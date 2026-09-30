@@ -66,6 +66,19 @@ is in [Teile.xlsx](Teile.xlsx).
 The original Cirkit Designer schematic is in
 [Schaltplan/](Schaltplan/SCHALTPLAN.png) (PNG and SVG).
 
+## 3D-printed case
+
+<p align="center">
+  <img src="Gehaeuse/bilder/zusammengebaut.png" alt="Control unit with keypad, OLED and RFID field next to the sensor unit on its wedge" width="80%">
+</p>
+
+Two printed enclosures, connected by a 3-wire cable: the **control unit** (keypad,
+OLED, RC522, buzzer, Uno) goes outside next to the door, the **sensor unit** sits
+on the room side on a 60° wedge that turns it towards the entrance. The PIR can't
+see through the wall, so standing at the keypad never triggers it. Five STL files,
+no supports needed. Planning, print settings and assembly (in German):
+[MDs/gehaeuse.md](MDs/gehaeuse.md), model and STLs: [Gehaeuse/](Gehaeuse/).
+
 ## Getting started
 
 1. Install the **Arduino IDE** and get these libraries from the Library Manager:
@@ -100,6 +113,7 @@ sounds and OLED graphics are the same:
 - Click the motion sensor to trigger the alarm while ARMED.
 - A signal pulse travels along each wire. A key press lights up exactly its row and column wire, and the L LED on D13 flickers during SPI traffic.
 - The buzzer plays through WebAudio, and there is a serial monitor and an EEPROM card list.
+- The **Enclosure** tab ([direct link](https://bbz-aifs51.github.io/LF7-Projekt_GAS/#enclosure)) puts the same parts into the 3D-printed case, built from the real STL files. Show the case solid, as X-ray or hidden, open it, and watch the signals run through the wires and the cable to the sensor unit.
 
 The model uses demo PINs (`1234` and admin `0000`), not the real ones from the
 sketch. To use it offline, just open
@@ -118,7 +132,9 @@ sketch. To use it offline, just open
 | Folder/file | Contents |
 |---|---|
 | [Code/](Code/) | Arduino sketches, one subfolder per sketch |
-| [docs/](docs/) | animated README graphics (SVG) and the 3D viewer (`docs/viewer/`) |
+| [docs/](docs/) | animated README graphics (SVG), the 3D viewer (`docs/viewer/`) and the social preview image |
+| [Gehaeuse/](Gehaeuse/) | 3D-printable case: OpenSCAD model, STL files, pictures |
+| [tools/](tools/) | scripts that put the STLs into the viewer and render the pictures |
 | [MDs/](MDs/) | docs (German): [hardware spec](MDs/aufbau.md), [user manual](MDs/anleitung.md), [development log](MDs/entwicklungsverlauf.md) |
 | [Anleitung/](Anleitung/) | user manual as a PDF |
 | [Schaltplan/](Schaltplan/) | schematic (PNG/SVG) |

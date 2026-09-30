@@ -6,6 +6,10 @@ Einsteiger: Es wird nichts an Vorwissen über 3D-Druck vorausgesetzt.
 - Modell (zum Anpassen): [../Gehaeuse/gehaeuse.scad](../Gehaeuse/gehaeuse.scad)
 - Fertige Druckdateien: [../Gehaeuse/stl/](../Gehaeuse/stl/)
 - Bilder: [../Gehaeuse/bilder/](../Gehaeuse/bilder/)
+- 3D-Ansicht im Browser, Tab „Enclosure“: <https://bbz-aifs51.github.io/LF7-Projekt_GAS/#enclosure>
+  — alle Bauteile im Gehäuse, das Gehäuse lässt sich massiv, durchsichtig
+  (X-ray) oder ausgeblendet zeigen und aufklappen. Die Firmware läuft dabei
+  weiter: Tasten drücken, Karte vorhalten, Bewegungsmelder anklicken.
 
 ---
 
@@ -128,6 +132,9 @@ symmetrisch, das Rückteil passt in beiden Lagen. Den Winkel kann man über
 
 ![Explosionsansicht](../Gehaeuse/bilder/explosion.png)
 
+Alle Bilder auf dieser Seite rendert [../tools/render.mjs](../tools/render.mjs) aus dem
+3D-Viewer, also aus genau den STL-Dateien, die gedruckt werden.
+
 | Datei | Teil | Druckzeit (ca.) | Material (ca.) |
 |---|---|---|---|
 | [control_back.stl](../Gehaeuse/stl/control_back.stl) | Bedienteil, Rückteil | 6–8 h | 100 g |
@@ -186,7 +193,10 @@ Studio, Orca Slicer oder Cura — je nachdem, welcher Drucker es ist.
 1. STL-Datei in den Slicer ziehen.
 2. **Nicht drehen** — die Teile liegen schon richtig (große flache Seite unten,
    Frontplatten mit der Sichtseite nach unten, Keil mit der Wandseite unten —
-   die Schräge oben braucht keine Stützen).
+   die Schräge oben braucht keine Stützen). So sehen sie im Slicer aus:
+
+   ![Alle fünf Druckteile in Druckrichtung](../Gehaeuse/bilder/druckplatte.png)
+
 3. Einstellungen:
 
 | Einstellung | Wert |
@@ -269,6 +279,17 @@ dem das Modell als Text beschrieben wird. Deshalb lässt es sich über Zahlen
    zusammengebaut mit den Modulen).
 5. Zum Exportieren: ein Teil wählen (z. B. `control_front`), **F6** (Rendern,
    dauert ein paar Sekunden), dann **F7** bzw. *Datei → Export → STL*.
+6. Danach 3D-Viewer und Bilder nachziehen (braucht [Node.js](https://nodejs.org)):
+
+   ```sh
+   node tools/stl2viewer.mjs     # STLs -> docs/viewer/enclosure.js
+   npm install --no-save playwright && npx playwright install chromium   # nur einmal
+   node tools/render.mjs         # Bilder in Gehaeuse/bilder/ + docs/social-preview.png
+   ```
+
+   Ändert sich dabei die Lage von Bauteilen im Gehäuse (z. B. über `keypad_h`),
+   auch die Formeln in `buildCase()` in [../docs/viewer/index.html](../docs/viewer/index.html)
+   anpassen — sie sind aus `gehaeuse.scad` übernommen.
 
 Die Gesamthöhe des Bedienteils berechnet sich automatisch aus Keypad, RFID und
 OLED. Wird also z. B. `keypad_h` größer, wächst das Gehäuse mit.

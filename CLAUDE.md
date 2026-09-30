@@ -29,7 +29,9 @@ Bewegungssensor erkennt Anwesenheit.
   gedreht, damit er den Eingang abdeckt), verbunden per 3-adrigem Kabel. Planung und
   Druck-/Bauanleitung: [MDs/gehaeuse.md](MDs/gehaeuse.md). Modulmaße stammen
   aus Datenblättern, nicht vom echten Aufbau. **Ändert sich ein Bauteil oder
-  dessen Position, STLs neu exportieren.**
+  dessen Position, STLs neu exportieren, danach `node tools/stl2viewer.mjs` und
+  `node tools/render.mjs`** (Viewer-Daten und Bilder, s. `tools/`). Die Bilder in
+  `bilder/` sind gerendert, nicht von Hand bearbeiten (Ausnahme: `montage.svg`).
 - `Teile.xlsx` — Bauteilliste
 - `docs/` — README-Grafiken als animierte SVGs (`banner.svg`, `how-it-works.svg`,
   `wiring.svg`, handgeschrieben, CSS-Animationen) und `docs/viewer/`: 3D-Modell
@@ -37,6 +39,19 @@ Bewegungssensor erkennt Anwesenheit.
   `alarm_system.ino` (Demo-PINs `1234`/`0000`). Wird per
   `.github/workflows/pages.yml` auf GitHub Pages veröffentlicht. **Ändert sich
   Verhalten, Zeit oder Pin in der Firmware, den Viewer mitziehen.**
+  Zwei Tabs: „Breadboard“ (Teile lose nach Schaltplan) und „Enclosure“
+  (`#enclosure`, dieselben Teile im Gehäuse, Gehäuse massiv/X-ray/ausgeblendet,
+  aufklappbar). Die Gehäuseteile kommen aus `docs/viewer/enclosure.js`, das
+  `tools/stl2viewer.mjs` aus den STLs erzeugt (nicht von Hand ändern). Die
+  Modul-Positionen im Gehäuse rechnet `buildCase()` mit denselben Formeln wie
+  `gehaeuse.scad` — Layout-Änderungen dort auch hier nachziehen.
+  `index.html?shot` ist ein versteckter Modus nur für `tools/render.mjs`.
+  `docs/social-preview.png` (1280 × 640, < 1 MB) ist das GitHub-Social-Preview,
+  wird von Hand unter Settings → General → Social preview hochgeladen.
+- `tools/` — Node-Skripte: `stl2viewer.mjs` (STL → `enclosure.js`, ohne
+  Abhängigkeiten), `render.mjs` (rendert `Gehaeuse/bilder/*.png` und das Social
+  Preview über den Viewer, braucht Playwright + Chromium),
+  `social-preview.html` (Vorlage fürs Social Preview).
 
 ## Angeschlossene Bauteile & Pin-Belegung
 
