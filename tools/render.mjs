@@ -128,7 +128,7 @@ const SHOTS = {
   social: {
     size: [1120, 1280], transparent: true, out: null,
     cfg: {
-      housing: 'xray', floor: false,
+      housing: 'solid', floor: false,
       cu: { pos: [-6.5, 0, 0], rot: [0, -0.5, 0] },
       su: { pos: [6.8, 0, 3.5], rot: [0, -1.45, 0] },
       camera: { dir: [0.15, 0.13, 1], fov: 26, fit: 0.84 }

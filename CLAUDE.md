@@ -34,7 +34,8 @@ Bewegungssensor erkennt Anwesenheit.
   `bilder/` sind gerendert, nicht von Hand bearbeiten (Ausnahme: `montage.svg`).
 - `Teile.xlsx` — Bauteilliste
 - `docs/` — README-Grafiken als animierte SVGs (`banner.svg`, `how-it-works.svg`,
-  `wiring.svg`, handgeschrieben, CSS-Animationen) und `docs/viewer/`: 3D-Modell
+  `wiring.svg`, handgeschrieben, CSS-Animationen; `banner.svg` zeigt das Gehäuse
+  isometrisch mit den Maßen aus `gehaeuse.scad`) und `docs/viewer/`: 3D-Modell
   (three.js, `three.min.js` liegt bei) mit nachgebauter Firmware-Logik aus
   `alarm_system.ino` (Demo-PINs `1234`/`0000`). Wird per
   `.github/workflows/pages.yml` auf GitHub Pages veröffentlicht. **Ändert sich

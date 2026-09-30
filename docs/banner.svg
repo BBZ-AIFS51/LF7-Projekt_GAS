@@ -17,8 +17,6 @@
 
   .float { animation: float 3.2s ease-in-out infinite; }
   @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
-  .shadow { animation: shade 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
-  @keyframes shade { 0%,100% { opacity: .35; transform: scale(1) } 50% { opacity: .15; transform: scale(.8) } }
 
   .key { animation: key 10s linear infinite; }
   @keyframes key { 0%,100% { opacity: 0 } }
@@ -35,8 +33,6 @@
 </style>
 <defs>
   <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0E131C"/><stop offset="1" stop-color="#18202E"/></linearGradient>
-  <linearGradient id="side1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3344"/><stop offset="1" stop-color="#1C2330"/></linearGradient>
-  <linearGradient id="side2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#222A38"/><stop offset="1" stop-color="#161C27"/></linearGradient>
   <radialGradient id="redglow"><stop offset="0" stop-color="#F43F5E" stop-opacity=".65"/><stop offset="1" stop-color="#F43F5E" stop-opacity="0"/></radialGradient>
   <radialGradient id="dome" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9CFD8"/></radialGradient>
   <filter id="blur" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6"/></filter>
@@ -47,6 +43,9 @@
     <polygon points="64,25 61,30 67,30"/>
     <text x="64" y="61" font-size="15" font-weight="700" text-anchor="middle" font-family="ui-monospace, Consolas, monospace" fill="currentColor">30s</text>
   </g>
+  <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC21F"/><stop offset="1" stop-color="#EBA600"/></linearGradient>
+  <linearGradient id="caseSide" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C3C9D2"/><stop offset="1" stop-color="#8E97A5"/></linearGradient>
+  <radialGradient id="screw" cx=".35" cy=".35" r=".8"><stop offset="0" stop-color="#F1F4F8"/><stop offset="1" stop-color="#9AA3AF"/></radialGradient>
   <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#FFFFFF" opacity=".05"/></pattern>
 </defs>
 
@@ -75,31 +74,72 @@
 </g>
 
 <!-- red glow behind the device while the alarm runs -->
-<g class="ph-alarm"><ellipse class="glow" cx="915" cy="225" rx="310" ry="180" fill="url(#redglow)"/></g>
+<g class="ph-alarm"><ellipse class="glow" cx="965" cy="235" rx="300" ry="190" fill="url(#redglow)"/></g>
 
 <!-- ground shadow -->
-<ellipse cx="915" cy="366" rx="260" ry="40" fill="#000" opacity=".35" filter="url(#blur)"/>
+<ellipse cx="962" cy="402" rx="215" ry="24" fill="#000" opacity=".4" filter="url(#blur)"/>
 
-<!-- isometric housing, plan 320 x 240: A(880,66) B(1157,226) C(949,346) D(672,186), height 28 -->
-<polygon points="672,186 949,346 949,374 672,214" fill="url(#side1)"/>
-<polygon points="949,346 1157,226 1157,254 949,374" fill="url(#side2)"/>
-<polygon points="880,66 1157,226 949,346 672,186" fill="#2B3446" stroke="#3B475E" stroke-width="1.5"/>
+<!-- the 3D-printed case (Gehaeuse/gehaeuse.scad), isometric, 1 mm = 1.45 px:
+     P(X,Y,Z) = (856 + 1.2557 (X - Z), 310 + .725 (X + Z) - 1.45 Y)
+     X = right, Y = up, Z = out of the wall. Control unit 90 x 176 x 44.8 mm
+     (back part 42.4 + front plate 2.4), sensor unit on its 60 deg wedge next to it -->
 
-<!-- everything on the top face is drawn in plan coordinates -->
-<g transform="matrix(.866 .5 -.866 .5 880 66)">
-  <!-- RFID reader (back corner, so the card can hover above empty space) -->
-  <rect x="14" y="14" width="96" height="82" rx="5" fill="#1D6FD1"/>
-  <rect x="24" y="22" width="76" height="54" rx="10" fill="none" stroke="#9CC6F5" stroke-width="2"/>
-  <rect x="34" y="30" width="56" height="38" rx="6" fill="none" stroke="#9CC6F5" stroke-width="1.5"/>
-  <g fill="#E2B340"><circle cx="27" cy="88" r="2"/><circle cx="37" cy="88" r="2"/><circle cx="47" cy="88" r="2"/><circle cx="57" cy="88" r="2"/><circle cx="67" cy="88" r="2"/><circle cx="77" cy="88" r="2"/><circle cx="87" cy="88" r="2"/><circle cx="97" cy="88" r="2"/></g>
-  <rect class="shadow" x="24" y="24" width="76" height="52" rx="6" fill="#000"/>
-  <rect class="ring" x="30" y="28" width="64" height="44" rx="10" fill="none" stroke="#7DD3FC" stroke-width="2.5"/>
-  <rect class="ring" x="30" y="28" width="64" height="44" rx="10" fill="none" stroke="#7DD3FC" stroke-width="2.5" style="animation-delay:.6s"/>
+<!-- sensor unit (behind the control unit, so it is drawn first) -->
+<polygon points="1100,355.9 1100.1,358.7 1100.5,361.9 1101,365.1 1101.6,368.1 1102.4,370.8 1103.2,372.9 1104.1,374.4 1104.8,375.1 1105.5,374.9 1106,373.9 1106.3,372.1 1106.5,369.7 1106.5,358.1 1100,344.3" fill="#8c939d"/>
+<polygon points="1111.7,374 1112.4,373.8 1105.5,374.9 1104.8,375.1" fill="#656a71"/>
+<polygon points="1112.4,373.8 1112.9,372.8 1106,373.9 1105.5,374.9" fill="#656a71"/>
+<polygon points="1112.9,372.8 1113.2,371.1 1106.3,372.1 1106,373.9" fill="#656a71"/>
+<polygon points="1113.3,357.1 1106.9,343.2 1100,344.3 1106.5,358.1" fill="#9da4af"/>
+<polygon points="1113.2,371.1 1113.3,368.7 1106.5,369.7 1106.3,372.1" fill="#656a71"/>
+<polygon points="1113.3,368.7 1113.3,357.1 1106.5,358.1 1106.5,369.7" fill="#656a71"/>
+<polygon points="1016.5,346.6 1018.3,350.5 1018.3,286.7 1016.5,282.8" fill="#8c939d"/>
+<polygon points="1018.3,350.5 1107.5,364.3 1107.5,300.5 1018.3,286.7" fill="#737981"/>
+<polygon points="1107.5,364.3 1116.1,363 1116.1,299.2 1107.5,300.5" fill="#656a71"/>
+<polygon points="1016.5,282.8 1018.3,286.7 1107.5,300.5 1116.1,299.2 1102.3,269.5" fill="#9da4af"/>
+<polygon points="1109.3,263.1 1108.5,262.5 1101.6,263.5 1102.4,264.2" fill="#9ba2ad"/>
+<polygon points="1100,280.5 1106.5,294.3 1106.5,282.7 1106.3,279.9 1106,276.7 1105.5,273.5 1104.8,270.5 1104.1,267.8 1103.2,265.6 1102.4,264.2 1101.6,263.5 1101,263.7 1100.5,264.7 1100.1,266.5 1100,268.9" fill="#8c939d"/>
+<polygon points="1113.3,293.3 1113.3,281.7 1106.5,282.7 1106.5,294.3" fill="#656a71"/>
+<polygon points="1110.1,264.6 1109.3,263.1 1102.4,264.2 1103.2,265.6" fill="#9da4af"/>
+<polygon points="1110.9,266.7 1110.1,264.6 1103.2,265.6 1104.1,267.8" fill="#9ba3ae"/>
+<polygon points="1111.7,269.4 1110.9,266.7 1104.1,267.8 1104.8,270.5" fill="#969da8"/>
+<polygon points="1113.3,281.7 1113.2,278.8 1106.3,279.9 1106.5,282.7" fill="#666b72"/>
+<polygon points="1107.5,364.3 1107.5,300.5 1092.6,332.6 1092.6,396.4" fill="#888a8c"/>
+<polygon points="1112.4,272.5 1111.7,269.4 1104.8,270.5 1105.5,273.5" fill="#8d949e"/>
+<polygon points="1113.2,278.8 1112.9,275.7 1106,276.7 1106.3,279.9" fill="#757a82"/>
+<polygon points="1112.9,275.7 1112.4,272.5 1105.5,273.5 1106,276.7" fill="#828891"/>
+<polygon points="1107.5,300.5 1018.3,286.7 1003.4,318.8 1092.6,332.6" fill="#d2d5d9"/>
+<polygon points="1003.4,382.6 1092.6,396.4 1092.6,332.6 1003.4,318.8" fill="#9b9da0"/>
+<polygon points="1002.3,385 1091.5,398.8 1091.5,335 1002.3,321.2" fill="#a67b00"/>
+<polygon points="1092.6,396.4 1092.6,332.6 1091.5,335 1091.5,398.8" fill="#926c00"/>
+<polygon points="1092.6,332.6 1003.4,318.8 1002.3,321.2 1091.5,335" fill="#e2a700"/>
+<!-- sensor front plate, drawn in plate coordinates (mm from its top left corner) -->
+<g transform="matrix(1.7153 0.2654 0 1.45 1002.3085 321.2021)">
+  <rect width="52" height="44" rx="4" fill="url(#plate)"/>
+  <circle cx="6.5" cy="6.5" r="2.4" fill="url(#screw)" stroke="#8A6400" stroke-width=".4"/><path d="M5.06 6.5 h2.88 M6.5 5.06 v2.88" stroke="#6B7280" stroke-width=".7"/><circle cx="45.5" cy="6.5" r="2.4" fill="url(#screw)" stroke="#8A6400" stroke-width=".4"/><path d="M44.06 6.5 h2.88 M45.5 5.06 v2.88" stroke="#6B7280" stroke-width=".7"/><circle cx="6.5" cy="37.5" r="2.4" fill="url(#screw)" stroke="#8A6400" stroke-width=".4"/><path d="M5.06 37.5 h2.88 M6.5 36.06 v2.88" stroke="#6B7280" stroke-width=".7"/><circle cx="45.5" cy="37.5" r="2.4" fill="url(#screw)" stroke="#8A6400" stroke-width=".4"/><path d="M44.06 37.5 h2.88 M45.5 36.06 v2.88" stroke="#6B7280" stroke-width=".7"/>
+  <circle cx="26" cy="22" r="12" fill="#3A2A00"/>
+  <g class="ph-alarm"><circle class="ring" cx="26" cy="22" r="15" fill="none" stroke="#F87171" stroke-width="1.6"/><circle class="ring" cx="26" cy="22" r="15" fill="none" stroke="#F87171" stroke-width="1.6" style="animation-delay:.6s"/></g>
+</g>
+<!-- Fresnel lens, 6 mm in front of the plate -->
+<g transform="matrix(1.7153 0.2654 0 1.45 999.5508 327.1443)">
+  <circle cx="26" cy="22" r="11.5" fill="url(#dome)"/>
+  <g fill="none" stroke="#B6BDC8" stroke-width=".6"><circle cx="26" cy="22" r="4"/><circle cx="26" cy="22" r="8"/></g>
+</g>
 
-  <!-- OLED module -->
-  <rect x="122" y="18" width="126" height="74" rx="5" fill="#1D4E89"/>
-  <rect x="130" y="26" width="110" height="58" rx="2" fill="#05070B"/>
-  <g transform="translate(133,29) scale(.8125)" fill="#D7ECFF">
+<!-- control unit: right side and top of the back part and the front plate -->
+<polygon points="969,375.3 915.8,406 915.8,150.8 969,120.1" fill="url(#caseSide)"/>
+<polygon points="915.8,406 912.8,407.7 912.8,152.5 915.8,150.8" fill="#B98400"/>
+<polygon points="915.8,200.1 918.3,198.6 922,192.1 918.3,189.9 915.8,191.4" fill="#4B5563"/>
+<polygon points="856,54.8 969,120.1 915.8,150.8 802.8,85.5" fill="#EEF1F4"/>
+<polygon points="802.8,85.5 915.8,150.8 912.8,152.5 799.7,87.3" fill="#FFCB2E"/>
+
+<!-- front plate, drawn in plate coordinates (mm from its top left corner) -->
+<g transform="matrix(1.2557 0.725 0 1.45 799.7446 87.28)">
+  <rect width="90" height="176" rx="4" fill="url(#plate)"/>
+  <circle cx="6.5" cy="6.5" r="2.9" fill="url(#screw)" stroke="#8A6400" stroke-width=".4"/><path d="M4.76 6.5 h3.48 M6.5 4.76 v3.48" stroke="#6B7280" stroke-width=".7"/><circle cx="83.5" cy="6.5" r="2.9" fill="url(#screw)" stroke="#8A6400" stroke-width=".4"/><path d="M81.76 6.5 h3.48 M83.5 4.76 v3.48" stroke="#6B7280" stroke-width=".7"/><circle cx="6.5" cy="169.5" r="2.9" fill="url(#screw)" stroke="#8A6400" stroke-width=".4"/><path d="M4.76 169.5 h3.48 M6.5 167.76 v3.48" stroke="#6B7280" stroke-width=".7"/><circle cx="83.5" cy="169.5" r="2.9" fill="url(#screw)" stroke="#8A6400" stroke-width=".4"/><path d="M81.76 169.5 h3.48 M83.5 167.76 v3.48" stroke="#6B7280" stroke-width=".7"/>
+
+  <!-- OLED behind a 32 x 18 mm window, active area 29.4 x 14.7 mm = 128 x 64 px -->
+  <rect x="29" y="15.7" width="32" height="18" rx=".8" fill="#05070B" stroke="#B98400" stroke-width=".5"/>
+  <g transform="translate(30.3,17.35) scale(.2297)" fill="#D7ECFF">
     <!-- heart, same primitives as drawHeart(64, 30) -->
     <g class="ph-heart"><g class="beat"><circle cx="56" cy="24" r="9.5"/><circle cx="72" cy="24" r="9.5"/><polygon points="48,29 80,29 64,48"/></g></g>
     <!-- masked PIN entry -->
@@ -120,46 +160,46 @@
       </g>
       <g class="flash" style="animation-delay:-.25s"><use href="#alarmSkull" color="#D7ECFF" fill="#05070B"/></g>
     </g>
+    </g>
+
+  <!-- buzzer behind 7 sound holes -->
+  <g fill="#3A2A00"><circle cx="75.1" cy="24.7" r="1"/><circle cx="78.60" cy="24.70" r="1"/><circle cx="76.85" cy="27.73" r="1"/><circle cx="73.35" cy="27.73" r="1"/><circle cx="71.60" cy="24.70" r="1"/><circle cx="73.35" cy="21.67" r="1"/><circle cx="76.85" cy="21.67" r="1"/></g>
+  <g class="ph-alarm"><circle class="ring" cx="75.1" cy="24.7" r="6.5" fill="none" stroke="#FBBF24" stroke-width="1"/><circle class="ring" cx="75.1" cy="24.7" r="6.5" fill="none" stroke="#FBBF24" stroke-width="1" style="animation-delay:.4s"/><circle class="ring" cx="75.1" cy="24.7" r="6.5" fill="none" stroke="#FBBF24" stroke-width="1" style="animation-delay:.8s"/></g>
+
+  <!-- engravings -->
+  <g fill="#C48F00" font-weight="800" text-anchor="middle">
+    <text transform="translate(14.9 27.6) rotate(-90)" font-size="8.2">GAS</text>
+    <text x="45" y="69.3" font-size="9.5">RFID</text>
   </g>
+  <rect x="20" y="49.9" width="50" height="32" rx="4" fill="none" stroke="#C48F00" stroke-width=".8"/>
+  <rect class="ring" x="24" y="54" width="42" height="24" rx="5" fill="none" stroke="#7DD3FC" stroke-width="1.2"/>
+  <rect class="ring" x="24" y="54" width="42" height="24" rx="5" fill="none" stroke="#7DD3FC" stroke-width="1.2" style="animation-delay:.6s"/>
 
-  <!-- PIR motion sensor -->
-  <rect x="260" y="14" width="50" height="82" rx="4" fill="#15803D"/>
-  <circle cx="285" cy="55" r="21" fill="url(#dome)"/>
-  <g fill="none" stroke="#B6BDC8" stroke-width="1"><circle cx="285" cy="55" r="7"/><circle cx="285" cy="55" r="14"/></g>
-  <g class="ph-alarm"><circle class="ring" cx="285" cy="55" r="25" fill="none" stroke="#F87171" stroke-width="3"/><circle class="ring" cx="285" cy="55" r="25" fill="none" stroke="#F87171" stroke-width="3" style="animation-delay:.6s"/></g>
-
-  <!-- keypad -->
-  <rect x="14" y="106" width="116" height="128" rx="8" fill="#161B25"/>
-  <g font-size="13" font-weight="700" text-anchor="middle" fill="#fff">
-    <rect x="22" y="114" width="22" height="24" rx="4" fill="#3B82F6"/><rect x="50" y="114" width="22" height="24" rx="4" fill="#3B82F6"/><rect x="78" y="114" width="22" height="24" rx="4" fill="#3B82F6"/><rect x="106" y="114" width="18" height="24" rx="4" fill="#DC2626"/>
-    <rect x="22" y="144" width="22" height="24" rx="4" fill="#3B82F6"/><rect x="50" y="144" width="22" height="24" rx="4" fill="#3B82F6"/><rect x="78" y="144" width="22" height="24" rx="4" fill="#3B82F6"/><rect x="106" y="144" width="18" height="24" rx="4" fill="#DC2626"/>
-    <rect x="22" y="174" width="22" height="24" rx="4" fill="#3B82F6"/><rect x="50" y="174" width="22" height="24" rx="4" fill="#3B82F6"/><rect x="78" y="174" width="22" height="24" rx="4" fill="#3B82F6"/><rect x="106" y="174" width="18" height="24" rx="4" fill="#DC2626"/>
-    <rect x="22" y="204" width="22" height="24" rx="4" fill="#DC2626"/><rect x="50" y="204" width="22" height="24" rx="4" fill="#3B82F6"/><rect x="78" y="204" width="22" height="24" rx="4" fill="#DC2626"/><rect x="106" y="204" width="18" height="24" rx="4" fill="#DC2626"/>
-    <text x="33" y="131">1</text><text x="61" y="131">2</text><text x="89" y="131">3</text><text x="115" y="131">A</text>
-    <text x="33" y="161">4</text><text x="61" y="161">5</text><text x="89" y="161">6</text><text x="115" y="161">B</text>
-    <text x="33" y="191">7</text><text x="61" y="191">8</text><text x="89" y="191">9</text><text x="115" y="191">C</text>
-    <text x="33" y="221">*</text><text x="61" y="221">0</text><text x="89" y="221">#</text><text x="115" y="221">D</text>
+  <!-- membrane keypad glued on the front, ribbon through the slot below it -->
+  <rect x="33.5" y="166.9" width="23" height="4" fill="#2A1E00"/>
+  <rect x="34.5" y="166.9" width="21" height="2.2" fill="#A3A8B0"/>
+  <rect x="10.25" y="89.9" width="69.5" height="77" rx="3" fill="#161B25"/>
+  <g font-size="8" font-weight="700" text-anchor="middle" fill="#fff">
+    <rect x="14.6" y="92.2" width="12.8" height="13.8" rx="1.8" fill="#3B82F6"/><rect x="30.6" y="92.2" width="12.8" height="13.8" rx="1.8" fill="#3B82F6"/><rect x="46.6" y="92.2" width="12.8" height="13.8" rx="1.8" fill="#3B82F6"/><rect x="62.6" y="92.2" width="12.8" height="13.8" rx="1.8" fill="#DC2626"/><rect x="14.6" y="109.4" width="12.8" height="13.8" rx="1.8" fill="#3B82F6"/><rect x="30.6" y="109.4" width="12.8" height="13.8" rx="1.8" fill="#3B82F6"/><rect x="46.6" y="109.4" width="12.8" height="13.8" rx="1.8" fill="#3B82F6"/><rect x="62.6" y="109.4" width="12.8" height="13.8" rx="1.8" fill="#DC2626"/><rect x="14.6" y="126.6" width="12.8" height="13.8" rx="1.8" fill="#3B82F6"/><rect x="30.6" y="126.6" width="12.8" height="13.8" rx="1.8" fill="#3B82F6"/><rect x="46.6" y="126.6" width="12.8" height="13.8" rx="1.8" fill="#3B82F6"/><rect x="62.6" y="126.6" width="12.8" height="13.8" rx="1.8" fill="#DC2626"/><rect x="14.6" y="143.8" width="12.8" height="13.8" rx="1.8" fill="#DC2626"/><rect x="30.6" y="143.8" width="12.8" height="13.8" rx="1.8" fill="#3B82F6"/><rect x="46.6" y="143.8" width="12.8" height="13.8" rx="1.8" fill="#DC2626"/><rect x="62.6" y="143.8" width="12.8" height="13.8" rx="1.8" fill="#DC2626"/>
+    <text x="21" y="102.0">1</text><text x="37" y="102.0">2</text><text x="53" y="102.0">3</text><text x="69" y="102.0">A</text><text x="21" y="119.2">4</text><text x="37" y="119.2">5</text><text x="53" y="119.2">6</text><text x="69" y="119.2">B</text><text x="21" y="136.4">7</text><text x="37" y="136.4">8</text><text x="53" y="136.4">9</text><text x="69" y="136.4">C</text><text x="21" y="153.6">*</text><text x="37" y="153.6">0</text><text x="53" y="153.6">#</text><text x="69" y="153.6">D</text>
   </g>
   <!-- key presses during the PIN phase (not the real PIN) -->
-  <rect class="key k1" x="22" y="114" width="22" height="24" rx="4" fill="#fff" opacity="0"/>
-  <rect class="key k2" x="50" y="174" width="22" height="24" rx="4" fill="#fff" opacity="0"/>
-  <rect class="key k3" x="78" y="144" width="22" height="24" rx="4" fill="#fff" opacity="0"/>
-  <rect class="key k4" x="78" y="204" width="22" height="24" rx="4" fill="#fff" opacity="0"/>
-
-  <!-- passive buzzer behind a speaker grill -->
-  <circle cx="200" cy="165" r="26" fill="#1F2633" stroke="#3B475E" stroke-width="1.5"/>
-  <g stroke="#0B0D12" stroke-width="3" stroke-linecap="round"><path d="M186 155 h28 M182 165 h36 M186 175 h28"/></g>
-  <g class="ph-alarm"><circle class="ring" cx="200" cy="165" r="30" fill="none" stroke="#FBBF24" stroke-width="2.5"/><circle class="ring" cx="200" cy="165" r="30" fill="none" stroke="#FBBF24" stroke-width="2.5" style="animation-delay:.4s"/><circle class="ring" cx="200" cy="165" r="30" fill="none" stroke="#FBBF24" stroke-width="2.5" style="animation-delay:.8s"/></g>
-  <text x="300" y="226" font-size="12" font-weight="800" letter-spacing="2" text-anchor="end" fill="#3B475E">PROJEKT GAS</text>
+  <rect class="key k1" x="46.6" y="92.2" width="12.8" height="13.8" rx="1.8" fill="#fff" opacity="0"/>
+  <rect class="key k2" x="46.6" y="109.4" width="12.8" height="13.8" rx="1.8" fill="#fff" opacity="0"/>
+  <rect class="key k3" x="46.6" y="126.6" width="12.8" height="13.8" rx="1.8" fill="#fff" opacity="0"/>
+  <rect class="key k4" x="46.6" y="143.8" width="12.8" height="13.8" rx="1.8" fill="#fff" opacity="0"/>
 </g>
 
-<!-- floating RFID card above the reader (outer group bobs, inner group is the iso plane) -->
+<!-- RFID card held in front of the reader (outer group bobs, inner group is a plane
+     parallel to the front plate, 40 mm in front of it) -->
 <g class="float">
-  <g transform="matrix(.866 .5 -.866 .5 880 8)">
-    <rect x="20" y="24" width="84" height="54" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
-    <rect x="29" y="34" width="17" height="13" rx="2" fill="#E2B340"/>
-    <text x="96" y="70" font-size="12" font-weight="800" text-anchor="end" fill="#1E3A8A">GAS</text>
-    <rect x="29" y="58" width="32" height="4" rx="2" fill="#CBD5E1"/>
+  <g transform="matrix(1.2557 0.725 0 1.45 749.5166 116.28)">
+    <rect x="-16" y="28" width="54" height="85.6" rx="3.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width=".6"/>
+    <path d="M-16 45 V31.5 a3.5 3.5 0 0 1 3.5 -3.5 h47 a3.5 3.5 0 0 1 3.5 3.5 V45 z" fill="#1D4ED8"/>
+    <text x="-11" y="40.5" font-size="9" font-weight="900" fill="#fff">GAS</text>
+    <rect x="-10" y="54" width="11" height="8.5" rx="1.5" fill="#E2B340"/>
+    <rect x="-10" y="72" width="30" height="3" rx="1.5" fill="#CBD5E1"/>
+    <rect x="-10" y="79" width="20" height="3" rx="1.5" fill="#E2E8F0"/>
   </g>
 </g>
 </svg>
