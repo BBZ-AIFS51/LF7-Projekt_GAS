@@ -284,7 +284,7 @@ dem das Modell als Text beschrieben wird. Deshalb lässt es sich über Zahlen
    ```sh
    node tools/stl2viewer.mjs     # STLs -> docs/viewer/enclosure.js
    npm install --no-save playwright && npx playwright install chromium   # nur einmal
-   node tools/render.mjs         # Bilder in Gehaeuse/bilder/ + docs/social-preview.png
+   node tools/render.mjs         # Bilder in Gehaeuse/bilder/, README-Banner, Social Preview
    ```
 
    Ändert sich dabei die Lage von Bauteilen im Gehäuse (z. B. über `keypad_h`),

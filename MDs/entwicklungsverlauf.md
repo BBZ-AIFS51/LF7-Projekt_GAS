@@ -567,6 +567,27 @@ Upload an image (dafür gibt es keine API).
 
 ---
 
+## 15. Prompt — Holo-Look für Banner und Social Preview (30.09.2026)
+
+> Mace es so im holo look, also durchsichtig wie auf dem social preview
+> *(dazu ein Screenshot des Social Preview mit dem durchsichtigen X-ray-Gehäuse)*
+
+### Antwort
+
+- `docs/banner.svg` zeigt das Gehäuse jetzt im X-ray-Look: Bedienteil und
+  Sensorteil durchsichtig, innen sind Uno, OLED, RC522, Breadboard und die
+  Kabel zu sehen. Die Grafik ist ein Render aus dem 3D-Viewer, als Bild ins
+  SVG eingebettet (120 KB). Die Animation liegt als SVG-Ebenen passgenau
+  darüber: OLED (Herz → `****` → Totenkopf → Alarm), Tastendrücke, pulsierendes
+  RFID-Feld, Karte, Ringe an Buzzer und Bewegungsmelder im Alarm.
+- Das Banner wird jetzt erzeugt: `node tools/render.mjs banner` füllt die
+  Vorlage `tools/banner.svg`. Die Lage der Ebenen rechnet das Skript aus dem
+  3D-Modell aus (Punkte der Frontplatten werden auf das Bild projiziert).
+- `docs/social-preview.png` wieder mit durchsichtigem Gehäuse (136 KB), wie
+  vorher.
+
+---
+
 ## Anhang — Stand der Dateien
 
 | Datei | Zweck |
