@@ -33,9 +33,11 @@ Bewegungssensor erkennt Anwesenheit.
   `node tools/render.mjs`** (Viewer-Daten und Bilder, s. `tools/`). Die Bilder in
   `bilder/` sind gerendert, nicht von Hand bearbeiten (Ausnahme: `montage.svg`).
 - `Teile.xlsx` — Bauteilliste
-- `docs/` — README-Grafiken als animierte SVGs (`banner.svg`, `how-it-works.svg`,
-  `wiring.svg`, handgeschrieben, CSS-Animationen; `banner.svg` zeigt das Gehäuse
-  isometrisch mit den Maßen aus `gehaeuse.scad`) und `docs/viewer/`: 3D-Modell
+- `docs/` — README-Grafiken als animierte SVGs (`how-it-works.svg`, `wiring.svg`
+  handgeschrieben, CSS-Animationen; `banner.svg` wird von `tools/render.mjs` aus
+  der Vorlage `tools/banner.svg` erzeugt: X-ray-Render des Gehäuses plus
+  animierte SVG-Ebenen — **Vorlage bearbeiten, nicht `docs/banner.svg`**) und
+  `docs/viewer/`: 3D-Modell
   (three.js, `three.min.js` liegt bei) mit nachgebauter Firmware-Logik aus
   `alarm_system.ino` (Demo-PINs `1234`/`0000`). Wird per
   `.github/workflows/pages.yml` auf GitHub Pages veröffentlicht. **Ändert sich
@@ -51,8 +53,8 @@ Bewegungssensor erkennt Anwesenheit.
   wird von Hand unter Settings → General → Social preview hochgeladen.
 - `tools/` — Node-Skripte: `stl2viewer.mjs` (STL → `enclosure.js`, ohne
   Abhängigkeiten), `render.mjs` (rendert `Gehaeuse/bilder/*.png` und das Social
-  Preview über den Viewer, braucht Playwright + Chromium),
-  `social-preview.html` (Vorlage fürs Social Preview).
+  Preview und `docs/banner.svg` über den Viewer, braucht Playwright + Chromium),
+  `social-preview.html` und `banner.svg` (Vorlagen für Social Preview und Banner).
 
 ## Angeschlossene Bauteile & Pin-Belegung
 

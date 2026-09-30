@@ -2599,6 +2599,12 @@ function buildScene() {
       label(l.text, f.localToWorld(V(l.at[0] / 10, l.at[1] / 10, l.at[2] / 10)));
     });
     labelsEl.classList.add('shot');
+    // screen position (px) of a point in mm in one of the frames, used by
+    // tools/render.mjs to lay the animated SVG parts of the banner over the render
+    window.gasProject = (frame, at) => {
+      const p = (frames[frame] || scene).localToWorld(V(at[0] / 10, at[1] / 10, at[2] / 10)).project(camera);
+      return [(p.x + 1) / 2 * canvas.clientWidth, (1 - p.y) / 2 * canvas.clientHeight];
+    };
     return new Promise((resolve) => {
       let n = 0;
       const tick = () => (++n > 4 ? resolve(true) : requestAnimationFrame(tick));
