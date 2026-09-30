@@ -546,6 +546,27 @@ Upload an image (dafür gibt es keine API).
 
 ---
 
+## 14. Prompt — Banner und Social Preview mit Gehäuse (30.09.2026)
+
+> dann aktualisiere auch docs/banner.svg, sodass auch dort sowie auf dem social
+> preview banner das ganze im gehäuse drauf ist
+
+### Antwort
+
+- `docs/banner.svg`: Statt der flachen Platine zeigt das Banner jetzt das
+  Bedienteil im Gehäuse (isometrisch, stehend) und daneben das Sensorteil auf
+  dem 60°-Keil. Alle Positionen stammen aus `gehaeuse.scad`: OLED-Fenster,
+  Schalllöcher, „GAS“- und „RFID“-Gravur, Keypad, Kabelschlitz, Schrauben.
+  Die Animation läuft wie vorher: Herz, PIN-Eingabe mit Tastendrücken,
+  Totenkopf, Alarm mit Blinken, rotem Schein und Ringen an Buzzer und
+  Bewegungsmelder. Die Karte schwebt vor dem RFID-Feld. Weiterhin reines SVG
+  mit CSS-Animation (19 KB), keine eingebetteten Bilder.
+- `docs/social-preview.png`: Gehäuse jetzt massiv statt X-ray, damit klar das
+  fertige Gerät zu sehen ist (1280 × 640, 110 KB). Muss danach wieder unter
+  Settings → General → Social preview hochgeladen werden.
+
+---
+
 ## Anhang — Stand der Dateien
 
 | Datei | Zweck |
