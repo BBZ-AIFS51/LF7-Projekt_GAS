@@ -14,3 +14,6 @@ desktop.ini
 
 # Editor
 .vscode/
+
+# tools/render.mjs (Playwright)
+node_modules

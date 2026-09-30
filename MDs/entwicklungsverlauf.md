@@ -4,7 +4,8 @@ Dokumentation der Firmware-Entwicklung mit Claude Code (Claude Opus 5).
 Chronologisches Protokoll: Prompts (Jan Mummert) und Antworten (Claude).
 
 - Projekt: LF07 — Mini-Sicherheitssystem / Access Lock (Arduino Uno R3)
-- Daten der Sitzungen: 08.09.2026, 22.09.2026, 23.09.2026 (inkl. Gehäuse)
+- Daten der Sitzungen: 08.09.2026, 22.09.2026, 23.09.2026 (inkl. Gehäuse),
+  29.09.2026, 30.09.2026
 - Grundlagen im Kontext: [../CLAUDE.md](../CLAUDE.md), [aufbau.md](aufbau.md)
 
 ---
@@ -502,6 +503,46 @@ Ende nicht hinten aus dem Keil kommen, hat er dort 4 mm zusätzliches Material
 (`wedge_back`). `montage.svg` (Kegel an der Wandaußenseite abgeschnitten, weil
 der PIR nicht durch die Wand sieht), `sensor.png`, `explosion.png`,
 `zusammengebaut.png` und `stl/sensor_wedge.stl` („Simple: yes“) neu erzeugt.
+
+---
+
+## 13. Prompt — Vorschaubilder, Gehäuse im 3D-Viewer, Social Preview (30.09.2026)
+
+> 1. Überarbeite Optisch nochmal die Vorschauen für das 3D-Druck Modell.
+> 2. Ergänze beim 3D-Modell im Browser noch einen Tab, in welchem das ganze
+>    nicht nur lose da liegt, sondern auch im Gehäuse ist. Das Gehäuse soll bei
+>    diesem Modell dann quasi durchsichtig oder umschaltbar sein
+> 3. Erstelle ein Passendes Social Media Preview nach den vorgaben von gitbhub
+
+### Antwort
+
+**Gehäuse im 3D-Viewer:** neuer Tab **Enclosure** (Direktlink
+`…/LF7-Projekt_GAS/#enclosure`). Bedienteil vorne auf einem Demo-Brett (spielt
+die Wand), Sensorteil auf dem 60°-Keil auf der Rückseite, 3-adriges Kabel durch
+das Brett. Innen sitzen Uno, Keypad, OLED, RC522, Buzzer und ein Mini-Breadboard
+an den Positionen aus `gehaeuse.scad`, alle Kabel sind verlegt. Das Gehäuse lässt
+sich **Solid / X-ray / Hidden** schalten und mit **Open** aufklappen. Die
+Firmware läuft weiter: Tasten, Karten (fliegen ans RFID-Feld), Bewegungsmelder
+(Signal läuft sichtbar übers Kabel, der Erfassungsbereich leuchtet auf).
+Die Gehäuseteile sind keine Nachbauten, sondern die echten STL-Dateien:
+`tools/stl2viewer.mjs` packt sie kompakt in `docs/viewer/enclosure.js` (233 KB,
+funktioniert auch offline). Nebenbei die Befestigungslöcher des Uno im Viewer
+auf die echten R3-Maße korrigiert, damit er auf den Abstandshaltern sitzt.
+
+**Vorschaubilder:** alle sechs Bilder in `Gehaeuse/bilder/` neu, jetzt im Stil
+der README-Grafiken (dunkler Hintergrund, weiche Schatten, Studio-Licht,
+Beschriftungen auf Deutsch) und mit den detaillierten Bauteilen aus dem Viewer
+statt der groben OpenSCAD-Platzhalter. Neu dazu `druckplatte.png`: alle fünf
+Teile so, wie sie auf dem Druckbett liegen (in `gehaeuse.md` bei „Slicen“).
+Erzeugt werden die Bilder von `tools/render.mjs` über den Viewer (Playwright),
+optional mit pngquant verkleinert (je 35–115 KB).
+
+**Social Preview:** `docs/social-preview.png`, 1280 × 640 px (GitHub-Empfehlung,
+Minimum 640 × 320), PNG unter 1 MB (135 KB), wichtige Inhalte mit Abstand zum
+Rand. Titel, Kurzbeschreibung und die vier Funktionen wie im Banner, rechts das
+Gehäuse im X-ray-Modus. Vorlage: `tools/social-preview.html`. **Muss von Hand
+hochgeladen werden:** Repository → Settings → General → Social preview → Edit →
+Upload an image (dafür gibt es keine API).
 
 ---
 
