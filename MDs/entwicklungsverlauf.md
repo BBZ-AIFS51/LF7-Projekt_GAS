@@ -462,6 +462,49 @@ echten Aufbau gemessen. Außerdem ist noch nichts gedruckt.
 
 ---
 
+## 11. Prompt — Sensor schräg zur Tür (29.09.2026)
+
+> Passe montage.svg so an, dass der Sensor den Eingang abschirmt (grob im
+> Bild angezeichnet). Passe außerdem sensor.png und die 3D-Dateien so an,
+> dass der Sensor ein wenig angewinkelt an der Wand sitzt, sodass er den
+> kompletten Eingang abschirmt.
+
+### Antwort
+
+Neues Druckteil **Keil** (`sensor_wedge`, 30°, 5–31 mm dick): wird mit zwei
+Laschen an die Wand geschraubt, das unveränderte Sensor-Rückteil sitzt mit
+2 Schrauben 3 × 10 mm darauf. Das dünne Ende zeigt zur Tür; bei 110°
+Öffnungswinkel liegt die türseitige Kante des Erfassungsbereichs dann fast
+parallel zur Wand, der ganze Eingang ist im Sichtfeld. Für die andere Türseite
+wird der Keil um 180° gedreht.
+
+- `montage.svg`: Erfassungsbereich um 30° zur Tür gedreht, Keil eingezeichnet.
+  Außerdem das Türscharnier auf die andere Seite gelegt — sonst stünde die
+  geöffnete Tür genau zwischen Sensor und Eingang.
+- `sensor.png`, `explosion.png`, `zusammengebaut.png` neu gerendert,
+  `stl/sensor_wedge.stl` neu (geschlossen, „Simple: yes“). Die übrigen STLs
+  sind unverändert.
+- [gehaeuse.md](gehaeuse.md): Keil, Montage, Einkaufsliste ergänzt.
+
+---
+
+## 12. Prompt — Sensor noch stärker zur Tür (29.09.2026)
+
+> Noch mehr die Tür abdecken, sodass sich der Sensorbereich stark mit der
+> Wand überschneidet.
+
+### Antwort
+
+Keil von 30° auf **60°** (`su_angle`), jetzt 5–50 mm dick. Die türseitige
+Kante des Erfassungsbereichs läuft damit ca. 25° in die Wand hinein, die
+andere zeigt fast gerade in den Raum. Damit die Schraubenlöcher am dicken
+Ende nicht hinten aus dem Keil kommen, hat er dort 4 mm zusätzliches Material
+(`wedge_back`). `montage.svg` (Kegel an der Wandaußenseite abgeschnitten, weil
+der PIR nicht durch die Wand sieht), `sensor.png`, `explosion.png`,
+`zusammengebaut.png` und `stl/sensor_wedge.stl` („Simple: yes“) neu erzeugt.
+
+---
+
 ## Anhang — Stand der Dateien
 
 | Datei | Zweck |

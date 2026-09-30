@@ -14,7 +14,7 @@
 // data sheets - check them with a ruler before printing.
 
 /* [Part selection] */
-part = "assembly"; // [assembly, exploded, sensor_assembly, control_back, control_front, sensor_back, sensor_front]
+part = "assembly"; // [assembly, exploded, sensor_assembly, control_back, control_front, sensor_back, sensor_front, sensor_wedge]
 
 /* [General] */
 wall = 2.4;           // side wall thickness (6 lines with a 0.4 nozzle)
@@ -63,6 +63,10 @@ pir_h = 24.3;
 pir_hole_dist = 28;   // distance of the two mounting holes
 pir_dome_d = 23;      // Fresnel lens diameter
 pir_post_h = 3;       // gap between lid and sensor board
+su_angle = 60;        // wedge angle: sensor turned towards the door
+wedge_min = 5;        // wedge thickness at its thin end (door side)
+wedge_back = 4;       // extra material behind the thick end (screw holes)
+tab_t = 4;            // thickness of the wall mounting tabs on the wedge
 
 $fn = 48;
 
@@ -97,6 +101,8 @@ notch_w = 6;
 notch_d = 5;
 
 su_th = floor_t + su_depth;
+wedge_l = su_w * cos(su_angle);       // wedge length along the wall
+wedge_max = wedge_min + su_w * sin(su_angle);
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -318,6 +324,38 @@ module sensor_front() {
     }
 }
 
+// places children on the sloped face of the wedge (sensor_back coordinates)
+module on_wedge() {
+    translate([0, 0, wedge_max]) rotate([0, su_angle, 0]) children();
+}
+
+// wedge between wall and sensor_back, turns the sensor towards the door.
+// Wall side at z = 0 (print orientation), thin end at +x = door side.
+// Turn it by 180 degrees if the door is on the other side.
+module sensor_wedge() {
+    difference() {
+        union() {
+            translate([0, su_h, 0]) rotate([90, 0, 0]) linear_extrude(su_h)
+                polygon([[-wedge_back, 0], [wedge_l, 0], [wedge_l, wedge_min],
+                         [0, wedge_max], [-wedge_back, wedge_max]]);
+            // wall mounting tabs above and below the sensor box
+            for (m = [0, 1])
+                translate([0, m * su_h, 0]) mirror([0, m, 0])
+                    linear_extrude(tab_t) hull() {
+                        translate([wedge_l / 2, -8]) circle(d = 14);
+                        translate([wedge_l / 2 - 7, -1]) square([14, 1]);
+                    }
+        }
+        for (y = [-8, su_h + 8])
+            translate([wedge_l / 2, y, 0]) csk_hole(wall_screw_d, wall_csk_d, tab_t);
+        // pilot holes for the two screws of sensor_back (3 x 10 mm)
+        on_wedge() for (x = [su_w / 2 - 12, su_w / 2 + 12])
+            translate([x, su_h / 2, -9]) cylinder(d = pilot_d, h = 10);
+        // cable hole, lines up with the hole in sensor_back
+        translate([su_w / 2 * cos(su_angle), su_h / 2, -1]) cylinder(d = 10, h = wedge_max + 2);
+    }
+}
+
 // ---------------------------------------------------------------------------
 // Dummy parts, only for the preview pictures
 // ---------------------------------------------------------------------------
@@ -384,10 +422,13 @@ module control_assembly(lift = 0) {
 }
 
 module sensor_assembly(lift = 0) {
-    color("#e8e8e8") sensor_back();
-    translate([0, 0, su_th + lift]) {
-        color("#f4b400") sensor_front();
-        translate([su_w / 2, su_h / 2, -pir_post_h]) pir_dummy();
+    color("#c8c8c8") sensor_wedge();
+    on_wedge() translate([0, 0, lift / 2]) {
+        color("#e8e8e8") sensor_back();
+        translate([0, 0, su_th + lift]) {
+            color("#f4b400") sensor_front();
+            translate([su_w / 2, su_h / 2, -pir_post_h]) pir_dummy();
+        }
     }
 }
 
@@ -412,7 +453,10 @@ if (part == "assembly") {
     sensor_back();
 } else if (part == "sensor_front") {
     flip_lid(su_w) sensor_front();
+} else if (part == "sensor_wedge") {
+    sensor_wedge();
 }
 
 echo(str("Control unit: ", cu_w, " x ", cu_h, " x ", cu_th + lid_t, " mm"));
 echo(str("Sensor unit:  ", su_w, " x ", su_h, " x ", su_th + lid_t, " mm"));
+echo(str("Sensor wedge: ", su_angle, " deg, ", wedge_min, " .. ", wedge_max, " mm thick"));

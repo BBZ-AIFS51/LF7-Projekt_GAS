@@ -25,7 +25,8 @@ Bewegungssensor erkennt Anwesenheit.
 - `Gehaeuse/` — 3D-druckbares Gehäuse: `gehaeuse.scad` (OpenSCAD, parametrisch,
   Teil über `part` wählen), fertige STLs in `stl/`, Bilder in `bilder/`.
   Zwei Gehäuse: Bedienteil außen (Uno, Keypad, OLED, RC522, Buzzer) und
-  Sensorteil innen (HC-SR501), verbunden per 3-adrigem Kabel. Planung und
+  Sensorteil innen (HC-SR501, auf einem 60°-Keil `sensor_wedge` zur Tür
+  gedreht, damit er den Eingang abdeckt), verbunden per 3-adrigem Kabel. Planung und
   Druck-/Bauanleitung: [MDs/gehaeuse.md](MDs/gehaeuse.md). Modulmaße stammen
   aus Datenblättern, nicht vom echten Aufbau. **Ändert sich ein Bauteil oder
   dessen Position, STLs neu exportieren.**

@@ -38,6 +38,14 @@ Der Sensor zeigt in den Raum, die Wand steht zwischen ihm und der Person am
 Bedienteil — die kann er also gar nicht erfassen. Erst wer die Tür öffnet
 und eintritt, läuft in den Erfassungsbereich.
 
+**Warum schräg:** Flach an der Wand schaut der Sensor geradeaus in den Raum,
+der Bereich direkt vor der Tür liegt dann am Rand oder außerhalb seines
+Sichtfelds. Deshalb sitzt das Sensorteil auf einem **Keil (60°)** und ist
+stark zur Tür gedreht. Bei ca. 110° Öffnungswinkel läuft die türseitige Kante
+des Erfassungsbereichs dann schräg in die Wand hinein (ca. 25°), die andere
+zeigt fast gerade in den Raum. Der Eingang liegt damit komplett und bis dicht
+an die Wand im Sichtfeld — durch die Wand nach außen sieht er trotzdem nicht.
+
 ### Bedienteil (außen)
 
 ![Bedienteil zusammengebaut](../Gehaeuse/bilder/zusammengebaut.png)
@@ -70,18 +78,28 @@ Leiterbahnen aus Metall, die das Funkfeld stören würden.
 
 ![Sensorteil](../Gehaeuse/bilder/sensor.png)
 
-Größe: **52 × 44 × 35 mm**. Die Linse (weiße Kuppel) schaut vorne heraus, die
-Platine hängt an zwei Zapfen an der Frontplatte. Nach dem Abnehmen der Front
-kommt man an die beiden Drehregler (Empfindlichkeit, Haltezeit). Kabel raus
-durch Loch in der Rückwand oder Kerbe unten.
+Größe: **52 × 44 × 35 mm**, dazu der Keil (5–50 mm dick). Die Linse (weiße
+Kuppel) schaut vorne heraus, die Platine hängt an zwei Zapfen an der
+Frontplatte. Nach dem Abnehmen der Front kommt man an die beiden Drehregler
+(Empfindlichkeit, Haltezeit). Kabel raus durch Loch in der Rückwand (der Keil
+hat an derselben Stelle ein Ø-10-mm-Loch) oder Kerbe unten.
+
+Drei Druckteile: **Keil**, Rückteil, Frontplatte. Der Keil wird mit zwei
+Laschen (oben/unten) an die Wand geschraubt, das Rückteil mit 2 Schrauben auf
+den Keil. Das **dünne Ende zeigt zur Tür**. Liegt die Tür auf der anderen
+Seite, den Keil einfach um 180° gedreht anschrauben — er ist oben/unten
+symmetrisch, das Rückteil passt in beiden Lagen. Den Winkel kann man über
+`su_angle` in der `.scad`-Datei ändern.
 
 ### Montageort
 
 - **Bedienteil:** außen neben dem Türrahmen auf der Schlossseite, Oberkante
   etwa auf **1,40 m** — dann ist das Display gut lesbar.
 - **Sensorteil:** innen auf **derselben Wand** neben der Tür, etwa
-  **1,5–2 m hoch**, Kuppel zeigt in den Raum. Nicht auf Heizkörper, Fenster
-  mit direkter Sonne oder Lüftungen richten (Fehlalarme durch Wärme).
+  **1,5–2 m hoch**, auf dem Keil zur Tür gedreht. Am besten auf der Seite
+  **gegenüber dem Türscharnier** — sonst steht die geöffnete Tür genau
+  zwischen Sensor und Eingang. Nicht auf Heizkörper, Fenster mit direkter
+  Sonne oder Lüftungen richten (Fehlalarme durch Wärme).
 - **Kabel** nie durch den Türspalt auf der Schlossseite führen (wird
   eingeklemmt). Entweder ein kleines Loch durch die Wand (Ø 6–8 mm) oder
   mit Kabelclips außen um den Türrahmen herum.
@@ -116,8 +134,9 @@ durch Loch in der Rückwand oder Kerbe unten.
 | [control_front.stl](../Gehaeuse/stl/control_front.stl) | Bedienteil, Frontplatte | 2–3 h | 45 g |
 | [sensor_back.stl](../Gehaeuse/stl/sensor_back.stl) | Sensorteil, Rückteil | 1,5–2 h | 25 g |
 | [sensor_front.stl](../Gehaeuse/stl/sensor_front.stl) | Sensorteil, Frontplatte | 20–30 min | 6 g |
+| [sensor_wedge.stl](../Gehaeuse/stl/sensor_wedge.stl) | Sensorteil, Keil (60°) | 1,5–2 h | 20 g |
 
-Zusammen rund 180 g PLA, also ca. 4–5 € Material. Die Zeiten hängen stark vom
+Zusammen rund 200 g PLA, also ca. 4–5 € Material. Die Zeiten hängen stark vom
 Drucker ab — der Slicer zeigt den genauen Wert an.
 
 | Frontplatte von vorne | Frontplatte von innen | Rückteil |
@@ -166,7 +185,8 @@ Studio, Orca Slicer oder Cura — je nachdem, welcher Drucker es ist.
 
 1. STL-Datei in den Slicer ziehen.
 2. **Nicht drehen** — die Teile liegen schon richtig (große flache Seite unten,
-   Frontplatten mit der Sichtseite nach unten).
+   Frontplatten mit der Sichtseite nach unten, Keil mit der Wandseite unten —
+   die Schräge oben braucht keine Stützen).
 3. Einstellungen:
 
 | Einstellung | Wert |
@@ -191,6 +211,7 @@ Studio, Orca Slicer oder Cura — je nachdem, welcher Drucker es ist.
 | 8 | Senkkopf-Schraube 3 × 12 mm (Spanplattenschraube oder M3 × 12) | Frontplatten an beide Gehäuse |
 | 4 | Schraube 3 × 8 mm mit flachem Kopf (Linsenkopf) | Arduino Uno |
 | 2 | Schraube M2 × 6 mm | HC-SR501 (alternativ Heißkleber) |
+| 2 | Senkkopf-Schraube 3 × 10 mm | Sensor-Rückteil auf den Keil (nicht länger, sonst kommt die Spitze hinten raus) |
 | 4 | Senkkopf-Holzschraube 3,5–4 mm + Dübel | Wandmontage (alternativ: Powerstrips / Montageklebeband) |
 | 1 | 3-adriges Kabel, Länge je nach Weg (ca. 0,3 m durch die Wand, 1,5–2 m außen herum) + Dupont-Stecker | Verbindung zum Sensor |
 | 1 | Mini-Breadboard 170 Kontakte (falls nicht vorhanden) | 5V/GND verteilen |
@@ -229,8 +250,10 @@ Studio, Orca Slicer oder Cura — je nachdem, welcher Drucker es ist.
    Aufwärmen**, in der Zeit meldet er manchmal Bewegung. Bei der Vorführung
    einplanen.
 
-**Montage:** Beide Rückteile zuerst an die Wand (Schraubenköpfe sitzen innen
-versenkt), danach Elektronik rein und zuschrauben.
+**Montage:** Bedienteil-Rückteil und Sensor-Keil zuerst an die Wand
+(Schraubenköpfe sitzen versenkt; beim Keil das dünne Ende zur Tür), dann das
+Sensor-Rückteil mit 2 Schrauben 3 × 10 mm auf den Keil. Danach Elektronik
+rein und zuschrauben.
 
 ### Schritt 6 — Anpassen in OpenSCAD (nur wenn nötig)
 
