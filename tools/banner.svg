@@ -1,0 +1,148 @@
+<!-- Template for docs/banner.svg. "node tools/render.mjs banner" puts the X-ray render of the
+     case in for {{HERO}} and fills in the {{M_...}} matrices, which map plate coordinates of
+     gehaeuse.scad (mm from the top left corner of a front plate, y down) onto the render.
+     Edit this file, not docs/banner.svg. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460" width="1200" height="460" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<style>
+  /* one 10 s story: disarmed -> PIN entry -> armed -> alarm -> disarmed */
+  .ph-heart { animation: phHeart 10s linear infinite; }
+  .ph-entry { opacity: 0; animation: phEntry 10s linear infinite; }
+  .ph-armed { opacity: 0; animation: phArmed 10s linear infinite; }
+  .ph-alarm { opacity: 0; animation: phAlarm 10s linear infinite; }
+  @keyframes phHeart { 0%,29.9% { opacity: 1 } 30%,91.9% { opacity: 0 } 92%,100% { opacity: 1 } }
+  @keyframes phEntry { 0%,29.9% { opacity: 0 } 30%,39.9% { opacity: 1 } 40%,100% { opacity: 0 } }
+  @keyframes phArmed { 0%,39.9% { opacity: 0 } 40%,64.9% { opacity: 1 } 65%,100% { opacity: 0 } }
+  @keyframes phAlarm { 0%,64.9% { opacity: 0 } 65%,91.9% { opacity: 1 } 92%,100% { opacity: 0 } }
+
+  .flash { animation: flash .5s steps(1) infinite; }
+  @keyframes flash { 0% { opacity: 1 } 50% { opacity: 0 } }
+  .beat { animation: beat 1.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes beat { 0%,100% { transform: scale(1) } 15% { transform: scale(1.12) } 30% { transform: scale(1) } 45% { transform: scale(1.08) } }
+
+  .float { animation: float 3.2s ease-in-out infinite; }
+  @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
+
+  .key { animation: key 10s linear infinite; }
+  @keyframes key { 0%,100% { opacity: 0 } }
+  .k1 { animation-name: k1 } .k2 { animation-name: k2 } .k3 { animation-name: k3 } .k4 { animation-name: k4 }
+  @keyframes k1 { 0%,30% { opacity: 0 } 31% { opacity: .85 } 33%,100% { opacity: 0 } }
+  @keyframes k2 { 0%,32.5% { opacity: 0 } 33.5% { opacity: .85 } 35.5%,100% { opacity: 0 } }
+  @keyframes k3 { 0%,35% { opacity: 0 } 36% { opacity: .85 } 38%,100% { opacity: 0 } }
+  @keyframes k4 { 0%,37.5% { opacity: 0 } 38.5% { opacity: .85 } 40.5%,100% { opacity: 0 } }
+
+  .ring { animation: ring 1.2s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes ring { 0% { transform: scale(.4); opacity: .9 } 100% { transform: scale(1.5); opacity: 0 } }
+  .glow { animation: glow .5s ease-in-out infinite alternate; }
+  @keyframes glow { from { opacity: .35 } to { opacity: .8 } }
+</style>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0E131C"/><stop offset="1" stop-color="#18202E"/></linearGradient>
+  <radialGradient id="redglow"><stop offset="0" stop-color="#F43F5E" stop-opacity=".65"/><stop offset="1" stop-color="#F43F5E" stop-opacity="0"/></radialGradient>
+  <filter id="blur" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6"/></filter>
+  <!-- alarm skull + countdown: shape in currentColor, holes in the inherited fill -->
+  <g id="alarmSkull">
+    <rect x="45" y="4" width="38" height="32" rx="12" fill="currentColor"/><rect x="53" y="30" width="22" height="13" rx="4" fill="currentColor"/>
+    <circle cx="55" cy="19" r="6.5"/><circle cx="73" cy="19" r="6.5"/>
+    <polygon points="64,25 61,30 67,30"/>
+    <text x="64" y="61" font-size="15" font-weight="700" text-anchor="middle" font-family="ui-monospace, Consolas, monospace" fill="currentColor">30s</text>
+  </g>
+  <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#FFFFFF" opacity=".05"/></pattern>
+</defs>
+
+<rect width="1200" height="460" rx="28" fill="url(#bg)"/>
+<rect width="1200" height="460" rx="28" fill="url(#dots)"/>
+
+<!-- left: title -->
+<text x="72" y="104" font-size="15" font-weight="700" letter-spacing="3" fill="#7DD3FC">LF07 · ARDUINO UNO R3</text>
+<text x="68" y="182" font-size="78" font-weight="800" fill="#F1F5F9" letter-spacing="-2">Projekt GAS</text>
+<text x="72" y="226" font-size="24" fill="#94A3B8">Mini security system with keypad,</text>
+<text x="72" y="256" font-size="24" fill="#94A3B8">RFID reader and motion sensor</text>
+
+<rect x="72" y="288" width="112" height="36" rx="18" fill="#14532D"/><text x="90" y="312" font-size="16.5" font-weight="600" fill="#BBF7D0">PIN + #</text>
+<rect x="196" y="288" width="140" height="36" rx="18" fill="#1E3A8A"/><text x="214" y="312" font-size="16.5" font-weight="600" fill="#BFDBFE">RFID card</text>
+<rect x="348" y="288" width="152" height="36" rx="18" fill="#713F12"/><text x="366" y="312" font-size="16.5" font-weight="600" fill="#FDE68A">Motion sensor</text>
+<rect x="512" y="288" width="92" height="36" rx="18" fill="#7F1D1D"/><text x="530" y="312" font-size="16.5" font-weight="600" fill="#FECACA">Alarm</text>
+
+<text x="72" y="368" font-size="15" fill="#64748B">SH1106 OLED · RC522 · PIR · passive buzzer · cards in EEPROM</text>
+
+<!-- right: state badge -->
+<g transform="translate(1085,30)">
+  <g class="ph-heart"><rect x="-70" y="0" width="140" height="34" rx="17" fill="#14532D"/><circle cx="-48" cy="17" r="5" fill="#4ADE80"/><text x="-34" y="23" font-size="15" font-weight="700" letter-spacing="1.5" fill="#BBF7D0">DISARMED</text></g>
+  <g class="ph-entry"><rect x="-70" y="0" width="140" height="34" rx="17" fill="#1E293B"/><circle cx="-48" cy="17" r="5" fill="#94A3B8"/><text x="-34" y="23" font-size="15" font-weight="700" letter-spacing="1.5" fill="#E2E8F0">PIN …</text></g>
+  <g class="ph-armed"><rect x="-70" y="0" width="140" height="34" rx="17" fill="#713F12"/><circle cx="-48" cy="17" r="5" fill="#FBBF24"/><text x="-34" y="23" font-size="15" font-weight="700" letter-spacing="1.5" fill="#FDE68A">ARMED</text></g>
+  <g class="ph-alarm"><rect x="-70" y="0" width="140" height="34" rx="17" fill="#7F1D1D"/><circle class="flash" cx="-48" cy="17" r="5" fill="#F87171"/><text x="-34" y="23" font-size="15" font-weight="700" letter-spacing="1.5" fill="#FECACA">ALARM</text></g>
+</g>
+
+<!-- red glow behind the device while the alarm runs -->
+<g class="ph-alarm"><ellipse class="glow" cx="930" cy="240" rx="290" ry="200" fill="url(#redglow)"/></g>
+
+<!-- ground shadow -->
+<ellipse cx="925" cy="420" rx="200" ry="20" fill="#000" opacity=".45" filter="url(#blur)"/>
+
+<!-- control unit and sensor unit in the 3D-printed case, X-ray view from the 3D viewer -->
+{{HERO}}
+
+<!-- OLED: cover the rendered picture, then the animated screen (128 x 64 px on 29.4 x 14.7 mm) -->
+<g transform="{{M_OLED}}">
+  <rect x="29.6" y="16.6" width="30.8" height="16.2" rx=".6" fill="#05070B"/>
+  <g transform="translate(30.3,17.35) scale(.2297)" fill="#D7ECFF">
+    <!-- heart, same primitives as drawHeart(64, 30) -->
+    <g class="ph-heart"><g class="beat"><circle cx="56" cy="24" r="9.5"/><circle cx="72" cy="24" r="9.5"/><polygon points="48,29 80,29 64,48"/></g></g>
+    <!-- masked PIN entry -->
+    <g class="ph-entry"><text x="64" y="44" font-size="30" font-weight="700" text-anchor="middle" font-family="ui-monospace, Consolas, monospace">****</text></g>
+    <!-- skull, same primitives as drawSkull(64, 34) -->
+    <g class="ph-armed">
+      <rect x="45" y="12" width="38" height="32" rx="12"/><rect x="53" y="38" width="22" height="13" rx="4"/>
+      <circle cx="55" cy="27" r="6.5" fill="#05070B"/><circle cx="73" cy="27" r="6.5" fill="#05070B"/>
+      <polygon points="64,33 61,38 67,38" fill="#05070B"/>
+      <g fill="#05070B"><rect x="53" y="39" width="22" height="1"/><rect x="57" y="40" width="1" height="11"/><rect x="62" y="40" width="1" height="11"/><rect x="67" y="40" width="1" height="11"/><rect x="72" y="40" width="1" height="11"/></g>
+    </g>
+    <!-- alarm: the whole screen flips every 250 ms -->
+    <!-- alarm: the whole screen flips every 250 ms, like drawSkull(fg, bg) -->
+    <g class="ph-alarm">
+      <g class="flash">
+        <rect x="-4" y="-4" width="136" height="72" fill="#D7ECFF"/>
+        <use href="#alarmSkull" color="#05070B" fill="#D7ECFF"/>
+      </g>
+      <g class="flash" style="animation-delay:-.25s"><use href="#alarmSkull" color="#D7ECFF" fill="#05070B"/></g>
+    </g>
+  </g>
+</g>
+
+<!-- buzzer rings at the sound holes -->
+<g transform="{{M_BUZ}}">
+  <g class="ph-alarm"><circle class="ring" cx="75.1" cy="24.7" r="6.5" fill="none" stroke="#FBBF24" stroke-width="1"/><circle class="ring" cx="75.1" cy="24.7" r="6.5" fill="none" stroke="#FBBF24" stroke-width="1" style="animation-delay:.4s"/><circle class="ring" cx="75.1" cy="24.7" r="6.5" fill="none" stroke="#FBBF24" stroke-width="1" style="animation-delay:.8s"/></g>
+</g>
+
+<!-- RFID field pulses while the card is held in front of it -->
+<g transform="{{M_RFID}}">
+  <rect class="ring" x="24" y="54" width="42" height="24" rx="5" fill="none" stroke="#7DD3FC" stroke-width="1.2"/>
+  <rect class="ring" x="24" y="54" width="42" height="24" rx="5" fill="none" stroke="#7DD3FC" stroke-width="1.2" style="animation-delay:.6s"/>
+</g>
+
+<!-- key presses during the PIN phase (not the real PIN) -->
+<g transform="{{M_KEYS}}">
+  <rect class="key k1" x="46.6" y="92.2" width="12.8" height="13.8" rx="1.8" fill="#fff" opacity="0"/>
+  <rect class="key k2" x="46.6" y="109.4" width="12.8" height="13.8" rx="1.8" fill="#fff" opacity="0"/>
+  <rect class="key k3" x="46.6" y="126.6" width="12.8" height="13.8" rx="1.8" fill="#fff" opacity="0"/>
+  <rect class="key k4" x="46.6" y="143.8" width="12.8" height="13.8" rx="1.8" fill="#fff" opacity="0"/>
+</g>
+
+<!-- motion sensor: rings around the Fresnel lens during the alarm -->
+<g transform="{{M_PIR}}">
+  <g class="ph-alarm"><circle class="ring" cx="26" cy="22" r="15" fill="none" stroke="#F87171" stroke-width="1.6"/><circle class="ring" cx="26" cy="22" r="15" fill="none" stroke="#F87171" stroke-width="1.6" style="animation-delay:.6s"/></g>
+</g>
+
+<!-- RFID card held in front of the reader (outer group bobs, inner group is a plane
+     parallel to the front plate, 40 mm in front of it) -->
+<g class="float">
+  <g transform="{{M_CARD}}">
+    <rect x="-16" y="28" width="54" height="85.6" rx="3.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width=".6"/>
+    <path d="M-16 45 V31.5 a3.5 3.5 0 0 1 3.5 -3.5 h47 a3.5 3.5 0 0 1 3.5 3.5 V45 z" fill="#1D4ED8"/>
+    <text x="-11" y="40.5" font-size="9" font-weight="900" fill="#fff">GAS</text>
+    <rect x="-10" y="54" width="11" height="8.5" rx="1.5" fill="#E2B340"/>
+    <rect x="-10" y="72" width="30" height="3" rx="1.5" fill="#CBD5E1"/>
+    <rect x="-10" y="79" width="20" height="3" rx="1.5" fill="#E2E8F0"/>
+  </g>
+</g>
+</svg>

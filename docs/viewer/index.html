@@ -25,6 +25,23 @@
   .views button, .actions button, .side-btn { font: inherit; font-size: 12.5px; font-weight: 600; color: var(--ink); background: rgba(31,38,51,.9); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
   .views button:hover, .actions button:hover, .side-btn:hover { border-color: #3C475C; background: #263042; }
   .views button[aria-pressed="true"] { background: #1E3A5F; border-color: #2F5A8F; }
+  .seg { display: inline-flex; }
+  .seg button { border-radius: 0; margin-left: -1px; }
+  .seg button:first-child { border-radius: 999px 0 0 999px; margin-left: 0; }
+  .seg button:last-child { border-radius: 0 999px 999px 0; }
+  .tabs { display: inline-flex; gap: 2px; margin: 8px 0 2px; padding: 3px; background: rgba(23,28,38,.9); border: 1px solid var(--line); border-radius: 999px; pointer-events: auto; }
+  .tabs button { font: inherit; font-size: 13px; font-weight: 700; color: var(--muted); background: transparent; border: 0; border-radius: 999px; padding: 5px 14px; cursor: pointer; }
+  .tabs button:hover { color: var(--ink); }
+  .tabs button[aria-selected="true"] { background: #1E3A5F; color: var(--ink); }
+  .tabs button:disabled { opacity: .45; cursor: not-allowed; }
+  .stage:not([data-tab="case"]) [data-for="case"], .stage[data-tab="case"] [data-for="bench"] { display: none; }
+  /* ?shot: only the canvas, used by tools/render.mjs for the doc pictures */
+  html.shot, html.shot body { background: transparent; }
+  .shot .app { display: block; height: 100vh; }
+  .shot .stage { height: 100vh; }
+  .shot aside, .shot .hud, .shot .views, .shot .legend, .shot #tip, .shot .loading { display: none !important; }
+  #labels.shot div { margin-top: -8px; font-size: 17px; padding: 4px 11px; border-radius: 8px; background: rgba(13,17,25,.86); border-color: #3A4458; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+  #labels.shot div::after { content: ''; position: absolute; left: 50%; bottom: -7px; margin-left: -7px; border: 7px solid transparent; border-bottom: 0; border-top-color: #3A4458; }
   button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .legend { position: absolute; left: 20px; bottom: 14px; display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; max-width: 75%; }
   .legend span { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); background: rgba(23,28,38,.85); border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px 2px 6px; }
@@ -86,14 +103,29 @@
     <div id="labels"></div>
     <div class="hud">
       <h1>Projekt GAS — 3D model</h1>
-      <p>Click keys, cards and the motion sensor. Drag = rotate, mouse wheel = zoom, right-click/Shift = pan. The firmware logic is taken from <code>alarm_system.ino</code>.</p>
+      <div class="tabs" role="tablist" aria-label="Scene">
+        <button role="tab" data-tab="bench" id="tabBench" aria-selected="true">Breadboard</button>
+        <button role="tab" data-tab="case" id="tabCase" aria-selected="false">Enclosure</button>
+      </div>
+      <p data-for="bench">Click keys, cards and the motion sensor. Drag = rotate, mouse wheel = zoom, right-click/Shift = pan. The firmware logic is taken from <code>alarm_system.ino</code>.</p>
+      <p data-for="case">The same build in the 3D-printed case: control unit outside, sensor unit on the room side of the wall. Everything still works, switch the case to X-ray to watch the signals inside.</p>
     </div>
     <div class="views">
-      <button data-view="all">Overview</button>
-      <button data-view="keypad">Keypad</button>
-      <button data-view="oled">OLED</button>
-      <button data-view="rfid">RFID</button>
-      <button data-view="uno">Uno</button>
+      <button data-view="all" data-for="bench">Overview</button>
+      <button data-view="keypad" data-for="bench">Keypad</button>
+      <button data-view="oled" data-for="bench">OLED</button>
+      <button data-view="rfid" data-for="bench">RFID</button>
+      <button data-view="uno" data-for="bench">Uno</button>
+      <button data-view="c_all" data-for="case">Overview</button>
+      <button data-view="c_front" data-for="case">Front</button>
+      <button data-view="c_side" data-for="case">Side</button>
+      <button data-view="c_sensor" data-for="case">Sensor unit</button>
+      <span class="seg" data-for="case" role="group" aria-label="Case">
+        <button data-case="solid" aria-pressed="false">Solid</button>
+        <button data-case="xray" aria-pressed="true">X-ray</button>
+        <button data-case="off" aria-pressed="false">Hidden</button>
+      </span>
+      <button id="toggleOpen" data-for="case" aria-pressed="false">Open</button>
       <button id="toggleLabels" aria-pressed="true">Labels</button>
       <button id="toggleRotate" aria-pressed="false">Rotate</button>
     </div>
@@ -149,15 +181,19 @@
     <div class="row"><button class="side-btn" id="serialClear">Clear</button></div>
 
     <h2>About this model</h2>
-    <p class="about">Built after the <a href="https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Schaltplan/SCHALTPLAN.png">schematic</a> and the pin table. States, timings (10 s exit delay, 30 s siren, 2 s error tone), sounds and OLED graphics match the sketch; the EEPROM is stored in your browser. Works offline too: just open <code>docs/viewer/index.html</code>.</p>
+    <p class="about">Built after the <a href="https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Schaltplan/SCHALTPLAN.png">schematic</a> and the pin table. States, timings (10 s exit delay, 30 s siren, 2 s error tone), sounds and OLED graphics match the sketch; the EEPROM is stored in your browser. The <b>Enclosure</b> tab puts the same parts into the 3D-printed case, using the exact STL files from <a href="https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/Gehaeuse">Gehaeuse/</a>. Works offline too: just open <code>docs/viewer/index.html</code>.</p>
   </aside>
 </div>
 
 <script src="three.min.js"></script>
+<script src="enclosure.js"></script>
 <script>
 'use strict';
 
 const $ = (s) => document.querySelector(s);
+// ?shot = bare canvas for the pictures in Gehaeuse/bilder (see tools/render.mjs)
+const SHOT = new URLSearchParams(location.search).has('shot');
+if (SHOT) document.documentElement.classList.add('shot');
 const bootTime = performance.now();
 const millis = () => Math.floor(performance.now() - bootTime);
 
@@ -980,7 +1016,7 @@ function buildScene() {
   const stage = $('#stage');
   const canvas = $('#c');
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: SHOT });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -1009,6 +1045,8 @@ function buildScene() {
   scene.add(alarmLight);
 
   // ---- helpers ----
+  // every tab is a group; `root` is the group new objects go into while building
+  let root = scene, labelTab = 'bench', activeTab = 'bench', shotCam = false;
   const maxAniso = renderer.capabilities.getMaxAnisotropy();
   const mat = (color, o) => new THREE.MeshStandardMaterial(Object.assign({ color, roughness: 0.6, metalness: 0 }, o || {}));
   function mesh(geo, m, x, y, z, parent) {
@@ -1016,7 +1054,7 @@ function buildScene() {
     o.position.set(x, y, z);
     o.castShadow = true;
     o.receiveShadow = true;
-    (parent || scene).add(o);
+    (parent || root).add(o);
     return o;
   }
   const box = (w, h, d, m, x, y, z, parent) => mesh(new THREE.BoxGeometry(w, h, d), m, x, y, z, parent);
@@ -1056,11 +1094,12 @@ function buildScene() {
   }
   const labels = [];
   const labelsEl = $('#labels');
-  function label(text, pos) {
+  // side: 1 = only seen from the front of the demo board, -1 = only from behind
+  function label(text, pos, side) {
     const el = document.createElement('div');
     el.textContent = text;
     labelsEl.appendChild(el);
-    labels.push({ el, pos });
+    labels.push({ el, pos, tab: labelTab, side: side || 0 });
   }
   const gold = mat(0xd4a93c, { metalness: 0.8, roughness: 0.35 });
   const blackPlastic = mat(0x121418, { roughness: 0.7 });
@@ -1074,22 +1113,24 @@ function buildScene() {
   const grid = new THREE.GridHelper(80, 40, 0x2a3346, 0x222a3a);
   grid.position.y = 0.002;
   scene.add(grid);
+  const bench = new THREE.Group();
+  scene.add(bench);
+  root = bench;
 
   // =========================================================================
   // Arduino Uno R3 (rotated 180 like in the schematic: USB on the right,
   // digital header at the front, power/analog header at the back)
   // =========================================================================
-  const uno = new THREE.Group();
-  uno.position.set(3.5, 0, -2);
-  scene.add(uno);
   const UNO_W = 6.86, UNO_D = 5.33, UNO_Y = 0.3, UNO_T = 0.16, UNO_TOP = UNO_Y + UNO_T;
+  // mounting holes of the real board (UNO_HOLES in Gehaeuse/gehaeuse.scad)
+  const UNO_HOLES = [[2.03, -2.41], [1.9, 2.41], [-3.18, -1.9], [-3.18, 0.89]];
   const uX = (x) => (x + UNO_W / 2) / UNO_W, uZ = (z) => (z + UNO_D / 2) / UNO_D;
   const pinX = {};
   ['D0', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7'].forEach((n, i) => { pinX[n] = [-3.0 + i * 0.254, 2.42]; });
   ['D8', 'D9', 'D10', 'D11', 'D12', 'D13', 'GND2', 'AREF', 'SDA', 'SCL'].forEach((n, i) => { pinX[n] = [-0.85 + i * 0.254, 2.42]; });
   ['A5', 'A4', 'A3', 'A2', 'A1', 'A0'].forEach((n, i) => { pinX[n] = [-2.9 + i * 0.254, -2.42]; });
   ['VIN', 'GND', 'GND1', '5V', '3V3', 'RESET', 'IOREF', 'NC'].forEach((n, i) => { pinX[n] = [-1.2 + i * 0.254, -2.42]; });
-  const unoPin = (n) => V(uno.position.x + pinX[n][0], UNO_TOP + 0.85, uno.position.z + pinX[n][1]);
+  const unoPinLocal = (n) => V(pinX[n][0], UNO_TOP + 0.85, pinX[n][1]);
 
   const unoTex = canvasTex(1030, 800, (g, w, h) => {
     const grad = g.createLinearGradient(0, 0, w, h);
@@ -1127,7 +1168,7 @@ function buildScene() {
     g.fillText('ARDUINO', uX(-1.2) * w, uZ(-0.75) * h);
     g.strokeStyle = '#eef4ff';
     g.lineWidth = 4;
-    [[-3.0, -2.3], [-3.0, 2.3], [3.0, -2.1], [2.2, 2.3]].forEach(([x, z]) => {
+    UNO_HOLES.forEach(([x, z]) => {
       g.beginPath();
       g.arc(uX(x) * w, uZ(z) * h, 22, 0, Math.PI * 2);
       g.stroke();
@@ -1137,40 +1178,52 @@ function buildScene() {
     g.fillText('L', uX(-0.2) * w, uZ(1.35) * h);
     g.fillText('TX RX', uX(0.3) * w, uZ(1.95) * h + 30);
   });
-  texBox(UNO_W, UNO_T, UNO_D, 0x0a4a8a, unoTex, 0, UNO_Y + UNO_T / 2, 0, uno);
-  [[-3.0, -2.3], [-3.0, 2.3], [3.0, -2.1], [2.2, 2.3]].forEach(([x, z]) => cyl(0.16, UNO_Y, silver, x, UNO_Y / 2, z, uno, 12));
-  // female headers
-  function header(names) {
-    const xs = names.map((n) => pinX[n][0]);
-    const z = pinX[names[0]][1];
-    const len = xs[xs.length - 1] - xs[0] + 0.254;
-    box(len, 0.85, 0.25, blackPlastic, (xs[0] + xs[xs.length - 1]) / 2, UNO_TOP + 0.425, z, uno);
+  const unoLeds = [];        // L and TX LEDs of every Uno in the scene
+  // lying board: USB at +x, digital header at +z, parts on top (+y)
+  function buildUno(parent, standoffs) {
+    const uno = new THREE.Group();
+    parent.add(uno);
+    texBox(UNO_W, UNO_T, UNO_D, 0x0a4a8a, unoTex, 0, UNO_Y + UNO_T / 2, 0, uno);
+    if (standoffs) UNO_HOLES.forEach(([x, z]) => cyl(0.16, UNO_Y, silver, x, UNO_Y / 2, z, uno, 12));
+    // female headers
+    function header(names) {
+      const xs = names.map((n) => pinX[n][0]);
+      const z = pinX[names[0]][1];
+      const len = xs[xs.length - 1] - xs[0] + 0.254;
+      box(len, 0.85, 0.25, blackPlastic, (xs[0] + xs[xs.length - 1]) / 2, UNO_TOP + 0.425, z, uno);
+    }
+    header(['D0', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7']);
+    header(['D8', 'D9', 'D10', 'D11', 'D12', 'D13', 'GND2', 'AREF', 'SDA', 'SCL']);
+    header(['A5', 'A4', 'A3', 'A2', 'A1', 'A0']);
+    header(['VIN', 'GND', 'GND1', '5V', '3V3', 'RESET', 'IOREF', 'NC']);
+    // ATmega328P in its socket
+    box(3.9, 0.14, 1.05, mat(0x2b2f36), -0.2, UNO_TOP + 0.07, 0.35, uno);
+    box(3.6, 0.36, 0.78, mat(0x16181d, { roughness: 0.45 }), -0.2, UNO_TOP + 0.32, 0.35, uno);
+    for (let i = 0; i < 14; i++) {
+      box(0.1, 0.22, 0.1, silver, -1.85 + i * 0.254, UNO_TOP + 0.18, 0.35 - 0.46, uno);
+      box(0.1, 0.22, 0.1, silver, -1.85 + i * 0.254, UNO_TOP + 0.18, 0.35 + 0.46, uno);
+    }
+    box(1.6, 1.1, 1.2, silver, 3.25, UNO_TOP + 0.55, 1.13, uno);            // USB-B, sticks out 6 mm
+    box(1.45, 1.1, 0.9, blackPlastic, 3.0, UNO_TOP + 0.55, -1.85, uno);     // barrel jack
+    cyl(0.28, 0.1, mat(0x050505), 3.73, UNO_TOP + 0.55, -1.85, uno).rotation.z = Math.PI / 2;
+    box(0.9, 0.35, 0.36, silver, 1.4, UNO_TOP + 0.18, -0.8, uno);           // crystal
+    cyl(0.3, 0.6, mat(0x2d3748, { metalness: 0.4 }), 0.85, UNO_TOP + 0.3, -1.95, uno);
+    cyl(0.3, 0.6, mat(0x2d3748, { metalness: 0.4 }), 1.5, UNO_TOP + 0.3, -1.95, uno);
+    box(0.6, 0.22, 0.6, silver, 2.7, UNO_TOP + 0.11, 2.0, uno);             // reset button
+    cyl(0.18, 0.12, mat(0xd6453d), 2.7, UNO_TOP + 0.28, 2.0, uno, 14);
+    const ledMat = (c) => new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: 0.1 });
+    const ledOn = box(0.22, 0.1, 0.14, ledMat(0x4ade80), 0.9, UNO_TOP + 0.05, 1.6, uno);
+    ledOn.material.emissiveIntensity = 2.2;
+    unoLeds.push({
+      L: box(0.22, 0.1, 0.14, ledMat(0xfbbf24), -0.2, UNO_TOP + 0.05, 1.6, uno),
+      tx: box(0.22, 0.1, 0.14, ledMat(0xfbbf24), 0.15, UNO_TOP + 0.05, 1.95, uno)
+    });
+    part(uno, 'Arduino Uno R3', 'ATmega328P · 2 KB SRAM, 1 KB of it is the OLED buffer · serial 9600 baud · the L LED on D13 flickers during SPI');
+    return uno;
   }
-  header(['D0', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7']);
-  header(['D8', 'D9', 'D10', 'D11', 'D12', 'D13', 'GND2', 'AREF', 'SDA', 'SCL']);
-  header(['A5', 'A4', 'A3', 'A2', 'A1', 'A0']);
-  header(['VIN', 'GND', 'GND1', '5V', '3V3', 'RESET', 'IOREF', 'NC']);
-  // ATmega328P in its socket
-  box(3.9, 0.14, 1.05, mat(0x2b2f36), -0.2, UNO_TOP + 0.07, 0.35, uno);
-  box(3.6, 0.36, 0.78, mat(0x16181d, { roughness: 0.45 }), -0.2, UNO_TOP + 0.32, 0.35, uno);
-  for (let i = 0; i < 14; i++) {
-    box(0.1, 0.22, 0.1, silver, -1.85 + i * 0.254, UNO_TOP + 0.18, 0.35 - 0.46, uno);
-    box(0.1, 0.22, 0.1, silver, -1.85 + i * 0.254, UNO_TOP + 0.18, 0.35 + 0.46, uno);
-  }
-  box(1.65, 1.1, 1.2, silver, 3.05, UNO_TOP + 0.55, 1.05, uno);           // USB-B
-  box(1.45, 1.1, 0.9, blackPlastic, 3.0, UNO_TOP + 0.55, -1.55, uno);     // barrel jack
-  cyl(0.28, 0.1, mat(0x050505), 3.73, UNO_TOP + 0.55, -1.55, uno).rotation.z = Math.PI / 2;
-  box(0.9, 0.35, 0.36, silver, 1.4, UNO_TOP + 0.18, -0.8, uno);           // crystal
-  cyl(0.3, 0.6, mat(0x2d3748, { metalness: 0.4 }), 1.9, UNO_TOP + 0.3, -1.9, uno);
-  cyl(0.3, 0.6, mat(0x2d3748, { metalness: 0.4 }), 2.6, UNO_TOP + 0.3, -1.9, uno);
-  box(0.6, 0.22, 0.6, silver, 2.7, UNO_TOP + 0.11, 2.0, uno);             // reset button
-  cyl(0.18, 0.12, mat(0xd6453d), 2.7, UNO_TOP + 0.28, 2.0, uno, 14);
-  const ledMat = (c) => new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: 0.1 });
-  const ledOn = box(0.22, 0.1, 0.14, ledMat(0x4ade80), 0.9, UNO_TOP + 0.05, 1.6, uno);
-  const ledL = box(0.22, 0.1, 0.14, ledMat(0xfbbf24), -0.2, UNO_TOP + 0.05, 1.6, uno);
-  const ledTx = box(0.22, 0.1, 0.14, ledMat(0xfbbf24), 0.15, UNO_TOP + 0.05, 1.95, uno);
-  ledOn.material.emissiveIntensity = 2.2;
-  part(uno, 'Arduino Uno R3', 'ATmega328P · 2 KB SRAM, 1 KB of it is the OLED buffer · serial 9600 baud · the L LED on D13 flickers during SPI');
+  const uno = buildUno(root, true);
+  uno.position.set(3.5, 0, -2);
+  const unoPin = (n) => unoPinLocal(n).add(uno.position);
   label('Arduino Uno R3', V(3.5, 2.2, -2));
 
   // =========================================================================
@@ -1220,9 +1273,6 @@ function buildScene() {
   // =========================================================================
   // 4x4 keypad (membrane)
   // =========================================================================
-  const keypad = new THREE.Group();
-  keypad.position.set(-9.5, 0, -1.5);
-  scene.add(keypad);
   const kpTex = canvasTex(512, 564, (g, w, h) => {
     g.fillStyle = '#34373e';
     g.fillRect(0, 0, w, h);
@@ -1231,11 +1281,10 @@ function buildScene() {
     rr(g, 18, 18, w - 36, h - 36, 26);
     g.stroke();
   });
-  texBox(6.9, 0.1, 7.6, 0x2c2f35, kpTex, 0, 0.05, 0, keypad);
-  const keyMeshes = {};
-  KEYS.forEach((row, r) => row.forEach((k, c) => {
+  const keyTex = {};
+  KEYS.flat().forEach((k) => {
     const col = /[0-9]/.test(k) ? '#3d7fe0' : '#d9433f';
-    const tex = canvasTex(128, 128, (g, w, h) => {
+    keyTex[k] = canvasTex(128, 128, (g, w, h) => {
       g.fillStyle = col;
       g.fillRect(0, 0, w, h);
       const grad = g.createLinearGradient(0, 0, 0, h);
@@ -1249,34 +1298,43 @@ function buildScene() {
       g.textBaseline = 'middle';
       g.fillText(k, w / 2, h / 2 + 4);
     });
-    const km = texBox(1.28, 0.14, 1.38, new THREE.Color(col).getHex(), tex, (c - 1.5) * 1.6, 0.17, -0.35 + (r - 1.5) * 1.72, keypad);
-    km.material[2].emissive = new THREE.Color(0xffffff);
-    km.material[2].emissiveMap = tex;
-    km.material[2].emissiveIntensity = 0;
-    km.material[2].needsUpdate = true;
-    km.userData.base = km.position.y;
-    km.userData.pressT = -1e9;
-    km.userData.rc = [r, c];
-    part(km, 'Key ' + k, 'Row R' + (r + 1) + ' + column C' + (c + 1) + ' · click to press', () => pressKey(k));
-    keyMeshes[k] = km;
-  }));
-  box(2.2, 0.02, 1.3, mat(0xa3a8b0, { roughness: 0.4 }), 0, 0.02, 4.45, keypad);   // ribbon tail
-  box(2.3, 0.35, 0.42, blackPlastic, 0, 0.18, 5.25, keypad);
-  const kpPins = [];
-  for (let i = 0; i < 8; i++) {
-    const x = -0.889 + i * 0.254;
-    box(0.07, 0.07, 0.55, gold, x, 0.18, 5.7, keypad);
-    kpPins.push(V(keypad.position.x + x, 0.18, keypad.position.z + 5.98));
+  });
+  const keyMeshes = [];      // keys of both keypads, userData.key = label
+  // lying keypad, row 1 towards -z; tail = ribbon with the 8-pin plug at +z
+  function buildKeypad(parent, tail) {
+    const keypad = new THREE.Group();
+    parent.add(keypad);
+    texBox(6.9, 0.1, 7.6, 0x2c2f35, kpTex, 0, 0.05, 0, keypad);
+    KEYS.forEach((row, r) => row.forEach((k, c) => {
+      const col = /[0-9]/.test(k) ? 0x3d7fe0 : 0xd9433f;
+      const km = texBox(1.28, 0.14, 1.38, col, keyTex[k], (c - 1.5) * 1.6, 0.17, -0.35 + (r - 1.5) * 1.72, keypad);
+      km.material[2].emissive = new THREE.Color(0xffffff);
+      km.material[2].emissiveMap = keyTex[k];
+      km.material[2].emissiveIntensity = 0;
+      km.material[2].needsUpdate = true;
+      km.userData.base = km.position.y;
+      km.userData.pressT = -1e9;
+      km.userData.key = k;
+      part(km, 'Key ' + k, 'Row R' + (r + 1) + ' + column C' + (c + 1) + ' · click to press', () => pressKey(k));
+      keyMeshes.push(km);
+    }));
+    if (tail) {
+      box(2.2, 0.02, 1.3, mat(0xa3a8b0, { roughness: 0.4 }), 0, 0.02, 4.45, keypad);   // ribbon tail
+      box(2.3, 0.35, 0.42, blackPlastic, 0, 0.18, 5.25, keypad);
+      for (let i = 0; i < 8; i++) box(0.07, 0.07, 0.55, gold, -0.889 + i * 0.254, 0.18, 5.7, keypad);
+    }
+    part(keypad, '4x4 keypad', 'R1–R4 → D9–D6, C1–C4 → D5–D2 · own matrix scan without the Keypad library (saves ~120 bytes of SRAM)');
+    return keypad;
   }
-  part(keypad, '4x4 keypad', 'R1–R4 → D9–D6, C1–C4 → D5–D2 · own matrix scan without the Keypad library (saves ~120 bytes of SRAM)');
+  const keypad = buildKeypad(root, true);
+  keypad.position.set(-9.5, 0, -1.5);
+  const kpPins = [];
+  for (let i = 0; i < 8; i++) kpPins.push(V(keypad.position.x - 0.889 + i * 0.254, 0.18, keypad.position.z + 5.98));
   label('4x4 keypad', V(-12.2, 0.6, 3.4));
 
   // =========================================================================
   // OLED 1.3" SH1106
   // =========================================================================
-  const oled = new THREE.Group();
-  oled.position.set(-3.6, 0, -2.2);
-  scene.add(oled);
   const oledBoardTex = canvasTex(512, 498, (g, w, h) => {
     g.fillStyle = '#1b4f8f';
     g.fillRect(0, 0, w, h);
@@ -1288,32 +1346,42 @@ function buildScene() {
     g.lineWidth = 6;
     [[40, 40], [w - 40, 40], [40, h - 40], [w - 40, h - 40]].forEach(([x, y]) => { g.beginPath(); g.arc(x, y, 18, 0, Math.PI * 2); g.stroke(); });
   });
-  texBox(3.5, 0.12, 3.4, 0x1b4f8f, oledBoardTex, 0, 0.06, 0, oled);
-  box(3.1, 0.1, 1.95, mat(0x07080b, { roughness: 0.2 }), 0, 0.17, 0.35, oled);
   oledTex = new THREE.CanvasTexture(oledCanvas);
   oledTex.colorSpace = THREE.SRGBColorSpace;
   oledTex.magFilter = THREE.NearestFilter;
   oledTex.minFilter = THREE.LinearFilter;
-  const screen = new THREE.Mesh(new THREE.PlaneGeometry(2.94, 1.47), new THREE.MeshBasicMaterial({ map: oledTex, toneMapped: false }));
-  screen.rotation.x = -Math.PI / 2;
-  screen.position.set(0, 0.225, 0.3);
-  oled.add(screen);
-  box(1.02, 0.25, 0.25, blackPlastic, 0, 0.245, -1.45, oled);
+  const screenMat = new THREE.MeshBasicMaterial({ map: oledTex, toneMapped: false });
+  // module pins: p = pin tip, d = direction a plugged-in wire leaves in (both local)
+  // pinsBack = header on the back side, like in the case (pins point away from the glass)
+  function buildOled(parent, pinsBack) {
+    const oled = new THREE.Group();
+    parent.add(oled);
+    texBox(3.5, 0.12, 3.4, 0x1b4f8f, oledBoardTex, 0, 0.06, 0, oled);
+    box(3.1, 0.1, 1.95, mat(0x07080b, { roughness: 0.2 }), 0, 0.17, 0.35, oled);
+    const screen = new THREE.Mesh(new THREE.PlaneGeometry(2.94, 1.47), screenMat);
+    screen.rotation.x = -Math.PI / 2;
+    screen.position.set(0, 0.225, 0.3);
+    oled.add(screen);
+    const s = pinsBack ? -1 : 1;
+    box(1.02, 0.25, 0.25, blackPlastic, 0, pinsBack ? -0.125 : 0.245, -1.45, oled);
+    const pins = {};
+    ['GND', 'VCC', 'SCL', 'SDA'].forEach((n, i) => {
+      const x = -0.381 + i * 0.254;
+      box(0.06, 0.6, 0.06, gold, x, pinsBack ? -0.45 : 0.55, -1.45, oled);
+      pins[n] = { p: V(x, pinsBack ? -0.75 : 0.85, -1.45), d: V(0, s, 0) };
+    });
+    part(oled, '1.3" OLED SH1106', '128x64 · I²C address 0x3C · SDA → A4, SCL → A5 · Adafruit_SH1106G');
+    return { g: oled, pins };
+  }
+  const oled = buildOled(root, false).g;
+  oled.position.set(-3.6, 0, -2.2);
   const oledPins = {};
-  ['GND', 'VCC', 'SCL', 'SDA'].forEach((n, i) => {
-    const x = -0.381 + i * 0.254;
-    box(0.06, 0.6, 0.06, gold, x, 0.55, -1.45, oled);
-    oledPins[n] = V(oled.position.x + x, 0.85, oled.position.z - 1.45);
-  });
-  part(oled, '1.3" OLED SH1106', '128x64 · I²C address 0x3C · SDA → A4, SCL → A5 · Adafruit_SH1106G');
+  ['GND', 'VCC', 'SCL', 'SDA'].forEach((n, i) => { oledPins[n] = V(oled.position.x - 0.381 + i * 0.254, 0.85, oled.position.z - 1.45); });
   label('OLED SH1106', V(-3.6, 1.5, -4.2));
 
   // =========================================================================
   // RFID-RC522
   // =========================================================================
-  const rc = new THREE.Group();
-  rc.position.set(3.2, 0, -9.0);
-  scene.add(rc);
   const RC_PINS = ['SDA', 'SCK', 'MOSI', 'MISO', 'IRQ', 'GND', 'RST', '3.3V'];
   const rcTex = canvasTex(512, 768, (g, w, h) => {
     g.fillStyle = '#1560bd';
@@ -1339,45 +1407,69 @@ function buildScene() {
     g.lineWidth = 6;
     [[44, 44], [w - 44, 44], [44, h - 150], [w - 44, h - 150]].forEach(([x, y]) => { g.beginPath(); g.arc(x, y, 20, 0, Math.PI * 2); g.stroke(); });
   });
-  texBox(4.0, 0.16, 6.0, 0x1358ad, rcTex, 0, 0.08, 0, rc);
-  box(0.8, 0.12, 0.8, blackPlastic, 0.0, 0.22, 1.0, rc);
-  box(2.1, 0.25, 0.25, blackPlastic, 0, 0.285, 2.75, rc);
+  function buildRc(parent) {
+    const rc = new THREE.Group();
+    parent.add(rc);
+    texBox(4.0, 0.16, 6.0, 0x1358ad, rcTex, 0, 0.08, 0, rc);
+    box(0.8, 0.12, 0.8, blackPlastic, 0.0, 0.22, 1.0, rc);
+    box(2.1, 0.25, 0.25, blackPlastic, 0, 0.285, 2.75, rc);
+    const pins = {};
+    RC_PINS.forEach((n, i) => {
+      const x = -0.889 + i * 0.254;
+      box(0.06, 0.6, 0.06, gold, x, 0.6, 2.75, rc);
+      pins[n] = { p: V(x, 0.9, 2.75), d: V(0, 1, 0) };
+    });
+    part(rc, 'RFID-RC522', 'SPI: MOSI D11, MISO D12, SCK D13 · SS A0 · RST A1 · VCC to 3.3 V, not 5 V!');
+    return { g: rc, pins };
+  }
+  const rc = buildRc(root).g;
+  rc.position.set(3.2, 0, -9.0);
   const rcPins = {};
-  RC_PINS.forEach((n, i) => {
-    const x = -0.889 + i * 0.254;
-    box(0.06, 0.6, 0.06, gold, x, 0.6, 2.75, rc);
-    rcPins[n] = V(rc.position.x + x, 0.9, rc.position.z + 2.75);
-  });
-  const rfidRing = new THREE.Mesh(new THREE.RingGeometry(1.2, 1.3, 48), new THREE.MeshBasicMaterial({ color: 0x7dd3fc, transparent: true, opacity: 0, depthWrite: false }));
+  RC_PINS.forEach((n, i) => { rcPins[n] = V(rc.position.x - 0.889 + i * 0.254, 0.9, rc.position.z + 2.75); });
+  const ringMat = (color, side) => new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0, depthWrite: false, side: side || THREE.FrontSide });
+  const rfidRing = new THREE.Mesh(new THREE.RingGeometry(1.2, 1.3, 48), ringMat(0x7dd3fc));
   rfidRing.rotation.x = -Math.PI / 2;
   rfidRing.position.set(rc.position.x, 0.2, rc.position.z - 0.8);
-  scene.add(rfidRing);
-  part(rc, 'RFID-RC522', 'SPI: MOSI D11, MISO D12, SCK D13 · SS A0 · RST A1 · VCC to 3.3 V, not 5 V!');
+  root.add(rfidRing);
   label('RFID-RC522', V(3.2, 1.0, -12.4));
 
   // =========================================================================
   // passive buzzer module
   // =========================================================================
-  const buz = new THREE.Group();
+  const buzBodies = [];
+  function buildBuzzer(parent, pinsBack) {
+    const buz = new THREE.Group();
+    parent.add(buz);
+    box(1.8, 0.1, 2.0, mat(0x15171b), 0, 0.05, 0, buz);
+    buzBodies.push(cyl(0.62, 0.85, mat(0x0b0c0f, { roughness: 0.5 }), 0, 0.53, -0.15, buz, 32));
+    cyl(0.12, 0.02, mat(0x3a3f47), 0, 0.97, -0.15, buz, 16);
+    const s = pinsBack ? -1 : 1;
+    const pins = {};
+    ['S', '+', '-'].forEach((n, i) => {
+      const x = -0.254 + i * 0.254;
+      box(0.06, 0.6, 0.06, gold, x, pinsBack ? -0.3 : 0.4, 0.8, buz);
+      pins[n] = { p: V(x, pinsBack ? -0.6 : 0.7, 0.8), d: V(0, s, 0) };
+    });
+    part(buz, 'Passive buzzer', 'Signal on D10 · tone()/noTone() · note: SPI.begin() drives D10 HIGH');
+    return { g: buz, pins };
+  }
+  // three rings in the xy plane that grow while the buzzer sounds
+  function buzzRings(parent) {
+    return [0, 1, 2].map(() => {
+      const m = new THREE.Mesh(new THREE.RingGeometry(0.66, 0.74, 40), ringMat(0xfacc15, THREE.DoubleSide));
+      parent.add(m);
+      return m;
+    });
+  }
+  const buz = buildBuzzer(root, false).g;
   buz.position.set(6.2, 0, 4.3);
-  scene.add(buz);
-  box(1.8, 0.1, 2.0, mat(0x15171b), 0, 0.05, 0, buz);
-  const buzBody = cyl(0.62, 0.85, mat(0x0b0c0f, { roughness: 0.5 }), 0, 0.53, -0.15, buz, 32);
-  cyl(0.12, 0.02, mat(0x3a3f47), 0, 0.97, -0.15, buz, 16);
   const buzPins = {};
-  ['S', '+', '-'].forEach((n, i) => {
-    const x = -0.254 + i * 0.254;
-    box(0.06, 0.6, 0.06, gold, x, 0.4, 0.8, buz);
-    buzPins[n] = V(buz.position.x + x, 0.7, buz.position.z + 0.8);
-  });
-  const buzRings = [0, 1, 2].map(() => {
-    const m = new THREE.Mesh(new THREE.RingGeometry(0.66, 0.74, 40), new THREE.MeshBasicMaterial({ color: 0xfacc15, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide }));
+  ['S', '+', '-'].forEach((n, i) => { buzPins[n] = V(buz.position.x - 0.254 + i * 0.254, 0.7, buz.position.z + 0.8); });
+  const buzRings = buzzRings(root);
+  buzRings.forEach((m) => {
     m.rotation.x = -Math.PI / 2;
     m.position.set(buz.position.x, 1.0, buz.position.z - 0.15);
-    scene.add(m);
-    return m;
   });
-  part(buz, 'Passive buzzer', 'Signal on D10 · tone()/noTone() · note: SPI.begin() drives D10 HIGH');
   label('Buzzer', V(6.2, 1.9, 4.1));
 
   // =========================================================================
@@ -1385,7 +1477,7 @@ function buildScene() {
   // =========================================================================
   const pir = new THREE.Group();
   pir.position.set(11, 0, 4.6);
-  scene.add(pir);
+  root.add(pir);
   box(3.2, 0.12, 2.4, mat(0x157a3a), 0, 0.06, 0, pir);
   box(2.3, 0.22, 2.3, mat(0xeeeeee, { roughness: 0.5 }), 0.15, 0.23, 0, pir);
   const domeMat = new THREE.MeshStandardMaterial({ color: 0xf4f5f7, roughness: 0.35, flatShading: true, emissive: 0xff3030, emissiveIntensity: 0 });
@@ -1396,10 +1488,10 @@ function buildScene() {
     box(0.06, 0.6, 0.06, gold, -1.42, 0.4, z, pir);
     pirPins[n] = V(pir.position.x - 1.42, 0.7, pir.position.z + z);
   });
-  const pirRing = new THREE.Mesh(new THREE.RingGeometry(1.3, 1.45, 48), new THREE.MeshBasicMaterial({ color: 0xf87171, transparent: true, opacity: 0, depthWrite: false }));
+  const pirRing = new THREE.Mesh(new THREE.RingGeometry(1.3, 1.45, 48), ringMat(0xf87171));
   pirRing.rotation.x = -Math.PI / 2;
   pirRing.position.set(pir.position.x + 0.15, 0.05, pir.position.z);
-  scene.add(pirRing);
+  root.add(pirRing);
   part(pir, 'Motion sensor', 'OUT → A2 (active HIGH) · only triggers while ARMED · click = motion', triggerMotion);
   label('Motion sensor', V(11, 1.9, 3.1));
 
@@ -1408,7 +1500,7 @@ function buildScene() {
   // =========================================================================
   const bat = new THREE.Group();
   bat.position.set(12.4, 0, -3.2);
-  scene.add(bat);
+  root.add(bat);
   box(2.6, 1.75, 3.1, mat(0x1e1f24, { roughness: 0.4 }), 0, 0.875, 0.85, bat);
   box(2.6, 1.75, 1.75, mat(0xc27c3a, { roughness: 0.35, metalness: 0.3 }), 0, 0.875, -1.55, bat);
   cyl(0.35, 0.3, silver, -0.6, 0.9, -2.55, bat).rotation.x = Math.PI / 2;
@@ -1423,16 +1515,20 @@ function buildScene() {
   const wires = [];
   const dupGeo = new THREE.BoxGeometry(0.22, 0.55, 0.22);
   const dupMat = mat(0x111111, { roughness: 0.5 });
-  function dupont(p, dir) {
-    const m = new THREE.Mesh(dupGeo, dupMat);
+  function dupont(p, dir, m) {
+    if (!m) {
+      m = new THREE.Mesh(dupGeo, dupMat);
+      m.castShadow = true;
+      root.add(m);
+    }
     m.position.copy(p).addScaledVector(dir, 0.275);
     m.quaternion.setFromUnitVectors(UP, dir);
-    m.castShadow = true;
-    scene.add(m);
+    return m;
   }
   // wire from an Uno/rail pin (a) to a module pin (b), t = 0 sits at a
   // optional via points route a wire around parts, like in the schematic
   function wire(a, b, color, title, text, dirB, via) {
+    const parent = root;
     const dirA = UP;
     dirB = dirB ? dirB.clone().normalize() : UP;
     const pa = a.clone().addScaledVector(dirA, 0.55), pb = b.clone().addScaledVector(dirB, 0.55);
@@ -1446,10 +1542,10 @@ function buildScene() {
     const m = new THREE.MeshStandardMaterial({ color, roughness: 0.45, emissive: color, emissiveIntensity: 0.06 });
     const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 64, 0.05, 8, false), m);
     tube.castShadow = true;
-    scene.add(tube);
+    parent.add(tube);
     dupont(a, dirA);
     dupont(b, dirB);
-    const w = { curve, color, mat: m, glow: 0 };
+    const w = { curve, color, mat: m, glow: 0, parent };
     part(tube, title, text);
     wires.push(w);
     return w;
@@ -1484,37 +1580,45 @@ function buildScene() {
   wire(railPin(8.6, '5V'), pirPins.VCC, 0xdc2626, '5V → PIR VCC', '', V(-1, 0.5, 0));
   wire(railPin(9.3, 'GND'), pirPins.GND, 0x475569, 'GND → PIR GND', '', V(-1, 0.5, 0));
   // battery clip to the barrel jack
-  const jack = V(uno.position.x + 3.75, UNO_TOP + 0.55, uno.position.z - 1.55);
+  const jack = V(uno.position.x + 3.75, UNO_TOP + 0.55, uno.position.z - 1.85);
   [[0xdc2626, -0.4], [0x1f2937, 0.4]].forEach(([c, dx]) => {
     const a = V(bat.position.x + dx, 0.9, bat.position.z - 3.1);
     const curve = new THREE.CubicBezierCurve3(a, a.clone().add(V(0, 0.3, -1.5)), jack.clone().add(V(2.5, 0.2, 0)), jack.clone().add(V(0.3, 0, 0)));
     const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 40, 0.07, 8, false), mat(c));
     tube.castShadow = true;
-    scene.add(tube);
+    root.add(tube);
   });
 
-  // travelling signal pulses
+  // travelling signal pulses; the same signal is shown on the wires of both tabs
   const pulses = [];
   const pulseGeo = new THREE.SphereGeometry(0.13, 12, 8);
-  function pulse(w, reverse, dur) {
+  function pulse(w, reverse, dur, delay) {
+    if (!w || shotCam) return;
     const m = new THREE.Mesh(pulseGeo, new THREE.MeshBasicMaterial({ color: w.color, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
-    scene.add(m);
-    pulses.push({ m, w, t0: performance.now(), dur: dur || 650, reverse });
+    m.visible = false;
+    m.scale.setScalar(w.pulseScale || 1);
+    w.parent.add(m);
+    pulses.push({ m, w, t0: performance.now() + (delay || 0), dur: dur || 650, reverse });
     w.glow = 1;
   }
+  const sig = {
+    sda: [wSDA], scl: [wSCL], spi: [spi], buz: [wBuz], pir: [[wPir, true, 600]],
+    rows: [rowWires], cols: [colWires]
+  };
   let lastI2c = 0;
   fx.i2c = () => {
     const t = performance.now();
     if (t - lastI2c < 220) return;
     lastI2c = t;
-    pulse(wSDA, false, 450);
-    pulse(wSCL, false, 450);
+    sig.sda.forEach((w) => pulse(w, false, 450));
+    sig.scl.forEach((w) => pulse(w, false, 450));
   };
   fx.spi = () => {
-    spi.forEach((w, i) => pulse(w, i === 1, 450 + i * 70));
+    sig.spi.forEach((set) => set.forEach((w, i) => pulse(w, i === 1, 450 + i * 70)));
     hw.lUntil = millis() + 350;
   };
-  fx.pir = () => pulse(wPir, true, 600);
+  // PIR: one entry per wire the signal runs along, [wire, reverse, duration, delay]
+  fx.pir = () => sig.pir.forEach((p) => pulse(p[0], p[1], p[2], p[3]));
 
   // =========================================================================
   // transponders (click to hold them to the reader)
@@ -1542,55 +1646,65 @@ function buildScene() {
       g.fillText(note, 40, 520);
     });
   }
-  const tags = [];
-  function addTag(id, group, rest, rotY, hoverY) {
+  const tagSets = { bench: [], case: [] };
+  // hover = where the tag is held to the reader, arc = bump on the way there
+  function addTag(set, id, group, rest, rotY, hover, hoverQ, arc, ring) {
     group.position.copy(rest);
     group.rotation.y = rotY;
-    scene.add(group);
-    const tag = { id, group, rest: rest.clone(), rotY, hover: V(antenna.x, hoverY, antenna.z), anim: null };
+    root.add(group);
+    const tag = { id, group, rest: rest.clone(), restQ: group.quaternion.clone(), hover, hoverQ, arc, ring, anim: null };
     part(group, TAGS[id].name, 'UID ' + uidHex(TAGS[id].uid) + ' · click to hold it to the reader', () => presentTag(id));
-    label(TAGS[id].name, { get: () => group.position.clone().add(V(0, 0.8, 0)) });
-    tags.push(tag);
+    label(TAGS[id].name, { get: () => group.position.clone().add(V(0, 0.8, 0)) }, set === 'case' ? 1 : 0);
+    tagSets[set].push(tag);
   }
+  const cardTexs = {};
   function card(title, accent, uid, note) {
     const g = new THREE.Group();
     const side = mat(0xf2f3f5);
-    const top = new THREE.MeshStandardMaterial({ map: cardTex(title, accent, uid, note), roughness: 0.4 });
+    cardTexs[title] = cardTexs[title] || cardTex(title, accent, uid, note);
+    const top = new THREE.MeshStandardMaterial({ map: cardTexs[title], roughness: 0.4 });
     const m = new THREE.Mesh(new THREE.BoxGeometry(5.4, 0.08, 8.56), [side, side, top, side, side, side]);
     m.castShadow = true;
     m.receiveShadow = true;
     g.add(m);
     return g;
   }
-  addTag('A', card('Card A', '#1d4ed8', uidHex(TAGS.A.uid), 'stored from factory'), V(-2.2, 0.05, -10.4), 0.06, 1.5);
-  addTag('B', card('Card B', '#ea580c', uidHex(TAGS.B.uid), 'not stored yet'), V(-8.5, 0.05, -10.8), -0.1, 1.5);
-  const fob = new THREE.Group();
-  const fobShape = new THREE.Shape();
-  fobShape.absarc(0, 0, 1.45, 0, Math.PI * 2, false);
-  const fobHole = new THREE.Path();
-  fobHole.absarc(0, 0.95, 0.28, 0, Math.PI * 2, true);
-  fobShape.holes.push(fobHole);
-  const fobMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(fobShape, { depth: 0.3, bevelEnabled: true, bevelSize: 0.08, bevelThickness: 0.08, bevelSegments: 3, curveSegments: 32 }), mat(0x2563eb, { roughness: 0.35 }));
-  fobMesh.rotation.x = -Math.PI / 2;
-  fobMesh.castShadow = true;
-  fob.add(fobMesh);
-  const fobRing = new THREE.Mesh(new THREE.TorusGeometry(0.75, 0.06, 8, 32), silver);
-  fobRing.rotation.x = -Math.PI / 2;
-  fobRing.position.set(0, 0.25, -1.6);
-  fob.add(fobRing);
-  addTag('F', fob, V(8.8, 0.1, -9.6), 0.4, 1.3);
+  const cardA = () => card('Card A', '#1d4ed8', uidHex(TAGS.A.uid), 'stored from factory');
+  const cardB = () => card('Card B', '#ea580c', uidHex(TAGS.B.uid), 'not stored yet');
+  function keyFob() {
+    const fob = new THREE.Group();
+    const fobShape = new THREE.Shape();
+    fobShape.absarc(0, 0, 1.45, 0, Math.PI * 2, false);
+    const fobHole = new THREE.Path();
+    fobHole.absarc(0, 0.95, 0.28, 0, Math.PI * 2, true);
+    fobShape.holes.push(fobHole);
+    const fobMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(fobShape, { depth: 0.3, bevelEnabled: true, bevelSize: 0.08, bevelThickness: 0.08, bevelSegments: 3, curveSegments: 32 }), mat(0x2563eb, { roughness: 0.35 }));
+    fobMesh.rotation.x = -Math.PI / 2;
+    fobMesh.castShadow = true;
+    fob.add(fobMesh);
+    const fobRing = new THREE.Mesh(new THREE.TorusGeometry(0.75, 0.06, 8, 32), silver);
+    fobRing.rotation.x = -Math.PI / 2;
+    fobRing.position.set(0, 0.25, -1.6);
+    fob.add(fobRing);
+    return fob;
+  }
+  const flatQ = new THREE.Quaternion();
+  const benchHover = (y) => () => V(antenna.x, y, antenna.z);
+  addTag('bench', 'A', cardA(), V(-2.2, 0.05, -10.4), 0.06, benchHover(1.5), flatQ, V(0, 2.2, 0), rfidRing);
+  addTag('bench', 'B', cardB(), V(-8.5, 0.05, -10.8), -0.1, benchHover(1.5), flatQ, V(0, 2.2, 0), rfidRing);
+  addTag('bench', 'F', keyFob(), V(8.8, 0.1, -9.6), 0.4, benchHover(1.3), flatQ, V(0, 2.2, 0), rfidRing);
 
   let tagBusy = false;
   presentTag = (id) => {
     audioUnlock();
-    const tag = tags.find((t) => t.id === id);
+    const tag = tagSets[activeTab].find((t) => t.id === id);
     if (!tag || tagBusy) return;
     tagBusy = true;
     tag.anim = { t0: performance.now(), fired: false };
   };
   const ease = (k) => k * k * (3 - 2 * k);
   function updateTags(t) {
-    tags.forEach((tag) => {
+    tagSets[activeTab].forEach((tag) => {
       const a = tag.anim;
       if (!a) return;
       const e = t - a.t0, T1 = 700, T2 = 1500, T3 = 700;
@@ -1610,11 +1724,520 @@ function buildScene() {
         tag.anim = null;
         tagBusy = false;
       }
-      tag.group.position.lerpVectors(tag.rest, tag.hover, k);
-      tag.group.position.y += Math.sin(k * Math.PI) * 2.2;
-      tag.group.rotation.y = tag.rotY * (1 - k);
-      rfidRing.material.opacity = k > 0.9 ? 0.9 * Math.abs(Math.sin(t / 160)) : 0;
+      tag.group.position.lerpVectors(tag.rest, tag.hover(), k).addScaledVector(tag.arc, Math.sin(k * Math.PI));
+      tag.group.quaternion.slerpQuaternions(tag.restQ, tag.hoverQ, k);
+      tag.ring.material.opacity = k > 0.9 ? 0.9 * Math.abs(Math.sin(t / 160)) : 0;
     });
+  }
+
+  // =========================================================================
+  // ENCLOSURE TAB: the same parts in the 3D-printed case (Gehaeuse/)
+  // =========================================================================
+  const caseRoot = new THREE.Group();
+  caseRoot.visible = false;
+  scene.add(caseRoot);
+  root = caseRoot;
+  labelTab = 'case';
+  const caseApi = window.GAS_ENCLOSURE ? buildCase() : null;
+  root = scene;
+  labelTab = 'shot';
+
+  // point / direction given in obj's local space -> space of an ancestor
+  function inFrame(obj, v, frame) {
+    const p = v.clone();
+    for (let o = obj; o && o !== frame; o = o.parent) {
+      o.updateMatrix();
+      p.applyMatrix4(o.matrix);
+    }
+    return p;
+  }
+  function dirInFrame(obj, d, frame) {
+    const p = d.clone();
+    for (let o = obj; o && o !== frame; o = o.parent) p.applyQuaternion(o.quaternion);
+    return p.normalize();
+  }
+
+  function buildCase() {
+    const mm = (v) => v / 10;          // the scene works in cm
+    const deg = Math.PI / 180;
+    // layout of the case, same formulas as in Gehaeuse/gehaeuse.scad (mm)
+    const G = {
+      wall: 2.4, floor_t: 2.4, lid_t: 2.4, cu_w: 90, cu_depth: 40, keypad_w: 69.5, keypad_h: 77,
+      ribbon_slot_h: 4, rfid_h: 40, oled_w: 36, oled_h: 34, guide_t: 1.2, fit: 0.25, uno_standoff_h: 5,
+      su_w: 52, su_h: 44, su_depth: 30, pir_post_h: 3, su_angle: 60, wedge_min: 5, cable_y: 145
+    };
+    const lipIn = G.wall + 0.3 + 1.6;
+    G.cu_cx = G.cu_w / 2;
+    G.slot_y = lipIn + 0.8;
+    G.kp_y = G.slot_y + G.ribbon_slot_h;
+    G.rfid_cy = G.kp_y + G.keypad_h + 4 + G.rfid_h / 2;
+    G.oled_cy = G.rfid_cy + G.rfid_h / 2 + 3 + G.guide_t + G.oled_h / 2;
+    G.cu_h = Math.ceil(G.oled_cy + G.oled_h / 2 + 3 + lipIn);
+    G.cu_th = G.floor_t + G.cu_depth;
+    G.buzzer_x = (G.cu_cx + G.oled_w / 2 + G.fit + G.guide_t + G.cu_w - lipIn) / 2;
+    G.uno_x = G.cu_cx - 53.34 / 2;
+    G.uno_y = G.wall + 6.2 + 0.4;
+    G.uno_z = G.floor_t + G.uno_standoff_h;
+    G.su_th = G.floor_t + G.su_depth;
+    G.wedge_max = G.wedge_min + G.su_w * Math.sin(G.su_angle * deg);
+
+    // ---- meshes from enclosure.js (= the STL files) ----
+    function decode(name) {
+      const d = window.GAS_ENCLOSURE[name];
+      const bin = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0)).buffer;
+      const q = new Int16Array(bin(d.v));
+      const idx = d.i32 ? new Uint32Array(bin(d.i)) : new Uint16Array(bin(d.i));
+      const pos = new Float32Array(q.length);
+      for (let i = 0; i < q.length; i++) pos[i] = q[i] / 1000;   // 1/100 mm -> cm
+      return creased(pos, idx, 32);
+    }
+    // smooth normals across edges flatter than `angle`, hard edges elsewhere
+    function creased(pos, idx, angle) {
+      const nt = idx.length / 3, nv = pos.length / 3;
+      const fn = new Float32Array(nt * 3);
+      const a = V(0, 0, 0), b = V(0, 0, 0), c = V(0, 0, 0);
+      for (let t = 0; t < nt; t++) {
+        a.fromArray(pos, idx[t * 3] * 3);
+        b.fromArray(pos, idx[t * 3 + 1] * 3);
+        c.fromArray(pos, idx[t * 3 + 2] * 3);
+        c.sub(b).cross(a.sub(b)).normalize();
+        fn[t * 3] = c.x; fn[t * 3 + 1] = c.y; fn[t * 3 + 2] = c.z;
+      }
+      const start = new Uint32Array(nv + 1);           // faces around every vertex
+      for (let i = 0; i < idx.length; i++) start[idx[i] + 1]++;
+      for (let v = 0; v < nv; v++) start[v + 1] += start[v];
+      const fill = start.slice(0, nv), vf = new Uint32Array(idx.length);
+      for (let i = 0; i < idx.length; i++) vf[fill[idx[i]]++] = (i / 3) | 0;
+      const cosA = Math.cos(angle * deg);
+      const P = new Float32Array(nt * 9), N = new Float32Array(nt * 9);
+      for (let t = 0; t < nt; t++) {
+        for (let k = 0; k < 3; k++) {
+          const v = idx[t * 3 + k], o = (t * 3 + k) * 3;
+          P[o] = pos[v * 3]; P[o + 1] = pos[v * 3 + 1]; P[o + 2] = pos[v * 3 + 2];
+          let x = 0, y = 0, z = 0;
+          for (let j = start[v]; j < start[v + 1]; j++) {
+            const f = vf[j] * 3;
+            if (fn[f] * fn[t * 3] + fn[f + 1] * fn[t * 3 + 1] + fn[f + 2] * fn[t * 3 + 2] >= cosA) { x += fn[f]; y += fn[f + 1]; z += fn[f + 2]; }
+          }
+          const l = Math.hypot(x, y, z) || 1;
+          N[o] = x / l; N[o + 1] = y / l; N[o + 2] = z / l;
+        }
+      }
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(P, 3));
+      g.setAttribute('normal', new THREE.BufferAttribute(N, 3));
+      g.computeBoundingSphere();
+      return g;
+    }
+
+    const HOUSING = {
+      control_back: { color: 0xe3e6ea, title: 'Back part · control_back.stl', text: 'Uno on 4 standoffs · openings for USB-B and the barrel jack · cable hole Ø 8 mm · 2 holes for the wall screws' },
+      control_front: { color: 0xf4b400, title: 'Front plate · control_front.stl', text: 'OLED window, 7 sound holes, RFID field (the card reads through 2.4 mm of plastic), keypad glued on the outside' },
+      sensor_back: { color: 0xe3e6ea, title: 'Sensor back part · sensor_back.stl', text: 'Screwed onto the wedge · cable through the notch at the bottom or the hole in the back' },
+      sensor_front: { color: 0xf4b400, title: 'Sensor front · sensor_front.stl', text: 'The Fresnel lens looks out, the HC-SR501 hangs on two posts' },
+      sensor_wedge: { color: 0xa9b1bd, title: 'Wedge 60° · sensor_wedge.stl', text: 'Turns the sensor towards the door: it covers the entrance but cannot see through the wall' }
+    };
+    const geos = {};
+    const housing = [];
+    const xrayLine = new THREE.LineBasicMaterial({ color: 0x7dd3fc, transparent: true, opacity: 0.55, depthWrite: false });
+    function housingPart(name, parent) {
+      const h = HOUSING[name];
+      if (!geos[name]) geos[name] = decode(name);
+      const g = new THREE.Group();
+      parent.add(g);
+      const solid = mat(h.color, { roughness: 0.62 });
+      const xray = new THREE.MeshStandardMaterial({ color: h.color, roughness: 0.3, transparent: true, opacity: 0.1, depthWrite: false, side: THREE.DoubleSide });
+      const m = new THREE.Mesh(geos[name], solid);
+      m.castShadow = true;
+      m.receiveShadow = true;
+      g.add(m);
+      if (!geos[name].edges) geos[name].edges = new THREE.EdgesGeometry(geos[name], 35);
+      const edgeSolid = new THREE.LineBasicMaterial({ color: new THREE.Color(h.color).multiplyScalar(0.45), transparent: true, opacity: 0.35 });
+      const lines = new THREE.LineSegments(geos[name].edges, edgeSolid);
+      lines.raycast = () => {};
+      g.add(lines);
+      part(g, h.title, h.text).userData.part.housing = true;
+      housing.push({ name, g, m, lines, solid, xray, edgeSolid, shown: true });
+      return g;
+    }
+    let mode = 'xray';
+    function setMode(next) {
+      mode = next;
+      housing.forEach((h) => {
+        h.g.visible = h.shown && mode !== 'off';
+        h.m.material = mode === 'xray' ? h.xray : h.solid;
+        h.m.castShadow = mode === 'solid';
+        h.lines.material = mode === 'xray' ? xrayLine : h.edgeSolid;
+      });
+    }
+
+    // =======================================================================
+    // control unit, frame = gehaeuse.scad: x right, y up, z out of the wall
+    // =======================================================================
+    const cu = new THREE.Group();
+    cu.position.set(-8.5, 7, 0);
+    caseRoot.add(cu);
+    housingPart('control_back', cu);
+    const lid = new THREE.Group();
+    lid.position.z = mm(G.cu_th);
+    cu.add(lid);
+    const front = housingPart('control_front', lid);
+    front.rotation.y = Math.PI;                    // STL lies face down (print orientation)
+    front.position.set(mm(G.cu_w), 0, mm(G.lid_t));
+
+    // Uno upright, USB/power jacks down through the bottom wall
+    const cUno = buildUno(cu, false);
+    cUno.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(V(0, -1, 0), V(0, 0, 1), V(-1, 0, 0)));
+    cUno.position.set(mm(G.uno_x + 53.34 / 2), mm(G.uno_y + 68.58 / 2), mm(G.uno_z) - UNO_Y);
+
+    // keypad glued onto the front, its ribbon goes through the slot below it
+    const cKp = buildKeypad(lid, false);
+    cKp.rotation.x = Math.PI / 2;
+    cKp.position.set(mm(G.cu_cx), mm(G.kp_y + G.keypad_h / 2), mm(G.lid_t));
+    const ribbon = mat(0xa3a8b0, { roughness: 0.4 });
+    const sy = mm(G.slot_y + G.ribbon_slot_h / 2);
+    box(2.2, mm(G.kp_y) - sy + 0.05, 0.02, ribbon, mm(G.cu_cx), (mm(G.kp_y) + sy) / 2, mm(G.lid_t) + 0.01, lid);
+    box(2.2, 0.02, 1.5, ribbon, mm(G.cu_cx), sy, mm(G.lid_t) - 0.75, lid);
+    box(2.3, 0.35, 0.42, blackPlastic, mm(G.cu_cx), sy + 0.05, -1.45, lid);
+    const kpPlug = [];
+    for (let i = 0; i < 8; i++) {
+      const x = mm(G.cu_cx) - 0.889 + i * 0.254;
+      box(0.07, 0.5, 0.07, gold, x, sy + 0.475, -1.45, lid);
+      kpPlug.push({ o: lid, p: V(x, sy + 0.725, -1.45), d: V(0, 1, 0) });
+    }
+
+    const cOled = buildOled(lid, true);
+    cOled.g.rotation.x = Math.PI / 2;
+    cOled.g.position.set(mm(G.cu_cx), mm(G.oled_cy) + 0.3, -0.23);   // picture centred in the window
+
+    // RC522 with its flat side against the front plate, header on the right
+    const cRc = buildRc(lid);
+    cRc.g.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(V(0, -1, 0), V(0, 0, -1), V(1, 0, 0)));
+    cRc.g.position.set(mm(G.cu_cx), mm(G.rfid_cy), 0);
+
+    const cBuz = buildBuzzer(lid, true);
+    cBuz.g.rotation.x = Math.PI / 2;
+    cBuz.g.position.set(mm(G.buzzer_x), mm(G.oled_cy) - 0.15, -0.96);
+
+    // mini breadboard (170 holes) on the back wall above the Uno: 5 V and GND
+    const MB = { x: mm(G.cu_cx), y: 11.5, z: mm(G.floor_t) + 0.85 };
+    const mbHole = (col, row) => V(MB.x + (col - 8) * 0.254,
+      MB.y + (row < 5 ? 0.3 + (4 - row) * 0.254 : -0.3 - (row - 5) * 0.254), MB.z);
+    const MB5V = 12, MBGND = 14;
+    const mbTex = canvasTex(470, 350, (g, w, h) => {
+      g.fillStyle = '#ecebe6';
+      g.fillRect(0, 0, w, h);
+      g.fillStyle = '#d9d8d2';
+      g.fillRect(0, h / 2 - 14, w, 28);
+      for (let c = 0; c < 17; c++) for (let r = 0; r < 10; r++) {
+        const p = mbHole(c, r);
+        g.fillStyle = '#3b3b3b';
+        g.fillRect(w / 2 + (p.x - MB.x) * 100 - 5, h / 2 - (p.y - MB.y) * 100 - 5, 10, 10);
+      }
+      g.lineWidth = 5;
+      [[MB5V, '#dc2626', '+5V'], [MBGND, '#2563eb', 'GND']].forEach(([c, col, t]) => {
+        const x = w / 2 + (c - 8) * 25.4;
+        g.strokeStyle = col;
+        g.beginPath(); g.moveTo(x - 13, 22); g.lineTo(x - 13, h / 2 - 20); g.stroke();
+        g.fillStyle = col;
+        g.font = 'bold 20px sans-serif';
+        g.textAlign = 'center';
+        g.fillText(t, x, 18);
+      });
+    });
+    const mbSide = mat(0xe4e3de);
+    const mb = box(4.7, 0.85, 3.5, [mbSide, mbSide, new THREE.MeshStandardMaterial({ map: mbTex, roughness: 0.8 }), mbSide, mbSide, mbSide], MB.x, MB.y, mm(G.floor_t) + 0.425, cu);
+    mb.rotation.x = Math.PI / 2;
+    part(mb, 'Mini breadboard', 'Glued to the back wall: one strip for 5 V, one for GND (OLED, buzzer, motion sensor)');
+
+    // ---- wires inside the case: rebuilt whenever the lid moves ----
+    const caseWires = [];
+    function resolve(e, frame) { return { p: inFrame(e.o, e.p, frame), d: dirInFrame(e.o, e.d, frame) }; }
+    function caseWire(frame, a, b, color, title, text, bare) {
+      const m = new THREE.MeshStandardMaterial({ color, roughness: 0.45, emissive: color, emissiveIntensity: 0.06 });
+      const tube = new THREE.Mesh(new THREE.BufferGeometry(), m);
+      tube.castShadow = true;
+      frame.add(tube);
+      const plug = () => {
+        const d = new THREE.Mesh(dupGeo, dupMat);
+        d.castShadow = true;
+        frame.add(d);
+        return d;
+      };
+      const duA = bare ? null : plug(), duB = plug();
+      const w = { color, mat: m, glow: 0, parent: frame, curve: null, pulseScale: 0.6, tube };
+      w.layout = () => {
+        const A = resolve(a, frame), B = resolve(b, frame);
+        const pa = A.p.clone().addScaledVector(A.d, bare ? 0 : 0.55), pb = B.p.clone().addScaledVector(B.d, 0.55);
+        const h = 0.3 + pa.distanceTo(pb) * 0.32;
+        w.curve = new THREE.CubicBezierCurve3(pa, pa.clone().addScaledVector(A.d, h), pb.clone().addScaledVector(B.d, h), pb);
+        tube.geometry.dispose();
+        tube.geometry = new THREE.TubeGeometry(w.curve, 36, 0.035, 6, false);
+        if (duA) dupont(A.p, A.d, duA);
+        dupont(B.p, B.d, duB);
+      };
+      part(tube, title, text);
+      wires.push(w);
+      caseWires.push(w);
+      return w;
+    }
+    const uPin = (n) => ({ o: cUno, p: unoPinLocal(n), d: UP });
+    const mPin = (mod, n) => ({ o: mod.g, p: mod.pins[n].p, d: mod.pins[n].d });
+    const hole = (col, row) => ({ o: cu, p: mbHole(col, row), d: V(0, 0, 1) });
+    const cw = (a, b, color, title, text) => caseWire(cu, a, b, color, title, text);
+
+    const KP_COLORS = [0x86efac, 0xa78bfa, 0xbef264, 0xf0abfc, 0x5eead4, 0x60a5fa, 0x84cc16, 0x2dd4bf];
+    const cRows = ['D9', 'D8', 'D7', 'D6'].map((p, i) => cw(uPin(p), kpPlug[i], KP_COLORS[i], p + ' ↔ R' + (i + 1), 'Keypad row ' + (i + 1) + ' (INPUT_PULLUP)'));
+    const cCols = ['D5', 'D4', 'D3', 'D2'].map((p, i) => cw(uPin(p), kpPlug[4 + i], KP_COLORS[4 + i], p + ' ↔ C' + (i + 1), 'Keypad column ' + (i + 1) + ' (pulled LOW during the scan)'));
+    sig.rows.push(cRows);
+    sig.cols.push(cCols);
+    sig.sda.push(cw(uPin('A4'), mPin(cOled, 'SDA'), 0xfb7185, 'A4 → SDA', 'I²C data to the OLED'));
+    sig.scl.push(cw(uPin('A5'), mPin(cOled, 'SCL'), 0xe879f9, 'A5 → SCL', 'I²C clock to the OLED'));
+    sig.spi.push([
+      cw(uPin('D11'), mPin(cRc, 'MOSI'), 0x22d3ee, 'D11 → MOSI', 'SPI, Uno → RC522'),
+      cw(uPin('D12'), mPin(cRc, 'MISO'), 0x34d399, 'D12 ← MISO', 'SPI, RC522 → Uno'),
+      cw(uPin('D13'), mPin(cRc, 'SCK'), 0xa3e635, 'D13 → SCK', 'SPI clock (the L LED is on D13 too)'),
+      cw(uPin('A0'), mPin(cRc, 'SDA'), 0xfb923c, 'A0 → SDA/SS', 'Chip select of the RC522'),
+      cw(uPin('A1'), mPin(cRc, 'RST'), 0xf472b6, 'A1 → RST', 'Reset of the RC522 (key B = soft reset)')
+    ]);
+    cw(uPin('3V3'), mPin(cRc, '3.3V'), 0xfca5a5, '3.3 V → RC522', '3.3 V only! 5 V destroys the module');
+    cw(uPin('GND1'), mPin(cRc, 'GND'), 0x475569, 'GND → RC522', 'Ground');
+    sig.buz.push(cw(uPin('D10'), mPin(cBuz, 'S'), 0xfacc15, 'D10 → Buzzer S', 'tone() puts the square wave on this pin'));
+    cw(uPin('5V'), hole(MB5V, 0), 0xdc2626, '5V → breadboard', '5 V for the OLED, buzzer and motion sensor');
+    cw(uPin('GND'), hole(MBGND, 0), 0x475569, 'GND → breadboard', 'common ground');
+    cw(hole(MB5V, 1), mPin(cOled, 'VCC'), 0xdc2626, '5V → OLED VCC', '');
+    cw(hole(MBGND, 1), mPin(cOled, 'GND'), 0x475569, 'GND → OLED GND', '');
+    cw(hole(MB5V, 2), mPin(cBuz, '+'), 0xdc2626, '5V → Buzzer +', '');
+    cw(hole(MBGND, 2), mPin(cBuz, '-'), 0x475569, 'GND → Buzzer −', '');
+
+    // =======================================================================
+    // sensor unit: wedge on the wall, sensor_back on the wedge (on_wedge())
+    // =======================================================================
+    const su = new THREE.Group();
+    su.rotation.y = Math.PI;                       // on the room side of the board
+    su.position.set(9.5, 19, -1.2);
+    caseRoot.add(su);
+    housingPart('sensor_wedge', su);
+    const sBox = new THREE.Group();
+    sBox.position.z = mm(G.wedge_max);
+    sBox.rotation.y = G.su_angle * deg;
+    su.add(sBox);
+    const sBack = new THREE.Group();
+    sBox.add(sBack);
+    housingPart('sensor_back', sBack);
+    const sLid = new THREE.Group();
+    sLid.position.z = mm(G.su_th);
+    sBack.add(sLid);
+    const sFront = housingPart('sensor_front', sLid);
+    sFront.rotation.y = Math.PI;
+    sFront.position.set(mm(G.su_w), 0, mm(G.lid_t));
+
+    // HC-SR501: board 3 mm behind the lid, lens through the opening, pins back
+    const cPir = new THREE.Group();
+    cPir.position.set(mm(G.su_w / 2), mm(G.su_h / 2), -mm(G.pir_post_h));
+    sLid.add(cPir);
+    box(3.23, 2.43, 0.12, mat(0x157a3a), 0, 0, -0.06, cPir);
+    box(2.4, 2.4, 0.2, mat(0xeeeeee, { roughness: 0.5 }), 0, 0, 0.1, cPir);
+    cyl(1.15, 0.5, domeMat, 0, 0, 0.45, cPir, 24).rotation.x = Math.PI / 2;
+    const cap = mesh(new THREE.SphereGeometry(1.15, 24, 8, 0, Math.PI * 2, 0, Math.PI / 2), domeMat, 0, 0, 0.7, cPir);
+    cap.rotation.x = Math.PI / 2;
+    cap.scale.set(1, 0.5, 1);
+    box(0.8, 0.25, 0.25, blackPlastic, 0, -1.0, -0.245, cPir);
+    [-0.9, 0.9].forEach((x) => cyl(0.3, 0.25, mat(0xf59e0b), x, 0.55, -0.245, cPir, 16).rotation.x = Math.PI / 2);
+    const pirPin = {};
+    ['VCC', 'OUT', 'GND'].forEach((n, i) => {
+      const x = -0.254 + i * 0.254;
+      box(0.06, 0.06, 0.9, gold, x, -1.0, -0.57, cPir);
+      pirPin[n] = { o: cPir, p: V(x, -1.0, -1.02), d: V(0, 0, -1) };
+    });
+    part(cPir, 'HC-SR501 motion sensor', 'Looks into the room · OUT → A2 over the 3-wire cable · only triggers while ARMED · click = motion', triggerMotion);
+
+    // ---- 3-wire cable: control unit -> through the wall -> sensor unit ----
+    const cableEnd = { o: cu, p: V(mm(G.cu_cx) + 0.3, mm(G.cable_y) - 0.5, 1.1), d: V(0.25, -1, 0.35) };
+    const sensorEnd = { o: sBack, p: V(mm(G.su_w / 2), 0.75, 2.55), d: V(0, 1, -0.6) };
+    const wPirCu = caseWire(cu, uPin('A2'), cableEnd, 0xf97316, 'A2 ← PIR OUT', 'HIGH on motion (was D11, which is MOSI now)');
+    caseWire(cu, hole(MB5V, 3), cableEnd, 0xdc2626, '5V → PIR VCC', 'through the 3-wire cable');
+    caseWire(cu, hole(MBGND, 3), cableEnd, 0x475569, 'GND → PIR GND', 'through the 3-wire cable');
+    const wPirSu = caseWire(sBack, sensorEnd, pirPin.OUT, 0xf97316, 'PIR OUT → cable', 'active HIGH on motion', true);
+    caseWire(sBack, sensorEnd, pirPin.VCC, 0xdc2626, 'cable → PIR VCC', '5 V', true);
+    caseWire(sBack, sensorEnd, pirPin.GND, 0x475569, 'cable → PIR GND', 'ground', true);
+    const jacket = new THREE.Mesh(new THREE.BufferGeometry(), mat(0x3a4150, { roughness: 0.55 }));
+    jacket.castShadow = true;
+    caseRoot.add(jacket);
+    const wCable = { color: 0xf97316, mat: jacket.material, glow: 0, parent: caseRoot, curve: null, pulseScale: 1.3, noGlow: true };
+    part(jacket, '3-wire cable', '5 V, GND and OUT → A2 · through the back of the control unit and the wall (Ø 8 mm) to the sensor unit');
+    function layoutCable() {
+      const P = (o, x, y, z) => inFrame(o, V(x, y, z), caseRoot);
+      const holeX = mm(G.cu_cx), holeY = mm(G.cable_y);
+      const notch = P(sBack, mm(G.su_w / 2), 0.12, 2.95);
+      const pts = [
+        inFrame(cu, cableEnd.p, caseRoot), P(cu, holeX, holeY, 0.5), P(cu, holeX, holeY, -0.6),
+        P(cu, holeX, holeY - 0.4, -1.45), P(cu, holeX + 1.0, holeY - 4.4, -1.4),
+        V(notch.x - 0.6, holeY - 4.9 + cu.position.y, -1.5),
+        notch.clone().add(V(0, -1.6, 1.3)), notch.clone().add(V(0, -0.5, 0)), notch,
+        inFrame(sBack, sensorEnd.p, caseRoot)
+      ];
+      wCable.curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
+      jacket.geometry.dispose();
+      jacket.geometry = new THREE.TubeGeometry(wCable.curve, 120, 0.13, 8, false);
+    }
+    // motion: along the OUT wire in the sensor, the cable, then the A2 wire
+    sig.pir.push([wPirSu, true, 250], [wCable, true, 700, 200], [wPirCu, true, 300, 850]);
+
+    // =======================================================================
+    // demo board (plays the wall), detection area, rings, cards
+    // =======================================================================
+    const woodTex = canvasTex(1024, 824, (g, w, h) => {
+      g.fillStyle = '#c7a473';
+      g.fillRect(0, 0, w, h);
+      for (let i = 0; i < 140; i++) {
+        const y = rnd() * h;
+        g.strokeStyle = rnd() > 0.5 ? 'rgba(120,80,40,.10)' : 'rgba(255,240,210,.12)';
+        g.lineWidth = 1 + rnd() * 4;
+        g.beginPath();
+        g.moveTo(0, y);
+        g.bezierCurveTo(w * 0.3, y + (rnd() - 0.5) * 30, w * 0.7, y + (rnd() - 0.5) * 30, w, y + (rnd() - 0.5) * 20);
+        g.stroke();
+      }
+    });
+    const wood = new THREE.MeshStandardMaterial({ map: woodTex, roughness: 0.85 });
+    const woodEdge = mat(0xb08d5e, { roughness: 0.9 });
+    const board = box(31, 28, 1.2, [woodEdge, woodEdge, woodEdge, woodEdge, wood, wood], 0, 14, -0.6);
+    const scenery = [board, jacket, ...[-12.5, 12.5].map((x) => box(1.8, 2.2, 13, woodEdge, x, 1.1, -0.6))];
+    part(board, 'Demo board = wall', 'For the presentation a board plays the wall: control unit outside, sensor unit on the room side, cable through a hole');
+    const holeDisc = new THREE.Mesh(new THREE.CircleGeometry(0.45, 24), mat(0x1c150d));
+    holeDisc.position.set(cu.position.x + mm(G.cu_cx), cu.position.y + mm(G.cable_y), -1.205);
+    holeDisc.rotation.y = Math.PI;
+    caseRoot.add(holeDisc);
+
+    // PIR detection area (about 110°), cut off by the wall like in montage.svg
+    const lens = inFrame(cPir, V(0, 0, 1.2), caseRoot);
+    const fanMat = new THREE.MeshBasicMaterial({ color: 0xf87171, transparent: true, opacity: 0.07, depthWrite: false, side: THREE.DoubleSide });
+    const fan = new THREE.Mesh(new THREE.CircleGeometry(24, 48, 95 * deg, 85 * deg), fanMat);
+    fan.rotation.x = -Math.PI / 2;
+    fan.position.copy(lens);
+    caseRoot.add(fan);
+    scenery.push(holeDisc, fan);
+
+    const cRfidRing = new THREE.Mesh(new THREE.RingGeometry(1.9, 2.05, 64), ringMat(0x7dd3fc));
+    cRfidRing.position.set(mm(G.cu_cx), mm(G.rfid_cy), mm(G.lid_t) + 0.03);
+    lid.add(cRfidRing);
+    const cBuzRings = buzzRings(lid);
+    cBuzRings.forEach((m) => m.position.set(mm(G.buzzer_x), mm(G.oled_cy), mm(G.lid_t) + 0.03));
+
+    const field = () => inFrame(lid, V(mm(G.cu_cx), mm(G.rfid_cy), mm(G.lid_t) + 1.0), caseRoot);
+    const upright = new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.PI / 2, 0, 0));
+    addTag('case', 'A', cardA(), V(3.5, 0.05, 8.5), 0.12, field, upright, V(0, 0, 5), cRfidRing);
+    addTag('case', 'B', cardB(), V(10, 0.05, 9.5), -0.15, field, upright, V(0, 0, 5), cRfidRing);
+    addTag('case', 'F', keyFob(), V(-12.5, 0.1, 8), 0.4, field, upright, V(0, 0, 5), cRfidRing);
+
+    label('Control unit · outside', { get: () => inFrame(cu, V(mm(G.cu_cx), mm(G.cu_h) + 0.6, 2.2), caseRoot) }, 1);
+    label('Sensor unit · room side', { get: () => inFrame(sBack, V(mm(G.su_w / 2), mm(G.su_h) + 0.6, 1.5), caseRoot) });
+    label('Demo board = wall', V(11, 3.5, 0.2), 1);
+
+    // ---- open / close ----
+    let openK = 0, openTo = 0, openFrom = 0, openT0 = 0;
+    function applyOpen(k) {
+      lid.position.z = mm(G.cu_th) + 7 * k;
+      sBack.position.z = 1.2 * k;
+      sLid.position.z = mm(G.su_th) + 3.2 * k;
+      layout();
+    }
+    function layout() {
+      caseWires.forEach((w) => w.layout());
+      layoutCable();
+    }
+    layout();
+    setMode(mode);
+
+    // all five STLs as they lie on the print bed (only for the doc pictures)
+    function printBed() {
+      const bed = new THREE.Group();
+      caseRoot.add(bed);
+      const pei = canvasTex(1080, 780, (g, w, h) => {
+        g.fillStyle = '#23262c';
+        g.fillRect(0, 0, w, h);
+        g.strokeStyle = 'rgba(255,255,255,.07)';
+        g.lineWidth = 2;
+        for (let x = 0; x <= w; x += 40) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); }
+        for (let y = 0; y <= h; y += 40) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+      });
+      const side = mat(0x15171b);
+      box(27, 0.4, 19.5, [side, side, new THREE.MeshStandardMaterial({ map: pei, roughness: 0.7 }), side, side, side], 13.5, -0.2, -9.75, bed);
+      [['control_back', 0.5, 0.95], ['control_front', 10.4, 0.95], ['sensor_back', 20.9, 1.3],
+        ['sensor_front', 20.9, 7.4], ['sensor_wedge', 21.9, 13.4]].forEach(([name, x, y]) => {
+        const h = HOUSING[name];
+        const m = new THREE.Mesh(geos[name], mat(h.color, { roughness: 0.62 }));
+        m.castShadow = m.receiveShadow = true;
+        m.rotation.x = -Math.PI / 2;                    // STL z (up on the printer) -> y
+        m.position.set(x, 0, -y);
+        const l = new THREE.LineSegments(geos[name].edges, housing.find((p) => p.name === name).edgeSolid);
+        m.add(l);
+        bed.add(m);
+      });
+      return bed;
+    }
+    // lowest visible point of a unit onto the floor (y = 0)
+    function dropToFloor(obj) {
+      obj.updateMatrixWorld(true);
+      const box3 = new THREE.Box3(), b = new THREE.Box3();
+      obj.traverse((o) => {
+        if (!o.isMesh) return;
+        for (let q = o; q; q = q.parent) if (!q.visible) return;
+        if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
+        box3.union(b.copy(o.geometry.boundingBox).applyMatrix4(o.matrixWorld));
+      });
+      obj.position.y -= box3.min.y;
+    }
+
+    return {
+      get mode() { return mode; },
+      setMode,
+      setOpen(on) {
+        openFrom = openK;
+        openTo = on ? 1 : 0;
+        openT0 = performance.now();
+      },
+      // arranges the case for a doc picture, returns the frames labels can refer to
+      stage(cfg) {
+        const frames = { cu, lid, su, sBox, sBack, sLid, world: scene };
+        scenery.forEach((o) => { o.visible = false; });
+        const keep = new Set([lid, sBox, sBack, sLid, ...housing.map((h) => h.g)]);
+        [cu, lid, su, sBox, sBack, sLid].forEach((f) => f.children.forEach((c) => { if (!keep.has(c)) c.visible = cfg.modules !== false; }));
+        if (cfg.wires === false) caseWires.forEach((w) => w.parent.children.forEach((c) => { if (c === w.tube || c.geometry === dupGeo) c.visible = false; }));
+        housing.forEach((h) => { h.shown = !cfg.parts || cfg.parts.includes(h.name); });
+        setMode(cfg.housing || 'solid');
+        if (cfg.edges) housing.forEach((h) => { h.edgeSolid.opacity = cfg.edges; });
+        openK = openTo = cfg.open || 0;
+        lid.position.z = mm(G.cu_th) + 7 * openK;
+        sBack.position.z = 1.2 * openK;
+        sLid.position.z = mm(G.su_th) + 3.2 * openK;
+        layout();
+        [[cu, cfg.cu], [su, cfg.su]].forEach(([u, p]) => {
+          u.visible = !!p && !cfg.print;
+          if (!p) return;
+          u.position.set(...(p.pos || [0, 0, 0]));
+          u.rotation.set(...(p.rot || [0, 0, 0]));
+          if (p.floor !== false) dropToFloor(u);
+        });
+        if (cfg.print) frames.print = printBed();
+        return frames;
+      },
+      update(t) {
+        if (openK !== openTo) {
+          const k = Math.min(1, (t - openT0) / 800);
+          openK = k >= 1 ? openTo : openFrom + (openTo - openFrom) * ease(k);
+          applyOpen(openK);
+        }
+        const buzzing = snd.freq > 0;
+        cBuzRings.forEach((m, i) => {
+          const k = ((t / 700) + i / 3) % 1;
+          m.scale.setScalar(1 + k * 2.2);
+          m.material.opacity = buzzing ? (1 - k) * 0.85 : Math.max(0, m.material.opacity - 0.05);
+        });
+        fanMat.opacity = motionPin() ? 0.12 + Math.abs(Math.sin(t / 180)) * 0.16 : 0.07;
+      }
+    };
   }
 
   // =========================================================================
@@ -1625,7 +2248,12 @@ function buildScene() {
     keypad: { target: V(-9.5, 0, -1.2), r: 14, theta: 0.1, phi: 0.62 },
     oled: { target: V(-3.6, 0.3, -1.9), r: 8.5, theta: 0.0, phi: 0.45 },
     rfid: { target: V(3.2, 0.5, -9.5), r: 15, theta: 0.35, phi: 0.72 },
-    uno: { target: V(3.5, 0.6, -1.8), r: 12, theta: -0.45, phi: 0.78 }
+    uno: { target: V(3.5, 0.6, -1.8), r: 12, theta: -0.45, phi: 0.78 },
+    // enclosure tab
+    c_all: { target: V(-1.5, 11, 2.5), r: 70, theta: 0.5, phi: 1.14 },
+    c_front: { target: V(-4, 15.8, 2), r: 44, theta: 0.12, phi: 1.42 },
+    c_side: { target: V(-4, 15.5, 1), r: 44, theta: 1.2, phi: 1.3 },
+    c_sensor: { target: V(5, 20, -4), r: 36, theta: 2.45, phi: 1.2 }
   };
   const view = { target: VIEWS.all.target.clone(), r: VIEWS.all.r, theta: VIEWS.all.theta, phi: VIEWS.all.phi };
   let viewAnim = null, autoRotate = false;
@@ -1640,6 +2268,45 @@ function buildScene() {
     viewAnim = { t0: performance.now(), from: { target: view.target.clone(), r: view.r, theta: view.theta, phi: view.phi }, to, dTheta };
   }
   document.querySelectorAll('[data-view]').forEach((b) => b.addEventListener('click', () => goTo(b.dataset.view)));
+
+  // ---- tabs: loose parts on the table / the same parts in the case ----
+  const alarmSpot = { bench: V(2, 10, 0), case: V(-4, 16, 12) };
+  function setTab(name) {
+    if (name === 'case' && !caseApi) return;
+    tagSets[activeTab].forEach((t) => {          // put a card that is on its way back
+      if (!t.anim) return;
+      t.anim = null;
+      t.group.position.copy(t.rest);
+      t.group.quaternion.copy(t.restQ);
+      t.ring.material.opacity = 0;
+    });
+    tagBusy = false;
+    activeTab = name;
+    bench.visible = name === 'bench';
+    caseRoot.visible = name === 'case';
+    stage.dataset.tab = name;
+    document.querySelectorAll('[data-tab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === name)));
+    alarmLight.position.copy(alarmSpot[name]);
+    goTo(name === 'case' ? 'c_all' : 'all');
+    if (!SHOT) history.replaceState(null, '', name === 'case' ? '#enclosure' : location.pathname + location.search);
+  }
+  document.querySelectorAll('[data-tab]').forEach((b) => b.addEventListener('click', () => setTab(b.dataset.tab)));
+  function setCaseMode(m) {
+    caseApi.setMode(m);
+    document.querySelectorAll('[data-case]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.case === m)));
+  }
+  document.querySelectorAll('[data-case]').forEach((b) => b.addEventListener('click', () => setCaseMode(b.dataset.case)));
+  let caseOpen = false;
+  $('#toggleOpen').addEventListener('click', (e) => {
+    caseOpen = !caseOpen;
+    caseApi.setOpen(caseOpen);
+    e.currentTarget.setAttribute('aria-pressed', String(caseOpen));
+  });
+  if (!caseApi) {
+    const b = $('#tabCase');
+    b.disabled = true;
+    b.title = 'enclosure.js is missing (node tools/stl2viewer.mjs)';
+  }
   $('#toggleLabels').addEventListener('click', (e) => {
     const on = labelsEl.classList.toggle('off') === false;
     e.currentTarget.setAttribute('aria-pressed', String(on));
@@ -1657,9 +2324,13 @@ function buildScene() {
     ray.setFromCamera(ndc, camera);
     const hits = ray.intersectObjects(parts, true);
     for (const h of hits) {
-      let o = h.object;
+      let o = h.object, shown = true;
+      for (let q = o; q; q = q.parent) if (!q.visible) shown = false;   // other tab / hidden case
+      if (!shown) continue;
       while (o && !o.userData.part) o = o.parent;
-      if (o) return o.userData.part;
+      if (!o) continue;
+      if (o.userData.part.housing && caseApi.mode !== 'solid') continue;  // look through the X-ray case
+      return o.userData.part;
     }
     return null;
   }
@@ -1721,7 +2392,8 @@ function buildScene() {
     } else {
       const k = view.r * 0.0016;
       const right = V(Math.cos(view.theta), 0, -Math.sin(view.theta));
-      const fwd = V(Math.sin(view.theta), 0, Math.cos(view.theta));
+      // table: move over the floor; enclosure: the case stands upright, so move up/down
+      const fwd = activeTab === 'case' ? V(0, -1, 0) : V(Math.sin(view.theta), 0, Math.cos(view.theta));
       view.target.addScaledVector(right, -dx * k).addScaledVector(fwd, -dy * k);
     }
   });
@@ -1771,10 +2443,10 @@ function buildScene() {
     } else if (autoRotate && pointers.size === 0) {
       view.theta += 0.0016;
     }
-    applyView();
+    if (!shotCam) applyView();
 
     // keys spring back after a press
-    Object.values(keyMeshes).forEach((km) => {
+    keyMeshes.forEach((km) => {
       const e = (t - km.userData.pressT) / 180;
       const k = e >= 0 && e < 1 ? Math.sin(e * Math.PI) : 0;
       km.position.y = km.userData.base - k * 0.08;
@@ -1782,19 +2454,22 @@ function buildScene() {
     });
 
     updateTags(t);
+    if (caseApi) caseApi.update(t);
 
     // wires: move pulses, let the glow fade
     for (let i = pulses.length - 1; i >= 0; i--) {
       const p = pulses[i];
       const k = (t - p.t0) / p.dur;
       if (k >= 1) {
-        scene.remove(p.m);
+        p.m.removeFromParent();
         p.m.material.dispose();
         pulses.splice(i, 1);
         continue;
       }
+      p.m.visible = k >= 0;
+      if (k < 0) continue;
       p.m.position.copy(p.w.curve.getPointAt(p.reverse ? 1 - k : k));
-      p.m.scale.setScalar(1 + Math.sin(k * Math.PI) * 0.5);
+      p.m.scale.setScalar((1 + Math.sin(k * Math.PI) * 0.5) * (p.w.pulseScale || 1));
     }
     wires.forEach((w) => {
       w.glow = Math.max(0, w.glow - 0.025);
@@ -1805,14 +2480,14 @@ function buildScene() {
     const buzzing = snd.freq > 0;
     if (buzzing && t - lastBuzPulse > 180) {
       lastBuzPulse = t;
-      pulse(wBuz, false, 400);
+      sig.buz.forEach((w) => pulse(w, false, 400));
     }
     buzRings.forEach((m, i) => {
       const k = ((t / 700) + i / 3) % 1;
       m.scale.setScalar(1 + k * 2.2);
       m.material.opacity = buzzing ? (1 - k) * 0.85 : Math.max(0, m.material.opacity - 0.05);
     });
-    buzBody.scale.y = buzzing ? 1 + Math.sin(t * 0.9) * 0.015 : 1;
+    buzBodies.forEach((b) => { b.scale.y = buzzing ? 1 + Math.sin(t * 0.9) * 0.015 : 1; });
 
     // PIR
     const motion = motionPin();
@@ -1822,17 +2497,20 @@ function buildScene() {
     pirRing.material.opacity = motion ? (1 - pk) * 0.8 : 0;
 
     // board LEDs
-    ledL.material.emissiveIntensity = millis() < hw.lUntil ? 2.2 * (Math.random() > 0.4 ? 1 : 0.2) : 0.08;
-    ledTx.material.emissiveIntensity = millis() < hw.txUntil ? 2.2 : 0.08;
+    const lOn = millis() < hw.lUntil ? 2.2 * (Math.random() > 0.4 ? 1 : 0.2) : 0.08;
+    unoLeds.forEach((l) => {
+      l.L.material.emissiveIntensity = lOn;
+      l.tx.material.emissiveIntensity = millis() < hw.txUntil ? 2.2 : 0.08;
+    });
 
     // alarm: flashing red room light, in step with the OLED flash
-    if (fw.state === ST.ALARM) {
+    if (fw.state === ST.ALARM && !shotCam) {
       const flash = Math.floor(millis() / 250) % 2 === 0;
       alarmLight.intensity = flash ? 2.2 : 0.4;
       scene.background.copy(bgColor).lerp(alarmBg, flash ? 1 : 0.4);
     } else {
       alarmLight.intensity = 0;
-      scene.background.copy(bgColor);
+      if (scene.background) scene.background.copy(bgColor);
     }
 
     renderer.render(scene, camera);
@@ -1840,9 +2518,10 @@ function buildScene() {
     // HTML labels follow their 3D anchor
     if (!labelsEl.classList.contains('off')) {
       const w = stage.clientWidth, h = stage.clientHeight;
+      const tab = shotCam ? 'shot' : activeTab;
       labels.forEach((l) => {
         tmp.copy(l.pos.get ? l.pos.get() : l.pos).project(camera);
-        if (tmp.z > 1) {
+        if (tmp.z > 1 || l.tab !== tab || (l.side && Math.sign(camera.position.z + 0.6) !== l.side)) {
           l.el.style.display = 'none';
           return;
         }
@@ -1852,15 +2531,140 @@ function buildScene() {
     }
   }
 
+  // =========================================================================
+  // ?shot: still pictures of the case for the docs, driven by tools/render.mjs
+  // =========================================================================
+  // cfg: housing ('solid' | 'xray' | 'off'), open (0..1), modules, wires, parts
+  // (names of the housing parts to show), cu / su ({ pos, rot, floor } or null),
+  // print (all STLs in print orientation), camera ({ pos, target, fov }),
+  // sun ([x, y, z]), floor (radius, false = no floor and no shadows), shadow (opacity),
+  // labels ([{ text, frame, at: [x, y, z] in mm }])
+  function shot(cfg) {
+    setTab('case');
+    shotCam = true;
+    pulses.forEach((p) => p.m.removeFromParent());   // left over from the first OLED update
+    pulses.length = 0;
+    scene.background = null;
+    scene.fog = null;
+    table.visible = false;
+    grid.visible = false;
+    tagSets.case.forEach((t) => { t.group.visible = false; });
+    // soft round floor that fades into the page background, shadows on top of it
+    const floorTex = canvasTex(512, 512, (g, w, h) => {
+      const grad = g.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
+      grad.addColorStop(0, 'rgba(150,175,215,.16)');
+      grad.addColorStop(0.55, 'rgba(150,175,215,.07)');
+      grad.addColorStop(1, 'rgba(150,175,215,0)');
+      g.fillStyle = grad;
+      g.fillRect(0, 0, w, h);
+    });
+    const floor = new THREE.Mesh(new THREE.CircleGeometry(cfg.floor || 34, 64), new THREE.MeshBasicMaterial({ map: floorTex, transparent: true, depthWrite: false }));
+    floor.rotation.x = -Math.PI / 2;
+    if (cfg.floor !== false) scene.add(floor);
+    const catcher = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), new THREE.ShadowMaterial({ opacity: cfg.shadow || 0.45 }));
+    catcher.rotation.x = -Math.PI / 2;
+    catcher.receiveShadow = true;
+    if (cfg.floor !== false) scene.add(catcher);
+    const frames = caseApi.stage(cfg);
+    scene.updateMatrixWorld(true);
+    const c = cfg.camera;
+    camera.fov = c.fov || 30;
+    resize();
+    const tgt = c.dir ? frameCamera(c) : V(...c.target);
+    if (!c.dir) {
+      camera.position.set(...c.pos);
+      camera.lookAt(tgt);
+    }
+    camera.updateMatrixWorld();
+    floor.position.set(tgt.x, -0.01, tgt.z);
+
+    // studio light: sun from high above (short, soft shadows), key light from
+    // the camera side for the faces, cool rim light from behind
+    sun.target.position.copy(tgt);
+    scene.add(sun.target);
+    sun.position.copy(tgt).add(V(...(cfg.sun || [6, 40, 8])));
+    sun.shadow.mapSize.set(4096, 4096);
+    if (sun.shadow.map) {                         // the old map still has the old size
+      sun.shadow.map.dispose();
+      sun.shadow.map = null;
+    }
+    const camDir = camera.position.clone().sub(tgt).normalize();
+    const left = V(0, 1, 0).cross(camDir).normalize().negate();
+    const key = new THREE.DirectionalLight(0xfff6ea, cfg.key || 1.5);
+    key.position.copy(tgt).addScaledVector(camDir, 40).addScaledVector(left, 26).add(V(0, 22, 0));
+    key.target.position.copy(tgt);
+    scene.add(key, key.target);
+    const rim = new THREE.DirectionalLight(0xcfe3ff, 1.3);
+    rim.position.copy(tgt).addScaledVector(camDir, -40).addScaledVector(left, 18).add(V(0, 24, 0));
+    rim.target.position.copy(tgt);
+    scene.add(rim, rim.target);
+
+    (cfg.labels || []).forEach((l) => {
+      const f = frames[l.frame] || scene;
+      label(l.text, f.localToWorld(V(l.at[0] / 10, l.at[1] / 10, l.at[2] / 10)));
+    });
+    labelsEl.classList.add('shot');
+    // screen position (px) of a point in mm in one of the frames, used by
+    // tools/render.mjs to lay the animated SVG parts of the banner over the render
+    window.gasProject = (frame, at) => {
+      const p = (frames[frame] || scene).localToWorld(V(at[0] / 10, at[1] / 10, at[2] / 10)).project(camera);
+      return [(p.x + 1) / 2 * canvas.clientWidth, (1 - p.y) / 2 * canvas.clientHeight];
+    };
+    return new Promise((resolve) => {
+      let n = 0;
+      const tick = () => (++n > 4 ? resolve(true) : requestAnimationFrame(tick));
+      requestAnimationFrame(tick);
+    });
+  }
+
+  // camera looks along -dir at everything visible and fills `fit` of the frame;
+  // shift moves the object on screen (-1..1, e.g. to leave room for labels)
+  function frameCamera(c) {
+    const pts = [], corner = V(0, 0, 0);
+    caseRoot.traverse((o) => {
+      if (!o.isMesh) return;
+      for (let q = o; q; q = q.parent) if (!q.visible) return;
+      if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
+      const b = o.geometry.boundingBox;
+      for (let i = 0; i < 8; i++) {
+        corner.set(i & 1 ? b.max.x : b.min.x, i & 2 ? b.max.y : b.min.y, i & 4 ? b.max.z : b.min.z);
+        pts.push(corner.clone().applyMatrix4(o.matrixWorld));
+      }
+    });
+    const target = new THREE.Box3().setFromPoints(pts).getCenter(V(0, 0, 0));
+    const dir = V(...c.dir).normalize();
+    const fit = c.fit || 0.82, shift = c.shift || [0, 0];
+    const tanH = Math.tan(camera.fov * Math.PI / 360);
+    let d = 60;
+    for (let i = 0; i < 10; i++) {
+      camera.position.copy(target).addScaledVector(dir, d);
+      camera.lookAt(target);
+      camera.updateMatrixWorld();
+      let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+      pts.forEach((p) => {
+        const q = p.clone().project(camera);
+        x0 = Math.min(x0, q.x); x1 = Math.max(x1, q.x);
+        y0 = Math.min(y0, q.y); y1 = Math.max(y1, q.y);
+      });
+      const right = V(1, 0, 0).applyQuaternion(camera.quaternion), up = V(0, 1, 0).applyQuaternion(camera.quaternion);
+      target.addScaledVector(right, ((x0 + x1) / 2 - shift[0]) * d * tanH * camera.aspect)
+        .addScaledVector(up, ((y0 + y1) / 2 - shift[1]) * d * tanH);
+      d *= Math.max((x1 - x0) / 2, (y1 - y0) / 2) / fit;
+    }
+    camera.position.copy(target).addScaledVector(dir, d);
+    camera.lookAt(target);
+    return target;
+  }
+
   return {
     update,
+    shot,
     pressKey(k) {
-      const km = keyMeshes[k];
-      if (!km) return;
-      km.userData.pressT = performance.now();
-      const [r, c] = km.userData.rc;
-      pulse(rowWires[r], true, 500);
-      pulse(colWires[c], false, 500);
+      const t = performance.now();
+      keyMeshes.forEach((km) => { if (km.userData.key === k) km.userData.pressT = t; });
+      const r = KEYS.findIndex((row) => row.includes(k)), c = KEYS[r].indexOf(k);
+      sig.rows.forEach((set) => pulse(set[r], true, 500));
+      sig.cols.forEach((set) => pulse(set[c], false, 500));
     }
   };
 }
@@ -1879,6 +2683,8 @@ try {
   if (typeof THREE === 'undefined') throw new Error('three.min.js is missing');
   scene3d = buildScene();
   $('#loading').hidden = true;
+  if (SHOT) window.gasShot = scene3d.shot;
+  else if (location.hash === '#enclosure') $('#tabCase').click();
 } catch (e) {
   $('#loading').textContent = '3D view not available (' + e.message + '). The simulation on the right still works.';
   console.error(e);

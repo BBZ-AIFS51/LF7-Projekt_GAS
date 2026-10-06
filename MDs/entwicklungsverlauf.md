@@ -5,7 +5,7 @@ Chronologisches Protokoll: Prompts (Jan Mummert) und Antworten (Claude).
 
 - Projekt: LF07 — Mini-Sicherheitssystem / Access Lock (Arduino Uno R3)
 - Daten der Sitzungen: 08.09.2026, 22.09.2026, 23.09.2026 (inkl. Gehäuse),
-  29.09.2026, 06.10.2026
+  29.09.2026, 30.09.2026, 06.10.2026
 - Grundlagen im Kontext: [../CLAUDE.md](../CLAUDE.md), [aufbau.md](aufbau.md)
 
 ---
@@ -506,7 +506,89 @@ der PIR nicht durch die Wand sieht), `sensor.png`, `explosion.png`,
 
 ---
 
-## 13. Prompt — Falsche Eingabe bricht den Alarm ab (06.10.2026)
+## 13. Prompt — Vorschaubilder, Gehäuse im 3D-Viewer, Social Preview (30.09.2026)
+
+> 1. Überarbeite Optisch nochmal die Vorschauen für das 3D-Druck Modell.
+> 2. Ergänze beim 3D-Modell im Browser noch einen Tab, in welchem das ganze
+>    nicht nur lose da liegt, sondern auch im Gehäuse ist. Das Gehäuse soll bei
+>    diesem Modell dann quasi durchsichtig oder umschaltbar sein
+> 3. Erstelle ein Passendes Social Media Preview nach den vorgaben von gitbhub
+
+### Antwort
+
+**Gehäuse im 3D-Viewer:** neuer Tab **Enclosure** (Direktlink
+`…/LF7-Projekt_GAS/#enclosure`). Bedienteil vorne auf einem Demo-Brett (spielt
+die Wand), Sensorteil auf dem 60°-Keil auf der Rückseite, 3-adriges Kabel durch
+das Brett. Innen sitzen Uno, Keypad, OLED, RC522, Buzzer und ein Mini-Breadboard
+an den Positionen aus `gehaeuse.scad`, alle Kabel sind verlegt. Das Gehäuse lässt
+sich **Solid / X-ray / Hidden** schalten und mit **Open** aufklappen. Die
+Firmware läuft weiter: Tasten, Karten (fliegen ans RFID-Feld), Bewegungsmelder
+(Signal läuft sichtbar übers Kabel, der Erfassungsbereich leuchtet auf).
+Die Gehäuseteile sind keine Nachbauten, sondern die echten STL-Dateien:
+`tools/stl2viewer.mjs` packt sie kompakt in `docs/viewer/enclosure.js` (233 KB,
+funktioniert auch offline). Nebenbei die Befestigungslöcher des Uno im Viewer
+auf die echten R3-Maße korrigiert, damit er auf den Abstandshaltern sitzt.
+
+**Vorschaubilder:** alle sechs Bilder in `Gehaeuse/bilder/` neu, jetzt im Stil
+der README-Grafiken (dunkler Hintergrund, weiche Schatten, Studio-Licht,
+Beschriftungen auf Deutsch) und mit den detaillierten Bauteilen aus dem Viewer
+statt der groben OpenSCAD-Platzhalter. Neu dazu `druckplatte.png`: alle fünf
+Teile so, wie sie auf dem Druckbett liegen (in `gehaeuse.md` bei „Slicen“).
+Erzeugt werden die Bilder von `tools/render.mjs` über den Viewer (Playwright),
+optional mit pngquant verkleinert (je 35–115 KB).
+
+**Social Preview:** `docs/social-preview.png`, 1280 × 640 px (GitHub-Empfehlung,
+Minimum 640 × 320), PNG unter 1 MB (135 KB), wichtige Inhalte mit Abstand zum
+Rand. Titel, Kurzbeschreibung und die vier Funktionen wie im Banner, rechts das
+Gehäuse im X-ray-Modus. Vorlage: `tools/social-preview.html`. **Muss von Hand
+hochgeladen werden:** Repository → Settings → General → Social preview → Edit →
+Upload an image (dafür gibt es keine API).
+
+---
+
+## 14. Prompt — Banner und Social Preview mit Gehäuse (30.09.2026)
+
+> dann aktualisiere auch docs/banner.svg, sodass auch dort sowie auf dem social
+> preview banner das ganze im gehäuse drauf ist
+
+### Antwort
+
+- `docs/banner.svg`: Statt der flachen Platine zeigt das Banner jetzt das
+  Bedienteil im Gehäuse (isometrisch, stehend) und daneben das Sensorteil auf
+  dem 60°-Keil. Alle Positionen stammen aus `gehaeuse.scad`: OLED-Fenster,
+  Schalllöcher, „GAS“- und „RFID“-Gravur, Keypad, Kabelschlitz, Schrauben.
+  Die Animation läuft wie vorher: Herz, PIN-Eingabe mit Tastendrücken,
+  Totenkopf, Alarm mit Blinken, rotem Schein und Ringen an Buzzer und
+  Bewegungsmelder. Die Karte schwebt vor dem RFID-Feld. Weiterhin reines SVG
+  mit CSS-Animation (19 KB), keine eingebetteten Bilder.
+- `docs/social-preview.png`: Gehäuse jetzt massiv statt X-ray, damit klar das
+  fertige Gerät zu sehen ist (1280 × 640, 110 KB). Muss danach wieder unter
+  Settings → General → Social preview hochgeladen werden.
+
+---
+
+## 15. Prompt — Holo-Look für Banner und Social Preview (30.09.2026)
+
+> Mace es so im holo look, also durchsichtig wie auf dem social preview
+> *(dazu ein Screenshot des Social Preview mit dem durchsichtigen X-ray-Gehäuse)*
+
+### Antwort
+
+- `docs/banner.svg` zeigt das Gehäuse jetzt im X-ray-Look: Bedienteil und
+  Sensorteil durchsichtig, innen sind Uno, OLED, RC522, Breadboard und die
+  Kabel zu sehen. Die Grafik ist ein Render aus dem 3D-Viewer, als Bild ins
+  SVG eingebettet (120 KB). Die Animation liegt als SVG-Ebenen passgenau
+  darüber: OLED (Herz → `****` → Totenkopf → Alarm), Tastendrücke, pulsierendes
+  RFID-Feld, Karte, Ringe an Buzzer und Bewegungsmelder im Alarm.
+- Das Banner wird jetzt erzeugt: `node tools/render.mjs banner` füllt die
+  Vorlage `tools/banner.svg`. Die Lage der Ebenen rechnet das Skript aus dem
+  3D-Modell aus (Punkte der Frontplatten werden auf das Bild projiziert).
+- `docs/social-preview.png` wieder mit durchsichtigem Gehäuse (136 KB), wie
+  vorher.
+
+---
+
+## 16. Prompt — Falsche Eingabe bricht den Alarm ab (06.10.2026)
 
 > Wenn der Alarm ausgelöst wurde und man einen Falschen Code oder Falsche
 > karte eingibt. Dann geht kurz der Buzzer mit dem "Falsch" Ton, der alarm
