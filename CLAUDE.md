@@ -147,7 +147,8 @@ statisches SRAM (im Wesentlichen die `Uid`-Struktur), Flash rund 5–7 kB.
   Scharf/Unscharf geht auf zwei Wegen: PIN + `#` am Keypad **oder** eine
   gespeicherte Karte an den RC522 halten. Beide laufen über `accessGranted()` /
   `accessDenied()`, 3 Fehlversuche (falsche PIN oder unbekannte Karte) lösen
-  den Alarm aus.
+  den Alarm aus. Während ALARM werden falsche PIN/Karten ignoriert (kein
+  Fehlerton, Sirene läuft weiter) — nur richtige PIN oder Karte beendet ihn.
   **RFID-Rechtevergabe (Admin-Modus):** Erlaubte UIDs stehen nicht mehr fest
   im Code, sondern im internen EEPROM des Uno (`loadUidsFromEeprom()` /
   `saveUidsToEeprom()`, Layout: Magic-Byte, Anzahl, dann `UID_LEN`-Byte-Blöcke)

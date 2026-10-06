@@ -543,6 +543,11 @@ function accessGranted() {
 }
 
 function accessDenied(reason) {
+  // a wrong PIN/card must not interrupt or restart a running siren
+  if (fw.state === ST.ALARM) {
+    serial('[ALARM] wrong entry ignored, siren keeps running');
+    return;
+  }
   fw.wrongTries++;
   fw.displayDirty = true;
   if (fw.wrongTries >= MAX_WRONG_TRIES) {

@@ -4,7 +4,8 @@ Dokumentation der Firmware-Entwicklung mit Claude Code (Claude Opus 5).
 Chronologisches Protokoll: Prompts (Jan Mummert) und Antworten (Claude).
 
 - Projekt: LF07 — Mini-Sicherheitssystem / Access Lock (Arduino Uno R3)
-- Daten der Sitzungen: 08.09.2026, 22.09.2026, 23.09.2026 (inkl. Gehäuse)
+- Daten der Sitzungen: 08.09.2026, 22.09.2026, 23.09.2026 (inkl. Gehäuse),
+  29.09.2026, 06.10.2026
 - Grundlagen im Kontext: [../CLAUDE.md](../CLAUDE.md), [aufbau.md](aufbau.md)
 
 ---
@@ -502,6 +503,39 @@ Ende nicht hinten aus dem Keil kommen, hat er dort 4 mm zusätzliches Material
 (`wedge_back`). `montage.svg` (Kegel an der Wandaußenseite abgeschnitten, weil
 der PIR nicht durch die Wand sieht), `sensor.png`, `explosion.png`,
 `zusammengebaut.png` und `stl/sensor_wedge.stl` („Simple: yes“) neu erzeugt.
+
+---
+
+## 13. Prompt — Falsche Eingabe bricht den Alarm ab (06.10.2026)
+
+> Wenn der Alarm ausgelöst wurde und man einen Falschen Code oder Falsche
+> karte eingibt. Dann geht kurz der Buzzer mit dem "Falsch" Ton, der alarm
+> geht aber nicht weiter danach.
+>
+> Der Alarm soll während die Anlage ausgelöst ist natürlich nicht unterbrochen
+> oder abgebrochen werden können, außer durch die eingabe des richtigen
+> Codes/Karte
+
+### Antwort
+
+**Ursache:** `accessDenied()` hat bei jeder Fehleingabe `startSound(SOUND_ERROR)`
+gerufen. Das hat die Sirene durch den Fehlerton ersetzt. Nach dessen Ende war
+Stille, obwohl der Zustand noch ALARM war.
+
+**Fix:** In
+[../Code/alarm_system/alarm_system.ino](../Code/alarm_system/alarm_system.ino)
+kehrt `accessDenied()` im Zustand `STATE_ALARM` sofort zurück. Die Sirene läuft
+weiter, es gibt keinen Fehlerton, keinen Neustart des Alarms und keinen
+gezählten Fehlversuch. Nur die richtige PIN oder eine bekannte Karte beendet
+den Alarm (über `accessGranted()`). Serial meldet
+`[ALARM] wrong entry ignored, siren keeps running`. Gleiche Änderung im
+3D-Viewer ([../docs/viewer/index.html](../docs/viewer/index.html)) und ein Satz
+in [../CLAUDE.md](../CLAUDE.md).
+
+Unverändert: Nach `ALARM_MS` (30 s) geht die Sirene weiterhin von selbst aus
+und die Anlage ist wieder scharf (so in Eintrag 1 gewünscht).
+
+**Offener Punkt:** nicht kompiliert und nicht am Aufbau getestet.
 
 ---
 

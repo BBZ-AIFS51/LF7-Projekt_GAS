@@ -579,6 +579,13 @@ void accessGranted() {
 }
 
 void accessDenied(const __FlashStringHelper *reason) {
+  // while the siren runs, a wrong PIN/card must not interrupt or restart it -
+  // only the correct PIN or a known card ends the alarm
+  if (state == STATE_ALARM) {
+    Serial.println(F("[ALARM] wrong entry ignored, siren keeps running"));
+    return;
+  }
+
   wrongTries++;
   displayDirty = true;
 
