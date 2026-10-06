@@ -55,9 +55,13 @@ Bewegungssensor erkennt Anwesenheit.
   Abhängigkeiten), `render.mjs` (rendert `Gehaeuse/bilder/*.png` und das Social
   Preview und `docs/banner.svg` über den Viewer, braucht Playwright + Chromium),
   `social-preview.html` und `banner.svg` (Vorlagen für Social Preview und Banner).
-- **Wiki** — nicht in diesem Repo, sondern eigenes Git-Repo
-  `https://github.com/BBZ-AIFS51/LF7-Projekt_GAS.wiki.git` (Branch `master`,
-  wird direkt gepusht). Projektdokumentation für die Schule, auf **Deutsch**,
+- `wiki/` — **Quelle des GitHub-Wikis.** `.github/workflows/wiki.yml` überträgt
+  den Ordner bei jedem Push nach `main` (Pfad `wiki/**`) als Spiegel
+  ins Wiki-Repo `BBZ-AIFS51/LF7-Projekt_GAS.wiki.git` (Branch `master`).
+  **Wiki nur hier bearbeiten**, nicht im Wiki-Web-Editor — der wird beim
+  nächsten Lauf überschrieben (jede Seite trägt dazu einen HTML-Kommentar).
+  Eigene Bilder nach `wiki/images/` und per `raw.githubusercontent.com`-URL
+  (`…/main/wiki/images/…`) einbinden. Projektdokumentation für die Schule, auf **Deutsch**,
   aufgebaut nach den zehn Kapiteln der Lehrkraft-Vorgabe (Seitenleiste
   nummeriert): `Home` (Deckblatt), `Idee-und-Zielsetzung`,
   `Funktionsbeschreibung`, `Verwendete-Bauteile`, `Aufbau-und-Schaltplan`,
@@ -69,8 +73,8 @@ Bewegungssensor erkennt Anwesenheit.
   laut Vorgabe ins Wiki, der vollständige Code nicht. Bilder per
   `raw.githubusercontent.com`-URL aus diesem Repo einbinden. Platzhalter fürs
   Team sind mit `✏️ TODO` markiert, Reflexion und Team-Angaben nicht selbst
-  ausfüllen. **Neuer Eintrag in `entwicklungsverlauf.md` → im Wiki unter
-  `Entwicklungsverlauf.md` eine Karte ergänzen und Zeitleiste, Diagramme und
+  ausfüllen. **Neuer Eintrag in `entwicklungsverlauf.md` → in
+  `wiki/Entwicklungsverlauf.md` eine Karte ergänzen und Zeitleiste, Diagramme und
   Zahlen (Schritte, Sitzungen, auch auf `Home.md`) anpassen.
   Ändert sich Verhalten, Zeit, Pin oder Code in der Firmware →
   `Funktionsbeschreibung.md` (Zustandsdiagramm), `Aufbau-und-Schaltplan.md`,

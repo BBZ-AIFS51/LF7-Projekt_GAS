@@ -1,0 +1,44 @@
+# Publishes the wiki/ folder to the GitHub wiki (BBZ-AIFS51/LF7-Projekt_GAS.wiki.git).
+# wiki/ is the source: pages edited in the wiki web editor are overwritten on
+# the next run. Pages deleted from wiki/ are deleted from the wiki too.
+name: Wiki veröffentlichen
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "wiki/**"
+      - ".github/workflows/wiki.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write   # lets github.token push to the .wiki.git repo
+
+concurrency:
+  group: wiki
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Push wiki/ to the GitHub wiki
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git clone --depth 1 "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.wiki.git" "$RUNNER_TEMP/wiki"
+          # mirror: drop everything except .git, then copy wiki/ in
+          find "$RUNNER_TEMP/wiki" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R wiki/. "$RUNNER_TEMP/wiki/"
+          cd "$RUNNER_TEMP/wiki"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Wiki is already up to date."
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -m "Update wiki from ${GITHUB_SHA::7}"
+          git push origin HEAD:master

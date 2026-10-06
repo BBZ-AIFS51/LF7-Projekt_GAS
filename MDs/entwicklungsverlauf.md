@@ -713,6 +713,42 @@ Anhang erlaubt ist. Fehlerton weiterhin 2 s statt der geforderten 3 s.
 
 ---
 
+## 19. Prompt — Wiki automatisch veröffentlichen (06.10.2026)
+
+Vorher: Claude Code kann aus der Cloud-Sitzung nicht direkt ins Wiki-Repo
+pushen, die Seiten mussten als ZIP von Hand hochgeladen werden. Auf die Frage
+
+> wie kann ich am besten die wiki aktualisieren, ohne alles manuell auf github
+> zu pasten
+
+kam der Vorschlag, die Seiten im Repo abzulegen und per GitHub Action zu
+veröffentlichen. Dann:
+
+> Ja dann mach das, also setze es um mit dem workflow usw
+
+### Antwort
+
+- **[../wiki/](../wiki/)** enthält jetzt alle 18 Wiki-Seiten (Stand aus
+  Eintrag 18). Jede Seite beginnt mit einem HTML-Kommentar, dass sie aus
+  diesem Ordner erzeugt wird, die Fußzeile hat einen Link „Wiki bearbeiten“.
+- **[../.github/workflows/wiki.yml](../.github/workflows/wiki.yml)** läuft bei
+  jedem Push nach `main`, der `wiki/` ändert (oder von Hand über „Run
+  workflow“): Wiki-Repo klonen, `wiki/` hineinspiegeln (alles außer `.git` löschen, dann kopieren),
+  committen, pushen. Kein fremdes Action-Paket, nur der eingebaute
+  `github.token` mit `contents: write`. Ohne Änderungen wird nichts committet.
+- Weil gespiegelt wird, verschwinden die umbenannten alten Seiten
+  (Projektauftrag, Umsetzung, Fazit und Reflexion) beim ersten Lauf aus dem
+  Wiki.
+- Hinweise in den Seiten angepasst: eigene Bilder nach `wiki/images/`, Einbindung
+  per `raw.githubusercontent.com`-URL.
+- [../CLAUDE.md](../CLAUDE.md) und README beschreiben den neuen Ablauf.
+
+**Wichtig fürs Team:** Das Wiki ab jetzt nur noch im Ordner `wiki/` bearbeiten
+(auf GitHub: Datei öffnen → Stift-Symbol). Änderungen im Wiki-Web-Editor werden
+beim nächsten Lauf überschrieben.
+
+---
+
 ## Anhang — Stand der Dateien
 
 | Datei | Zweck |

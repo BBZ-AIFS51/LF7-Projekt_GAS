@@ -1,0 +1,2 @@
+<!-- Diese Seite wird automatisch aus dem Ordner wiki/ im Repository erzeugt. Änderungen im Wiki-Editor werden beim nächsten Abgleich überschrieben. Bearbeiten: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/wiki -->
+<sub>Projekt GAS · Lernfeld 7 · BBZ-AIFS51 · 2026 · [Repository](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS) · [3D-Modell](https://bbz-aifs51.github.io/LF7-Projekt_GAS/) · Lizenz: MIT · [✏️ Wiki bearbeiten](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/wiki)</sub>
