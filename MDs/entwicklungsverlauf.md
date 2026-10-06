@@ -621,6 +621,49 @@ und die Anlage ist wieder scharf (so in Eintrag 1 gewünscht).
 
 ---
 
+## 17. Prompt — Projekt-Wiki (06.10.2026)
+
+Vorher in derselben Sitzung: Vorschläge, wie man das GitHub-Wiki sinnvoll
+nutzen kann, ein Plan für die Projektdokumentation und welche
+Gestaltungsmittel das Wiki erlaubt. Dann:
+
+> Wiki page ist erstellt. Tob dich aus.
+>
+> Plane erst genau was du reinpacken willst, damit nichts vergessen wird.
+> Packe platzhalter für dinge rein die wir später reinschreiben sollen. Halte
+> dich an die vorgaben der claude.md im repository.
+>
+> Die Reflexion schreiben wir später, packe einen platzhalter rein
+> Der Entwicklungsverlauf aus entwicklungsverlauf.md ist wichtig. Er soll schön
+> visualisiert in der Wiki auftauchen.
+
+### Antwort
+
+Das Wiki (eigenes Git-Repo `LF7-Projekt_GAS.wiki.git`) enthält jetzt die
+Projektdokumentation auf Deutsch: Home, Projektauftrag, Team und Rollen,
+Zeitplan, Kosten, Umsetzung, Entwicklungsverlauf, KI-Einsatz, Fazit und
+Reflexion, dazu Seitenleiste und Fußzeile.
+
+- **Keine doppelte Technik-Doku:** Pins, Code und Bauanleitung bleiben im
+  Repository, das Wiki verlinkt darauf. Bilder werden direkt aus dem Repo
+  eingebunden, nicht kopiert.
+- **Entwicklungsverlauf:** Zeitleiste nach Sitzungen, ein Diagramm, wie die
+  Prompts aufeinander aufbauen, Verteilung nach Themen und pro Prompt eine
+  Karte (Anlass, Prompt im Wortlaut zum Aufklappen, Ergebnis, offene Punkte,
+  Link auf den vollen Eintrag hier).
+- **Diagramme** als Mermaid direkt im Wiki: Gantt-Diagramm (Ist-Ablauf),
+  Systemüberblick, Zustandsautomat, Arbeitsablauf mit der KI.
+- **Platzhalter** (`✏️ TODO`) für alles, was nur das Team weiß: Team und
+  Rollen, Projektauftrag im Wortlaut, Preise, Soll-Zeitplan, Fotos und die
+  Reflexion.
+- [../CLAUDE.md](../CLAUDE.md) beschreibt das Wiki jetzt und sagt, was bei
+  Änderungen mitgezogen werden muss. Die README verlinkt es.
+
+**Offener Punkt:** Die Prompts 1–6 sind hier nicht einzeln datiert. Im
+Gantt-Diagramm stehen sie deshalb als ein Zeitraum vom 08.09. bis 22.09.
+
+---
+
 ## Anhang — Stand der Dateien
 
 | Datei | Zweck |
