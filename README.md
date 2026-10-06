@@ -136,6 +136,7 @@ sketch. To use it offline, just open
 | [docs/](docs/) | animated README graphics (SVG), the 3D viewer (`docs/viewer/`) and the social preview image |
 | [Gehaeuse/](Gehaeuse/) | 3D-printable case: OpenSCAD model, STL files, pictures |
 | [tools/](tools/) | scripts that put the STLs into the viewer and render the pictures |
+| [wiki/](wiki/) | source of the project wiki (German), published automatically by `.github/workflows/wiki.yml` |
 | [MDs/](MDs/) | docs (German): [hardware spec](MDs/aufbau.md), [user manual](MDs/anleitung.md), [development log](MDs/entwicklungsverlauf.md) |
 | [Anleitung/](Anleitung/) | user manual as a PDF |
 | [Schaltplan/](Schaltplan/) | schematic (PNG/SVG) |
@@ -146,7 +147,8 @@ The firmware was written together with Claude Code. Every prompt and answer is
 logged (in German) in [MDs/entwicklungsverlauf.md](MDs/entwicklungsverlauf.md).
 The school project documentation (assignment, team, schedule, costs, a visual
 timeline of the development log, reflection) lives in the
-[project wiki](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/wiki) (German).
+[project wiki](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/wiki) (German). Its pages
+are edited in [wiki/](wiki/); every push to `main` publishes them to the wiki.
 
 ## License
 
