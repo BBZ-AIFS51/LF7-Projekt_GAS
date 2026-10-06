@@ -1043,3 +1043,4 @@ void drawCross(int cx, int cy, uint16_t fg) {
     display.drawLine(cx - 20, cy + 20 + i, cx + 20, cy - 20 + i, fg);
   }
 }
+//Hugo war hier
