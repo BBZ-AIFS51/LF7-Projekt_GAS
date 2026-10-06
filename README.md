@@ -4,6 +4,7 @@
 
 <p align="center">
   <a href="https://bbz-aifs51.github.io/LF7-Projekt_GAS/"><b>▶ Open the 3D model in your browser</b></a>
+  &nbsp;·&nbsp; <a href="https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/wiki">Project wiki (German)</a>
   &nbsp;·&nbsp; <a href="MDs/anleitung.md">User manual (German)</a>
   &nbsp;·&nbsp; <a href="Schaltplan/SCHALTPLAN.png">Schematic</a>
   &nbsp;·&nbsp; <a href="Code/alarm_system/alarm_system.ino">Firmware</a>
@@ -143,6 +144,9 @@ sketch. To use it offline, just open
 
 The firmware was written together with Claude Code. Every prompt and answer is
 logged (in German) in [MDs/entwicklungsverlauf.md](MDs/entwicklungsverlauf.md).
+The school project documentation (assignment, team, schedule, costs, a visual
+timeline of the development log, reflection) lives in the
+[project wiki](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/wiki) (German).
 
 ## License
 

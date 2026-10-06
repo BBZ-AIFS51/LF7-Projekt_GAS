@@ -55,6 +55,19 @@ Bewegungssensor erkennt Anwesenheit.
   Abhängigkeiten), `render.mjs` (rendert `Gehaeuse/bilder/*.png` und das Social
   Preview und `docs/banner.svg` über den Viewer, braucht Playwright + Chromium),
   `social-preview.html` und `banner.svg` (Vorlagen für Social Preview und Banner).
+- **Wiki** — nicht in diesem Repo, sondern eigenes Git-Repo
+  `https://github.com/BBZ-AIFS51/LF7-Projekt_GAS.wiki.git` (Branch `master`,
+  wird direkt gepusht). Projektdokumentation für die Schule, auf **Deutsch**:
+  Auftrag, Team, Zeitplan, Kosten, Umsetzung, Entwicklungsverlauf, KI-Einsatz,
+  Fazit. Keine Technik-Doku duplizieren (Pins, Code, Bauanleitung nur
+  verlinken), Bilder per `raw.githubusercontent.com`-URL aus diesem Repo
+  einbinden. Platzhalter fürs Team sind mit `✏️ TODO` markiert, Reflexion und
+  Team-Angaben nicht selbst ausfüllen. **Neuer Eintrag in
+  `entwicklungsverlauf.md` → im Wiki unter `Entwicklungsverlauf.md` eine Karte
+  ergänzen und Zeitleiste, Diagramme und Zahlen (Prompts, Sitzungen, auch auf
+  `Home.md`) anpassen.
+  Ändert sich Verhalten oder Zeit in der Firmware → Zustandsdiagramm in
+  `Umsetzung.md` mitziehen.**
 
 ## Angeschlossene Bauteile & Pin-Belegung
 
