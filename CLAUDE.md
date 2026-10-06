@@ -57,17 +57,25 @@ Bewegungssensor erkennt Anwesenheit.
   `social-preview.html` und `banner.svg` (Vorlagen für Social Preview und Banner).
 - **Wiki** — nicht in diesem Repo, sondern eigenes Git-Repo
   `https://github.com/BBZ-AIFS51/LF7-Projekt_GAS.wiki.git` (Branch `master`,
-  wird direkt gepusht). Projektdokumentation für die Schule, auf **Deutsch**:
-  Auftrag, Team, Zeitplan, Kosten, Umsetzung, Entwicklungsverlauf, KI-Einsatz,
-  Fazit. Keine Technik-Doku duplizieren (Pins, Code, Bauanleitung nur
-  verlinken), Bilder per `raw.githubusercontent.com`-URL aus diesem Repo
-  einbinden. Platzhalter fürs Team sind mit `✏️ TODO` markiert, Reflexion und
-  Team-Angaben nicht selbst ausfüllen. **Neuer Eintrag in
-  `entwicklungsverlauf.md` → im Wiki unter `Entwicklungsverlauf.md` eine Karte
-  ergänzen und Zeitleiste, Diagramme und Zahlen (Prompts, Sitzungen, auch auf
-  `Home.md`) anpassen.
-  Ändert sich Verhalten oder Zeit in der Firmware → Zustandsdiagramm in
-  `Umsetzung.md` mitziehen.**
+  wird direkt gepusht). Projektdokumentation für die Schule, auf **Deutsch**,
+  aufgebaut nach den zehn Kapiteln der Lehrkraft-Vorgabe (Seitenleiste
+  nummeriert): `Home` (Deckblatt), `Idee-und-Zielsetzung`,
+  `Funktionsbeschreibung`, `Verwendete-Bauteile`, `Aufbau-und-Schaltplan`,
+  `Sourcecode`, `Wichtige-Codeabschnitte`, `Herausforderungen`,
+  `Fazit-und-Ausblick`, `Quellenverzeichnis`; Anhang: Team, Zeitplan, Kosten,
+  Projektphasen, Entwicklungsverlauf, KI-Einsatz. **Vorgabe: Prompts werden
+  im Wiki nicht abgedruckt** — dort heißen sie „Schritt“ und werden nur
+  zusammengefasst. Pin-Zuordnung und kurze Code-Auszüge mit Erklärung gehören
+  laut Vorgabe ins Wiki, der vollständige Code nicht. Bilder per
+  `raw.githubusercontent.com`-URL aus diesem Repo einbinden. Platzhalter fürs
+  Team sind mit `✏️ TODO` markiert, Reflexion und Team-Angaben nicht selbst
+  ausfüllen. **Neuer Eintrag in `entwicklungsverlauf.md` → im Wiki unter
+  `Entwicklungsverlauf.md` eine Karte ergänzen und Zeitleiste, Diagramme und
+  Zahlen (Schritte, Sitzungen, auch auf `Home.md`) anpassen.
+  Ändert sich Verhalten, Zeit, Pin oder Code in der Firmware →
+  `Funktionsbeschreibung.md` (Zustandsdiagramm), `Aufbau-und-Schaltplan.md`,
+  `Sourcecode.md` (Konstanten) und die Auszüge in
+  `Wichtige-Codeabschnitte.md` mitziehen.**
 
 ## Angeschlossene Bauteile & Pin-Belegung
 
@@ -89,8 +97,8 @@ Bewegungssensor erkennt Anwesenheit.
 | Alle übrigen VCC | 5V |
 | Alle GND | GND |
 
-Damit ist die Pinbelegung des Uno vollständig ausgereizt — nur noch D0/D1
-(Serial) sind frei.
+Damit ist die Pinbelegung des Uno fast ausgereizt — frei sind nur noch A3 und
+D0/D1 (Serial).
 
 Raw-Pin-Mapping fürs Keypad (nicht ändern, außer die Verdrahtung ändert sich):
 

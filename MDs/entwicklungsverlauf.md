@@ -664,6 +664,55 @@ Gantt-Diagramm stehen sie deshalb als ein Zeitraum vom 08.09. bis 22.09.
 
 ---
 
+## 18. Prompt — Projektdoku nach den Vorgaben (06.10.2026)
+
+Mit angehängt: die Vorgaben der Lehrkraft „Projektdokumentation und
+Präsentation“ (zehn Kapitel von Deckblatt bis Quellenverzeichnis, Regeln zum
+KI-Einsatz, Ablauf der Präsentation).
+
+> Das hier sind unsere Projektvorgaben. Du kannst ja in der Wiki nochmal den
+> Rest vervollständigen den du da noch raus nehmen kannst.
+>
+> Entwerfe einen Plan/Idee wie man die ganze abgabe des Projekts gestalten
+> könnte
+
+### Antwort
+
+Das Wiki folgt jetzt den zehn Kapiteln der Vorgabe. Seitenleiste und
+Startseite sind danach nummeriert, jede Kapitelseite hat Vor-/Zurück-Links.
+
+| Kapitel | Wiki-Seite |
+|---|---|
+| 1 Deckblatt | `Home` (Titel, Gruppe, Klasse, Datum als ✏️ TODO) |
+| 2 Idee und Zielsetzung | `Idee-und-Zielsetzung` (vorher `Projektauftrag`) |
+| 3 Funktionsbeschreibung | `Funktionsbeschreibung` (neu: Alltag, Zustände, Rückmeldungen, Admin-Menü) |
+| 4 Verwendete Bauteile | `Verwendete-Bauteile` (neu) |
+| 5 Aufbau und Schaltplan | `Aufbau-und-Schaltplan` (neu: Schaltplan, Pin-Zuordnung, Platz fürs Foto) |
+| 6 Sourcecode | `Sourcecode` (neu: Dateiliste, Konstanten) |
+| 7 Wichtige Codeabschnitte | `Wichtige-Codeabschnitte` (neu: 8 Abschnitte mit kurzen Auszügen) |
+| 8 Herausforderungen | `Herausforderungen` (neu: Situation, Ursache, Lösung pro Bauteil) |
+| 9 Fazit und Ausblick | `Fazit-und-Ausblick` (vorher `Fazit-und-Reflexion`) |
+| 10 Quellenverzeichnis | `Quellenverzeichnis` (neu) |
+
+Team, Zeitplan, Kosten, Projektphasen (vorher `Umsetzung`), Entwicklungsverlauf
+und KI-Einsatz stehen als Anhang.
+
+- **Prompts nicht abdrucken:** Die Vorgabe verbietet Prompts in der
+  Dokumentation. Die Prompts im Wortlaut sind aus dem Wiki entfernt, die
+  Karten im Entwicklungsverlauf heißen „Schritt“ statt „Prompt“.
+- **Technik im Wiki:** Die Vorgabe verlangt Pin-Zuordnung und Code-Erklärungen
+  in der Dokumentation. Die Regel „keine Technik-Doku im Wiki“ in
+  [../CLAUDE.md](../CLAUDE.md) ist entsprechend angepasst.
+- **Korrektur:** Neben D0/D1 ist am Uno auch A3 noch frei (CLAUDE.md und
+  README sagten „nur D0/D1“).
+- Dazu ein Vorschlag für die gesamte Abgabe (Abgabepaket, Präsentation,
+  Live-Demo), nur im Chat.
+
+**Offene Punkte:** Klären, ob dieses Protokoll mit den Prompts im Wortlaut als
+Anhang erlaubt ist. Fehlerton weiterhin 2 s statt der geforderten 3 s.
+
+---
+
 ## Anhang — Stand der Dateien
 
 | Datei | Zweck |
