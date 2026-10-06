@@ -57,7 +57,7 @@ and as a PDF in [Anleitung/](Anleitung/Mini%20Security%20System%20Manual.pdf).
 | 9 V battery | barrel jack | power supply |
 
 All other VCC pins go to 5 V, all GND pins to a common ground. This uses up
-every pin on the Uno; only D0/D1 (serial) are left free. The full parts list
+almost every pin on the Uno; only A3 and D0/D1 (serial) are left free. The full parts list
 is in [Teile.xlsx](Teile.xlsx).
 
 <p align="center">
