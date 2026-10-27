@@ -1012,6 +1012,8 @@ const fx = { i2c() {}, spi() {}, pir() {} };
 
 function buildScene() {
   const V = (x, y, z) => new THREE.Vector3(x, y, z);
+  // false if the object or any of its parents is hidden (other tab, hidden case)
+  const isShown = (o) => { for (let q = o; q; q = q.parent) if (!q.visible) return false; return true; };
   const UP = V(0, 1, 0);
   const stage = $('#stage');
   const canvas = $('#c');
@@ -1550,23 +1552,35 @@ function buildScene() {
     wires.push(w);
     return w;
   }
-  const kpDir = V(0, 0.55, 1);
-  const rowWires = [], colWires = [];
+  // Uno pin -> keypad / module pin, shared by the Breadboard and Enclosure tabs:
+  // change a pin here and both follow. Fields: signal group (animated pulses),
+  // Uno pin, module, module pin, color, title, text, breadboard-only direction.
   const KP_COLORS = [0x86efac, 0xa78bfa, 0xbef264, 0xf0abfc, 0x5eead4, 0x60a5fa, 0x84cc16, 0x2dd4bf];
-  ['D9', 'D8', 'D7', 'D6'].forEach((p, i) => rowWires.push(wire(unoPin(p), kpPins[i], KP_COLORS[i], p + ' ↔ R' + (i + 1), 'Keypad row ' + (i + 1) + ' (INPUT_PULLUP)', kpDir)));
-  ['D5', 'D4', 'D3', 'D2'].forEach((p, i) => colWires.push(wire(unoPin(p), kpPins[4 + i], KP_COLORS[4 + i], p + ' ↔ C' + (i + 1), 'Keypad column ' + (i + 1) + ' (pulled LOW during the scan)', kpDir)));
-  const wSDA = wire(unoPin('A4'), oledPins.SDA, 0xfb7185, 'A4 → SDA', 'I²C data to the OLED');
-  const wSCL = wire(unoPin('A5'), oledPins.SCL, 0xe879f9, 'A5 → SCL', 'I²C clock to the OLED');
-  const spi = [
-    wire(unoPin('D11'), rcPins.MOSI, 0x22d3ee, 'D11 → MOSI', 'SPI, Uno → RC522'),
-    wire(unoPin('D12'), rcPins.MISO, 0x34d399, 'D12 ← MISO', 'SPI, RC522 → Uno'),
-    wire(unoPin('D13'), rcPins.SCK, 0xa3e635, 'D13 → SCK', 'SPI clock (the L LED is on D13 too)'),
-    wire(unoPin('A0'), rcPins.SDA, 0xfb923c, 'A0 → SDA/SS', 'Chip select of the RC522'),
-    wire(unoPin('A1'), rcPins.RST, 0xf472b6, 'A1 → RST', 'Reset of the RC522 (key B = soft reset)')
+  const KP_WIRES = ['D9', 'D8', 'D7', 'D6', 'D5', 'D4', 'D3', 'D2'].map((pin, i) => ({
+    pin, color: KP_COLORS[i],
+    title: pin + ' ↔ ' + (i < 4 ? 'R' + (i + 1) : 'C' + (i - 3)),
+    text: i < 4 ? 'Keypad row ' + (i + 1) + ' (INPUT_PULLUP)' : 'Keypad column ' + (i - 3) + ' (pulled LOW during the scan)'
+  }));
+  const MODULE_WIRES = [
+    ['sda', 'A4', 'oled', 'SDA', 0xfb7185, 'A4 → SDA', 'I²C data to the OLED'],
+    ['scl', 'A5', 'oled', 'SCL', 0xe879f9, 'A5 → SCL', 'I²C clock to the OLED'],
+    ['spi', 'D11', 'rc', 'MOSI', 0x22d3ee, 'D11 → MOSI', 'SPI, Uno → RC522'],
+    ['spi', 'D12', 'rc', 'MISO', 0x34d399, 'D12 ← MISO', 'SPI, RC522 → Uno'],
+    ['spi', 'D13', 'rc', 'SCK', 0xa3e635, 'D13 → SCK', 'SPI clock (the L LED is on D13 too)'],
+    ['spi', 'A0', 'rc', 'SDA', 0xfb923c, 'A0 → SDA/SS', 'Chip select of the RC522'],
+    ['spi', 'A1', 'rc', 'RST', 0xf472b6, 'A1 → RST', 'Reset of the RC522 (key B = soft reset)'],
+    [null, '3V3', 'rc', '3.3V', 0xfca5a5, '3.3 V → RC522', '3.3 V only! 5 V destroys the module'],
+    [null, 'GND1', 'rc', 'GND', 0x475569, 'GND → RC522', 'Ground'],
+    ['buz', 'D10', 'buz', 'S', 0xfacc15, 'D10 → Buzzer S', 'tone() puts the square wave on this pin', V(0, 0.4, 1)]
   ];
-  wire(unoPin('3V3'), rcPins['3.3V'], 0xfca5a5, '3.3 V → RC522', '3.3 V only! 5 V destroys the module');
-  wire(unoPin('GND1'), rcPins.GND, 0x475569, 'GND → RC522', 'Ground');
-  const wBuz = wire(unoPin('D10'), buzPins.S, 0xfacc15, 'D10 → Buzzer S', 'tone() puts the square wave on this pin', V(0, 0.4, 1));
+  const kpDir = V(0, 0.55, 1);
+  const kpBb = KP_WIRES.map((k, i) => wire(unoPin(k.pin), kpPins[i], k.color, k.title, k.text, kpDir));
+  const bbModules = { oled: oledPins, rc: rcPins, buz: buzPins };
+  const bbSig = { sda: [], scl: [], spi: [], buz: [] };
+  MODULE_WIRES.forEach(([group, pin, mod, to, color, title, text, dir]) => {
+    const w = wire(unoPin(pin), bbModules[mod][to], color, title, text, dir);
+    if (group) bbSig[group].push(w);
+  });
   const wPir = wire(unoPin('A2'), pirPins.OUT, 0xf97316, 'A2 ← PIR OUT', 'HIGH on motion (was D11, which is MOSI now)');
   wire(unoPin('5V'), railPin(-3.0, '5V'), 0xdc2626, '5V → rail', '5 V supply for the OLED, buzzer and PIR');
   wire(unoPin('GND'), railPin(-3.6, 'GND'), 0x475569, 'GND → rail', 'common ground');
@@ -1602,8 +1616,8 @@ function buildScene() {
     w.glow = 1;
   }
   const sig = {
-    sda: [wSDA], scl: [wSCL], spi: [spi], buz: [wBuz], pir: [[wPir, true, 600]],
-    rows: [rowWires], cols: [colWires]
+    sda: bbSig.sda, scl: bbSig.scl, spi: [bbSig.spi], buz: bbSig.buz, pir: [[wPir, true, 600]],
+    rows: [kpBb.slice(0, 4)], cols: [kpBb.slice(4)]
   };
   let lastI2c = 0;
   fx.i2c = () => {
@@ -1762,7 +1776,7 @@ function buildScene() {
     const deg = Math.PI / 180;
     // layout of the case, same formulas as in Gehaeuse/gehaeuse.scad (mm)
     const G = {
-      wall: 2.4, floor_t: 2.4, lid_t: 2.4, cu_w: 90, cu_depth: 40, keypad_w: 69.5, keypad_h: 77,
+      wall: 2.4, floor_t: 2.4, lid_t: 2.4, cu_w: 90, cu_depth: 40, keypad_h: 77,
       ribbon_slot_h: 4, rfid_h: 40, oled_w: 36, oled_h: 34, guide_t: 1.2, fit: 0.25, uno_standoff_h: 5,
       su_w: 52, su_h: 44, su_depth: 30, pir_post_h: 3, su_angle: 60, wedge_min: 5, cable_y: 145
     };
@@ -1986,23 +2000,19 @@ function buildScene() {
     const hole = (col, row) => ({ o: cu, p: mbHole(col, row), d: V(0, 0, 1) });
     const cw = (a, b, color, title, text) => caseWire(cu, a, b, color, title, text);
 
-    const KP_COLORS = [0x86efac, 0xa78bfa, 0xbef264, 0xf0abfc, 0x5eead4, 0x60a5fa, 0x84cc16, 0x2dd4bf];
-    const cRows = ['D9', 'D8', 'D7', 'D6'].map((p, i) => cw(uPin(p), kpPlug[i], KP_COLORS[i], p + ' ↔ R' + (i + 1), 'Keypad row ' + (i + 1) + ' (INPUT_PULLUP)'));
-    const cCols = ['D5', 'D4', 'D3', 'D2'].map((p, i) => cw(uPin(p), kpPlug[4 + i], KP_COLORS[4 + i], p + ' ↔ C' + (i + 1), 'Keypad column ' + (i + 1) + ' (pulled LOW during the scan)'));
-    sig.rows.push(cRows);
-    sig.cols.push(cCols);
-    sig.sda.push(cw(uPin('A4'), mPin(cOled, 'SDA'), 0xfb7185, 'A4 → SDA', 'I²C data to the OLED'));
-    sig.scl.push(cw(uPin('A5'), mPin(cOled, 'SCL'), 0xe879f9, 'A5 → SCL', 'I²C clock to the OLED'));
-    sig.spi.push([
-      cw(uPin('D11'), mPin(cRc, 'MOSI'), 0x22d3ee, 'D11 → MOSI', 'SPI, Uno → RC522'),
-      cw(uPin('D12'), mPin(cRc, 'MISO'), 0x34d399, 'D12 ← MISO', 'SPI, RC522 → Uno'),
-      cw(uPin('D13'), mPin(cRc, 'SCK'), 0xa3e635, 'D13 → SCK', 'SPI clock (the L LED is on D13 too)'),
-      cw(uPin('A0'), mPin(cRc, 'SDA'), 0xfb923c, 'A0 → SDA/SS', 'Chip select of the RC522'),
-      cw(uPin('A1'), mPin(cRc, 'RST'), 0xf472b6, 'A1 → RST', 'Reset of the RC522 (key B = soft reset)')
-    ]);
-    cw(uPin('3V3'), mPin(cRc, '3.3V'), 0xfca5a5, '3.3 V → RC522', '3.3 V only! 5 V destroys the module');
-    cw(uPin('GND1'), mPin(cRc, 'GND'), 0x475569, 'GND → RC522', 'Ground');
-    sig.buz.push(cw(uPin('D10'), mPin(cBuz, 'S'), 0xfacc15, 'D10 → Buzzer S', 'tone() puts the square wave on this pin'));
+    const kpCase = KP_WIRES.map((k, i) => cw(uPin(k.pin), kpPlug[i], k.color, k.title, k.text));
+    sig.rows.push(kpCase.slice(0, 4));
+    sig.cols.push(kpCase.slice(4));
+    const caseModules = { oled: cOled, rc: cRc, buz: cBuz };
+    const caseSig = { sda: [], scl: [], spi: [], buz: [] };
+    MODULE_WIRES.forEach(([group, pin, mod, to, color, title, text]) => {
+      const w = cw(uPin(pin), mPin(caseModules[mod], to), color, title, text);
+      if (group) caseSig[group].push(w);
+    });
+    sig.sda.push(...caseSig.sda);
+    sig.scl.push(...caseSig.scl);
+    sig.spi.push(caseSig.spi);
+    sig.buz.push(...caseSig.buz);
     cw(uPin('5V'), hole(MB5V, 0), 0xdc2626, '5V → breadboard', '5 V for the OLED, buzzer and motion sensor');
     cw(uPin('GND'), hole(MBGND, 0), 0x475569, 'GND → breadboard', 'common ground');
     cw(hole(MB5V, 1), mPin(cOled, 'VCC'), 0xdc2626, '5V → OLED VCC', '');
@@ -2064,7 +2074,7 @@ function buildScene() {
     const jacket = new THREE.Mesh(new THREE.BufferGeometry(), mat(0x3a4150, { roughness: 0.55 }));
     jacket.castShadow = true;
     caseRoot.add(jacket);
-    const wCable = { color: 0xf97316, mat: jacket.material, glow: 0, parent: caseRoot, curve: null, pulseScale: 1.3, noGlow: true };
+    const wCable = { color: 0xf97316, parent: caseRoot, curve: null, pulseScale: 1.3 };
     part(jacket, '3-wire cable', '5 V, GND and OUT → A2 · through the back of the control unit and the wall (Ø 8 mm) to the sensor unit');
     function layoutCable() {
       const P = (o, x, y, z) => inFrame(o, V(x, y, z), caseRoot);
@@ -2182,8 +2192,7 @@ function buildScene() {
       obj.updateMatrixWorld(true);
       const box3 = new THREE.Box3(), b = new THREE.Box3();
       obj.traverse((o) => {
-        if (!o.isMesh) return;
-        for (let q = o; q; q = q.parent) if (!q.visible) return;
+        if (!o.isMesh || !isShown(o)) return;
         if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
         box3.union(b.copy(o.geometry.boundingBox).applyMatrix4(o.matrixWorld));
       });
@@ -2324,9 +2333,8 @@ function buildScene() {
     ray.setFromCamera(ndc, camera);
     const hits = ray.intersectObjects(parts, true);
     for (const h of hits) {
-      let o = h.object, shown = true;
-      for (let q = o; q; q = q.parent) if (!q.visible) shown = false;   // other tab / hidden case
-      if (!shown) continue;
+      let o = h.object;
+      if (!isShown(o)) continue;
       while (o && !o.userData.part) o = o.parent;
       if (!o) continue;
       if (o.userData.part.housing && caseApi.mode !== 'solid') continue;  // look through the X-ray case
@@ -2622,10 +2630,9 @@ function buildScene() {
   function frameCamera(c) {
     const pts = [], corner = V(0, 0, 0);
     caseRoot.traverse((o) => {
-      if (!o.isMesh) return;
-      for (let q = o; q; q = q.parent) if (!q.visible) return;
+      if (!o.isMesh || !isShown(o)) return;
       if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
-      const b = o.geometry.boundingBox;
+      const b =o.geometry.boundingBox;
       for (let i = 0; i < 8; i++) {
         corner.set(i & 1 ? b.max.x : b.min.x, i & 2 ? b.max.y : b.min.y, i & 4 ? b.max.z : b.min.z);
         pts.push(corner.clone().applyMatrix4(o.matrixWorld));

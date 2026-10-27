@@ -132,8 +132,9 @@ symmetrisch, das Rückteil passt in beiden Lagen. Den Winkel kann man über
 
 ![Explosionsansicht](../Gehaeuse/bilder/explosion.png)
 
-Alle Bilder auf dieser Seite rendert [../tools/render.mjs](../tools/render.mjs) aus dem
-3D-Viewer, also aus genau den STL-Dateien, die gedruckt werden.
+Alle Bilder auf dieser Seite außer `montage.svg` (von Hand gezeichnet) rendert
+[../tools/render.mjs](../tools/render.mjs) aus dem 3D-Viewer, also aus genau den
+STL-Dateien, die gedruckt werden.
 
 | Datei | Teil | Druckzeit (ca.) | Material (ca.) |
 |---|---|---|---|

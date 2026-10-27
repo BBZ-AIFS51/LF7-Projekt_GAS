@@ -31,7 +31,9 @@ Bewegungssensor erkennt Anwesenheit.
   aus Datenblättern, nicht vom echten Aufbau. **Ändert sich ein Bauteil oder
   dessen Position, STLs neu exportieren, danach `node tools/stl2viewer.mjs` und
   `node tools/render.mjs`** (Viewer-Daten und Bilder, s. `tools/`). Die Bilder in
-  `bilder/` sind gerendert, nicht von Hand bearbeiten (Ausnahme: `montage.svg`).
+  `bilder/` sind gerendert, nicht von Hand bearbeiten (Ausnahme: `montage.svg`,
+  von Hand gezeichnet; bei Änderung am Sensor-Keil oder der Sensorposition
+  von Hand nachziehen).
 - `Teile.xlsx` — Bauteilliste
 - `docs/` — README-Grafiken als animierte SVGs (`how-it-works.svg`, `wiring.svg`
   handgeschrieben, CSS-Animationen; `banner.svg` wird von `tools/render.mjs` aus
@@ -191,7 +193,9 @@ statisches SRAM (im Wesentlichen die `Uid`-Struktur), Flash rund 5–7 kB.
   gespeicherte Karte an den RC522 halten. Beide laufen über `accessGranted()` /
   `accessDenied()`, 3 Fehlversuche (falsche PIN oder unbekannte Karte) lösen
   den Alarm aus. Während ALARM werden falsche PIN/Karten ignoriert (kein
-  Fehlerton, Sirene läuft weiter) — nur richtige PIN oder Karte beendet ihn.
+  Fehlerton, Sirene läuft weiter) — nur richtige PIN oder Karte beendet ihn
+  vorzeitig. Ohne Eingabe endet der Alarm nach `ALARM_MS` (30 s) von selbst,
+  die Anlage bleibt danach SCHARF.
   **RFID-Rechtevergabe (Admin-Modus):** Erlaubte UIDs stehen nicht mehr fest
   im Code, sondern im internen EEPROM des Uno (`loadUidsFromEeprom()` /
   `saveUidsToEeprom()`, Layout: Magic-Byte, Anzahl, dann `UID_LEN`-Byte-Blöcke)

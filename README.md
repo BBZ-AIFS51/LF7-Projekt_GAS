@@ -25,7 +25,7 @@ the device, no PC needed.
 
 - **Two ways to arm and disarm:** PIN + `#` on the keypad, or a stored RFID card. Both do exactly the same thing.
 - **Exit delay:** After arming you have 10 s to leave the room. The buzzer beeps once per second in the meantime.
-- **Alarm:** It starts on motion (only while ARMED) or after **3 wrong tries** (wrong PIN or unknown card). The siren runs for 30 s or until the correct PIN or a known card is used.
+- **Alarm:** It starts on motion (only while ARMED) or after **3 wrong tries** (wrong PIN or unknown card). The siren runs for 30 s or until the correct PIN or a known card is used. Wrong entries during an alarm are ignored (no feedback, the siren keeps going).
 - **Feedback:** A bright double tone means OK, a rough buzz means an error. The PIN only shows up as `*`, and a wrong entry briefly shows a ✖.
 - **Admin menu on the device:** `A` + admin PIN + `#` opens it. There you add cards (just hold them to the reader), or browse and delete the stored ones. Cards live in the internal EEPROM and survive a new upload.
 - **RFID reset:** `B` restarts the RC522 in case a clone module hangs.
