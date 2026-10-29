@@ -19,7 +19,7 @@ Wie das Projekt geplant war und wie es tatsächlich gelaufen ist.
 | Bauteile besorgen und Aufbau | ✏️ TODO | ✏️ TODO |
 | Firmware Grundfunktion | ✏️ TODO | 08.09.2026 |
 | Erweiterungen (RFID, Admin-Menü) | ✏️ TODO | 22.09.2026 |
-| Gehäuse | ✏️ TODO | ✏️ TODO (Druck) |
+| Gehäuse | ✏️ TODO | gedruckt (Stand 28.10.2026), Einbau läuft |
 | Dokumentation und Präsentation | ✏️ TODO | ✏️ TODO |
 
 ## Tatsächlicher Ablauf (Ist)
@@ -47,6 +47,7 @@ gantt
     section Gehäuse
     Planung und Entwurf (S10)           :done, 2026-09-23, 1d
     Sensor-Keil (S11–S12)               :done, 2026-09-29, 1d
+    Batterie an VIN, Mini-Breadboard (S20) :done, 2026-10-28, 1d
 
     section Dokumentation
     Repository angelegt                 :milestone, 2026-09-22, 0d
@@ -76,5 +77,6 @@ gantt
 | 29.09.2026 | Gehäuse mit 60°-Keil für den Bewegungsmelder |
 | 30.09.2026 | Gehäuse im 3D-Modell, Banner und Social Preview |
 | 06.10.2026 | Bugfix: Falsche Eingabe bricht den Alarm nicht mehr ab · Projekt-Wiki |
-| ✏️ TODO | Gehäuse gedruckt und montiert |
+| 28.10.2026 | Gehäuse gedruckt, Stromversorgung auf Batterie an VIN umgebaut, Steckplan fürs Mini-Breadboard |
+| ✏️ TODO | Gehäuse fertig montiert und getestet |
 | ✏️ TODO | Abgabe und Präsentation |

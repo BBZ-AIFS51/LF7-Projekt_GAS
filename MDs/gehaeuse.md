@@ -24,7 +24,9 @@ Einsteiger: Es wird nichts an Vorwissen über 3D-Druck vorausgesetzt.
    Entsperren vor der Tür steht.
 3. Druckbar ohne Erfahrung: keine Stützstrukturen, passt auf kleine Drucker,
    Befestigung mit einfachen Schrauben und Heißkleber.
-4. Keine Änderung an Firmware oder Verdrahtung nötig.
+4. Keine Änderung an der Firmware nötig. Einzige Änderung an der Verdrahtung:
+   Die 9-V-Batterie hängt an **VIN** statt am Hohlstecker, damit sie mit ins
+   Gehäuse passt (siehe [Stromversorgung](#stromversorgung-9-v-batterie-an-vin)).
 
 ### Konzept: zwei Gehäuse, ein Kabel
 
@@ -64,19 +66,59 @@ Frontplatte.
 | Mitte | RC522 hinter der Frontplatte, Feld „RFID“ eingraviert | vier Eckführungen + Heißkleber. Die Karte liest durch 2,4 mm Kunststoff problemlos |
 | unten | Folien-Keypad **außen aufgeklebt** (Klebefolie auf der Rückseite) | Eckmarken zeigen die Position, das Flachkabel geht durch einen Schlitz direkt darunter |
 | hinten | Arduino Uno auf 4 Abstandshaltern, USB-/Strombuchse zeigt nach unten | 4 Schrauben |
-| hinten, über dem Uno | Platz für ein Mini-Breadboard (5V-/GND-Verteilung) | Klebefolie |
+| hinten, über dem Uno | Mini-Breadboard SYB-170 (Verteilung 5 V, GND, 9 V), zwischen unterem Montageloch und Kabelloch | Klebefolie auf der Unterseite |
+| hinten, links neben dem Breadboard | 9-V-Block auf der schmalen Seite, Clip oben | doppelseitiges Klebeband oder Klettband (zum Wechseln) |
 
 Das RFID-Feld liegt bewusst **nicht** hinter dem Keypad: Die Folientastatur hat
 Leiterbahnen aus Metall, die das Funkfeld stören würden.
 
 Öffnungen im Rückteil:
 
-- unten: Aussparungen für **USB-B** und **Hohlstecker** (Stromversorgung)
+- unten: Aussparungen für **USB-B** (nur zum Hochladen) und **Hohlstecker**.
+  Der Hohlstecker bleibt frei, die Batterie sitzt innen an VIN.
 - Rückwand: **Kabelloch Ø 8 mm** (Kabel direkt durch die Wand zum Sensor)
 - links und rechts: je eine **Kabelkerbe** am Rand (Kabel außen auf der Wand
   verlegt — nimm die Seite, die zur Tür zeigt)
 - Rückwand: 2 **Löcher für die Wandmontage** (Schraubenkopf versenkt, die
   Rückseite bleibt flach — geht also auch mit Klebestreifen)
+
+### Stromversorgung: 9-V-Batterie an VIN
+
+Am Hohlstecker würde der Batterieclip unten aus dem Gehäuse ragen, die Batterie
+hinge außen dran. Deshalb sitzt der **9-V-Block innen** links neben dem
+Breadboard und speist den Uno über den Pin **VIN**. Der Uno macht daraus mit
+seinem eigenen Regler die 5 V für alle Module.
+
+![Steckplan Mini-Breadboard](../Schaltplan/steckplan_gehaeuse.svg)
+
+| Spalte (von links) | Hälfte | Netz | Was steckt drin |
+|---|---|---|---|
+| 13 | oben | +5 V | Brücke vom Uno-Pin 5V, OLED VCC, Buzzer +, Sensorkabel VCC |
+| 15 | oben | GND | Brücke vom Uno-Pin GND, OLED GND, Buzzer −, Sensorkabel GND, **Batterie − (schwarz)** |
+| 17 | unten | +9 V | **Batterie + (rot)**, Brücke zum Uno-Pin **VIN** |
+
+Alle anderen Leitungen (Keypad, OLED SDA/SCL, RC522, Buzzer-Signal, Sensor
+OUT → A2) gehen wie bisher direkt an den Uno, der RC522 bekommt 3,3 V und GND
+direkt vom Uno.
+
+> **Achtung:**
+> - **VIN hat keinen Verpolungsschutz.** Die Schutzdiode sitzt nur hinter dem
+>   Hohlstecker. Rot und schwarz vertauscht = Uno kaputt. Erst prüfen, dann
+>   den Clip auf die Batterie stecken.
+> - **9 V nie in Spalte 13** (5 V) stecken, das zerstört OLED, Buzzer und Sensor.
+> - Die blanken Enden des Batterieclips halten im Breadboard. Sitzen sie zu
+>   locker, je ein Stück Jumper-Kabel anlöten oder mit Schrumpfschlauch
+>   verstärken.
+
+**Ein/Aus und Laufzeit:** Einen Schalter gibt es nicht, ausgeschaltet wird
+durch Abziehen des Clips. Ein frischer 9-V-Block (Alkali) hält grob **3–5
+Stunden** (die Schaltung zieht um die 100 mA). Das reicht für Tests und die
+Vorführung, für Dauerbetrieb nicht. Unter etwa 7 V arbeitet der Spannungsregler
+des Uno nicht mehr sauber, dann Batterie wechseln.
+
+**Hochladen:** USB-Kabel durch die Öffnung unten anstecken, die Batterie darf
+dranbleiben. Der Uno schaltet automatisch auf VIN um, sobald dort mehr als
+etwa 6,6 V anliegen.
 
 ### Sensorteil (innen)
 
@@ -225,8 +267,10 @@ Studio, Orca Slicer oder Cura — je nachdem, welcher Drucker es ist.
 | 2 | Senkkopf-Schraube 3 × 10 mm | Sensor-Rückteil auf den Keil (nicht länger, sonst kommt die Spitze hinten raus) |
 | 4 | Senkkopf-Holzschraube 3,5–4 mm + Dübel | Wandmontage (alternativ: Powerstrips / Montageklebeband) |
 | 1 | 3-adriges Kabel, Länge je nach Weg (ca. 0,3 m durch die Wand, 1,5–2 m außen herum) + Dupont-Stecker | Verbindung zum Sensor |
-| 1 | Mini-Breadboard 170 Kontakte (falls nicht vorhanden) | 5V/GND verteilen |
-| 1 | USB-Netzteil 5 V + USB-B-Kabel | Stromversorgung |
+| 1 | Mini-Breadboard SYB-170 (170 Kontakte) | 5 V, GND und 9 V verteilen |
+| 1 | 9-V-Block (Alkali) + Batterieclip mit offenen Enden | Stromversorgung über VIN |
+| 1 | Klettband oder doppelseitiges Klebeband | Batterie im Rückteil |
+| 1 | USB-B-Kabel | nur zum Hochladen |
 | — | Heißklebepistole | Module fixieren |
 
 ### Schritt 5 — Zusammenbau
@@ -242,11 +286,15 @@ Studio, Orca Slicer oder Cura — je nachdem, welcher Drucker es ist.
    Fenster mittig schieben, dann erst festkleben.
 5. Uno mit 4 Schrauben auf die Abstandshalter im Rückteil schrauben (Buchsen
    zeigen zu den Aussparungen unten).
-6. Mini-Breadboard auf die Rückwand über dem Uno kleben (zwischen den beiden
-   Montagelöchern).
-7. Verkabeln wie bisher (Pin-Tabelle in [../CLAUDE.md](../CLAUDE.md)). Das
-   Sensorkabel durch Kabelloch oder Kerbe hereinführen: 5V, GND, A2.
-8. **Erst testen**, dann Frontplatte aufsetzen und mit 4 Schrauben festziehen.
+6. Mini-Breadboard auf die Rückwand über dem Uno kleben (zwischen dem unteren
+   Montageloch und dem Kabelloch).
+7. 9-V-Block links neben dem Breadboard mit Klettband befestigen, Clip oben.
+8. Verkabeln: Signalleitungen wie bisher direkt an den Uno (Pin-Tabelle in
+   [../CLAUDE.md](../CLAUDE.md)), Strom nach dem
+   [Steckplan](#stromversorgung-9-v-batterie-an-vin). Das Sensorkabel durch
+   Kabelloch oder Kerbe hereinführen: VCC und GND ins Breadboard, OUT an A2.
+   Den Batterieclip **zuletzt** anstecken, vorher Polung prüfen.
+9. **Erst testen**, dann Frontplatte aufsetzen und mit 4 Schrauben festziehen.
    Nicht zu fest — Kunststoffgewinde überdreht leicht.
 
 **Sensorteil:**
@@ -299,8 +347,10 @@ OLED. Wird also z. B. `keypad_h` größer, wächst das Gehäuse mit.
 
 - Alle Modulmaße aus Datenblättern, **nicht am echten Aufbau gemessen**
   (siehe Schritt 1).
-- Noch nicht gedruckt — die Passung (0,3 mm Spiel zwischen Front und Rückteil)
-  ist ein üblicher Wert, kann aber je nach Drucker etwas zu stramm oder zu
-  locker sein. Dann `clr` anpassen.
+- **Gedruckt** (Stand 28.10.2026). Noch offen: ob Frontplatte und Rückteil
+  sauber zusammenpassen (0,3 mm Spiel, sonst `clr` anpassen) und ob alle
+  Module in ihre Führungen passen.
+- Batterie und Mini-Breadboard sind nicht Teil der Druckteile, ihre Lage im
+  Modell (`bb_cy`, `bat_y`) ist ein Vorschlag nach dem Foto vom Aufbau.
 - Die Uno-Maße (Lochbild, Buchsen) sind die offiziellen Maße des Uno R3 und
   sollten stimmen.

@@ -2,7 +2,8 @@
 //
 // Two separate enclosures:
 //   1. Control unit (outside, next to the door frame):
-//      membrane keypad, OLED, RFID-RC522, passive buzzer, Arduino Uno
+//      membrane keypad, OLED, RFID-RC522, passive buzzer, Arduino Uno,
+//      mini breadboard and a 9 V battery (feeds VIN, so it fits inside)
 //   2. Sensor unit (inside the room): HC-SR501 motion sensor
 //
 // Usage (OpenSCAD, free: https://openscad.org):
@@ -53,6 +54,16 @@ oled_win_w = 32;      // window, active area is about 29.4 x 14.7
 oled_win_h = 18;
 buzzer_d = 12;        // buzzer body on the KY-006 style module
 uno_standoff_h = 5;
+
+/* [Inside the control unit - only for the preview, not printed] */
+bb_w = 47;            // mini breadboard SYB-170 (17 x 10 holes)
+bb_h = 35;
+bb_t = 8.5;
+bb_cy = 115;          // centre height: between the lower wall screw and the cable hole
+bat_w = 26.5;         // 9 V block, lies on its narrow side left of the breadboard
+bat_t = 17.5;
+bat_l = 48.5;
+bat_y = 82;           // bottom end, just above the Uno; clip at the top
 
 /* [Sensor unit] */
 su_w = 52;
@@ -224,7 +235,9 @@ module control_back() {
         for (p = UNO_HOLES)
             translate([uno_x + p[0], uno_y + p[1], 0.8])
                 cylinder(d = pilot_d, h = uno_z);
-        // USB-B and power jack openings in the bottom wall
+        // USB-B (uploading) and power jack openings in the bottom wall. The
+        // power jack stays unused, the battery inside feeds VIN. Kept, because
+        // the part is already printed.
         translate([uno_x + 9.34 + 6 - 8, -1, uno_z - 1.5]) cube([16, wall + 2, 14]);
         translate([uno_x + 40.7 + 4.5 - 6, -1, uno_z - 1.5]) cube([12, wall + 2, 14]);
         // wall mounting holes, screw heads inside
@@ -372,6 +385,23 @@ module uno_dummy() {
     color("dimgray") translate([22, 30, 1.6]) cube([10, 35, 3.5]);
 }
 
+// 17 columns of 2 x 5 holes, column 13 = 5 V, 15 = GND, 17 (lower half) = 9 V
+module breadboard_dummy() {
+    color("#eeeeea") difference() {
+        cube([bb_w, bb_h, bb_t]);
+        for (c = [0 : 16], r = [0 : 9])
+            translate([bb_w / 2 + (c - 8) * 2.54, bb_h / 2 + (r < 5 ? 3 + r * 2.54 : -3 - (r - 5) * 2.54), bb_t - 2])
+                cube([1, 1, 3], center = true);
+    }
+}
+
+// lying on its narrow side, terminals and snap clip at the top (+y)
+module battery_dummy() {
+    color("#222") cube([bat_t, bat_l - 17, bat_w]);
+    color("#c27c3a") translate([0, bat_l - 17, 0]) cube([bat_t, 15, bat_w]);
+    color("#111") translate([2, bat_l - 2, 3]) cube([bat_t - 4, 8, bat_w - 6]);
+}
+
 module keypad_dummy() {
     color("#222") cube([keypad_w, keypad_h, 0.8]);
     for (r = [0 : 3], c = [0 : 3])
@@ -412,6 +442,8 @@ module pir_dummy() {
 module control_assembly(lift = 0) {
     color("#e8e8e8") control_back();
     translate([uno_x, uno_y, uno_z]) uno_dummy();
+    translate([cu_cx - bb_w / 2, bb_cy - bb_h / 2, floor_t]) breadboard_dummy();
+    translate([wall + 0.2, bat_y, floor_t]) battery_dummy();
     translate([0, 0, cu_th + lift]) {
         color("#f4b400") control_front();
         translate([kp_x, kp_y, lid_t]) keypad_dummy();

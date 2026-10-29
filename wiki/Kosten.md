@@ -26,9 +26,10 @@ Einkaufsliste in der [Gehäuse-Anleitung](https://github.com/BBZ-AIFS51/LF7-Proj
 | 1 | RFID-Leser mit Karte und Schlüsselanhänger | RC522 (13,56 MHz) | ✏️ | ✏️ € | ✏️ € |
 | 1 | Bewegungsmelder (PIR) | Joy-IT SEN-HC-SR501 | ✏️ | ✏️ € | ✏️ € |
 | 1 | Passiver Buzzer | ✏️ | ✏️ | ✏️ € | ✏️ € |
-| 1 | Breadboard bzw. Mini-Breadboard (170 Kontakte) | ✏️ | ✏️ | ✏️ € | ✏️ € |
+| 1 | Mini-Breadboard 170 Kontakte | SYB-170 | ✏️ | ✏️ € | ✏️ € |
 | 1 | Jumper-Kabel (Set) | ✏️ | ✏️ | ✏️ € | ✏️ € |
-| 1 | Stromversorgung: 9-V-Batterie mit Hohlstecker oder USB-Netzteil 5 V | ✏️ | ✏️ | ✏️ € | ✏️ € |
+| 1 | 9-V-Blockbatterie | Alkali | ✏️ | ✏️ € | ✏️ € |
+| 1 | Batterieclip 9 V mit offenen Enden | ✏️ | ✏️ | ✏️ € | ✏️ € |
 | | | | | **Zwischensumme** | **✏️ €** |
 
 ## Gehäuse
@@ -42,6 +43,7 @@ Einkaufsliste in der [Gehäuse-Anleitung](https://github.com/BBZ-AIFS51/LF7-Proj
 | 2 | Senkkopf-Schraube 3 × 10 mm | Sensor auf Keil | ✏️ | | ✏️ € |
 | 4 | Holzschraube 3,5–4 mm mit Dübel | Wandmontage | ✏️ | | ✏️ € |
 | 1 | 3-adriges Kabel mit Dupont-Steckern | Verbindung zum Sensorteil | ✏️ | | ✏️ € |
+| 1 | Klettband oder doppelseitiges Klebeband | Batterie und Breadboard im Rückteil | ✏️ | | ✏️ € |
 | | | | | **Zwischensumme** | **✏️ €** |
 
 > [!TIP]

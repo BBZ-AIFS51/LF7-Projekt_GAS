@@ -16,8 +16,8 @@ Bezugsquellen stehen im Anhang unter [Kosten](Kosten), die Verdrahtung in
 | 💳 **RFID-Karte und -Anhänger** | MIFARE Classic, 4-Byte-UID | „Schlüssel“ für berechtigte Personen. Welche Karten gelten, wird im Admin-Menü festgelegt. |
 | 👁️ **Bewegungsmelder** | PIR-Sensor HC-SR501 (Joy-IT SEN-HC-SR501), Erfassungswinkel ca. 120°, Reichweite bis ca. 7 m, Ausgang HIGH bei Bewegung | Erkennt, wenn jemand den Raum betritt, und löst im scharfen Zustand den Alarm aus |
 | 🔊 **Buzzer** | Passiver Piezo-Summer | Alle Töne: Tastenklick, Bestätigung, Fehlerton, Piepen der Ausgangsverzögerung, Sirene |
-| 🔋 **Stromversorgung** | 9-V-Batterie mit Hohlstecker (alternativ USB) | Versorgt den Arduino. Alle Module hängen an dessen 5-V- bzw. 3,3-V-Pin. |
-| 🔗 **Breadboard und Jumper-Kabel** | Steckbrett, Steckbrücken | Gemeinsame 5-V- und GND-Schiene, Verbindungen ohne Löten |
+| 🔋 **Stromversorgung** | 9-V-Blockbatterie mit Clip, angeschlossen an **VIN** (nicht am Hohlstecker) | Versorgt den Arduino und sitzt mit im Gehäuse. Alle Module hängen am 5-V- bzw. 3,3-V-Pin des Uno. Zum Hochladen kommt USB dazu. |
+| 🔗 **Breadboard und Jumper-Kabel** | Versuchsaufbau: großes Steckbrett · im Gehäuse: Mini-Breadboard SYB-170 (170 Kontakte, 17 Spalten), Steckbrücken | Verteilt 5 V, GND und die 9 V der Batterie, Verbindungen ohne Löten |
 
 > [!NOTE]
 > **Warum ein passiver Buzzer?** Ein aktiver Buzzer piept mit einer festen

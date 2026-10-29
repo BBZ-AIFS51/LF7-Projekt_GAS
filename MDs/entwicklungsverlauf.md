@@ -5,7 +5,7 @@ Chronologisches Protokoll: Prompts (Jan Mummert) und Antworten (Claude).
 
 - Projekt: LF07 — Mini-Sicherheitssystem / Access Lock (Arduino Uno R3)
 - Daten der Sitzungen: 08.09.2026, 22.09.2026, 23.09.2026 (inkl. Gehäuse),
-  29.09.2026, 30.09.2026, 06.10.2026
+  29.09.2026, 30.09.2026, 06.10.2026, 28.10.2026
 - Grundlagen im Kontext: [../CLAUDE.md](../CLAUDE.md), [aufbau.md](aufbau.md)
 
 ---
@@ -746,6 +746,81 @@ veröffentlichen. Dann:
 **Wichtig fürs Team:** Das Wiki ab jetzt nur noch im Ordner `wiki/` bearbeiten
 (auf GitHub: Datei öffnen → Stift-Symbol). Änderungen im Wiki-Web-Editor werden
 beim nächsten Lauf überschrieben.
+
+---
+
+## 20. Prompt — Batterie an VIN und Mini-Breadboard (28.10.2026)
+
+Mit angehängt: ein Foto des gedruckten Rückteils mit eingeschraubtem Uno und
+eingeklebtem Mini-Breadboard (SYB-170).
+
+> Steht in der claude.md eigentlich, das in @MDs/entwicklungsverlauf.md bzw
+> @wiki/Entwicklungsverlauf.md dokumentiert werden soll?
+>
+> Dann zum eigentlichen, wir haben jetzt das gehäuse gedruckt und machen
+> folgende änderung: wir werden den arudino anders mit strom versorgen und zwar
+> per Batterie, aber nicht über den normalen stromanschluss sondern über den
+> vin pin, weil sonst die batterie oder das kabel außerhalb des kastens wäre.
+> Passe bitte alles im projekt an was damit zu tun hat. vergesse nix. Wir haben
+> jz außerdem folgendes breadboard verbaut, passe bitte auf dieses die
+> verkabelung an und auch alle dateien die damit zu tun haben.
+
+### Antwort
+
+**Zur Frage:** Nur indirekt. [../CLAUDE.md](../CLAUDE.md) sagte, was bei einem
+neuen Eintrag hier im Wiki nachzuziehen ist, aber nicht, dass jeder Prompt
+einen Eintrag bekommt. Das steht jetzt als eigene Regel unter „Konventionen“.
+
+**Stromversorgung:** 9-V-Block innen links neben dem Mini-Breadboard, auf der
+schmalen Seite, Clip oben. Rot → VIN, schwarz → GND, jeweils über das
+Breadboard. Wichtig dabei:
+
+- **VIN hat keinen Verpolungsschutz**, die Schutzdiode sitzt nur hinter dem
+  Hohlstecker. Vertauscht = Uno kaputt.
+- VIN braucht 7–12 V. Laufzeit grob 3–5 h (ca. 100 mA bei ~400–500 mAh),
+  reicht für Tests und die Vorführung. Aus = Clip abziehen.
+- USB darf zum Hochladen gleichzeitig stecken, der Uno schaltet automatisch um.
+- Die Hohlstecker-Öffnung im gedruckten Rückteil bleibt einfach frei, die
+  Druckteile ändern sich nicht.
+
+**Steckplan Mini-Breadboard** (17 Spalten, je 2 × 5 Löcher, keine Schienen):
+Spalte 13 oben = +5 V (Uno 5V, OLED, Buzzer, Sensor), Spalte 15 oben = GND
+(dieselben + Batterie −), Spalte 17 unten = +9 V (Batterie +, Brücke → VIN).
+Die 9 V liegen bewusst auf der anderen Hälfte, weit weg von der 5-V-Spalte.
+Signale gehen weiter direkt an den Uno.
+
+Geändert bzw. neu:
+
+- **Neu:** [../Schaltplan/steckplan_gehaeuse.svg](../Schaltplan/steckplan_gehaeuse.svg),
+  von Hand gezeichneter Steckplan. Der Cirkit-Schaltplan zeigt weiterhin den
+  Versuchsaufbau (Batterie am Hohlstecker), die Quelle liegt nicht im Repo.
+- [../docs/viewer/index.html](../docs/viewer/index.html): Batterie in beiden
+  Tabs an VIN statt am Hohlstecker. Im Tab Enclosure sitzt sie im Gehäuse, das
+  Breadboard hat die 9-V-Spalte und die neue Belegung. Neuer Legenden-Eintrag.
+- [../docs/wiring.svg](../docs/wiring.svg): Batterie an VIN, VIN-Pin ergänzt.
+  Dabei korrigiert: Neben D0/D1 ist auch A3 frei.
+- [../Gehaeuse/gehaeuse.scad](../Gehaeuse/gehaeuse.scad): nur Kommentare und
+  Vorschau-Dummys für Breadboard und Batterie, die Druckgeometrie ist
+  unverändert (keine neuen STLs nötig).
+- Bilder neu gerendert: `explosion.png`, `rueckteil.png` (Label
+  „Hohlstecker (frei)“), `zusammengebaut.png`, `docs/social-preview.png`,
+  `docs/banner.svg`.
+- Doku: [../CLAUDE.md](../CLAUDE.md), [aufbau.md](aufbau.md),
+  [gehaeuse.md](gehaeuse.md) (neuer Abschnitt Stromversorgung, Einkaufsliste,
+  Zusammenbau), [anleitung.md](anleitung.md) (Ein/Aus, Batteriewechsel),
+  [../README.md](../README.md) und das Wiki (Aufbau und Schaltplan, Bauteile,
+  Kosten, Herausforderungen, Status „gedruckt“, Foto des Rückteils).
+
+**Offene Punkte:**
+
+- Nicht am Aufbau getestet. Vor dem ersten Anstecken der Batterie die Polung
+  an VIN prüfen.
+- Die PDF-Anleitung in `Anleitung/` muss aus `anleitung.md` neu erzeugt werden
+  (neuer Abschnitt Stromversorgung).
+- `SCHALTPLAN.png/.svg` im Cirkit Designer auf VIN umstecken und neu exportieren.
+- Social Preview neu hochladen (Settings → General → Social preview).
+- Laufzeit der Batterie einmal messen. `Teile.xlsx` enthält Batterie und
+  Breadboard noch nicht.
 
 ---
 

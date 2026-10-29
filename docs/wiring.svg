@@ -70,9 +70,9 @@
 <path class="p"       stroke="#E879F9" d="M700 408 V470 H850" style="animation-duration:1.2s"/>
 <path class="p in d4" stroke="#FB7185" d="M682 408 V490 H850" style="animation-duration:1.8s"/>
 
-<!-- 9 V battery to the barrel jack -->
-<path class="w" stroke="#EF4444" d="M424 356 H462"/>
-<path class="w" stroke="#64748B" d="M424 372 H462"/>
+<!-- 9 V battery into VIN (inside the case, the barrel jack stays free); hops over the 3.3 V wire -->
+<path class="w" stroke="#F59E0B" d="M424 350 H440 V426 H494 a6 6 0 0 1 12 0 H572 V408" style="opacity:.8"/>
+<path class="w" stroke="#64748B" d="M424 376 H432 V434 H494 a6 6 0 0 1 12 0 H554 V408" style="opacity:.8"/>
 
 <!-- ================= Arduino Uno ================= -->
 <rect x="470" y="200" width="260" height="220" rx="12" fill="#12467F" stroke="#2563A8" stroke-width="2"/>
@@ -92,10 +92,10 @@
 <text x="599" y="246" font-size="8.5" letter-spacing="2" fill="#93C5FD" text-anchor="middle">DIGITAL</text>
 
 <!-- power + analog header -->
-<rect x="488" y="401" width="78" height="14" rx="2" fill="#0B0F17"/>
+<rect x="488" y="401" width="96" height="14" rx="2" fill="#0B0F17"/>
 <rect x="598" y="401" width="114" height="14" rx="2" fill="#0B0F17"/>
-<g fill="#E2B340"><circle cx="500" cy="408" r="3"/><circle cx="518" cy="408" r="3"/><circle cx="536" cy="408" r="3"/><circle cx="554" cy="408" r="3"/><circle cx="610" cy="408" r="3"/><circle cx="628" cy="408" r="3"/><circle cx="646" cy="408" r="3"/><circle cx="664" cy="408" r="3"/><circle cx="682" cy="408" r="3"/><circle cx="700" cy="408" r="3"/></g>
-<g class="pin"><text x="500" y="394">3V3</text><text x="518" y="394">5V</text><text x="536" y="394" style="font-size:7px">GND</text><text x="555" y="394" style="font-size:7px">GND</text><text x="610" y="394">A0</text><text x="628" y="394">A1</text><text x="646" y="394">A2</text><text x="664" y="394">A3</text><text x="682" y="394">A4</text><text x="700" y="394">A5</text></g>
+<g fill="#E2B340"><circle cx="500" cy="408" r="3"/><circle cx="518" cy="408" r="3"/><circle cx="536" cy="408" r="3"/><circle cx="554" cy="408" r="3"/><circle cx="572" cy="408" r="3"/><circle cx="610" cy="408" r="3"/><circle cx="628" cy="408" r="3"/><circle cx="646" cy="408" r="3"/><circle cx="664" cy="408" r="3"/><circle cx="682" cy="408" r="3"/><circle cx="700" cy="408" r="3"/></g>
+<g class="pin"><text x="500" y="394">3V3</text><text x="518" y="394">5V</text><text x="536" y="394" style="font-size:7px">GND</text><text x="555" y="394" style="font-size:7px">GND</text><text x="573" y="394" style="font-size:7px">VIN</text><text x="610" y="394">A0</text><text x="628" y="394">A1</text><text x="646" y="394">A2</text><text x="664" y="394">A3</text><text x="682" y="394">A4</text><text x="700" y="394">A5</text></g>
 
 <!-- ================= RC522 ================= -->
 <rect x="150" y="50" width="180" height="150" rx="8" fill="#1D6FD1" stroke="#60A5FA" stroke-width="1.5"/>
@@ -160,14 +160,17 @@
 <rect x="360" y="330" width="64" height="62" rx="6" fill="#1F2937" stroke="#374151" stroke-width="1.5"/>
 <rect x="360" y="370" width="64" height="22" rx="0" fill="#B7793F"/>
 <text x="392" y="360" font-size="18" font-weight="800" fill="#E5E7EB" text-anchor="middle">9V</text>
+<text x="392" y="312" class="lbl" text-anchor="middle">9 V battery</text>
+<text x="392" y="326" class="sub" text-anchor="middle">+ → VIN · − → GND</text>
 
 <!-- ================= legend ================= -->
-<text x="60" y="520" font-size="26" font-weight="800" fill="#F1F5F9">Wiring</text>
-<text x="60" y="546" class="sub" style="font-size:13px">Every pin is used: only D0/D1 (serial) are free.</text>
+<text x="60" y="498" font-size="26" font-weight="800" fill="#F1F5F9">Wiring</text>
+<text x="60" y="524" class="sub" style="font-size:13px">Almost every pin is used: only A3 and D0/D1 (serial) are free.</text>
 <g font-size="12.5" fill="#CBD5E1">
-  <circle cx="66" cy="570" r="5" fill="#F87171"/><text x="78" y="574">5 V → OLED, buzzer, motion sensor</text>
-  <circle cx="66" cy="590" r="5" fill="#EF4444" stroke="#FECACA" stroke-width="1.5"/><text x="78" y="594">3.3 V → RC522 only</text>
-  <circle cx="66" cy="610" r="5" fill="#64748B"/><text x="78" y="614">GND shared by all parts</text>
+  <circle cx="66" cy="548" r="5" fill="#F87171"/><text x="78" y="552">5 V → OLED, buzzer, motion sensor</text>
+  <circle cx="66" cy="568" r="5" fill="#EF4444" stroke="#FECACA" stroke-width="1.5"/><text x="78" y="572">3.3 V → RC522 only</text>
+  <circle cx="66" cy="588" r="5" fill="#64748B"/><text x="78" y="592">GND shared by all parts</text>
+  <circle cx="66" cy="608" r="5" fill="#F59E0B"/><text x="78" y="612">9 V battery → VIN (no reverse-polarity protection)</text>
 </g>
-<text x="1140" y="626" font-size="11" fill="#475569" text-anchor="end">pulses show the signal direction · schematic: Schaltplan/SCHALTPLAN.png</text>
+<text x="1140" y="626" font-size="11" fill="#475569" text-anchor="end">pulses show the signal direction · breadboard plan in the case: Schaltplan/steckplan_gehaeuse.svg</text>
 </svg>

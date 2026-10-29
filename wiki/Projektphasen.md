@@ -73,9 +73,19 @@ Eingang abdeckt.
 [Schritt 12](Entwicklungsverlauf#-schritt-12--sensor-noch-stärker-zur-tür) ·
 [Gehäuse-Anleitung](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/gehaeuse.md)
 
+Das Gehäuse ist gedruckt. Beim Einbau hat sich gezeigt, dass die Batterie am
+Hohlstecker außen am Gehäuse hängen würde. Sie sitzt jetzt innen und speist den
+Uno über VIN, verteilt wird über ein Mini-Breadboard
+([Schritt 20](Entwicklungsverlauf#-schritt-20--batterie-an-vin-und-mini-breadboard)).
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/wiki/images/gehaeuse_innen.jpg" alt="Gedrucktes Rückteil mit Arduino Uno und Mini-Breadboard" width="40%"><br>
+  <sub>Gedrucktes Rückteil mit Uno und Mini-Breadboard</sub>
+</p>
+
 > [!NOTE]
-> ✏️ **TODO (Team):** Sobald gedruckt: Fotos vom echten Gehäuse ergänzen. Was
-> hat beim Druck oder Zusammenbau nicht gepasst?
+> ✏️ **TODO (Team):** Was hat beim Druck oder Zusammenbau nicht gepasst? Foto
+> vom fertigen Gerät ergänzen.
 
 ## 6 · Präsentation im Repository
 
@@ -108,4 +118,6 @@ abbrach. Jetzt wird eine falsche Eingabe im Alarm ignoriert.
 - [ ] Freier SRAM nach dem Entfernen der Keypad-Library gemessen: ✏️ TODO Byte (erwartet ~320)
 - [ ] RFID-Reset (<kbd>B</kbd>) mit absichtlich getrenntem Leser getestet
 - [ ] Gehäusemaße am echten Aufbau nachgemessen
-- [ ] Gehäuse gedruckt und montiert
+- [x] Gehäuse gedruckt
+- [ ] Gehäuse montiert, nach dem Steckplan verkabelt und getestet
+- [ ] Laufzeit mit 9-V-Batterie gemessen

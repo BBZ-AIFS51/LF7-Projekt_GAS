@@ -16,10 +16,7 @@ das sich per PIN oder RFID-Karte scharf und unscharf schalten lässt und bei
 Bewegung im Raum Alarm gibt.
 
 > [!NOTE]
-> ✏️ **TODO (Team):** 2–3 Sätze, warum ihr euch für eine Alarmanlage
-> entschieden habt und in welchem Rahmen das Projekt entstanden ist
-> (Gruppenarbeit, Zeitraum, welche Bauteile gestellt wurden). Gibt es einen
-> schriftlichen Auftrag der Lehrkraft, ihn hier als Zitat einfügen.
+> Hugo und ich haben uns für eine Alarmanlage entschieden, da wir nur mit den von der Schule bereitgestellten Materialien arbeiten wollten. Außderm wollten wir etwas schaffen, was man tatsächlich in echt verwenden könnte, oder es zumindest zu versuchen.
 
 ## Zielsetzung
 
@@ -62,12 +59,12 @@ Anregung der Lehrkraft.
 | K2 | Ausgangsverzögerung, damit man nach dem Scharfschalten den Raum verlassen kann | Vorschlag von Claude Code | ✅ |
 | K3 | Rechtevergabe: Karten ohne PC anlernen und löschen (Admin-Menü) | Lehrkraft | ✅ |
 | K4 | RFID-Reset, falls der Kartenleser hängt | Lehrkraft | ✅ |
-| K5 | 3D-gedrucktes Gehäuse, Bewegungsmelder getrennt im Raum | eigene Idee | 🟡 entworfen |
+| K5 | 3D-gedrucktes Gehäuse, Bewegungsmelder getrennt im Raum | eigene Idee | 🟡 gedruckt, Einbau läuft |
 | K6 | Interaktives 3D-Modell im Browser | eigene Idee | ✅ |
 
 > [!NOTE]
-> ✏️ **TODO (Team):** Status von K5 aktualisieren, sobald das Gehäuse gedruckt
-> ist. Fehlen Anforderungen aus dem Auftrag der Lehrkraft? Dann ergänzen.
+> ✏️ **TODO (Team):** Status von K5 auf ✅ setzen, sobald das Gehäuse fertig
+> montiert ist. Fehlen Anforderungen aus dem Auftrag der Lehrkraft? Dann ergänzen.
 
 ## Abgrenzung
 
@@ -77,7 +74,9 @@ Bewusst **nicht** Teil des Projekts:
 - keine Protokollierung, wer wann welche Karte benutzt hat
 - nur eine Berechtigungsstufe pro Karte (jede gespeicherte Karte darf scharf
   und unscharf schalten), siehe [Entwicklungsverlauf, Schritt 5](Entwicklungsverlauf#-schritt-5--kollisionserkennung-und-rechtevergabe-bei-rfid)
-- keine Notstromversorgung, kein Sabotagekontakt am Gehäuse
+- kein Dauerbetrieb: Die 9-V-Batterie reicht für Tests und die Vorführung,
+  es gibt keine Netz- oder Notstromversorgung
+- kein Sabotagekontakt am Gehäuse
 
 ## Rahmenbedingungen
 

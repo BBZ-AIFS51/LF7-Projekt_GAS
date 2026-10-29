@@ -116,7 +116,7 @@ const SHOTS = {
         { text: 'Kabelkerbe', frame: 'cu', at: [89, 150, 42.4] },
         { text: 'Wandmontage', frame: 'cu', at: [45, 88, 3] },
         { text: 'Abstandshalter Uno', frame: 'cu', at: [64, 75, 7.4] },
-        { text: 'USB-B + Hohlstecker', frame: 'cu', at: [45, 0, 22] }
+        { text: 'USB-B · Hohlstecker (frei)', frame: 'cu', at: [45, 0, 22] }
       ]
     }
   },

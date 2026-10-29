@@ -16,6 +16,7 @@ haben.
 | 📶 RFID | [Versorgungsspannung](#versorgungsspannung-des-rfid-lesers) | 3,3 V statt 5 V |
 | 🔊 Alarm | [Falsche Eingabe beendet den Alarm](#falsche-eingabe-beendet-den-alarm) | falsche Eingaben im Alarm ignorieren |
 | 📦 Gehäuse | [Wohin mit dem Bewegungsmelder?](#wohin-mit-dem-bewegungsmelder) | eigenes Sensorteil im Raum, auf einem 60°-Keil |
+| 🔋 Stromversorgung | [Batterie passt nicht ins Gehäuse](#batterie-passt-nicht-ins-gehäuse) | Batterie innen an VIN statt am Hohlstecker |
 
 ---
 
@@ -151,6 +152,22 @@ Eingang ab.
 <p align="center">
   <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Gehaeuse/bilder/sensor.png" alt="Sensorteil auf dem 60°-Keil" width="45%">
 </p>
+
+### Batterie passt nicht ins Gehäuse
+
+**Situation:** Laut Schaltplan wird die 9-V-Batterie über den Hohlstecker des
+Uno angeschlossen. Im gedruckten Gehäuse hätten Stecker und Batterie dann außen
+am Gehäuse gehangen.
+
+**Ursache:** Die Buchse zeigt durch eine Aussparung im Boden nach außen, der
+Stecker lässt sich nur von außen einstecken. Innen ist zwar Platz für die
+Batterie, aber kein Weg zur Buchse.
+
+**Lösung:** Die Batterie liegt innen links neben dem Mini-Breadboard und speist
+den Uno über den Pin **VIN**. VIN führt dieselbe Spannung wie der Hohlstecker,
+nur ohne dessen Schutzdiode gegen Verpolung ([1]). Deshalb steht die Belegung im
+[Steckplan](Aufbau-und-Schaltplan#stromversorgung-im-gehäuse), und der
+Batterieclip wird erst nach dem Prüfen der Polung angesteckt.
 
 ---
 

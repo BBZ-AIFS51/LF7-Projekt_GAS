@@ -139,6 +139,7 @@
       <span><i style="background:#DC2626"></i>5 V</span>
       <span><i style="background:#FCA5A5"></i>3.3 V</span>
       <span><i style="background:#475569"></i>GND</span>
+      <span><i style="background:#f59e0b"></i>9 V → VIN</span>
     </div>
     <div id="tip" hidden></div>
     <div class="loading" id="loading">Loading 3D model …</div>
@@ -1498,17 +1499,22 @@ function buildScene() {
   label('Motion sensor', V(11, 1.9, 3.1));
 
   // =========================================================================
-  // 9 V battery
+  // 9 V battery (feeds VIN, not the barrel jack, so it fits into the case)
   // =========================================================================
-  const bat = new THREE.Group();
+  // lying block, terminals and snap clip at -z; leads: where the clip wires leave
+  function buildBattery(parent) {
+    const g = new THREE.Group();
+    parent.add(g);
+    box(2.6, 1.75, 3.1, mat(0x1e1f24, { roughness: 0.4 }), 0, 0.875, 0.85, g);
+    box(2.6, 1.75, 1.75, mat(0xc27c3a, { roughness: 0.35, metalness: 0.3 }), 0, 0.875, -1.55, g);
+    cyl(0.35, 0.3, silver, -0.6, 0.9, -2.55, g).rotation.x = Math.PI / 2;
+    cyl(0.35, 0.3, silver, 0.6, 0.9, -2.55, g, 6).rotation.x = Math.PI / 2;
+    box(2.2, 1.0, 0.4, blackPlastic, 0, 0.9, -2.85, g);
+    part(g, '9 V battery', 'Feeds the Uno through its VIN pin (7–12 V), not the barrel jack · red = +, black = − · VIN has no reverse-polarity protection');
+    return { g, leads: { '+': { p: V(-0.4, 0.9, -3.05), d: V(0, 0, -1) }, '-': { p: V(0.4, 0.9, -3.05), d: V(0, 0, -1) } } };
+  }
+  const bat = buildBattery(root).g;
   bat.position.set(12.4, 0, -3.2);
-  root.add(bat);
-  box(2.6, 1.75, 3.1, mat(0x1e1f24, { roughness: 0.4 }), 0, 0.875, 0.85, bat);
-  box(2.6, 1.75, 1.75, mat(0xc27c3a, { roughness: 0.35, metalness: 0.3 }), 0, 0.875, -1.55, bat);
-  cyl(0.35, 0.3, silver, -0.6, 0.9, -2.55, bat).rotation.x = Math.PI / 2;
-  cyl(0.35, 0.3, silver, 0.6, 0.9, -2.55, bat, 6).rotation.x = Math.PI / 2;
-  box(2.2, 1.0, 0.4, blackPlastic, 0, 0.9, -2.85, bat);
-  part(bat, '9 V battery', 'Powers the Uno through its barrel jack');
   label('9 V battery', V(12.4, 2.3, -3.2));
 
   // =========================================================================
@@ -1593,14 +1599,18 @@ function buildScene() {
   wire(railPin(7.0, 'GND'), buzPins['-'], 0x475569, 'GND → Buzzer −', '', V(0, 0.4, 1));
   wire(railPin(8.6, '5V'), pirPins.VCC, 0xdc2626, '5V → PIR VCC', '', V(-1, 0.5, 0));
   wire(railPin(9.3, 'GND'), pirPins.GND, 0x475569, 'GND → PIR GND', '', V(-1, 0.5, 0));
-  // battery clip to the barrel jack
-  const jack = V(uno.position.x + 3.75, UNO_TOP + 0.55, uno.position.z - 1.85);
-  [[0xdc2626, -0.4], [0x1f2937, 0.4]].forEach(([c, dx]) => {
-    const a = V(bat.position.x + dx, 0.9, bat.position.z - 3.1);
-    const curve = new THREE.CubicBezierCurve3(a, a.clone().add(V(0, 0.3, -1.5)), jack.clone().add(V(2.5, 0.2, 0)), jack.clone().add(V(0.3, 0, 0)));
-    const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 40, 0.07, 8, false), mat(c));
+  // battery clip: red to VIN, black to the GND rail (the barrel jack stays free)
+  [[0xdc2626, -0.4, unoPin('VIN'), [V(9.5, 1.6, -6.4), V(2.3, 2.2, -6.0)], '9 V → VIN', 'Battery + on VIN. VIN skips the protection diode of the barrel jack: never swap + and −'],
+    [0x1f2937, 0.4, railPin(9.65, 'GND'), [V(14.4, 0.8, -4.5), V(14.4, 0.8, 8.4), V(10.4, 1.4, 7.4)], 'Battery − → GND rail', 'common ground']
+  ].forEach(([c, dx, to, via, title, text]) => {
+    const a = V(bat.position.x + dx, 0.9, bat.position.z - 3.05);
+    const pb = to.clone().addScaledVector(UP, 0.55);
+    const curve = new THREE.CatmullRomCurve3([a, a.clone().add(V(0, 0.2, -1.0)), ...via, pb.clone().addScaledVector(UP, 0.6), pb], false, 'centripetal');
+    const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 64, 0.07, 8, false), mat(c));
     tube.castShadow = true;
     root.add(tube);
+    part(tube, title, text);
+    dupont(to, UP);
   });
 
   // travelling signal pulses; the same signal is shown on the wires of both tabs
@@ -1778,7 +1788,8 @@ function buildScene() {
     const G = {
       wall: 2.4, floor_t: 2.4, lid_t: 2.4, cu_w: 90, cu_depth: 40, keypad_h: 77,
       ribbon_slot_h: 4, rfid_h: 40, oled_w: 36, oled_h: 34, guide_t: 1.2, fit: 0.25, uno_standoff_h: 5,
-      su_w: 52, su_h: 44, su_depth: 30, pir_post_h: 3, su_angle: 60, wedge_min: 5, cable_y: 145
+      su_w: 52, su_h: 44, su_depth: 30, pir_post_h: 3, su_angle: 60, wedge_min: 5, cable_y: 145,
+      bb_cy: 115, bat_t: 17.5, bat_l: 48.5, bat_y: 82
     };
     const lipIn = G.wall + 0.3 + 1.6;
     G.cu_cx = G.cu_w / 2;
@@ -1845,7 +1856,7 @@ function buildScene() {
     }
 
     const HOUSING = {
-      control_back: { color: 0xe3e6ea, title: 'Back part · control_back.stl', text: 'Uno on 4 standoffs · openings for USB-B and the barrel jack · cable hole Ø 8 mm · 2 holes for the wall screws' },
+      control_back: { color: 0xe3e6ea, title: 'Back part · control_back.stl', text: 'Uno on 4 standoffs · USB-B opening for uploading (the barrel jack opening stays free, the battery is inside on VIN) · cable hole Ø 8 mm · 2 holes for the wall screws' },
       control_front: { color: 0xf4b400, title: 'Front plate · control_front.stl', text: 'OLED window, 7 sound holes, RFID field (the card reads through 2.4 mm of plastic), keypad glued on the outside' },
       sensor_back: { color: 0xe3e6ea, title: 'Sensor back part · sensor_back.stl', text: 'Screwed onto the wedge · cable through the notch at the bottom or the hole in the back' },
       sensor_front: { color: 0xf4b400, title: 'Sensor front · sensor_front.stl', text: 'The Fresnel lens looks out, the HC-SR501 hangs on two posts' },
@@ -1933,11 +1944,13 @@ function buildScene() {
     cBuz.g.rotation.x = Math.PI / 2;
     cBuz.g.position.set(mm(G.buzzer_x), mm(G.oled_cy) - 0.15, -0.96);
 
-    // mini breadboard (170 holes) on the back wall above the Uno: 5 V and GND
-    const MB = { x: mm(G.cu_cx), y: 11.5, z: mm(G.floor_t) + 0.85 };
+    // mini breadboard SYB-170 (17 columns, 2 x 5 rows) on the back wall above
+    // the Uno, plan: Schaltplan/steckplan_gehaeuse.svg. col/row count from 0,
+    // the plan from 1: column 13 = 5 V, 15 = GND (upper half), 17 = 9 V (lower half)
+    const MB = { x: mm(G.cu_cx), y: mm(G.bb_cy), z: mm(G.floor_t) + 0.85 };
     const mbHole = (col, row) => V(MB.x + (col - 8) * 0.254,
       MB.y + (row < 5 ? 0.3 + (4 - row) * 0.254 : -0.3 - (row - 5) * 0.254), MB.z);
-    const MB5V = 12, MBGND = 14;
+    const MB5V = 12, MBGND = 14, MB9V = 16;
     const mbTex = canvasTex(470, 350, (g, w, h) => {
       g.fillStyle = '#ecebe6';
       g.fillRect(0, 0, w, h);
@@ -1958,11 +1971,20 @@ function buildScene() {
         g.textAlign = 'center';
         g.fillText(t, x, 18);
       });
+      const x9 = w / 2 + (MB9V - 8) * 25.4;
+      g.strokeStyle = g.fillStyle = '#d97706';
+      g.beginPath(); g.moveTo(x9 - 13, h / 2 + 20); g.lineTo(x9 - 13, h - 22); g.stroke();
+      g.fillText('9V', x9 - 2, h - 4);
     });
     const mbSide = mat(0xe4e3de);
     const mb = box(4.7, 0.85, 3.5, [mbSide, mbSide, new THREE.MeshStandardMaterial({ map: mbTex, roughness: 0.8 }), mbSide, mbSide, mbSide], MB.x, MB.y, mm(G.floor_t) + 0.425, cu);
     mb.rotation.x = Math.PI / 2;
-    part(mb, 'Mini breadboard', 'Glued to the back wall: one strip for 5 V, one for GND (OLED, buzzer, motion sensor)');
+    part(mb, 'Mini breadboard SYB-170', 'Glued to the back wall · upper half: column 13 = 5 V, column 15 = GND · lower half: column 17 = 9 V from the battery to VIN');
+
+    // 9 V block on its narrow side left of the breadboard, clip at the top
+    const cBat = buildBattery(cu);
+    cBat.g.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(V(0, 0, -1), V(1, 0, 0), V(0, -1, 0)));
+    cBat.g.position.set(mm(G.wall) + 0.02, mm(G.bat_y + G.bat_l / 2) + 0.02, mm(G.floor_t) + 1.32);
 
     // ---- wires inside the case: rebuilt whenever the lid moves ----
     const caseWires = [];
@@ -2013,12 +2035,18 @@ function buildScene() {
     sig.scl.push(...caseSig.scl);
     sig.spi.push(caseSig.spi);
     sig.buz.push(...caseSig.buz);
-    cw(uPin('5V'), hole(MB5V, 0), 0xdc2626, '5V → breadboard', '5 V for the OLED, buzzer and motion sensor');
-    cw(uPin('GND'), hole(MBGND, 0), 0x475569, 'GND → breadboard', 'common ground');
-    cw(hole(MB5V, 1), mPin(cOled, 'VCC'), 0xdc2626, '5V → OLED VCC', '');
-    cw(hole(MBGND, 1), mPin(cOled, 'GND'), 0x475569, 'GND → OLED GND', '');
-    cw(hole(MB5V, 2), mPin(cBuz, '+'), 0xdc2626, '5V → Buzzer +', '');
-    cw(hole(MBGND, 2), mPin(cBuz, '-'), 0x475569, 'GND → Buzzer −', '');
+    // rows as in the plan: a = PIR (cable), b = buzzer, c = OLED, d = Uno, e = battery −
+    cw(uPin('5V'), hole(MB5V, 3), 0xdc2626, '5V → breadboard', '5 V for the OLED, buzzer and motion sensor');
+    cw(uPin('GND'), hole(MBGND, 3), 0x475569, 'GND → breadboard', 'common ground');
+    cw(hole(MB5V, 2), mPin(cOled, 'VCC'), 0xdc2626, '5V → OLED VCC', '');
+    cw(hole(MBGND, 2), mPin(cOled, 'GND'), 0x475569, 'GND → OLED GND', '');
+    cw(hole(MB5V, 1), mPin(cBuz, '+'), 0xdc2626, '5V → Buzzer +', '');
+    cw(hole(MBGND, 1), mPin(cBuz, '-'), 0x475569, 'GND → Buzzer −', '');
+    // battery clip into the breadboard, jumper from the 9 V column to VIN
+    const lead = (k) => ({ o: cBat.g, p: cBat.leads[k].p, d: cBat.leads[k].d });
+    caseWire(cu, lead('+'), hole(MB9V, 5), 0xdc2626, 'Battery + → breadboard', '9 V, lower half of column 17, from there to VIN', true);
+    caseWire(cu, lead('-'), hole(MBGND, 4), 0x1f2937, 'Battery − → GND', 'column 15, the common ground', true);
+    cw(uPin('VIN'), hole(MB9V, 9), 0xf59e0b, 'VIN ← 9 V', 'The Uno makes its 5 V from this with its own regulator. VIN skips the protection diode of the barrel jack: never swap + and −');
 
     // =======================================================================
     // sensor unit: wedge on the wall, sensor_back on the wedge (on_wedge())
@@ -2066,8 +2094,8 @@ function buildScene() {
     const cableEnd = { o: cu, p: V(mm(G.cu_cx) + 0.3, mm(G.cable_y) - 0.5, 1.1), d: V(0.25, -1, 0.35) };
     const sensorEnd = { o: sBack, p: V(mm(G.su_w / 2), 0.75, 2.55), d: V(0, 1, -0.6) };
     const wPirCu = caseWire(cu, uPin('A2'), cableEnd, 0xf97316, 'A2 ← PIR OUT', 'HIGH on motion (was D11, which is MOSI now)');
-    caseWire(cu, hole(MB5V, 3), cableEnd, 0xdc2626, '5V → PIR VCC', 'through the 3-wire cable');
-    caseWire(cu, hole(MBGND, 3), cableEnd, 0x475569, 'GND → PIR GND', 'through the 3-wire cable');
+    caseWire(cu, hole(MB5V, 0), cableEnd, 0xdc2626, '5V → PIR VCC', 'through the 3-wire cable');
+    caseWire(cu, hole(MBGND, 0), cableEnd, 0x475569, 'GND → PIR GND', 'through the 3-wire cable');
     const wPirSu = caseWire(sBack, sensorEnd, pirPin.OUT, 0xf97316, 'PIR OUT → cable', 'active HIGH on motion', true);
     caseWire(sBack, sensorEnd, pirPin.VCC, 0xdc2626, 'cable → PIR VCC', '5 V', true);
     caseWire(sBack, sensorEnd, pirPin.GND, 0x475569, 'cable → PIR GND', 'ground', true);

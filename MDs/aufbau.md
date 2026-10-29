@@ -10,7 +10,7 @@ Before writing final code, identify any missing hardware information and verify 
 
 ---
 
-## Project Status (updated 2026-09-15)
+## Project Status (updated 2026-10-28)
 
 This document was the original hardware export, written before the firmware
 existed and before the RFID reader was added. It has since been updated to
@@ -26,6 +26,11 @@ match the finished build. **For anything not covered here, the pin table in
 - The OLED I²C pins were originally recorded reversed (SDA on A5, SCL on A4).
   The real build uses the Uno's fixed hardware I²C pins correctly: **SDA = A4,
   SCL = A5**. The wiring table below reflects the corrected, actual wiring.
+- **Update 2026-10-28 (printed case):** the Uno is powered by a 9 V battery on
+  the **VIN pin**, not the barrel jack, so battery and cable fit inside the
+  control unit. Power is distributed on a mini breadboard (SYB-170) instead of
+  the rails of a full-size breadboard, see component 7 and
+  [../Schaltplan/steckplan_gehaeuse.svg](../Schaltplan/steckplan_gehaeuse.svg).
 
 ---
 
@@ -183,6 +188,25 @@ other component. `VersionReg` answers `0x91` or `0x92` on a genuine module;
 
 ---
 
+### 7. Power supply and mini breadboard
+
+Added for the printed case, no Cirkit Designer IDs.
+
+- **9 V battery** (block with snap clip): red `+` → Uno **VIN**, black `−` →
+  GND. VIN needs 7–12 V. VIN bypasses the reverse-polarity diode behind the
+  barrel jack, so swapping `+` and `−` destroys the board. USB may stay
+  plugged in for uploading, the Uno switches to VIN automatically.
+- **Mini breadboard SYB-170**: 17 columns of 2 × 5 connected holes, no power
+  rails. Only used to distribute power, all signals go straight to the Uno.
+
+| Column (from the left) | Half | Net | Connected |
+|---|---|---|---|
+| 13 | upper | +5 V | Uno 5V, OLED VCC, Buzzer +VCC, motion sensor VCC |
+| 15 | upper | GND | Uno GND, OLED GND, Buzzer GND, motion sensor GND, battery − |
+| 17 | lower | +9 V | battery +, jumper to Uno VIN |
+
+---
+
 ## Complete Wiring Table
 
 ### Arduino Uno Pin Assignments
@@ -206,9 +230,11 @@ other component. `VersionReg` answers `0x91` or `0x92` on a genuine module;
 | Pin A2 | Motion sensor | OUT | Motion detection signal (moved off Pin 11) |
 | Pin A4 | OLED | SDA | Fixed Uno I2C data pin |
 | Pin A5 | OLED | SCL | Fixed Uno I2C clock pin |
-| 5 Volt | Shared positive rail | OLED VCC, Buzzer +VCC, Motion VCC, Keypad (unpowered) | +5 V supply |
+| 5 Volt | Mini breadboard, column 13 | OLED VCC, Buzzer +VCC, Motion VCC (keypad needs no supply) | +5 V supply |
 | 3.3 Volt | RFID-RC522 | VCC | +3.3 V supply — NOT 5V |
-| Ground 1 | Shared ground rail | OLED GND, Buzzer GND, Motion GND, RFID-RC522 GND | Common ground |
+| Ground | Mini breadboard, column 15 | OLED GND, Buzzer GND, Motion GND, battery − | Common ground |
+| Ground (2nd pin) | RFID-RC522 | GND | Common ground |
+| External voltage input (VIN) | Mini breadboard, column 17 | 9 V battery + | Power input, 7–12 V, no reverse-polarity protection |
 
 ---
 

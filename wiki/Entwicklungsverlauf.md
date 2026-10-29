@@ -14,7 +14,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **19** | **6** | **3** | **2** |
+| **20** | **7** | **3** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -47,6 +47,8 @@ timeline
                : S17 Projekt-Wiki
                : S18 Doku nach Vorgaben
                : S19 Wiki automatisch
+    section Einbau
+        28.10. : S20 Batterie an VIN, Mini-Breadboard
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -76,6 +78,7 @@ flowchart LR
     P17["📝 S17<br/>Wiki"]
     P18["📝 S18<br/>Vorgaben"]
     P19["📝 S19<br/>Wiki-Workflow"]
+    P20["📦 S20<br/>Batterie an VIN"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -84,6 +87,7 @@ flowchart LR
     P8 --> P9
     P8 --> P13
     P10 --> P11 --> P12 --> P13
+    P12 -- "gedruckt" --> P20
     P13 --> P14 --> P15
     P3 --> P17
     P17 -. "Lehrkraft" .-> P18
@@ -99,7 +103,7 @@ flowchart LR
     class P2,P4,P16 bug
     class P5 info
     class P8,P9,P13,P14,P15 vis
-    class P10,P11,P12 box
+    class P10,P11,P12,P20 box
     class P3,P17,P18,P19 doc
 ```
 
@@ -117,7 +121,7 @@ flowchart LR
 | 🐞 | Fehlerbehebung | 2, 4, 16 |
 | 💡 | Erklärung / Wissen | 5 |
 | 🎨 | Darstellung (README, 3D-Modell, Grafiken) | 8, 9, 13, 14, 15 |
-| 📦 | Gehäuse | 10, 11, 12 |
+| 📦 | Gehäuse | 10, 11, 12, 20 |
 | 📝 | Dokumentation | 3, 17, 18, 19 |
 
 </td>
@@ -129,7 +133,7 @@ pie
     "Fehlerbehebung" : 3
     "Erklärung" : 1
     "Darstellung" : 5
-    "Gehäuse" : 3
+    "Gehäuse" : 4
     "Dokumentation" : 4
 ```
 
@@ -396,6 +400,27 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 - Bearbeitet wird nur noch in `wiki/`, Änderungen im Wiki-Editor werden überschrieben
 
 <sub>⚙️ [`wiki.yml`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/.github/workflows/wiki.yml) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#19-prompt--wiki-automatisch-veröffentlichen-06102026)</sub>
+
+---
+
+## 📆 28.10.2026 · Das Gehäuse ist gedruckt
+
+### 📦 Schritt 20 — Batterie an VIN und Mini-Breadboard
+
+**Anlass:** Das Gehäuse ist gedruckt. Am Hohlstecker hätte die Batterie außen am Gehäuse gehangen, außerdem ist jetzt ein Mini-Breadboard (SYB-170) eingebaut.
+
+**Ergebnis**
+- Die **9-V-Batterie** liegt innen links neben dem Breadboard und speist den Uno über den Pin **VIN**. Die Öffnung für den Hohlstecker bleibt frei, die Druckteile ändern sich nicht.
+- **Steckplan fürs Mini-Breadboard:** Spalte 13 = 5 V, Spalte 15 = GND, Spalte 17 (untere Hälfte) = 9 V zur VIN. Die Signale gehen weiter direkt an den Uno.
+- 3D-Modell, Verdrahtungsgrafik, Gehäusebilder, Anleitung und Wiki angepasst
+- Nebenbei: Im Projekt steht jetzt ausdrücklich, dass jeder Arbeitsschritt im Protokoll landet
+
+<p align="center"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Schaltplan/steckplan_gehaeuse.svg" alt="Steckplan des Mini-Breadboards im Bedienteil" width="85%"></p>
+
+> [!WARNING]
+> **Offen:** nicht am Aufbau getestet. VIN hat keinen Verpolungsschutz, also vor dem ersten Anstecken die Polung prüfen. Die PDF-Anleitung und der Cirkit-Schaltplan müssen noch nachgezogen werden.
+
+<sub>📄 [`steckplan_gehaeuse.svg`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Schaltplan/steckplan_gehaeuse.svg) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#20-prompt--batterie-an-vin-und-mini-breadboard-28102026)</sub>
 
 ---
 

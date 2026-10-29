@@ -11,7 +11,7 @@ Die Anforderungen stehen ausführlich in [Kapitel 2](Idee-und-Zielsetzung#anford
 |---|---|:---:|
 | **Muss** | PIN-Bedienung, Symbole auf dem Display, Töne, Alarm bei Bewegung und nach 3 Fehlversuchen | ✅ 7 / 7 |
 | **Kann** | RFID-Karten, Ausgangsverzögerung, Admin-Menü, RFID-Reset, 3D-Modell | ✅ 5 / 6 |
-| **Kann** | 3D-gedrucktes Gehäuse | 🟡 entworfen, ✏️ TODO: gedruckt? |
+| **Kann** | 3D-gedrucktes Gehäuse | 🟡 gedruckt, Einbau läuft (✏️ TODO: fertig montiert?) |
 | **Zeit** | Abgabe bis ✏️ TODO | ✏️ TODO |
 | **Kosten** | ✏️ TODO (gab es ein Budget?) | siehe [Kosten](Kosten) |
 
@@ -92,7 +92,9 @@ Die Anforderungen stehen ausführlich in [Kapitel 2](Idee-und-Zielsetzung#anford
 > - Protokoll, wer wann welche Karte benutzt hat
 > - Sabotagekontakt am Gehäuse
 > - Benachrichtigung aufs Handy, z. B. mit einem WLAN-fähigen Mikrocontroller
-> - Akku als Notstrom, damit Stecker-Ziehen die Anlage nicht abschaltet
+> - Längere Laufzeit: Akku-Pack oder Netzteil statt 9-V-Block (hält nur
+>   wenige Stunden), dazu ein Ein/Aus-Schalter
+> - Batteriespannung über den freien Pin A3 messen und vor leerer Batterie warnen
 
 ---
 

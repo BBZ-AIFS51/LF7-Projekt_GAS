@@ -12,7 +12,12 @@ Bewegungssensor erkennt Anwesenheit.
 - Mikrocontroller: **Arduino Uno R3**
 - Hardware-Spezifikation: [MDs/aufbau.md](MDs/aufbau.md) (Stand vor dem RFID-Umbau;
   maßgeblich für Pins/Verdrahtung ist die Tabelle weiter unten in dieser Datei)
-- Schaltplan: [Schaltplan/](Schaltplan/)
+- Schaltplan: [Schaltplan/](Schaltplan/). `SCHALTPLAN.png/.svg` ist der
+  Cirkit-Designer-Export des Versuchsaufbaus (großes Breadboard, Batterie noch
+  am Hohlstecker, Quelle nicht im Repo). Für den Einbau ins Gehäuse gilt
+  `steckplan_gehaeuse.svg` (von Hand gezeichnet: Mini-Breadboard, Batterie an
+  VIN). Ändert sich die Belegung, Steckplan, `docs/wiring.svg` und
+  `buildCase()` im Viewer gemeinsam anpassen.
 - Teileliste: [Teile.xlsx](Teile.xlsx)
 
 ## Ordnerstruktur
@@ -24,7 +29,10 @@ Bewegungssensor erkennt Anwesenheit.
 - `Schaltplan/` — Schaltplan
 - `Gehaeuse/` — 3D-druckbares Gehäuse: `gehaeuse.scad` (OpenSCAD, parametrisch,
   Teil über `part` wählen), fertige STLs in `stl/`, Bilder in `bilder/`.
-  Zwei Gehäuse: Bedienteil außen (Uno, Keypad, OLED, RC522, Buzzer) und
+  **Ist gedruckt** (Stand 28.10.2026), Änderungen an den Druckteilen also nur
+  noch, wenn wirklich neu gedruckt wird.
+  Zwei Gehäuse: Bedienteil außen (Uno, Keypad, OLED, RC522, Buzzer,
+  Mini-Breadboard SYB-170, 9-V-Batterie an VIN) und
   Sensorteil innen (HC-SR501, auf einem 60°-Keil `sensor_wedge` zur Tür
   gedreht, damit er den Eingang abdeckt), verbunden per 3-adrigem Kabel. Planung und
   Druck-/Bauanleitung: [MDs/gehaeuse.md](MDs/gehaeuse.md). Modulmaße stammen
@@ -100,11 +108,27 @@ Bewegungssensor erkennt Anwesenheit.
 | RFID-RC522 — SCK | **D13** (fest, Hardware-SPI) |
 | RFID-RC522 — IRQ | nicht angeschlossen |
 | RFID-RC522 — VCC | **3.3V** (nicht 5V!) |
+| 9-V-Batterie — Plus (rot) | **VIN** (über das Mini-Breadboard, s. u.) |
+| 9-V-Batterie — Minus (schwarz) | GND (GND-Spalte des Mini-Breadboards) |
 | Alle übrigen VCC | 5V |
 | Alle GND | GND |
 
 Damit ist die Pinbelegung des Uno fast ausgereizt — frei sind nur noch A3 und
 D0/D1 (Serial).
+
+**Mini-Breadboard im Bedienteil (SYB-170, 17 Spalten, je 2 × 5 Löcher, keine
+Stromschienen):** nur Stromverteilung, Signale gehen direkt zum Uno. Spalten
+von links gezählt, Blick ins offene Rückteil mit dem Uno unten. Steckplan:
+[Schaltplan/steckplan_gehaeuse.svg](Schaltplan/steckplan_gehaeuse.svg).
+
+| Spalte | Hälfte | Netz | Was steckt drin |
+|---|---|---|---|
+| 13 | oben | +5 V | Uno 5V, OLED VCC, Buzzer +, PIR VCC (Kabel) |
+| 15 | oben | GND | Uno GND, OLED GND, Buzzer −, PIR GND (Kabel), Batterie − |
+| 17 | unten | +9 V | Batterie +, Brücke → Uno VIN |
+
+RC522 3,3 V und GND gehen direkt an den Uno (3V3 und zweiter GND-Pin), nicht
+übers Breadboard.
 
 Raw-Pin-Mapping fürs Keypad (nicht ändern, außer die Verdrahtung ändert sich):
 
@@ -138,6 +162,20 @@ const byte COL_PINS[4] = {5, 4, 3, 2};
   Sirenen-Sweep stockt.
 - `VersionReg` des RC522 antwortet **0x91 oder 0x92**. 0x00 oder 0xFF heißt:
   Modul antwortet nicht (Verdrahtung oder 5 V statt 3,3 V).
+- **Stromversorgung: 9-V-Block an VIN, nicht am Hohlstecker.** Mit Hohlstecker
+  hinge Batterie oder Kabel außen am Gehäuse, so liegt die Batterie innen
+  links neben dem Breadboard. Der Uno macht aus VIN mit seinem Regler die 5 V.
+  - **VIN hat keinen Verpolungsschutz** (die Schutzdiode sitzt nur hinter dem
+    Hohlstecker). Plus und Minus vertauscht = Uno kaputt.
+  - VIN braucht 7–12 V. Ein frischer 9-V-Block hat ~9,5 V, unter ~7 V wird es
+    unzuverlässig → Batterie wechseln.
+  - Laufzeit grob 3–5 h (Uno ~50 mA, OLED, RC522 und Buzzer zusammen ~100 mA,
+    Alkali-9-V ~400–500 mAh). Reicht für Tests und die Vorführung, nicht für
+    Dauerbetrieb. Ausschalten = Clip abziehen (kein Schalter verbaut).
+  - USB darf zum Hochladen gleichzeitig stecken: Der Uno schaltet automatisch
+    auf VIN um, sobald dort mehr als ~6,6 V anliegen.
+  - Die Hohlstecker-Öffnung im Rückteil bleibt ungenutzt, USB-B wird nur zum
+    Hochladen gebraucht.
 - Passiver Buzzer: direkt an D10, kein Treiber/Transistor. Ansteuerung mit
   `tone()` / `noTone()`.
 - **SRAM ist knapp**: Uno hat 2048 Byte, der OLED-Framebuffer belegt allein
@@ -219,5 +257,9 @@ statisches SRAM (im Wesentlichen die `Uid`-Struktur), Flash rund 5–7 kB.
 
 ## Konventionen
 
+- **Jeder Prompt wird protokolliert:** Nach jeder Änderung einen neuen
+  Eintrag in [MDs/entwicklungsverlauf.md](MDs/entwicklungsverlauf.md) anlegen
+  (Prompt im Wortlaut, Antwort zusammengefasst, Datum, offene Punkte) und
+  danach die Karte im Wiki ergänzen (siehe `wiki/` oben).
 - Kommentare auf Englisch.
 - Kein Feature-Overkill — Schulprojekt.

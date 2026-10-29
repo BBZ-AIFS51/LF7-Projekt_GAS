@@ -54,7 +54,8 @@ and as a PDF in [Anleitung/](Anleitung/Mini%20Security%20System%20Manual.pdf).
 | RFID-RC522 | SS → A0, RST → A1, MOSI → D11, MISO → D12, SCK → D13 | **VCC to 3.3 V**, 5 V destroys the module |
 | Motion sensor (PIR) | OUT → A2 | active HIGH |
 | Passive buzzer | signal → D10 | driven directly from the pin, no transistor |
-| 9 V battery | barrel jack | power supply |
+| 9 V battery | **+ → VIN**, − → GND | inside the case, not on the barrel jack · VIN has no reverse-polarity protection |
+| Mini breadboard SYB-170 | 5V, GND, VIN | power distribution only, all signals go straight to the Uno |
 
 All other VCC pins go to 5 V, all GND pins to a common ground. This uses up
 almost every pin on the Uno; only A3 and D0/D1 (serial) are left free. The full parts list
@@ -65,7 +66,13 @@ is in [Teile.xlsx](Teile.xlsx).
 </p>
 
 The original Cirkit Designer schematic is in
-[Schaltplan/](Schaltplan/SCHALTPLAN.png) (PNG and SVG).
+[Schaltplan/](Schaltplan/SCHALTPLAN.png) (PNG and SVG). It shows the first
+build on a full-size breadboard with the battery on the barrel jack. Inside
+the printed case the battery feeds **VIN** instead, so it fits into the case,
+and a mini breadboard shares out 5 V, GND and 9 V. The plan for that
+breadboard (in German): [Schaltplan/steckplan_gehaeuse.svg](Schaltplan/steckplan_gehaeuse.svg).
+A fresh 9 V block lasts roughly 3–5 hours, enough for a demo. USB is only
+needed for uploading and may stay plugged in next to the battery.
 
 ## 3D-printed case
 
@@ -74,7 +81,7 @@ The original Cirkit Designer schematic is in
 </p>
 
 Two printed enclosures, connected by a 3-wire cable: the **control unit** (keypad,
-OLED, RC522, buzzer, Uno) goes outside next to the door, the **sensor unit** sits
+OLED, RC522, buzzer, Uno, mini breadboard, 9 V battery) goes outside next to the door, the **sensor unit** sits
 on the room side on a 60° wedge that turns it towards the entrance. The PIR can't
 see through the wall, so standing at the keypad never triggers it. Five STL files,
 no supports needed. Planning, print settings and assembly (in German):
@@ -139,7 +146,7 @@ sketch. To use it offline, just open
 | [wiki/](wiki/) | source of the project wiki (German), published automatically by `.github/workflows/wiki.yml` |
 | [MDs/](MDs/) | docs (German): [hardware spec](MDs/aufbau.md), [user manual](MDs/anleitung.md), [development log](MDs/entwicklungsverlauf.md) |
 | [Anleitung/](Anleitung/) | user manual as a PDF |
-| [Schaltplan/](Schaltplan/) | schematic (PNG/SVG) |
+| [Schaltplan/](Schaltplan/) | schematic (PNG/SVG) and the breadboard plan for the case |
 | [Teile.xlsx](Teile.xlsx) | parts list |
 | [CLAUDE.md](CLAUDE.md) | project context and hardware facts for development with Claude Code |
 

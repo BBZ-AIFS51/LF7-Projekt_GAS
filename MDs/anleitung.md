@@ -56,6 +56,21 @@ Karten werden direkt am Gerät verwaltet — dafür ist kein PC nötig.
 
 Das Menü schließt sich nach 20 Sekunden ohne Tastendruck automatisch.
 
+## Stromversorgung
+
+Das Gerät läuft mit einer **9-V-Blockbatterie** im Inneren des Bedienteils.
+
+- **Einschalten:** Batterieclip auf die Batterie stecken. Nach dem Start zeigt
+  das Display das Herz (unscharf).
+- **Ausschalten:** Clip abziehen. Einen Schalter gibt es nicht.
+- **Laufzeit:** etwa 3–5 Stunden. Wird das Display dunkel oder startet das
+  Gerät von selbst neu, ist die Batterie leer.
+- **Batterie wechseln:** Frontplatte abschrauben, Clip abziehen, neue Batterie
+  einsetzen. Auf die Polung achten (Clip passt nur in einer Richtung).
+- Der Bewegungsmelder braucht nach dem Einschalten etwa **eine Minute**, bis
+  er zuverlässig arbeitet.
+- Gespeicherte Karten bleiben erhalten, auch wenn die Batterie leer ist.
+
 ## Wichtig
 
 - PIN-Code und Admin-PIN nicht weitergeben.
