@@ -67,9 +67,9 @@ is in [Teile.xlsx](Teile.xlsx).
 
 The original Cirkit Designer schematic is in
 [Schaltplan/](Schaltplan/SCHALTPLAN.png) (PNG and SVG). It shows the first
-build on a full-size breadboard with the battery on the barrel jack. Inside
-the printed case the battery feeds **VIN** instead, so it fits into the case,
-and a mini breadboard shares out 5 V, GND and 9 V. The plan for that
+build on a full-size breadboard, with the battery on **VIN** and GND (not the
+barrel jack), so it fits into the case. Inside the printed case a mini
+breadboard shares out 5 V, GND and 9 V. The plan for that
 breadboard (in German): [Schaltplan/steckplan_gehaeuse.svg](Schaltplan/steckplan_gehaeuse.svg).
 A fresh 9 V block lasts roughly 3–5 hours, enough for a demo. USB is only
 needed for uploading and may stay plugged in next to the battery.

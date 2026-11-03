@@ -13,8 +13,10 @@ Bewegungssensor erkennt Anwesenheit.
 - Hardware-Spezifikation: [MDs/aufbau.md](MDs/aufbau.md) (Stand vor dem RFID-Umbau;
   maßgeblich für Pins/Verdrahtung ist die Tabelle weiter unten in dieser Datei)
 - Schaltplan: [Schaltplan/](Schaltplan/). `SCHALTPLAN.png/.svg` ist der
-  Cirkit-Designer-Export des Versuchsaufbaus (großes Breadboard, Batterie noch
-  am Hohlstecker, Quelle nicht im Repo). Für den Einbau ins Gehäuse gilt
+  Cirkit-Designer-Export des Versuchsaufbaus (großes Breadboard, Quelle nicht
+  im Repo). Die Batterie an VIN/GND ist im SVG von Hand nachgetragen und die
+  PNG daraus gerendert; das Cirkit-Projekt selbst hat sie noch am Hohlstecker,
+  ein neuer Export von dort würde das überschreiben. Für den Einbau ins Gehäuse gilt
   `steckplan_gehaeuse.svg` (von Hand gezeichnet: Mini-Breadboard, Batterie an
   VIN). Ändert sich die Belegung, Steckplan, `docs/wiring.svg` und
   `buildCase()` im Viewer gemeinsam anpassen.

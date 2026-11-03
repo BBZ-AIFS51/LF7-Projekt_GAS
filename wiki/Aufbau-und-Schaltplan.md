@@ -12,13 +12,10 @@ und ein Foto vom echten Aufbau zum Vergleich.
 </p>
 
 > [!NOTE]
-> Der Schaltplan zeigt den **Versuchsaufbau** auf dem großen Breadboard, dort
-> hängt die Batterie noch am Hohlstecker. Im Gehäuse sitzt die Batterie an
-> **VIN**, verteilt wird über ein Mini-Breadboard, siehe
-> [Stromversorgung im Gehäuse](#stromversorgung-im-gehäuse).
->
-> ✏️ **TODO (Team):** Im Cirkit-Designer-Projekt die Batterie von der
-> Hohlbuchse auf VIN/GND umstecken und `SCHALTPLAN.png`/`.svg` neu exportieren.
+> Der Schaltplan zeigt den **Versuchsaufbau** auf dem großen Breadboard. Die
+> Batterie hängt wie im Gehäuse an **VIN** (rot) und **GND** (schwarz), der
+> Hohlstecker bleibt frei. Im Gehäuse wird zusätzlich über ein Mini-Breadboard
+> verteilt, siehe [Stromversorgung im Gehäuse](#stromversorgung-im-gehäuse).
 
 ## Pin-Zuordnung
 

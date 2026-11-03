@@ -824,6 +824,76 @@ Geändert bzw. neu:
 
 ---
 
+## 21. Prompt — Schraubzapfen am Sensorteil brechen ab (03.11.2026)
+
+> Passe @Gehaeuse/stl/sensor_front.stl etwas an. Die aufnahmen für die
+> schrauben vom sensor sind zu instabil, selbst bei kleinen schrauben brechen
+> sie ab.
+
+### Antwort
+
+**Ursache:** Die beiden Zapfen für den HC-SR501 waren freistehende Zylinder
+mit Ø 4 mm und einem 1,6-mm-Vorbohrloch, also nur 1,2 mm Wand bei 3 mm Höhe.
+Dazu war das Loch nur 4 mm tief (3 mm Zapfen + 1 mm Deckel). Eine M2×6-Schraube
+ragt nach der 1,2-mm-Platine aber 4,8 mm hinein, lief also auf Grund und hat
+den Zapfen zusätzlich auseinandergedrückt.
+
+**Änderung** in [../Gehaeuse/gehaeuse.scad](../Gehaeuse/gehaeuse.scad),
+`sensor_front()`:
+
+- Nach innen ist kein Platz (der 24 × 24 mm große Linsenrahmen des Sensors
+  liegt direkt am Zapfen an). Deshalb wächst jeder Zapfen **nach außen zu
+  einem massiven Steg**, der bis in die Lippe des Deckels reicht (8 mm breit).
+  Der Zapfen hängt damit nicht mehr frei am Deckel, sondern ist mit Deckel und
+  Lippe verbunden.
+- Vorbohrloch auf 4,8 mm vertieft (bis 0,6 mm vor die Sichtseite), M2×6 passt
+  jetzt ganz hinein.
+
+Neu erzeugt: `Gehaeuse/stl/sensor_front.stl` (OpenSCAD 2021),
+`docs/viewer/enclosure.js` und `Gehaeuse/bilder/druckplatte.png`. Die anderen
+Bilder zeigen die Innenseite des Sensordeckels nicht und blieben unverändert.
+
+**Offene Punkte:**
+
+- `sensor_front.stl` neu drucken (≈ 30 min) und mit dem Sensor testen.
+- `druckplatte.png` ist unkomprimiert (~490 kB statt ~120 kB), weil auf dem
+  Rechner kein `pngquant` installiert ist. Bei Gelegenheit mit `pngquant` neu
+  rendern.
+
+---
+
+## 22. Prompt — Batterie im Schaltplan an VIN (03.11.2026)
+
+> commit alles, auf main
+>
+> Fixe vorher noch dem @Schaltplan/SCHALTPLAN.svg , dort ist die batterie noch
+> nicht auf VIN angeschlossen
+
+### Antwort
+
+Offener Punkt aus Schritt 20. Das Cirkit-Designer-Projekt liegt nicht im Repo,
+deshalb ist der Export
+[../Schaltplan/SCHALTPLAN.svg](../Schaltplan/SCHALTPLAN.svg) direkt bearbeitet:
+
+- Die beiden grünen Leitungen Batterie → Hohlstecker entfernt.
+- Neu: **rot** Batterie + → **VIN**, **schwarz** Batterie − → **GND** (der
+  GND-Pin direkt neben VIN, auf dem auch die GND-Leitung des RC522 endet).
+- Pin-Markierungen angepasst: VIN rot, Hohlstecker grau (frei).
+- [../Schaltplan/SCHALTPLAN.png](../Schaltplan/SCHALTPLAN.png) aus dem SVG
+  neu gerendert (gleiche Größe 3000 × 3039, Chromium über Playwright).
+
+Doku: [../CLAUDE.md](../CLAUDE.md), [../README.md](../README.md), Wiki
+(Aufbau und Schaltplan: Hinweis und TODO entfernt, Herausforderungen).
+
+Danach alles aus Schritt 21 und 22 auf `main` committet.
+
+**Offene Punkte:**
+
+- Das Cirkit-Projekt selbst hat die Batterie noch am Hohlstecker. Wird von
+  dort neu exportiert, ist die Änderung weg. Dann im Cirkit Designer umstecken.
+
+---
+
 ## Anhang — Stand der Dateien
 
 | Datei | Zweck |

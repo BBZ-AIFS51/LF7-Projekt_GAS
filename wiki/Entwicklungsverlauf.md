@@ -14,7 +14,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **20** | **7** | **3** | **2** |
+| **22** | **8** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -49,6 +49,8 @@ timeline
                : S19 Wiki automatisch
     section Einbau
         28.10. : S20 Batterie an VIN, Mini-Breadboard
+        03.11. : S21 Stabilere Sensor-Zapfen
+               : S22 Schaltplan mit VIN
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -79,6 +81,8 @@ flowchart LR
     P18["📝 S18<br/>Vorgaben"]
     P19["📝 S19<br/>Wiki-Workflow"]
     P20["📦 S20<br/>Batterie an VIN"]
+    P21["🐞 S21<br/>Sensor-Zapfen"]
+    P22["📝 S22<br/>Schaltplan VIN"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -88,6 +92,8 @@ flowchart LR
     P8 --> P13
     P10 --> P11 --> P12 --> P13
     P12 -- "gedruckt" --> P20
+    P12 -- "Test am Druck" --> P21
+    P20 --> P22
     P13 --> P14 --> P15
     P3 --> P17
     P17 -. "Lehrkraft" .-> P18
@@ -100,11 +106,11 @@ flowchart LR
     classDef box fill:#d2f4dc,stroke:#1a7f37,color:#044f1e
     classDef doc fill:#e6e9ed,stroke:#59636e,color:#1f2328
     class P1,P6,P7 fw
-    class P2,P4,P16 bug
+    class P2,P4,P16,P21 bug
     class P5 info
     class P8,P9,P13,P14,P15 vis
     class P10,P11,P12,P20 box
-    class P3,P17,P18,P19 doc
+    class P3,P17,P18,P19,P22 doc
 ```
 
 <sub>Durchgezogene Pfeile: Ergebnis führt direkt zum nächsten Schritt · gestrichelt: Anregung der Lehrkraft</sub>
@@ -118,11 +124,11 @@ flowchart LR
 | | Bereich | Schritte |
 |:---:|---|---|
 | 💻 | Firmware-Funktionen | 1, 6, 7 |
-| 🐞 | Fehlerbehebung | 2, 4, 16 |
+| 🐞 | Fehlerbehebung | 2, 4, 16, 21 |
 | 💡 | Erklärung / Wissen | 5 |
 | 🎨 | Darstellung (README, 3D-Modell, Grafiken) | 8, 9, 13, 14, 15 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
-| 📝 | Dokumentation | 3, 17, 18, 19 |
+| 📝 | Dokumentation | 3, 17, 18, 19, 22 |
 
 </td>
 <td width="45%">
@@ -130,11 +136,11 @@ flowchart LR
 ```mermaid
 pie
     "Firmware" : 3
-    "Fehlerbehebung" : 3
+    "Fehlerbehebung" : 4
     "Erklärung" : 1
     "Darstellung" : 5
     "Gehäuse" : 4
-    "Dokumentation" : 4
+    "Dokumentation" : 5
 ```
 
 </td>
@@ -421,6 +427,42 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 > **Offen:** nicht am Aufbau getestet. VIN hat keinen Verpolungsschutz, also vor dem ersten Anstecken die Polung prüfen. Die PDF-Anleitung und der Cirkit-Schaltplan müssen noch nachgezogen werden.
 
 <sub>📄 [`steckplan_gehaeuse.svg`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Schaltplan/steckplan_gehaeuse.svg) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#20-prompt--batterie-an-vin-und-mini-breadboard-28102026)</sub>
+
+---
+
+## 📆 03.11.2026 · Nachbessern am Druck
+
+### 🐞 Schritt 21 — Schraubzapfen am Sensorteil brechen ab
+
+**Problem:** Die beiden Zapfen in der Sensor-Frontplatte, an die der Bewegungsmelder geschraubt wird, brechen schon bei kleinen Schrauben ab.
+
+**Ergebnis**
+- **Ursache:** Die Zapfen waren dünne, freistehende Röhrchen mit nur 1,2 mm Wand. Außerdem war das Schraubloch kürzer als die Schraube, sie lief auf Grund und hat den Zapfen auseinandergedrückt.
+- **Fix:** Jeder Zapfen ist jetzt ein massiver Steg bis zum Rand des Deckels (nach innen ist wegen des Linsenrahmens kein Platz). Das Schraubloch ist tief genug für M2 × 6 mm.
+- STL neu exportiert, 3D-Modell und Bild der Druckplatte aktualisiert
+
+<p align="center"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Gehaeuse/bilder/druckplatte.png" alt="Druckplatte mit der neuen Sensor-Frontplatte" width="85%"></p>
+
+> [!WARNING]
+> **Offen:** Die Sensor-Frontplatte muss neu gedruckt und mit dem Sensor getestet werden.
+
+<sub>📄 [`sensor_front.stl`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Gehaeuse/stl/sensor_front.stl) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#21-prompt--schraubzapfen-am-sensorteil-brechen-ab-03112026)</sub>
+
+### 📝 Schritt 22 — Batterie im Schaltplan an VIN
+
+**Anlass:** Seit Schritt 20 hängt die Batterie an VIN, der Schaltplan zeigte sie aber noch am Hohlstecker.
+
+**Ergebnis**
+- Im Schaltplan geht die Batterie jetzt mit **rot an VIN** und **schwarz an GND**, der Hohlstecker ist frei
+- Der Export wurde direkt bearbeitet und das PNG daraus neu erzeugt, weil das Cirkit-Designer-Projekt nicht im Repository liegt
+- Hinweis und TODO auf der Seite [Aufbau und Schaltplan](Aufbau-und-Schaltplan) entfernt
+
+<p align="center"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Schaltplan/SCHALTPLAN.png" alt="Schaltplan mit der Batterie an VIN" width="70%"></p>
+
+> [!WARNING]
+> **Offen:** Das Cirkit-Projekt selbst zeigt noch den alten Stand. Ein neuer Export von dort würde die Änderung überschreiben.
+
+<sub>📄 [`SCHALTPLAN.svg`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Schaltplan/SCHALTPLAN.svg) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#22-prompt--batterie-im-schaltplan-an-vin-03112026)</sub>
 
 ---
 

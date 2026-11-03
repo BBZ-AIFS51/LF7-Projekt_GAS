@@ -155,7 +155,7 @@ Eingang ab.
 
 ### Batterie passt nicht ins Gehäuse
 
-**Situation:** Laut Schaltplan wird die 9-V-Batterie über den Hohlstecker des
+**Situation:** Laut ursprünglichem Schaltplan wird die 9-V-Batterie über den Hohlstecker des
 Uno angeschlossen. Im gedruckten Gehäuse hätten Stecker und Batterie dann außen
 am Gehäuse gehangen.
 
