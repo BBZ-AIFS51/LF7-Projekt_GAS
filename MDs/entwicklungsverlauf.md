@@ -894,6 +894,50 @@ geht hier im Container genauso (Chromium/Playwright, ffmpeg, Node vorhanden).
 
 ---
 
+## 22. Prompt — Echte 3D-Animation in der Präsentation (09.11.2026)
+
+> Kannst du auch ne 3d animation mal reinpacke, damit ich weiß wie das dann
+> ungefähr aussieht, weil auf der folie mit dem 3d modell war keine
+
+### Antwort
+
+Die Punktwolke auf der Gehäuse-Folie wirkte flach. Jetzt läuft dort das
+**echte 3D-Modell** aus dem Viewer, als Kamerafahrt in drei Phasen (9 s):
+
+1. Gehäuse massiv, Kamera fährt mit Überschwinger heran und kreist.
+2. Harter Farbschnitt, dann X-ray: Uno, Keypad, OLED, RC522, Breadboard,
+   Kabel sichtbar.
+3. Das Gehäuse klappt auf (Frontplatte und Sensor-Front fahren ab), die
+   Kamera dreht zur Seite, damit man das Innenleben sieht.
+
+**Technik:**
+
+- [../praesentation/index.html](../praesentation/index.html) bettet
+  `docs/viewer/index.html?shot` als `<iframe>` ein (transparenter Hintergrund)
+  und schickt ihm per `postMessage` einmal `shot` (Szene aufbauen, gleiche
+  Positionen wie beim X-ray-Banner) und danach in jedem Frame `pose` (Kamera,
+  X-ray/massiv, Aufklappen). `postMessage`, weil zwei `file://`-Seiten nicht
+  direkt aufeinander zugreifen dürfen.
+- [../docs/viewer/index.html](../docs/viewer/index.html): neue Funktion
+  `pose()` (wie `shot()`, aber ohne Licht und Boden neu anzulegen) plus die
+  `postMessage`-Brücke, beides nur im `?shot`-Modus. `shot()` kennt zusätzlich
+  `shadowMap` (Größe der Schattenkarte, Standard weiterhin 4096). Normale
+  Ansicht, `tools/render.mjs` und die Bilder sind unverändert.
+- [../tools/render-praesentation.mjs](../tools/render-praesentation.mjs):
+  startet Chromium mit Software-WebGL wie `render.mjs`. Ohne Grafikkarte
+  braucht ein 3D-Frame hier mehrere Sekunden, deshalb wird die 3D-Folie im
+  Video mit 15 fps aufgenommen (jedes Bild doppelt).
+- Punktwolke und das Laden von `enclosure.js` aus der Präsentation entfernt.
+
+**Offene Punkte:**
+
+- Auf dem Vortragsrechner prüfen, ob die 3D-Folie flüssig läuft (braucht
+  WebGL, also eine halbwegs aktuelle Grafik).
+- Der Viewer muss beim Vortrag mit im Ordner liegen (`docs/viewer/`), die
+  Präsentation lädt ihn relativ.
+
+---
+
 ---
 
 ## Anhang — Stand der Dateien

@@ -58,14 +58,19 @@ Bewegungssensor erkennt Anwesenheit.
   `tools/stl2viewer.mjs` aus den STLs erzeugt (nicht von Hand ändern). Die
   Modul-Positionen im Gehäuse rechnet `buildCase()` mit denselben Formeln wie
   `gehaeuse.scad` — Layout-Änderungen dort auch hier nachziehen.
-  `index.html?shot` ist ein versteckter Modus nur für `tools/render.mjs`.
+  `index.html?shot` ist ein versteckter Modus für `tools/render.mjs` und die
+  Präsentation (`gasShot()`, `gasPose()`, dazu eine `postMessage`-Brücke).
   `docs/social-preview.png` (1280 × 640, < 1 MB) ist das GitHub-Social-Preview,
   wird von Hand unter Settings → General → Social preview hochgeladen.
 - `praesentation/` — Vortrag vor der Klasse als animierte HTML-Präsentation im
   Motion-Graphics-Stil (`index.html`, Prototyp, ohne Ton). Farben fast Schwarz,
   Creme, Rot `#F04A35`, Blau; Sucher-HUD; Schriften Archivo (breit, 900),
   Instrument Serif kursiv, JetBrains Mono (Google Fonts). Zeichnet Herz und
-  Totenkopf wie die Firmware und eine Punktwolke aus `docs/viewer/enclosure.js`.
+  Totenkopf wie die Firmware. Die Gehäuse-Folie bettet den Viewer
+  (`../docs/viewer/index.html?shot`) als iframe ein und steuert ihn per
+  `postMessage` (`shot` einmal, dann `pose` pro Frame: Kamera, X-ray, Aufklappen)
+  — das 3D-Modell gibt es also nur einmal, `docs/viewer/` muss beim Vortrag
+  mit dabei sein.
   Steuerung: →/Leertaste/Klick weiter, ← zurück, `F` Vollbild, `A`/`?auto`
   Auto-Play. `?render` ist nur für `tools/render-praesentation.mjs`
   (MP4-Export bzw. `--stills`). Ändern sich Pins, Zeiten oder Zahlen, die

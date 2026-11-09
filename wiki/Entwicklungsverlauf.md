@@ -14,7 +14,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **21** | **8** | **3** | **2** |
+| **22** | **8** | **3** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -51,6 +51,7 @@ timeline
         28.10. : S20 Batterie an VIN, Mini-Breadboard
     section Vorbereitung Vortrag
         09.11. : S21 Präsentation als Motion Graphics
+               : S22 3D-Modell in der Präsentation
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -82,6 +83,7 @@ flowchart LR
     P19["📝 S19<br/>Wiki-Workflow"]
     P20["📦 S20<br/>Batterie an VIN"]
     P21["🎨 S21<br/>Präsentation"]
+    P22["🎨 S22<br/>3D in der Präsentation"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -92,7 +94,7 @@ flowchart LR
     P10 --> P11 --> P12 --> P13
     P12 -- "gedruckt" --> P20
     P13 --> P14 --> P15
-    P13 -- "3D-Daten" --> P21
+    P13 -- "3D-Daten" --> P21 --> P22
     P3 --> P17
     P17 -. "Lehrkraft" .-> P18
     P18 --> P19
@@ -106,7 +108,7 @@ flowchart LR
     class P1,P6,P7 fw
     class P2,P4,P16 bug
     class P5 info
-    class P8,P9,P13,P14,P15,P21 vis
+    class P8,P9,P13,P14,P15,P21,P22 vis
     class P10,P11,P12,P20 box
     class P3,P17,P18,P19 doc
 ```
@@ -124,7 +126,7 @@ flowchart LR
 | 💻 | Firmware-Funktionen | 1, 6, 7 |
 | 🐞 | Fehlerbehebung | 2, 4, 16 |
 | 💡 | Erklärung / Wissen | 5 |
-| 🎨 | Darstellung (README, 3D-Modell, Grafiken, Präsentation) | 8, 9, 13, 14, 15, 21 |
+| 🎨 | Darstellung (README, 3D-Modell, Grafiken, Präsentation) | 8, 9, 13, 14, 15, 21, 22 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
 | 📝 | Dokumentation | 3, 17, 18, 19 |
 
@@ -136,7 +138,7 @@ pie
     "Firmware" : 3
     "Fehlerbehebung" : 3
     "Erklärung" : 1
-    "Darstellung" : 6
+    "Darstellung" : 7
     "Gehäuse" : 4
     "Dokumentation" : 4
 ```
@@ -443,6 +445,19 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 > **Offen:** nur ein Prototyp. Texte, Reihenfolge und Folienzahl sind noch nicht mit dem Team abgestimmt, die Schriften kommen aus dem Internet (für einen Rechner ohne Netz lokal ablegen).
 
 <sub>📄 [`praesentation/index.html`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/praesentation/index.html) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#21-prompt--präsentation-im-motion-graphics-stil-09112026)</sub>
+
+### 🎨 Schritt 22 — Echte 3D-Animation in der Präsentation
+
+**Anlass:** Auf der Gehäuse-Folie des Prototyps war nur eine flache Punktwolke zu sehen, keine richtige 3D-Animation.
+
+**Ergebnis**
+- Auf der Folie läuft jetzt das **3D-Modell aus dem Viewer**: Kamerafahrt um das massive Gehäuse, Schnitt auf **X-ray** mit allen Bauteilen und Kabeln, dann **klappt das Gehäuse auf**.
+- Die Präsentation steuert dafür den vorhandenen Viewer Bild für Bild. Das Modell gibt es also nur einmal im Projekt, Änderungen am Gehäuse landen automatisch auch in der Präsentation.
+
+> [!NOTE]
+> **Offen:** Auf dem Vortragsrechner testen, ob die 3D-Folie flüssig läuft (braucht WebGL).
+
+<sub>📄 [`praesentation/index.html`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/praesentation/index.html) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#22-prompt--echte-3d-animation-in-der-präsentation-09112026)</sub>
 
 ---
 

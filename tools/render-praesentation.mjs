@@ -5,6 +5,9 @@
 //   node tools/render-praesentation.mjs                      -> praesentation/praesentation.mp4
 //   node tools/render-praesentation.mjs out.mp4 30           (file, frames per second)
 //   node tools/render-praesentation.mjs --stills out_dir     (one PNG per slide, for checking)
+//
+// The slide with the embedded 3D model renders in software here (several seconds
+// per frame), so it is captured with at most 15 fps and every frame is repeated.
 
 import { spawn } from 'node:child_process';
 import { mkdirSync } from 'node:fs';
@@ -30,11 +33,13 @@ const out = stills ? (args[1] || join(ROOT, 'praesentation', 'stills')) : (args[
 const fps = stills ? 1 : +(args[1] || 30);
 
 const { chromium } = await loadPlaywright();
-const browser = await chromium.launch();
+// WebGL for the embedded 3D model, same flags as tools/render.mjs
+const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
 await page.goto(URL);
 await page.waitForFunction(() => window.GAS && window.GAS.ready);
 const durations = await page.evaluate(() => window.GAS.durations);
+const heavy = await page.evaluate(() => [...document.querySelectorAll('.slide')].map((s) => !!s.querySelector('iframe')));
 
 if (stills) {
   mkdirSync(out, { recursive: true });
@@ -50,11 +55,14 @@ if (stills) {
   let total = 0;
   for (let i = 0; i < durations.length; i++) {
     const frames = Math.round(durations[i] * fps);
-    for (let f = 0; f < frames; f++) {
+    const step = heavy[i] ? Math.max(1, Math.round(fps / 15)) : 1;
+    for (let f = 0; f < frames; f += step) {
       const t = f / fps;
       await page.evaluate(([i, t, g]) => window.GAS.seek(i, t, g), [i, t, total + t]);
       const jpg = await page.screenshot({ type: 'jpeg', quality: 92 });
-      if (!ff.stdin.write(jpg)) await new Promise((r) => ff.stdin.once('drain', r));
+      for (let r = 0; r < Math.min(step, frames - f); r++) {
+        if (!ff.stdin.write(jpg)) await new Promise((res) => ff.stdin.once('drain', res));
+      }
     }
     total += durations[i];
     process.stdout.write(`slide ${i + 1}/${durations.length}\r`);

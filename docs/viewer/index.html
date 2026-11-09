@@ -2260,6 +2260,18 @@ function buildScene() {
         if (cfg.print) frames.print = printBed();
         return frames;
       },
+      // per-frame changes after stage(), used by animations (praesentation/):
+      // housing mode, open (0..1, may overshoot) and unit transforms
+      pose(p) {
+        if (p.housing && p.housing !== mode) setMode(p.housing);
+        if (p.open !== undefined) { openK = openTo = p.open; applyOpen(openK); }
+        [[cu, p.cu], [su, p.su]].forEach(([u, q]) => {
+          if (!q) return;
+          if (q.pos) u.position.set(...q.pos);
+          if (q.rot) u.rotation.set(...q.rot);
+          if (q.floor !== false) dropToFloor(u);
+        });
+      },
       update(t) {
         if (openK !== openTo) {
           const k = Math.min(1, (t - openT0) / 800);
@@ -2574,6 +2586,7 @@ function buildScene() {
   // (names of the housing parts to show), cu / su ({ pos, rot, floor } or null),
   // print (all STLs in print orientation), camera ({ pos, target, fov }),
   // sun ([x, y, z]), floor (radius, false = no floor and no shadows), shadow (opacity),
+  // shadowMap (size of the shadow map, default 4096),
   // labels ([{ text, frame, at: [x, y, z] in mm }])
   function shot(cfg) {
     setTab('case');
@@ -2619,7 +2632,7 @@ function buildScene() {
     sun.target.position.copy(tgt);
     scene.add(sun.target);
     sun.position.copy(tgt).add(V(...(cfg.sun || [6, 40, 8])));
-    sun.shadow.mapSize.set(4096, 4096);
+    sun.shadow.mapSize.set(cfg.shadowMap || 4096, cfg.shadowMap || 4096);
     if (sun.shadow.map) {                         // the old map still has the old size
       sun.shadow.map.dispose();
       sun.shadow.map = null;
@@ -2691,9 +2704,26 @@ function buildScene() {
     return target;
   }
 
+  // one frame of an animation after shot(cfg): same cfg keys as shot() for
+  // housing, open, cu, su and camera, without re-adding lights and floor
+  function pose(cfg) {
+    caseApi.pose(cfg);
+    scene.updateMatrixWorld(true);
+    const c = cfg.camera;
+    if (c) {
+      if (c.fov && c.fov !== camera.fov) { camera.fov = c.fov; camera.updateProjectionMatrix(); }
+      if (c.dir) frameCamera(c);
+      else { camera.position.set(...c.pos); camera.lookAt(V(...c.target)); }
+      camera.updateMatrixWorld();
+    }
+    // the render loop's own requestAnimationFrame runs first, so one frame is enough
+    return new Promise((resolve) => requestAnimationFrame(() => resolve(true)));
+  }
+
   return {
     update,
     shot,
+    pose,
     pressKey(k) {
       const t = performance.now();
       keyMeshes.forEach((km) => { if (km.userData.key === k) km.userData.pressT = t; });
@@ -2718,7 +2748,20 @@ try {
   if (typeof THREE === 'undefined') throw new Error('three.min.js is missing');
   scene3d = buildScene();
   $('#loading').hidden = true;
-  if (SHOT) window.gasShot = scene3d.shot;
+  if (SHOT) {
+    window.gasShot = scene3d.shot;
+    window.gasPose = scene3d.pose;
+    // praesentation/index.html embeds this page in an iframe and drives it by
+    // postMessage, because two file:// pages may not reach into each other
+    addEventListener('message', async (e) => {
+      const m = e.data || {};
+      if (m.gas === 'shot') await scene3d.shot(m.cfg);
+      else if (m.gas === 'pose') await scene3d.pose(m.cfg);
+      else return;
+      e.source.postMessage({ gas: 'done', id: m.id }, '*');
+    });
+    if (parent !== window) parent.postMessage({ gas: 'loaded' }, '*');
+  }
   else if (location.hash === '#enclosure') $('#tabCase').click();
 } catch (e) {
   $('#loading').textContent = '3D view not available (' + e.message + '). The simulation on the right still works.';
