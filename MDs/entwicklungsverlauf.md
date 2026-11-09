@@ -972,6 +972,68 @@ Modell zu sehen, weil das Render-Skript im Repo läuft.
 
 ---
 
+## 24. Prompt — Präsentation komplett in 3D (09.11.2026)
+
+> So, ich würd sagen, der vorgeschmack war ganz cool. Jetzt hau mal nen
+> richtigen banger raus, geb alles was du kannst.
+>
+> Also gerne auch neue 3d modelle, die ganze präsentation soll einf nur crazy
+> aussehen, also komplett motion graphic design. Also mach die Präsentation
+> komplett neu, erstell neue 3D-Assets, baller alles raus, was geht. Komplett
+> 3D-Design, alles reiner. Gib ihm.
+
+### Antwort
+
+Die Präsentation ist komplett neu: **14 Szenen, alles live in WebGL**
+(three.js aus `docs/viewer/`), Kamerafahrten statt Folien, ohne Ton.
+
+**Szenen:** Intro (roter Punkt explodiert zum Voxel-Totenkopf aus den
+OLED-Pixeln) · Titel (GAS als 3D-Schrift über einem welligen Punktfeld) ·
+Idee (Raum mit Tür, eine Person läuft in den Erfassungskegel des PIR → Alarm) ·
+6 Bauteile auf einem Drehteller · vier Zustände (Lichtkugel fährt eine Bahn
+ab: Herz, Countdown, Totenkopf, Alarm) · Display (8192 Pixelsäulen, die Icons
+laufen als Welle ein) · Verdrahtung (Uno, 17 Kabel wachsen aus den Pins, freie
+Pins D0/D1/A3 markiert) · Gehäuse (die echten STL-Teile werden schichtweise
+„gedruckt“, fliegen zusammen, X-ray mit Bauteilen innen, aufklappen) ·
+„Probleme“ (3D-Truchet-Feld) · 2048 Würfel = 2048 Byte SRAM, die
+Keypad-Library fliegt raus · Tunnelflug durch vier Lösungen · `scanKeypad()`
+tippt sich neben dem Keypad, das gerade gescannt wird · Zahlen · Finale.
+
+**Neue 3D-Assets** (alle aus Code, cm mit echten Maßen, `js/assets.js`):
+Arduino Uno mit Header-Pins, Keypad (Tasten einzeln, beschriftet), OLED mit
+Pixelbild, RC522 mit Antenne und Karte, PIR mit facettierter Linse, Buzzer,
+9-V-Block, Breadboard, Person mit Laufanimation; Herz und Totenkopf als
+extrudierte Formen und als Voxel-Skulptur (gleiche Zeichenbefehle wie
+`drawHeart()`/`drawSkull()`); 3D-Schrift aus gestapelten Glyphen-Ebenen.
+
+**Technik:**
+
+- [../praesentation/js/engine.js](../praesentation/js/engine.js): eigener
+  Renderer mit Nachbearbeitung (Bloom in 4 Stufen, RGB-Versatz bei jedem
+  Schnitt, Körnung, Vignette), Ablauf, HUD. Jede Szene setzt alles aus der
+  Szenenzeit t, darum sehen Live-Vortrag und Video gleich aus.
+- [../praesentation/js/slides.js](../praesentation/js/slides.js): die 14
+  Szenen. Texte bleiben in [../praesentation/index.html](../praesentation/index.html).
+- Schriften lokal in `praesentation/fonts/fonts.css` (Data-URIs, SIL Open
+  Font License, Lizenztexte liegen bei): läuft jetzt ohne Internet.
+- `GAS-Praesentation.html`: alles in einer Datei (~1,2 MB), erzeugt von
+  [../tools/build-praesentation.mjs](../tools/build-praesentation.mjs).
+- [../tools/render-praesentation.mjs](../tools/render-praesentation.mjs):
+  Video-Export mit `--jobs` (mehrere Browser parallel) und `--slides`.
+- Der Umbau am Viewer aus Schritt 22 (`pose()`, `postMessage`-Brücke) ist
+  wieder entfernt, `docs/viewer/index.html` ist wie vor Schritt 21.
+- Taste `Q` / `?low`: geringere Auflösung für schwache Rechner.
+
+**Offene Punkte:**
+
+- Auf dem Vortragsrechner und Beamer testen (braucht WebGL 2; ruckelt es,
+  `Q` drücken).
+- Texte und Reihenfolge mit dem Team abstimmen, Vortrag dazu proben (die
+  Szenen laufen 4,5–11 s, danach bleibt das Bild stehen und bewegt sich leicht).
+- Bauteil-Modelle sind nach Datenblatt-Maßen gebaut, nicht vom echten Aufbau.
+
+---
+
 ---
 
 ## Anhang — Stand der Dateien

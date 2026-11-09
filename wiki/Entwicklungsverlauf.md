@@ -14,7 +14,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **23** | **8** | **4** | **2** |
+| **24** | **8** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -53,6 +53,7 @@ timeline
         09.11. : S21 Präsentation als Motion Graphics
                : S22 3D-Modell in der Präsentation
                : S23 Präsentation als eine Datei
+               : S24 Präsentation komplett in 3D
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -86,6 +87,7 @@ flowchart LR
     P21["🎨 S21<br/>Präsentation"]
     P22["🎨 S22<br/>3D in der Präsentation"]
     P23["🐞 S23<br/>Eine Datei"]
+    P24["🎨 S24<br/>Alles in 3D"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -96,7 +98,7 @@ flowchart LR
     P10 --> P11 --> P12 --> P13
     P12 -- "gedruckt" --> P20
     P13 --> P14 --> P15
-    P13 -- "3D-Daten" --> P21 --> P22 -- "Test beim Team" --> P23
+    P13 -- "3D-Daten" --> P21 --> P22 -- "Test beim Team" --> P23 --> P24
     P3 --> P17
     P17 -. "Lehrkraft" .-> P18
     P18 --> P19
@@ -110,7 +112,7 @@ flowchart LR
     class P1,P6,P7 fw
     class P2,P4,P16,P23 bug
     class P5 info
-    class P8,P9,P13,P14,P15,P21,P22 vis
+    class P8,P9,P13,P14,P15,P21,P22,P24 vis
     class P10,P11,P12,P20 box
     class P3,P17,P18,P19 doc
 ```
@@ -128,7 +130,7 @@ flowchart LR
 | 💻 | Firmware-Funktionen | 1, 6, 7 |
 | 🐞 | Fehlerbehebung | 2, 4, 16, 23 |
 | 💡 | Erklärung / Wissen | 5 |
-| 🎨 | Darstellung (README, 3D-Modell, Grafiken, Präsentation) | 8, 9, 13, 14, 15, 21, 22 |
+| 🎨 | Darstellung (README, 3D-Modell, Grafiken, Präsentation) | 8, 9, 13, 14, 15, 21, 22, 24 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
 | 📝 | Dokumentation | 3, 17, 18, 19 |
 
@@ -140,7 +142,7 @@ pie
     "Firmware" : 3
     "Fehlerbehebung" : 4
     "Erklärung" : 1
-    "Darstellung" : 7
+    "Darstellung" : 8
     "Gehäuse" : 4
     "Dokumentation" : 4
 ```
@@ -474,6 +476,22 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 > **Offen:** Nach Änderungen an der Präsentation die Einzeldatei neu erzeugen.
 
 <sub>📄 [`GAS-Praesentation.html`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/praesentation/GAS-Praesentation.html) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#23-prompt--3d-modell-fehlt-in-der-html-09112026)</sub>
+
+### 🎨 Schritt 24 — Präsentation komplett in 3D
+
+**Anlass:** Der Prototyp hat gefallen. Jetzt sollte die ganze Präsentation neu entstehen: komplett in 3D, mit neuen Modellen und so viel Motion Design wie möglich.
+
+**Ergebnis**
+- **14 Szenen, alles live in 3D gerendert**, mit Kamerafahrten statt Folien: Voxel-Totenkopf im Intro, ein Raum, in dem eine Person den Alarm auslöst, die Bauteile auf einem Drehteller, 8192 Pixelsäulen fürs Display, wachsende Kabel an den Pins, das Gehäuse wird schichtweise „gedruckt“ und aufgeklappt, 2048 Würfel als Arbeitsspeicher, ein Tunnelflug durch die gelösten Probleme.
+- **Neue 3D-Modelle** von Uno, Keypad, OLED, RFID-Leser mit Karte, Bewegungsmelder, Buzzer, Batterie und Breadboard, alle nach Datenblatt-Maßen aus Code gebaut.
+- Läuft **ohne Internet** (Schriften eingebettet) und gibt es auch als **eine Datei** für den USB-Stick.
+
+<p align="center"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/wiki/images/praesentation-3d.jpg" alt="Ausschnitte aus der 3D-Präsentation" width="85%"></p>
+
+> [!NOTE]
+> **Offen:** Auf dem Vortragsrechner testen (braucht WebGL 2) und den Vortrag dazu proben.
+
+<sub>📄 [`praesentation/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/praesentation) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#24-prompt--präsentation-komplett-in-3d-09112026)</sub>
 
 ---
 

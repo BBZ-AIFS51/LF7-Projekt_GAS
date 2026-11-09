@@ -58,26 +58,35 @@ Bewegungssensor erkennt Anwesenheit.
   `tools/stl2viewer.mjs` aus den STLs erzeugt (nicht von Hand ändern). Die
   Modul-Positionen im Gehäuse rechnet `buildCase()` mit denselben Formeln wie
   `gehaeuse.scad` — Layout-Änderungen dort auch hier nachziehen.
-  `index.html?shot` ist ein versteckter Modus für `tools/render.mjs` und die
-  Präsentation (`gasShot()`, `gasPose()`, dazu eine `postMessage`-Brücke).
+  `index.html?shot` ist ein versteckter Modus nur für `tools/render.mjs`.
   `docs/social-preview.png` (1280 × 640, < 1 MB) ist das GitHub-Social-Preview,
   wird von Hand unter Settings → General → Social preview hochgeladen.
-- `praesentation/` — Vortrag vor der Klasse als animierte HTML-Präsentation im
-  Motion-Graphics-Stil (`index.html`, Prototyp, ohne Ton). Farben fast Schwarz,
-  Creme, Rot `#F04A35`, Blau; Sucher-HUD; Schriften Archivo (breit, 900),
-  Instrument Serif kursiv, JetBrains Mono (Google Fonts). Zeichnet Herz und
-  Totenkopf wie die Firmware. Die Gehäuse-Folie bettet den Viewer
-  (`../docs/viewer/index.html?shot`) als iframe ein und steuert ihn per
-  `postMessage` (`shot` einmal, dann `pose` pro Frame: Kamera, X-ray, Aufklappen)
-  — das 3D-Modell gibt es also nur einmal, `docs/viewer/` muss neben
-  `index.html` liegen. `GAS-Praesentation.html` ist dieselbe Präsentation als
-  **eine Datei** (Viewer, three.js und Gehäusedaten als `srcdoc` eingebettet),
-  erzeugt von `node tools/build-praesentation.mjs` — nicht von Hand ändern, nach
-  jeder Änderung an `index.html` oder `docs/viewer/` neu erzeugen.
-  Steuerung: →/Leertaste/Klick weiter, ← zurück, `F` Vollbild, `A`/`?auto`
-  Auto-Play. `?render` ist nur für `tools/render-praesentation.mjs`
-  (MP4-Export bzw. `--stills`). Ändern sich Pins, Zeiten oder Zahlen, die
-  Folien mitziehen.
+- `praesentation/` — Vortrag vor der Klasse als **komplette 3D-Motion-Graphics-
+  Präsentation**: 14 Szenen, alles live in WebGL gerendert (three.js aus
+  `docs/viewer/three.min.js`, Gehäuse-STLs aus `docs/viewer/enclosure.js`), ohne Ton.
+  - `index.html` — **alle Texte** (eine `<section>` pro Szene, gleiche
+    Reihenfolge wie in `slides.js`), HUD, CSS-Animationen.
+  - `js/engine.js` — Renderer mit eigener Nachbearbeitung (Bloom, RGB-Versatz
+    bei Schnitten, Körnung, Vignette), Ablauf, Navigation, HUD.
+  - `js/assets.js` — alle 3D-Modelle aus Code, in cm mit echten Maßen: Uno,
+    Keypad, OLED, RC522 + Karte, PIR, Buzzer, 9-V-Block, Breadboard, Person;
+    Herz/Totenkopf als 3D-Formen und Voxel-Totenkopf (aus `drawSkull()` /
+    `drawHeart()` der Firmware), 3D-Schrift (`xtext`, Glyphen als Ebenen
+    gestapelt), Gehäuse-Maße wie `gehaeuse.scad`/`buildCase()`.
+  - `js/slides.js` — die Szenen; jede baut eine eigene `THREE.Scene` und hat
+    `update(t)`, das **alles aus der Szenenzeit t** setzt (keine Zustände
+    mitschleppen, sonst stimmt der Video-Export nicht).
+  - `fonts/fonts.css` — Archivo, Instrument Serif, JetBrains Mono (Latin) als
+    Data-URIs, damit es offline und von `file://` läuft (Lizenz: `OFL-*.txt`).
+  - `GAS-Praesentation.html` — alles in **einer Datei** (~1,2 MB), erzeugt von
+    `node tools/build-praesentation.mjs`; nicht von Hand ändern, nach jeder
+    Änderung an `praesentation/` oder `docs/viewer/` neu erzeugen.
+  Farben fast Schwarz, Creme, Rot `#F04A35`, Blau. Steuerung: →/Leertaste/Klick
+  weiter, ← zurück, `F` Vollbild, `A`/`?auto` Auto-Play, `Q`/`?low` geringere
+  Auflösung für schwache Rechner. `?render` ist nur für
+  `tools/render-praesentation.mjs` (MP4-Export, `--jobs` parallel, `--stills`).
+  **Ändern sich Pins, Zeiten, Bauteile, Gehäuse oder Zahlen (z. B. Anzahl der
+  Arbeitsschritte in `NUMS`), die Szenen mitziehen.**
 - `tools/` — Node-Skripte: `stl2viewer.mjs` (STL → `enclosure.js`, ohne
   Abhängigkeiten), `render.mjs` (rendert `Gehaeuse/bilder/*.png` und das Social
   Preview und `docs/banner.svg` über den Viewer, braucht Playwright + Chromium),
