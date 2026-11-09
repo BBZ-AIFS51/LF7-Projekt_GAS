@@ -14,7 +14,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **22** | **8** | **3** | **2** |
+| **23** | **8** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -52,6 +52,7 @@ timeline
     section Vorbereitung Vortrag
         09.11. : S21 Präsentation als Motion Graphics
                : S22 3D-Modell in der Präsentation
+               : S23 Präsentation als eine Datei
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -84,6 +85,7 @@ flowchart LR
     P20["📦 S20<br/>Batterie an VIN"]
     P21["🎨 S21<br/>Präsentation"]
     P22["🎨 S22<br/>3D in der Präsentation"]
+    P23["🐞 S23<br/>Eine Datei"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -94,7 +96,7 @@ flowchart LR
     P10 --> P11 --> P12 --> P13
     P12 -- "gedruckt" --> P20
     P13 --> P14 --> P15
-    P13 -- "3D-Daten" --> P21 --> P22
+    P13 -- "3D-Daten" --> P21 --> P22 -- "Test beim Team" --> P23
     P3 --> P17
     P17 -. "Lehrkraft" .-> P18
     P18 --> P19
@@ -106,7 +108,7 @@ flowchart LR
     classDef box fill:#d2f4dc,stroke:#1a7f37,color:#044f1e
     classDef doc fill:#e6e9ed,stroke:#59636e,color:#1f2328
     class P1,P6,P7 fw
-    class P2,P4,P16 bug
+    class P2,P4,P16,P23 bug
     class P5 info
     class P8,P9,P13,P14,P15,P21,P22 vis
     class P10,P11,P12,P20 box
@@ -124,7 +126,7 @@ flowchart LR
 | | Bereich | Schritte |
 |:---:|---|---|
 | 💻 | Firmware-Funktionen | 1, 6, 7 |
-| 🐞 | Fehlerbehebung | 2, 4, 16 |
+| 🐞 | Fehlerbehebung | 2, 4, 16, 23 |
 | 💡 | Erklärung / Wissen | 5 |
 | 🎨 | Darstellung (README, 3D-Modell, Grafiken, Präsentation) | 8, 9, 13, 14, 15, 21, 22 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
@@ -136,7 +138,7 @@ flowchart LR
 ```mermaid
 pie
     "Firmware" : 3
-    "Fehlerbehebung" : 3
+    "Fehlerbehebung" : 4
     "Erklärung" : 1
     "Darstellung" : 7
     "Gehäuse" : 4
@@ -458,6 +460,20 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 > **Offen:** Auf dem Vortragsrechner testen, ob die 3D-Folie flüssig läuft (braucht WebGL).
 
 <sub>📄 [`praesentation/index.html`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/praesentation/index.html) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#22-prompt--echte-3d-animation-in-der-präsentation-09112026)</sub>
+
+### 🐞 Schritt 23 — Präsentation als eine Datei
+
+**Anlass:** Im Video war das 3D-Modell zu sehen, beim Öffnen der HTML-Datei aber nicht.
+
+**Ergebnis**
+- Ursache: Die Präsentation holt das Modell aus dem Ordner `docs/viewer/`. Wird nur die einzelne Datei geöffnet, fehlt dieser Ordner.
+- Ein kleines Skript packt jetzt alles in **eine Datei** (`GAS-Praesentation.html`, ca. 1 MB), die überall läuft, auch allein auf einem USB-Stick.
+- Fehlt das Modell trotzdem, zeigt die Folie einen Hinweis statt einer leeren Fläche.
+
+> [!NOTE]
+> **Offen:** Nach Änderungen an der Präsentation die Einzeldatei neu erzeugen.
+
+<sub>📄 [`GAS-Praesentation.html`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/praesentation/GAS-Praesentation.html) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#23-prompt--3d-modell-fehlt-in-der-html-09112026)</sub>
 
 ---
 

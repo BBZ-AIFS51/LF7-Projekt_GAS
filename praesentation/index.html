@@ -178,6 +178,9 @@
     <div class="abs mono" id="modelPhase" style="left:110px; top:150px; font-size:20px"></div>
     <h2 class="big abs a sl" style="--d:1.2s; left:104px; top:850px; font-size:140px">Gedruckt<span class="c-red">.</span></h2>
     <div class="abs serif a fade" style="--d:1.7s; left:110px; top:220px; font-size:44px; line-height:1.1">Bedienteil außen,<br>Sensorteil innen —<br>der Bewegungsmelder<br>sitzt auf einem 60°-Keil.</div>
+    <div class="abs mono" id="modelHint" style="left:900px; right:110px; top:470px; font-size:17px; line-height:1.7; opacity:0; text-transform:none; letter-spacing:.04em">
+      3D-Modell nicht geladen.<br>Diese Datei braucht den Ordner <b>docs/viewer/</b> aus dem Repo daneben.<br>
+      Alles in einer Datei: <b>praesentation/GAS-Praesentation.html</b><br>(erzeugt mit <b>node tools/build-praesentation.mjs</b>)</div>
     <div class="abs" id="modelCut" style="inset:0; z-index:40; opacity:0"></div>
   </section>
 
@@ -513,6 +516,7 @@ scenes.pins = (() => {
 scenes.model = (() => {
   const frame = document.getElementById('model3d');
   const phase = document.getElementById('modelPhase'), cut = document.getElementById('modelCut');
+  const hint = document.getElementById('modelHint');
   const waits = new Map();
   let seq = 0, staging = null, staged = false;
   const send = (gas, cfg) => new Promise((resolve) => {
@@ -555,6 +559,7 @@ scenes.model = (() => {
     if (RENDER) return stage().then(() => send('pose', p));
     if (staged) frame.contentWindow.postMessage({ gas: 'pose', cfg: p, id: 0 }, '*');
     else stage();
+    hint.style.opacity = !staged && t > 5 ? 1 : 0;   // viewer missing or blocked
   };
 })();
 
@@ -617,7 +622,7 @@ scenes.code = (() => {
 })();
 
 // 12 numbers: counting up over a rippling dot field
-const NUMS = [[6, 'Bauteile am Uno', C.cream], [4, 'Arduino-Sketches', C.red], [22, 'Arbeitsschritte', C.blue],
+const NUMS = [[6, 'Bauteile am Uno', C.cream], [4, 'Arduino-Sketches', C.red], [23, 'Arbeitsschritte', C.blue],
               [5, 'Zustände', C.cream], [5, 'Druckteile', C.red]];
 scenes.numbers = (g, t) => {
   g.fillStyle = C.ink; g.fillRect(0, 0, W, H);

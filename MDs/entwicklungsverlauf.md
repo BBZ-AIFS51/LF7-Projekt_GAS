@@ -938,6 +938,40 @@ Die Punktwolke auf der Gehäuse-Folie wirkte flach. Jetzt läuft dort das
 
 ---
 
+## 23. Prompt — 3D-Modell fehlt in der HTML (09.11.2026)
+
+> also, das 3d modell ist bei mir nur in der html nicht zu sehen, in der mp4
+> schon
+
+### Antwort
+
+**Ursache:** `praesentation/index.html` lädt das 3D-Modell aus dem Nachbarordner
+`../docs/viewer/`. Im ganzen Repo-Ordner funktioniert das (im Browser getestet),
+aber wird nur die einzelne HTML-Datei geöffnet (Vorschau, Download, USB-Stick
+ohne den Rest), fehlt der Viewer und die Folie bleibt leer. Im Video war das
+Modell zu sehen, weil das Render-Skript im Repo läuft.
+
+**Lösung:**
+
+- [../tools/build-praesentation.mjs](../tools/build-praesentation.mjs) (ohne
+  Abhängigkeiten): packt Präsentation, Viewer, `three.min.js` und
+  `enclosure.js` in **eine Datei**
+  [../praesentation/GAS-Praesentation.html](../praesentation/GAS-Praesentation.html)
+  (~1 MB). Der Viewer steckt als `srcdoc` im iframe und ist dort fest im
+  `?shot`-Modus. Getestet: Die Datei allein in einem leeren Ordner zeigt das
+  Modell.
+- Lädt das Modell trotzdem nicht, steht auf der Folie nach 5 s ein Hinweis,
+  was fehlt, statt einer leeren Fläche.
+
+**Offene Punkte:**
+
+- Nach Änderungen an `praesentation/index.html` oder `docs/viewer/`
+  `node tools/build-praesentation.mjs` erneut ausführen, sonst ist die
+  Einzeldatei veraltet.
+- Die Schriften kommen weiterhin aus dem Internet.
+
+---
+
 ---
 
 ## Anhang — Stand der Dateien

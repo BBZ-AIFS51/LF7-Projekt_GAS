@@ -69,8 +69,11 @@ Bewegungssensor erkennt Anwesenheit.
   Totenkopf wie die Firmware. Die Gehäuse-Folie bettet den Viewer
   (`../docs/viewer/index.html?shot`) als iframe ein und steuert ihn per
   `postMessage` (`shot` einmal, dann `pose` pro Frame: Kamera, X-ray, Aufklappen)
-  — das 3D-Modell gibt es also nur einmal, `docs/viewer/` muss beim Vortrag
-  mit dabei sein.
+  — das 3D-Modell gibt es also nur einmal, `docs/viewer/` muss neben
+  `index.html` liegen. `GAS-Praesentation.html` ist dieselbe Präsentation als
+  **eine Datei** (Viewer, three.js und Gehäusedaten als `srcdoc` eingebettet),
+  erzeugt von `node tools/build-praesentation.mjs` — nicht von Hand ändern, nach
+  jeder Änderung an `index.html` oder `docs/viewer/` neu erzeugen.
   Steuerung: →/Leertaste/Klick weiter, ← zurück, `F` Vollbild, `A`/`?auto`
   Auto-Play. `?render` ist nur für `tools/render-praesentation.mjs`
   (MP4-Export bzw. `--stills`). Ändern sich Pins, Zeiten oder Zahlen, die
@@ -78,7 +81,9 @@ Bewegungssensor erkennt Anwesenheit.
 - `tools/` — Node-Skripte: `stl2viewer.mjs` (STL → `enclosure.js`, ohne
   Abhängigkeiten), `render.mjs` (rendert `Gehaeuse/bilder/*.png` und das Social
   Preview und `docs/banner.svg` über den Viewer, braucht Playwright + Chromium),
-  `social-preview.html` und `banner.svg` (Vorlagen für Social Preview und Banner).
+  `social-preview.html` und `banner.svg` (Vorlagen für Social Preview und Banner),
+  `render-praesentation.mjs` (Präsentation → MP4) und `build-praesentation.mjs`
+  (Präsentation → eine Datei).
 - `wiki/` — **Quelle des GitHub-Wikis.** `.github/workflows/wiki.yml` überträgt
   den Ordner bei jedem Push nach `main` (Pfad `wiki/**`) als Spiegel
   ins Wiki-Repo `BBZ-AIFS51/LF7-Projekt_GAS.wiki.git` (Branch `master`).
