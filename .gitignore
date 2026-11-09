@@ -17,3 +17,7 @@ desktop.ini
 
 # tools/render.mjs (Playwright)
 node_modules
+
+# tools/render-praesentation.mjs output
+praesentation/*.mp4
+praesentation/stills/

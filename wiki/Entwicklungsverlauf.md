@@ -14,7 +14,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **20** | **7** | **3** | **2** |
+| **21** | **8** | **3** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -49,6 +49,8 @@ timeline
                : S19 Wiki automatisch
     section Einbau
         28.10. : S20 Batterie an VIN, Mini-Breadboard
+    section Vorbereitung Vortrag
+        09.11. : S21 Präsentation als Motion Graphics
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -79,6 +81,7 @@ flowchart LR
     P18["📝 S18<br/>Vorgaben"]
     P19["📝 S19<br/>Wiki-Workflow"]
     P20["📦 S20<br/>Batterie an VIN"]
+    P21["🎨 S21<br/>Präsentation"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -89,6 +92,7 @@ flowchart LR
     P10 --> P11 --> P12 --> P13
     P12 -- "gedruckt" --> P20
     P13 --> P14 --> P15
+    P13 -- "3D-Daten" --> P21
     P3 --> P17
     P17 -. "Lehrkraft" .-> P18
     P18 --> P19
@@ -102,7 +106,7 @@ flowchart LR
     class P1,P6,P7 fw
     class P2,P4,P16 bug
     class P5 info
-    class P8,P9,P13,P14,P15 vis
+    class P8,P9,P13,P14,P15,P21 vis
     class P10,P11,P12,P20 box
     class P3,P17,P18,P19 doc
 ```
@@ -120,7 +124,7 @@ flowchart LR
 | 💻 | Firmware-Funktionen | 1, 6, 7 |
 | 🐞 | Fehlerbehebung | 2, 4, 16 |
 | 💡 | Erklärung / Wissen | 5 |
-| 🎨 | Darstellung (README, 3D-Modell, Grafiken) | 8, 9, 13, 14, 15 |
+| 🎨 | Darstellung (README, 3D-Modell, Grafiken, Präsentation) | 8, 9, 13, 14, 15, 21 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
 | 📝 | Dokumentation | 3, 17, 18, 19 |
 
@@ -132,7 +136,7 @@ pie
     "Firmware" : 3
     "Fehlerbehebung" : 3
     "Erklärung" : 1
-    "Darstellung" : 5
+    "Darstellung" : 6
     "Gehäuse" : 4
     "Dokumentation" : 4
 ```
@@ -421,6 +425,24 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 > **Offen:** nicht am Aufbau getestet. VIN hat keinen Verpolungsschutz, also vor dem ersten Anstecken die Polung prüfen. Die PDF-Anleitung und der Cirkit-Schaltplan müssen noch nachgezogen werden.
 
 <sub>📄 [`steckplan_gehaeuse.svg`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Schaltplan/steckplan_gehaeuse.svg) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#20-prompt--batterie-an-vin-und-mini-breadboard-28102026)</sub>
+
+---
+
+## 📆 09.11.2026 · Vorbereitung der Präsentation
+
+### 🎨 Schritt 21 — Präsentation im Motion-Graphics-Stil
+
+**Anlass:** Für den Vortrag vor der Klasse wollten wir statt klassischer Folien eine animierte Präsentation, angelehnt an ein bekanntes Motion-Graphics-Video. Erst ging es darum, was möglich ist (PowerPoint, Web, Video), dann um einen ersten Prototyp.
+
+**Ergebnis**
+- **`praesentation/index.html`:** 14 animierte Folien im Browser, im Look des Vorbilds (fast schwarz, Creme, Rot, Blau, Sucher-Rahmen mit Timecode, große Schrift, die „reinknallt“). Weiter mit Pfeiltaste, Leertaste oder Presenter.
+- Die Inhalte kommen aus dem Projekt: Herz und Totenkopf mit denselben Zeichenbefehlen wie in der Firmware, eine Punktwolke aus den echten STL-Dateien des Gehäuses, die Pin-Belegung, die SRAM-Aufteilung und `scanKeypad()` als Codeausschnitt.
+- **`tools/render-praesentation.mjs`** macht aus der Präsentation ein MP4-Video (ohne Ton).
+
+> [!NOTE]
+> **Offen:** nur ein Prototyp. Texte, Reihenfolge und Folienzahl sind noch nicht mit dem Team abgestimmt, die Schriften kommen aus dem Internet (für einen Rechner ohne Netz lokal ablegen).
+
+<sub>📄 [`praesentation/index.html`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/praesentation/index.html) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#21-prompt--präsentation-im-motion-graphics-stil-09112026)</sub>
 
 ---
 

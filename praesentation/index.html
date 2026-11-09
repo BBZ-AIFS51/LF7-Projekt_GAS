@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projekt GAS – Präsentation</title>
+<!-- Prototype of a motion-graphics style talk. Keys: → / Space / click = next,
+     ← = back, F = fullscreen, A = auto-play. ?auto plays everything,
+     ?render is used by tools/render-praesentation.mjs to export a video. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;700&display=block" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0f; --cream: #efe9dd; --red: #f04a35; --blue: #2a2cf0;
+    --os: cubic-bezier(.2, .9, .3, 1);
+  }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  #stage {
+    position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px;
+    transform-origin: 0 0; overflow: hidden; cursor: none;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .slide { position: absolute; inset: 0; display: none; overflow: hidden; }
+  .slide.on { display: block; }
+  .ink   { background: var(--ink);   color: var(--cream); }
+  .cream { background: var(--cream); color: var(--ink); }
+  .red   { background: var(--red);   color: var(--ink); }
+  .blue  { background: var(--blue);  color: var(--cream); }
+  canvas.cv { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+  .abs { position: absolute; }
+
+  /* type */
+  .big { font-family: 'Archivo', sans-serif; font-stretch: 125%; font-weight: 900;
+         text-transform: uppercase; line-height: .84; letter-spacing: -.01em; margin: 0; white-space: nowrap; }
+  .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; }
+  .c-red { color: var(--red); } .c-blue { color: var(--blue); } .c-cream { color: var(--cream); } .c-ink { color: var(--ink); }
+  .rule { position: absolute; height: 2px; background: currentColor; }
+
+  /* entrances: every animated element gets --d (delay) */
+  .on .a { animation-fill-mode: both; animation-delay: var(--d, 0s); animation-duration: .6s; animation-timing-function: linear; }
+  .on .sl   { animation-name: slamL; }
+  .on .sr   { animation-name: slamR; }
+  .on .su   { animation-name: slamU; }
+  .on .sd   { animation-name: slamD; }
+  .on .pop  { animation-name: pop; animation-duration: .55s; }
+  .on .fade { animation-name: fade; animation-duration: .5s; }
+  .on .grow { animation-name: grow; animation-duration: .7s; transform-origin: 0 50%; }
+  .on .blink { animation: blink 1s steps(1) infinite var(--d, 0s) both; }
+  @keyframes slamL { 0% { opacity: 0; transform: translateX(-900px) scaleX(1.8); filter: blur(28px); }
+                     55% { opacity: 1; transform: translateX(24px) scaleX(.97); filter: blur(0); }
+                     78% { transform: translateX(-6px); } 100% { opacity: 1; transform: none; filter: none; } }
+  @keyframes slamR { 0% { opacity: 0; transform: translateX(900px) scaleX(1.8); filter: blur(28px); }
+                     55% { opacity: 1; transform: translateX(-24px) scaleX(.97); filter: blur(0); }
+                     78% { transform: translateX(6px); } 100% { opacity: 1; transform: none; filter: none; } }
+  @keyframes slamU { 0% { opacity: 0; transform: translateY(420px) scaleY(1.7); filter: blur(24px); }
+                     55% { opacity: 1; transform: translateY(-16px) scaleY(.98); filter: blur(0); }
+                     78% { transform: translateY(4px); } 100% { opacity: 1; transform: none; filter: none; } }
+  @keyframes slamD { 0% { opacity: 0; transform: translateY(-420px) scaleY(1.7); filter: blur(24px); }
+                     55% { opacity: 1; transform: translateY(16px) scaleY(.98); filter: blur(0); }
+                     78% { transform: translateY(-4px); } 100% { opacity: 1; transform: none; filter: none; } }
+  @keyframes pop   { 0% { opacity: 0; transform: scale(.2); } 60% { opacity: 1; transform: scale(1.08); }
+                     100% { opacity: 1; transform: none; } }
+  @keyframes fade  { 0% { opacity: 0; transform: translateY(14px); } 100% { opacity: 1; transform: none; } }
+  @keyframes grow  { 0% { transform: scaleX(0); } 70% { transform: scaleX(1.02); } 100% { transform: none; } }
+  @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* hard colour-block cut at the start of every slide */
+  .wipe { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+  .on .wipe { animation: wipe .38s cubic-bezier(.7, 0, .3, 1) both; }
+  @keyframes wipe { 0% { clip-path: inset(0 0 0 0); } 100% { clip-path: inset(0 0 0 100%); } }
+
+  /* viewfinder HUD */
+  #hud { position: absolute; inset: 0; z-index: 100; pointer-events: none; color: var(--cream); transition: color .15s; }
+  #hud.dark { color: var(--ink); }
+  #hud .br { position: absolute; width: 34px; height: 34px; border: 0 solid currentColor; }
+  #hud .tl { left: 36px; top: 36px; border-left-width: 2px; border-top-width: 2px; }
+  #hud .tr { right: 36px; top: 36px; border-right-width: 2px; border-top-width: 2px; }
+  #hud .bl { left: 36px; bottom: 36px; border-left-width: 2px; border-bottom-width: 2px; }
+  #hud .bbr { right: 36px; bottom: 36px; border-right-width: 2px; border-bottom-width: 2px; }
+  #hud .mono { position: absolute; font-size: 13px; opacity: .85; }
+  #hud .bar { position: absolute; left: 86px; bottom: 50px; height: 2px; width: 0; background: currentColor; }
+  #hud .sq { display: inline-block; width: 9px; height: 9px; border: 1.5px solid currentColor; margin-left: 4px; vertical-align: -1px; }
+  #hud .sq.f { background: currentColor; }
+
+  /* slide-specific bits */
+  .card { position: absolute; width: 560px; height: 290px; border: 2px solid rgba(239, 233, 221, .28); box-sizing: border-box; padding: 26px 30px; }
+  .card .big { font-size: 84px; margin-top: 34px; }
+  .card .serif { font-size: 40px; margin-top: 14px; }
+  .card .mono { position: absolute; bottom: 24px; left: 30px; font-size: 14px; opacity: .7; }
+  .card .dot { position: absolute; right: 26px; top: 26px; width: 22px; height: 22px; border-radius: 50%; }
+  .seg { height: 100%; box-sizing: border-box; display: flex; align-items: flex-end; padding: 0 0 12px 14px;
+         font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: .12em; text-transform: uppercase; overflow: hidden; white-space: nowrap; }
+  .on .shrink { animation: shrink .7s cubic-bezier(.6, -.3, .4, 1) both; animation-delay: var(--d); }
+  @keyframes shrink { 0% { width: var(--w0); } 100% { width: 0; padding: 0; } }
+  .on .widen { animation: widen .7s cubic-bezier(.3, 1.5, .4, 1) both; animation-delay: var(--d); }
+  @keyframes widen { 0% { width: var(--w0); } 100% { width: var(--w1); } }
+  .on .flash { animation: flash .5s steps(1) 3 both; animation-delay: var(--d); }
+  @keyframes flash { 0% { background: var(--red); } 50% { background: transparent; } }
+  pre.code { margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 24px; line-height: 34px; white-space: pre; }
+  .code .k { color: var(--red); } .code .c { color: rgba(239, 233, 221, .45); } .code .hl { background: var(--blue); }
+  .caret { display: inline-block; width: 13px; height: 28px; background: var(--red); vertical-align: -5px; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 00 INTRO: a dot turns into the OLED heart and then the skull -->
+  <section class="slide ink" data-name="Intro" data-dur="5.6" data-scene="intro">
+    <canvas class="cv" width="1920" height="1080"></canvas>
+    <div class="abs mono a fade" style="--d:2.3s; left:0; right:0; top:930px; text-align:center">128 × 64 px · SH1106 · I²C 0x3C</div>
+    <div class="abs mono a fade" style="--d:2.4s; left:150px; top:520px">♥ = unscharf</div>
+    <div class="abs mono a fade c-red" style="--d:4.0s; right:150px; top:520px; text-align:right">☠ = scharf</div>
+  </section>
+
+  <!-- 01 TITLE -->
+  <section class="slide red" data-name="Titel" data-dur="3.8" data-wipe="var(--ink)">
+    <div class="rule a grow" style="--d:.2s; left:96px; right:96px; top:180px"></div>
+    <div class="abs mono a fade" style="--d:.35s; left:96px; top:150px">Projekt · LF07 · AIFS51</div>
+    <div class="abs mono a fade" style="--d:.4s; right:96px; top:150px">Hugo &amp; Jan · 2026</div>
+    <h1 class="big abs" style="left:0; right:0; top:300px; text-align:center; font-size:520px">
+      <span class="a sd" style="--d:.45s; display:inline-block">G</span><span class="a su" style="--d:.6s; display:inline-block">A</span><span class="a sd" style="--d:.75s; display:inline-block">S</span>
+    </h1>
+    <div class="abs serif a fade c-cream" style="--d:1.3s; left:0; right:0; top:780px; text-align:center; font-size:96px">Mini-Sicherheitssystem</div>
+    <div class="rule a grow" style="--d:1.5s; left:96px; right:96px; top:930px"></div>
+    <div class="abs mono a fade" style="--d:1.7s; left:96px; top:946px">Keypad · RFID · Bewegungsmelder · Arduino Uno R3</div>
+  </section>
+
+  <!-- 02 IDEA -->
+  <section class="slide cream" data-name="Idee" data-dur="4.2" data-wipe="var(--red)">
+    <div class="abs mono a fade" style="--d:.3s; left:110px; top:150px">01 — Die Idee</div>
+    <h2 class="big abs a sl" style="--d:.35s; left:104px; top:230px; font-size:200px">Wer kommt</h2>
+    <h2 class="big abs a sr" style="--d:.6s; left:104px; top:410px; font-size:200px">hier <span class="c-red">rein?</span></h2>
+    <div class="abs serif a fade" style="--d:1.2s; left:110px; top:640px; font-size:58px; width:1400px; line-height:1.1">
+      Eine kleine Alarmanlage: scharf schalten per PIN oder Karte,<br>Alarm, sobald sich im Raum etwas bewegt.</div>
+    <div class="abs a pop" style="--d:1.8s; left:110px; top:860px; padding:16px 26px; background:var(--ink); color:var(--cream)"><span class="mono" style="font-size:20px">01 · PIN am Keypad</span></div>
+    <div class="abs a pop" style="--d:2.0s; left:540px; top:860px; padding:16px 26px; background:var(--red); color:var(--ink)"><span class="mono" style="font-size:20px">02 · RFID-Karte</span></div>
+    <div class="abs a pop" style="--d:2.2s; left:930px; top:860px; padding:16px 26px; background:var(--blue); color:var(--cream)"><span class="mono" style="font-size:20px">03 · Bewegungsmelder</span></div>
+  </section>
+
+  <!-- 03 PARTS -->
+  <section class="slide ink" data-name="Bauteile" data-dur="4.6" data-wipe="var(--blue)">
+    <div class="abs mono a fade" style="--d:.25s; left:110px; top:110px">02 — Verwendete Bauteile</div>
+    <h2 class="big abs a sl" style="--d:.3s; left:104px; top:150px; font-size:120px">6 Bauteile<span class="c-red">.</span></h2>
+    <div id="cards"></div>
+  </section>
+
+  <!-- 04 STATES -->
+  <section class="slide blue" data-name="Ablauf" data-dur="6" data-scene="states" data-wipe="var(--cream)">
+    <canvas class="cv" width="1920" height="1080"></canvas>
+    <div class="abs mono a fade" style="--d:.2s; left:110px; top:110px">03 — Funktionsbeschreibung</div>
+    <h2 class="big abs a sl" style="--d:.25s; left:104px; top:150px; font-size:120px">Vier Zustände<span class="c-red">.</span></h2>
+    <div id="stations"></div>
+    <div class="abs mono a fade" style="--d:4.8s; left:110px; top:960px; opacity:.8">+ Admin-Modus: Karten anlernen mit Taste A</div>
+  </section>
+
+  <!-- 05 OLED -->
+  <section class="slide ink" data-name="Display" data-dur="7.6" data-scene="oled" data-wipe="var(--red)">
+    <canvas class="cv" width="1920" height="1080"></canvas>
+    <div class="abs mono a fade" style="--d:.2s; left:110px; top:110px">04 — Was das Display zeigt</div>
+    <div class="abs mono a fade" style="--d:.3s; right:110px; top:110px; text-align:right">kein Text · nur Symbole</div>
+  </section>
+
+  <!-- 06 PINS -->
+  <section class="slide cream" data-name="Pins" data-dur="4.8" data-scene="pins" data-wipe="var(--blue)">
+    <canvas class="cv" width="1920" height="1080"></canvas>
+    <div class="abs mono a fade" style="--d:.2s; left:110px; top:110px">05 — Pin-Belegung am Uno</div>
+    <h2 class="big abs a sl" style="--d:.25s; left:104px; top:150px; font-size:150px">17 / 20 Pins<span class="c-red">.</span></h2>
+    <div class="abs serif a fade" style="--d:.8s; left:110px; top:315px; font-size:48px">Fast ausgereizt — frei sind nur noch A3, D0 und D1.</div>
+  </section>
+
+  <!-- 07 ENCLOSURE (point cloud from the real STL files) -->
+  <section class="slide ink" data-name="Gehäuse" data-dur="6.2" data-scene="cloud" data-wipe="var(--cream)">
+    <canvas class="cv" width="1920" height="1080"></canvas>
+    <div class="abs mono a fade" style="--d:.2s; left:110px; top:110px">06 — Gehäuse · OpenSCAD · 3D-Druck</div>
+    <h2 class="big abs a sl" style="--d:1.4s; left:104px; top:810px; font-size:170px">Gedruckt<span class="c-red">.</span></h2>
+    <div class="abs serif a fade" style="--d:1.9s; right:110px; top:150px; font-size:44px; text-align:right; line-height:1.1">Bedienteil außen, Sensorteil innen —<br>der Bewegungsmelder sitzt auf einem 60°-Keil.</div>
+  </section>
+
+  <!-- 08 SECTION: problems -->
+  <section class="slide ink" data-name="Probleme" data-dur="3.8" data-scene="truchet" data-wipe="var(--red)">
+    <canvas class="cv" width="1920" height="1080"></canvas>
+    <div class="abs a pop" style="--d:.9s; left:310px; top:380px; width:1300px; height:320px; background:var(--red)"></div>
+    <h2 class="big abs a sr" style="--d:1.05s; left:0; right:0; top:448px; text-align:center; font-size:150px; color:var(--ink)">Probleme.</h2>
+    <div class="abs serif a fade" style="--d:1.5s; left:0; right:0; top:612px; text-align:center; font-size:52px; color:var(--ink)">…und wie wir sie gelöst haben</div>
+  </section>
+
+  <!-- 09 SRAM -->
+  <section class="slide blue" data-name="Speicher" data-dur="5.8" data-wipe="var(--ink)">
+    <div class="abs mono a fade" style="--d:.2s; left:110px; top:110px">07 — Arbeitsspeicher</div>
+    <h2 class="big abs a sl" style="--d:.25s; left:104px; top:150px; font-size:200px">2048 Byte<span class="c-red">.</span></h2>
+    <div class="abs serif a fade" style="--d:.7s; left:110px; top:345px; font-size:54px">So viel RAM hat der Uno. Das Display braucht die Hälfte davon.</div>
+    <div class="abs a grow" style="--d:1.0s; left:120px; top:520px; width:1680px; height:170px; border:3px solid var(--cream); box-sizing:content-box; display:flex">
+      <div class="seg" style="width:840px; background:var(--cream); color:var(--ink)">Display-Puffer · 1024</div>
+      <div class="seg" style="width:573px; background:repeating-linear-gradient(135deg, rgba(239,233,221,.32) 0 3px, transparent 3px 14px)">Variablen + Stack</div>
+      <div class="seg shrink" style="--d:3.3s; --w0:98px; width:98px; background:var(--red); color:var(--ink)">Lib 120</div>
+      <div class="seg widen" style="--d:3.4s; --w0:168px; --w1:266px; width:168px; border-left:3px dashed var(--cream)"><span class="flash" style="--d:1.8s; padding:2px 4px">frei</span></div>
+    </div>
+    <div class="abs mono a fade" style="--d:1.9s; left:1428px; top:710px; color:var(--red); font-size:15px">↑ Keypad-Library</div>
+    <div class="abs mono a fade" style="--d:1.9s; left:1560px; top:740px; font-size:15px">↑ nur 205 Byte frei</div>
+    <h3 class="big abs a sr" style="--d:3.6s; right:110px; top:770px; font-size:110px">+120 Byte<span class="c-red">.</span></h3>
+    <div class="abs serif a fade" style="--d:3.9s; left:110px; top:800px; font-size:42px; line-height:1.15">Texte mit <span class="mono" style="font-size:30px; letter-spacing:0">F()</span> in den Flash,<br>Tastenfeld selbst abfragen.</div>
+  </section>
+
+  <!-- 10 FIXES -->
+  <section class="slide ink" data-name="Lösungen" data-dur="5.2" data-wipe="var(--blue)">
+    <div class="abs mono a fade" style="--d:.2s; left:110px; top:110px">08 — Herausforderungen</div>
+    <div id="fixes"></div>
+  </section>
+
+  <!-- 11 CODE -->
+  <section class="slide cream" data-name="Code" data-dur="6.2" data-scene="code" data-wipe="var(--ink)">
+    <div class="abs mono a fade" style="--d:.2s; left:110px; top:110px">09 — Wichtiger Codeabschnitt</div>
+    <h2 class="big abs a sl" style="--d:.25s; left:104px; top:150px; font-size:130px">Keine Library<span class="c-red">.</span></h2>
+    <div class="abs a pop" style="--d:.5s; left:110px; top:340px; width:1080px; height:640px; background:var(--ink); color:var(--cream); padding:34px 40px; box-sizing:border-box">
+      <div class="mono" style="font-size:13px; opacity:.5; margin-bottom:14px">alarm_system.ino · scanKeypad()</div>
+      <pre class="code" id="code"></pre>
+    </div>
+    <div class="abs serif a fade" style="--d:1.0s; left:1260px; top:350px; font-size:50px; width:560px; line-height:1.1">Die Tastenmatrix fragen wir selbst ab — spart 120 Byte RAM.</div>
+    <div class="abs mono a sr" style="--d:2.2s; left:1260px; top:620px; font-size:18px">→ Spalte auf LOW ziehen</div>
+    <div class="abs mono a sr" style="--d:2.9s; left:1260px; top:670px; font-size:18px">→ Reihen lesen</div>
+    <div class="abs mono a sr" style="--d:3.6s; left:1260px; top:720px; font-size:18px">→ Taste aus dem Flash holen</div>
+  </section>
+
+  <!-- 12 NUMBERS -->
+  <section class="slide ink" data-name="Zahlen" data-dur="4.4" data-scene="numbers" data-wipe="var(--red)">
+    <canvas class="cv" width="1920" height="1080"></canvas>
+    <div class="abs mono a fade" style="--d:.2s; left:110px; top:110px">10 — Auf einen Blick</div>
+    <div id="nums"></div>
+  </section>
+
+  <!-- 13 FINALE -->
+  <section class="slide red" data-name="Finale" data-dur="5.4" data-scene="finale" data-wipe="var(--blue)">
+    <canvas class="cv" width="1920" height="1080"></canvas>
+    <svg class="abs a pop" style="--d:.35s; left:430px; top:285px; width:330px; height:347px" viewBox="-20 -23 40 42">
+      <g fill="var(--ink)"><rect x="-19" y="-22" width="38" height="32" rx="12"/><rect x="-11" y="4" width="22" height="13" rx="4"/></g>
+      <g fill="var(--red)"><circle cx="-9" cy="-7" r="6"/><circle cx="9" cy="-7" r="6"/><polygon points="0,-1 -3,4 3,4"/>
+        <rect x="-11" y="5" width="22" height="1"/><rect x="-7" y="6" width="1" height="11"/><rect x="-2" y="6" width="1" height="11"/><rect x="3" y="6" width="1" height="11"/><rect x="8" y="6" width="1" height="11"/></g>
+    </svg>
+    <h1 class="big abs a sr" style="--d:.55s; left:800px; top:318px; font-size:330px">GAS</h1>
+    <div class="abs serif a fade c-cream" style="--d:1.1s; left:806px; top:640px; font-size:86px">Danke fürs Zuhören.</div>
+    <div class="rule a grow" style="--d:1.4s; left:436px; right:436px; top:780px"></div>
+    <div class="abs mono a fade" style="--d:1.6s; left:436px; top:798px">Mini-Sicherheitssystem · Arduino Uno R3 · LF07 · AIFS51 · 2026</div>
+    <div class="abs mono a fade" style="--d:2.4s; left:0; right:0; top:930px; text-align:center; font-size:22px"><span class="blink" style="--d:2.4s">▶</span> Jetzt: Live-Demo am echten Aufbau</div>
+  </section>
+
+  <div id="hud">
+    <div class="br tl"></div><div class="br tr"></div><div class="br bl"></div><div class="br bbr"></div>
+    <div class="mono" style="left:86px; top:44px">GAS — Mini-Sicherheitssystem</div>
+    <div class="mono" id="hudName" style="right:86px; top:44px; text-align:right"></div>
+    <div class="mono" id="hudTc" style="left:86px; bottom:60px"></div>
+    <div class="mono" id="hudRight" style="right:86px; bottom:60px; text-align:right"></div>
+    <div class="bar" id="hudBar"></div>
+  </div>
+</div>
+
+<script src="../docs/viewer/enclosure.js"></script>
+<script>
+'use strict';
+// ---------------------------------------------------------------------------
+// helpers
+// ---------------------------------------------------------------------------
+const W = 1920, H = 1080;
+const C = { ink: '#0d0d0f', cream: '#efe9dd', red: '#f04a35', blue: '#2a2cf0' };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, k) => a + (b - a) * k;
+const prog = (t, t0, d) => clamp((t - t0) / d);
+const back = (x, s = 1.9) => x <= 0 ? 0 : x >= 1 ? 1 : 1 + (s + 1) * Math.pow(x - 1, 3) + s * Math.pow(x - 1, 2);
+const expo = (x) => x >= 1 ? 1 : 1 - Math.pow(2, -10 * x);
+const inout = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+function rng(seed) {             // small deterministic PRNG (mulberry32)
+  return () => { seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+function el(html) { const d = document.createElement('div'); d.innerHTML = html.trim(); return d.firstChild; }
+
+// ---------------------------------------------------------------------------
+// OLED icons, drawn with the same primitives as drawSkull()/drawHeart()
+// in Code/alarm_system/alarm_system.ino, rasterised to 128 x 64 pixels
+// ---------------------------------------------------------------------------
+const G = {
+  rr(g, x, y, w, h, r, c) { g.fillStyle = c; g.beginPath(); g.roundRect(x, y, w, h, r); g.fill(); },
+  circ(g, x, y, r, c) { g.fillStyle = c; g.beginPath(); g.arc(x + .5, y + .5, r + .5, 0, 7); g.fill(); },
+  tri(g, a, b, c2, d, e, f, c) { g.fillStyle = c; g.beginPath(); g.moveTo(a + .5, b + .5); g.lineTo(c2 + .5, d + .5); g.lineTo(e + .5, f + .5); g.closePath(); g.fill(); },
+  rect(g, x, y, w, h, c) { g.fillStyle = c; g.fillRect(x, y, w, h); }
+};
+function skull(g, cx, cy, fg, bg) {
+  G.rr(g, cx - 19, cy - 22, 38, 32, 12, fg); G.rr(g, cx - 11, cy + 4, 22, 13, 4, fg);
+  G.circ(g, cx - 9, cy - 7, 6, bg); G.circ(g, cx + 9, cy - 7, 6, bg);
+  G.tri(g, cx, cy - 1, cx - 3, cy + 4, cx + 3, cy + 4, bg);
+  G.rect(g, cx - 11, cy + 5, 22, 1, bg);
+  for (let i = 0; i < 4; i++) G.rect(g, cx - 7 + i * 5, cy + 6, 1, 11, bg);
+}
+function heart(g, cx, cy, fg) {
+  G.circ(g, cx - 8, cy - 6, 9, fg); G.circ(g, cx + 8, cy - 6, 9, fg);
+  G.tri(g, cx - 16, cy - 1, cx + 16, cy - 1, cx, cy + 18, fg);
+}
+function raster(draw, invert) {
+  const c = document.createElement('canvas'); c.width = 128; c.height = 64;
+  const g = c.getContext('2d');
+  G.rect(g, 0, 0, 128, 64, invert ? '#fff' : '#000');
+  draw(g, invert ? '#000' : '#fff', invert ? '#fff' : '#000');
+  const d = g.getImageData(0, 0, 128, 64).data, on = new Uint8Array(8192);
+  for (let i = 0; i < 8192; i++) on[i] = d[i * 4] > 127 ? 1 : 0;
+  return on;
+}
+const PX = {
+  heart: raster((g, f) => heart(g, 64, 30, f)),
+  skull: raster((g, f, b) => skull(g, 64, 32, f, b)),
+  skullInv: raster((g, f, b) => skull(g, 64, 32, f, b), true),
+  blank: new Uint8Array(8192)
+};
+function litPoints(on, cx, cy, s, ox, oy) {
+  const pts = [];
+  for (let i = 0; i < 8192; i++) if (on[i]) pts.push([cx + ((i % 128) - ox) * s, cy + (Math.floor(i / 128) - oy) * s]);
+  return pts;
+}
+
+// ---------------------------------------------------------------------------
+// scenes: draw(ctx, t, slide) is called every frame with the slide time t
+// ---------------------------------------------------------------------------
+const scenes = {};
+
+// 00 intro: one dot -> ring -> heart -> skull
+scenes.intro = (() => {
+  const S = 13;
+  const hp = litPoints(PX.heart, 960, 520, S, 64, 31.5);
+  const sp = litPoints(PX.skull, 960, 520, S, 64, 29.5);
+  const N = Math.max(hp.length, sp.length), r = rng(7);
+  const P = [];
+  for (let i = 0; i < N; i++) {
+    const a = (i / N) * Math.PI * 2 * 7 + r() * .2, rad = 230 + (r() - .5) * 26;
+    P.push({ ring: [960 + Math.cos(a) * rad, 520 + Math.sin(a) * rad], h: hp[i % hp.length], s: sp[i % sp.length], j: r() });
+  }
+  function pos(p, t) {
+    let x = 960, y = 520;
+    const k1 = back(prog(t, 1.0 + p.j * .35, .7), 1.4);
+    x = lerp(x, p.ring[0], k1); y = lerp(y, p.ring[1], k1);
+    const k2 = back(prog(t, 2.0 + (p.h[1] - 300) / 900 * .5, .8), 1.6);
+    x = lerp(x, p.h[0], k2); y = lerp(y, p.h[1], k2);
+    const k3 = back(prog(t, 3.5 + Math.hypot(p.s[0] - 960, p.s[1] - 520) / 400 * .35, .75), 1.8);
+    x = lerp(x, p.s[0], k3); y = lerp(y, p.s[1], k3);
+    return [x, y, k3];
+  }
+  return (g, t) => {
+    g.fillStyle = C.ink; g.fillRect(0, 0, W, H);
+    // thin expanding ring + crosshair, like a viewfinder target
+    const kr = expo(prog(t, .3, 1.1));
+    g.strokeStyle = 'rgba(239,233,221,.35)'; g.lineWidth = 1.5;
+    g.beginPath(); g.arc(960, 520, 40 + kr * 420, 0, 7); g.stroke();
+    g.beginPath(); g.moveTo(960 - 470 * kr, 520); g.lineTo(960 + 470 * kr, 520);
+    g.moveTo(960, 520 - 470 * kr); g.lineTo(960, 520 + 470 * kr); g.strokeStyle = 'rgba(239,233,221,.12)'; g.stroke();
+    if (t < 1.0) {                                   // a single dot pops in
+      const k = back(prog(t, .1, .45), 2.6);
+      g.fillStyle = C.red; g.beginPath(); g.arc(960, 520, 16 * k, 0, 7); g.fill();
+      return;
+    }
+    for (const p of P) {
+      const a = pos(p, t), b = pos(p, t - .035);
+      const col = a[2] > .5 ? C.red : C.cream;
+      g.fillStyle = col; g.globalAlpha = .25;           // motion trail
+      g.fillRect(b[0] - 4, b[1] - 4, 9, 9);
+      g.globalAlpha = 1; g.fillRect(a[0] - 4.5, a[1] - 4.5, 9, 9);
+    }
+  };
+})();
+
+// 04 states: a dot travels through the four states
+const STATIONS = [
+  { name: 'Unscharf', note: '♥ Herz, Sensor aus', x: 250 },
+  { name: 'Verzögerung', note: '10 s zum Rausgehen', x: 723 },
+  { name: 'Scharf', note: '☠ wartet auf Bewegung', x: 1196 },
+  { name: 'Alarm', note: '30 s Sirene', x: 1670 }
+];
+const ARRIVE = [0.7, 1.9, 3.1, 4.3];
+const LINKS = ['PIN / Karte', 'nach 10 s', 'Bewegung'];
+scenes.states = (() => {
+  const Y = 610;
+  function dotX(t) {
+    let x = STATIONS[0].x;
+    for (let k = 1; k < 4; k++) x = lerp(x, STATIONS[k].x, back(prog(t, ARRIVE[k] - .55, .55), 1.7));
+    return x;
+  }
+  return (g, t) => {
+    g.clearRect(0, 0, W, H);
+    const kl = expo(prog(t, .3, .9));
+    g.strokeStyle = 'rgba(239,233,221,.45)'; g.lineWidth = 2;
+    g.beginPath(); g.moveTo(250, Y); g.lineTo(250 + (1670 - 250) * kl, Y); g.stroke();
+    // tick marks along the track
+    for (let x = 250; x <= 1670 * kl + 1; x += 47.3) { g.fillStyle = 'rgba(239,233,221,.4)'; g.fillRect(x, Y + 14, 1.5, 8); }
+    STATIONS.forEach((s, k) => {
+      const kp = back(prog(t, ARRIVE[k] - .05, .4), 2.4);
+      g.strokeStyle = C.cream; g.lineWidth = 2;
+      g.beginPath(); g.arc(s.x, Y, 22, 0, 7); g.stroke();
+      if (kp > 0) { g.fillStyle = k === 3 ? C.red : C.cream; g.beginPath(); g.arc(s.x, Y, 22 * kp, 0, 7); g.fill(); }
+    });
+    if (t > .4) {
+      const alarm = t > ARRIVE[3];
+      for (let i = 6; i >= 0; i--) {                  // motion blur streak
+        const x = dotX(t - i * .012);
+        g.globalAlpha = i ? .12 : 1; g.fillStyle = alarm ? C.red : C.cream;
+        g.beginPath(); g.arc(x, Y, 34, 0, 7); g.fill();
+      }
+      g.globalAlpha = 1;
+      if (alarm) for (let r = 0; r < 3; r++) {          // alarm pulses
+        const k = ((t - ARRIVE[3]) * 1.3 + r / 3) % 1;
+        g.strokeStyle = `rgba(240,74,53,${1 - k})`; g.lineWidth = 3;
+        g.beginPath(); g.arc(STATIONS[3].x, Y, 34 + k * 190, 0, 7); g.stroke();
+      }
+    }
+  };
+})();
+
+// 05 OLED: 128 x 64 pixel grid, icons ripple in from the centre
+scenes.oled = (() => {
+  const P = 9, SZ = 7, X0 = 960 - 64 * P, Y0 = 200;
+  const seq = [
+    { t: .5, px: PX.heart, col: C.cream, name: 'Unscharf', note: 'Herz — der Sensor wird ignoriert' },
+    { t: 2.3, px: PX.skull, col: C.cream, name: 'Scharf', note: 'Totenkopf — jetzt zählt jede Bewegung' },
+    { t: 4.1, px: 'alarm', col: C.red, name: 'Alarm', note: 'Totenkopf blinkt, 30 s Sirene' },
+    { t: 6.0, px: PX.heart, col: C.cream, name: 'Entschärft', note: 'PIN oder Karte beendet den Alarm' }
+  ];
+  const dist = new Float32Array(8192);
+  for (let i = 0; i < 8192; i++) dist[i] = Math.hypot((i % 128) - 64, (Math.floor(i / 128) - 32) * 1.2);
+  return (g, t) => {
+    g.fillStyle = C.ink; g.fillRect(0, 0, W, H);
+    // bezel
+    g.strokeStyle = 'rgba(239,233,221,.25)'; g.lineWidth = 2;
+    g.strokeRect(X0 - 24, Y0 - 24, 128 * P + 40, 64 * P + 40);
+    const flashInv = Math.floor((t - seq[2].t) / .3) % 2 === 1;
+    for (let i = 0; i < 8192; i++) {
+      let st = -1, front = false;
+      for (let k = seq.length - 1; k >= 0; k--) {
+        const tk = seq[k].t + dist[i] * .006;
+        if (t >= tk) { st = k; front = t - tk < .09; break; }
+      }
+      let on = 0, col = C.cream;
+      if (st >= 0) {
+        const s = seq[st];
+        const px = s.px === 'alarm' ? (flashInv ? PX.skullInv : PX.skull) : s.px;
+        on = px[i]; col = s.col;
+      }
+      const x = X0 + (i % 128) * P, y = Y0 + Math.floor(i / 128) * P;
+      if (front) { g.fillStyle = C.blue; g.fillRect(x - 1, y - 1, SZ + 2, SZ + 2); }
+      else if (on) { g.fillStyle = col; g.fillRect(x, y, SZ, SZ); }
+      else { g.fillStyle = '#1b1b1f'; g.fillRect(x + 2, y + 2, 3, 3); }
+    }
+    // label slams in for every state
+    let cur = -1;
+    for (let k = 0; k < seq.length; k++) if (t >= seq[k].t) cur = k;
+    if (cur >= 0) {
+      const s = seq[cur], k = prog(t, s.t, .45), e = back(k, 1.6);
+      g.save();
+      g.filter = `blur(${(1 - clamp(k * 1.8)) * 18}px)`;
+      g.fontStretch = 'expanded';
+      g.font = '900 130px Archivo'; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+      g.fillStyle = s.col;
+      g.fillText(s.name.toUpperCase(), 960 + (1 - e) * (cur % 2 ? 700 : -700), 925);
+      g.restore();
+      g.globalAlpha = clamp(prog(t, s.t + .2, .3));
+      g.font = 'italic 44px "Instrument Serif"'; g.textAlign = 'center'; g.fillStyle = C.cream;
+      g.fillText(s.note, 960, 990);
+      g.globalAlpha = 1;
+    }
+  };
+})();
+
+// 06 pins: all 20 I/O pins of the Uno as chips
+const PINS = [
+  ['D0', 'RX · frei', 0], ['D1', 'TX · frei', 0], ['D2', 'Key C4', 1], ['D3', 'Key C3', 1], ['D4', 'Key C2', 1],
+  ['D5', 'Key C1', 1], ['D6', 'Key R4', 1], ['D7', 'Key R3', 1], ['D8', 'Key R2', 1], ['D9', 'Key R1', 1],
+  ['D10', 'Buzzer', 3], ['D11', 'RFID MOSI', 2], ['D12', 'RFID MISO', 2], ['D13', 'RFID SCK', 2],
+  ['A0', 'RFID SS', 2], ['A1', 'RFID RST', 2], ['A2', 'PIR', 3], ['A3', 'frei', 0], ['A4', 'OLED SDA', 3], ['A5', 'OLED SCL', 3]
+];
+scenes.pins = (() => {
+  const CW = 112, CH = 150, GAP = 12, X0 = 110;
+  const fill = [null, C.blue, C.red, C.ink], txt = [C.ink, C.cream, C.ink, C.cream];
+  return (g, t) => {
+    g.clearRect(0, 0, W, H);
+    PINS.forEach((p, i) => {
+      const row = i < 14 ? 0 : 1, col = row ? i - 14 : i;
+      const x = X0 + col * (CW + GAP) + CW / 2, y = 470 + row * (CH + 60) + CH / 2;
+      const k = back(prog(t, .5 + col * .06 + row * .25, .45), 2.2);
+      if (k <= 0) return;
+      // colour wave rolling over the used pins
+      const wave = Math.max(0, Math.sin((t - 1.9) * 3.2 - col * .45 - row * .8));
+      g.save(); g.translate(x, y - wave * 14 * (p[2] ? 1 : 0)); g.scale(k, k);
+      if (p[2]) { g.fillStyle = fill[p[2]]; g.fillRect(-CW / 2, -CH / 2, CW, CH); }
+      else { g.setLineDash([6, 6]); g.strokeStyle = C.ink; g.lineWidth = 2; g.strokeRect(-CW / 2 + 1, -CH / 2 + 1, CW - 2, CH - 2); g.setLineDash([]); }
+      g.fillStyle = p[2] ? txt[p[2]] : C.ink;
+      g.font = '700 36px "JetBrains Mono"'; g.textAlign = 'center'; g.fillText(p[0], 0, -8);
+      g.font = '400 13px "JetBrains Mono"'; g.fillText(p[1].toUpperCase(), 0, 46);
+      g.restore();
+    });
+    // legend
+    const lk = prog(t, 2.2, .4);
+    g.globalAlpha = lk; g.font = '400 15px "JetBrains Mono"'; g.textAlign = 'left';
+    [['Keypad', C.blue], ['RFID · SPI', C.red], ['OLED · PIR · Buzzer', C.ink]].forEach(([n, c], i) => {
+      g.fillStyle = c; g.fillRect(110 + i * 330, 930, 22, 22);
+      g.fillStyle = C.ink; g.fillText(n.toUpperCase(), 146 + i * 330, 947);
+    });
+    g.strokeStyle = C.ink; g.setLineDash([5, 5]); g.strokeRect(1101, 931, 20, 20); g.setLineDash([]);
+    g.fillStyle = C.ink; g.fillText('FREI', 1136, 947);
+    g.globalAlpha = 1;
+  };
+})();
+
+// 07 enclosure: points sampled from the triangles of the printed STL parts
+scenes.cloud = (() => {
+  const E = window.GAS_ENCLOSURE;
+  if (!E) return (g) => { g.fillStyle = C.ink; g.fillRect(0, 0, W, H); };
+  const parts = [
+    ['control_back', 'Bedienteil · Rückteil'], ['control_front', 'Bedienteil · Front'],
+    ['sensor_back', 'Sensor · Rückteil'], ['sensor_front', 'Sensor · Front'], ['sensor_wedge', 'Keil 60°']
+  ];
+  const r = rng(42), bin = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0)).buffer;
+  const P = [], info = [];
+  let cursor = 0;
+  parts.forEach(([name, label], pi) => {
+    const d = E[name], v = new Int16Array(bin(d.v)), idx = d.i32 ? new Uint32Array(bin(d.i)) : new Uint16Array(bin(d.i));
+    const nt = idx.length / 3, cum = new Float64Array(nt);
+    let tot = 0, mn = [1e9, 1e9, 1e9], mx = [-1e9, -1e9, -1e9];
+    for (let i = 0; i < v.length; i += 3) for (let a = 0; a < 3; a++) { mn[a] = Math.min(mn[a], v[i + a]); mx[a] = Math.max(mx[a], v[i + a]); }
+    const ctr = [0, 1, 2].map((a) => (mn[a] + mx[a]) / 2);
+    for (let t = 0; t < nt; t++) {
+      const A = idx[t * 3] * 3, B = idx[t * 3 + 1] * 3, Cc = idx[t * 3 + 2] * 3;
+      const u = [v[B] - v[A], v[B + 1] - v[A + 1], v[B + 2] - v[A + 2]], w = [v[Cc] - v[A], v[Cc + 1] - v[A + 1], v[Cc + 2] - v[A + 2]];
+      tot += Math.hypot(u[1] * w[2] - u[2] * w[1], u[2] * w[0] - u[0] * w[2], u[0] * w[1] - u[1] * w[0]) / 2;
+      cum[t] = tot;
+    }
+    const n = Math.round(Math.pow(tot / 1e4, .62) * 26);
+    for (let s = 0; s < n; s++) {
+      const q = r() * tot; let lo = 0, hi = nt - 1;
+      while (lo < hi) { const m = (lo + hi) >> 1; if (cum[m] < q) lo = m + 1; else hi = m; }
+      let a = r(), b = r(); if (a + b > 1) { a = 1 - a; b = 1 - b; }
+      const A = idx[lo * 3] * 3, B = idx[lo * 3 + 1] * 3, Cc = idx[lo * 3 + 2] * 3, p = [];
+      for (let k = 0; k < 3; k++) p.push((v[A + k] + a * (v[B + k] - v[A + k]) + b * (v[Cc + k] - v[A + k]) - ctr[k]) / 100);
+      const ang = r() * 7, rad = 700 + r() * 500;
+      P.push({ p, part: pi, from: [960 + Math.cos(ang) * rad, 480 + Math.sin(ang) * rad], j: r(), c: r() < .05 ? C.red : r() < .03 ? C.blue : C.cream });
+    }
+    info.push({ label, size: Math.max(mx[0] - mn[0], mx[1] - mn[1]) / 100 });
+  });
+  // lay the parts out in a row, sized by their footprint
+  const gap = 34, total = info.reduce((s, p) => s + p.size, 0) + gap * (info.length - 1);
+  const scale = 1700 / total; let x = 960 - 1700 / 2;
+  info.forEach((p) => { p.cx = x + p.size * scale / 2; x += (p.size + gap) * scale; });
+  const tilt = .5;
+  return (g, t) => {
+    g.fillStyle = C.ink; g.fillRect(0, 0, W, H);
+    const k = (j) => expo(prog(t, .2 + j * .7, 1.3));
+    for (const pt of P) {
+      const inf = info[pt.part], ang = t * .55 + pt.part * .9;
+      const [px, py, pz] = pt.p;
+      const x1 = px * Math.cos(ang) - py * Math.sin(ang), y1 = px * Math.sin(ang) + py * Math.cos(ang);
+      const sy = -(pz * Math.cos(tilt) - y1 * Math.sin(tilt)), depth = y1 * Math.cos(tilt) + pz * Math.sin(tilt);
+      const f = 600 / (600 + depth);
+      const tx = inf.cx + x1 * scale * f, ty = 470 + sy * scale * f;
+      const e = k(pt.j);
+      const X = lerp(pt.from[0], tx, e), Y = lerp(pt.from[1], ty, e);
+      g.globalAlpha = clamp(.35 + (1 - depth / 80) * .4) * clamp(e * 3);
+      g.fillStyle = pt.c; g.fillRect(X - 1.3, Y - 1.3, 2.6, 2.6);
+    }
+    g.globalAlpha = clamp(prog(t, 1.6, .4));
+    g.fillStyle = C.cream; g.font = '400 13px "JetBrains Mono"'; g.textAlign = 'center';
+    info.forEach((p, i) => g.fillText(`0${i + 1} · ${p.label.toUpperCase()}`, p.cx, 700));
+    g.globalAlpha = 1;
+  };
+})();
+
+// 08 truchet pattern field with a rolling colour wave
+scenes.truchet = (() => {
+  const T = 96, cols = 21, rows = 12, r = rng(3), base = [];
+  for (let i = 0; i < cols * rows; i++) base.push(r() < .5 ? 0 : 1);
+  return (g, t) => {
+    g.fillStyle = C.ink; g.fillRect(0, 0, W, H);
+    g.lineWidth = 17; g.lineCap = 'butt';
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+      const d = Math.hypot(i - 10, (j - 5.5) * 1.1);
+      const w = t * 1.6 - d * .22;                  // wave front position
+      const flips = Math.max(0, Math.floor(w)), fr = w - Math.floor(w);
+      const rot = (base[j * cols + i] + flips + (w > 0 ? back(clamp(fr * 2.5), 1.8) : 0)) * Math.PI / 2;
+      const appear = back(prog(t, d * .03, .4), 2);
+      if (appear <= 0) continue;
+      const hot = w > 0 && fr < .35;
+      g.strokeStyle = hot ? C.red : C.cream;
+      g.save(); g.translate(i * T + T / 2 - 48, j * T + T / 2); g.rotate(rot); g.scale(appear, appear);
+      g.beginPath(); g.arc(-T / 2, -T / 2, T / 2, 0, Math.PI / 2); g.stroke();
+      g.beginPath(); g.arc(T / 2, T / 2, T / 2, Math.PI, Math.PI * 1.5); g.stroke();
+      g.restore();
+    }
+  };
+})();
+
+// 11 code: typewriter
+// same as scanKeypad() in Code/alarm_system/alarm_system.ino
+const CODE = [
+  ['k', 'char'], [null, ' scanKeypad() {\n'],
+  [null, '  '], ['k', 'char'], [null, ' found = 0;\n'],
+  [null, '  '], ['k', 'for'], [null, ' (byte c = 0; c < 4 && found == 0; c++) {\n'],
+  [null, '    '], ['hl', 'pinMode(COL_PINS[c], OUTPUT);'], ['c', '     // pull this column low\n'],
+  [null, '    delayMicroseconds(5);'], ['c', '             // let the line settle\n'],
+  [null, '    '], ['k', 'for'], [null, ' (byte r = 0; r < 4; r++) {\n'],
+  [null, '      '], ['k', 'if'], [null, ' ('], ['hl', 'digitalRead(ROW_PINS[r]) == LOW'], [null, ') {\n'],
+  [null, '        found = '], ['hl', 'pgm_read_byte(&KEYS[r][c])'], [null, ';\n'],
+  [null, '        '], ['k', 'break'], [null, ';\n'],
+  [null, '      }\n    }\n'],
+  [null, '    pinMode(COL_PINS[c], INPUT);'], ['c', '      // back to high-Z\n'],
+  [null, '  }\n'],
+  [null, '  '], ['k', 'return'], [null, ' found;\n'],
+  [null, '}']
+];
+scenes.code = (() => {
+  const pre = document.getElementById('code');
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  return (g, t) => {
+    let n = Math.floor(Math.max(0, t - .9) * 160), html = '';
+    const hl = t > 4.3;
+    for (const [cls, s] of CODE) {
+      if (n <= 0) break;
+      const part = esc(s.slice(0, n)); n -= s.length;
+      const c = cls === 'hl' ? (hl ? 'hl' : '') : cls;
+      html += c ? `<span class="${c}">${part}</span>` : part;
+    }
+    pre.innerHTML = html + (Math.floor(t * 2.5) % 2 ? '' : '<span class="caret"></span>');
+  };
+})();
+
+// 12 numbers: counting up over a rippling dot field
+const NUMS = [[6, 'Bauteile am Uno', C.cream], [4, 'Arduino-Sketches', C.red], [21, 'Arbeitsschritte', C.blue],
+              [5, 'Zustände', C.cream], [5, 'Druckteile', C.red]];
+scenes.numbers = (g, t) => {
+  g.fillStyle = C.ink; g.fillRect(0, 0, W, H);
+  for (let y = 60; y < H; y += 40) for (let x = 60; x < W; x += 40) {
+    const w = Math.sin(t * 3 - Math.hypot(x - 960, y - 540) / 90);
+    g.fillStyle = w > .85 ? C.red : 'rgba(239,233,221,.13)';
+    g.fillRect(x - 1.5, y - 1.5, 3, 3);
+  }
+  document.querySelectorAll('#nums .n').forEach((e, i) => {
+    const k = prog(t, .4 + i * .18, .7);
+    e.textContent = Math.round(NUMS[i][0] * expo(k));
+  });
+};
+
+// 13 finale: dot burst
+scenes.finale = (() => {
+  const r = rng(11), P = [];
+  for (let i = 0; i < 160; i++) {
+    const a = r() * 7, s = 300 + r() * 1300;
+    P.push({ a, s, c: [C.ink, C.cream, C.blue][i % 3], sz: 3 + r() * 7 });
+  }
+  return (g, t) => {
+    g.clearRect(0, 0, W, H);
+    const k = prog(t, .35, 2.2);
+    if (k <= 0 || k >= 1) return;
+    const d = 1 - Math.pow(1 - k, 3);
+    for (const p of P) {
+      g.globalAlpha = 1 - k; g.fillStyle = p.c;
+      g.beginPath(); g.arc(595 + Math.cos(p.a) * p.s * d, 460 + Math.sin(p.a) * p.s * d, p.sz, 0, 7); g.fill();
+    }
+    g.globalAlpha = 1;
+    const ring = expo(prog(t, .35, .9));
+    g.strokeStyle = `rgba(239,233,221,${1 - ring})`; g.lineWidth = 6;
+    g.beginPath(); g.arc(595, 460, 60 + ring * 700, 0, 7); g.stroke();
+  };
+})();
+
+// ---------------------------------------------------------------------------
+// build repeated DOM bits
+// ---------------------------------------------------------------------------
+const PARTS = [
+  ['Uno R3', 'das Gehirn', 'ATmega328P · 2 KB SRAM', C.cream],
+  ['Keypad', 'PIN eintippen', '4×4-Matrix · D2–D9', C.blue],
+  ['OLED', 'Herz & Totenkopf', 'SH1106 · I²C 0x3C', C.cream],
+  ['RC522', 'Karte auflegen', '13,56 MHz · SPI · 3,3 V', C.red],
+  ['PIR', 'sieht Bewegung', 'HC-SR501 · A2', C.blue],
+  ['Buzzer', 'piept & heult', 'passiv · D10', C.red]
+];
+PARTS.forEach(([n, d, s, c], i) => {
+  const x = 110 + (i % 3) * 590, y = 340 + Math.floor(i / 3) * 320;
+  document.getElementById('cards').appendChild(el(`
+    <div class="card a ${i % 2 ? 'su' : 'sd'}" style="--d:${(.6 + i * .14).toFixed(2)}s; left:${x}px; top:${y}px">
+      <div class="mono" style="position:static; opacity:.6">0${i + 1}</div>
+      <div class="dot" style="background:${c}"></div>
+      <div class="big">${n}</div><div class="serif">${d}</div><div class="mono">${s}</div></div>`));
+});
+STATIONS.forEach((s, k) => {
+  const host = document.getElementById('stations');
+  host.appendChild(el(`<div class="big abs a ${k % 2 ? 'sd' : 'su'}" style="--d:${ARRIVE[k]}s; left:${s.x - 300}px; width:600px; text-align:center; top:478px; font-size:42px; ${k === 3 ? 'color:var(--red)' : ''}">${s.name}</div>`));
+  host.appendChild(el(`<div class="serif abs a fade" style="--d:${ARRIVE[k] + .15}s; left:${s.x - 300}px; width:600px; text-align:center; top:680px; font-size:40px">${s.note}</div>`));
+  if (k < 3) host.appendChild(el(`<div class="mono abs a pop" style="--d:${ARRIVE[k + 1] - .5}s; left:${(s.x + STATIONS[k + 1].x) / 2 - 150}px; width:300px; text-align:center; top:560px; font-size:14px">${LINKS[k]} →</div>`));
+});
+const FIXES = [
+  ['SH1106', 'statt SSD1306 — andere Library, sonst bleibt das Display schwarz.', C.cream],
+  ['D11 → A2', 'Der Bewegungsmelder macht Platz für den SPI-Bus.', C.blue],
+  ['3,3 Volt', 'Nicht 5 V — sonst ist der RFID-Leser hinüber.', C.red],
+  ['200 ms', 'RFID nur alle 200 ms abfragen, sonst stockt die Sirene.', C.cream]
+];
+FIXES.forEach(([b, s, c], i) => {
+  const y = 190 + i * 200, d = .4 + i * .9;
+  const host = document.getElementById('fixes');
+  host.appendChild(el(`<div class="mono abs a fade" style="--d:${d}s; left:110px; top:${y + 8}px; opacity:.6">0${i + 1}</div>`));
+  host.appendChild(el(`<div class="big abs a ${i % 2 ? 'sr' : 'sl'}" style="--d:${d}s; left:170px; top:${y}px; font-size:128px; color:${c}">${b}</div>`));
+  host.appendChild(el(`<div class="serif abs a fade" style="--d:${d + .35}s; left:1150px; width:680px; top:${y + 14}px; font-size:44px; line-height:1.05">${s}</div>`));
+  if (i < 3) host.appendChild(el(`<div class="rule a grow" style="--d:${d + .2}s; left:110px; right:110px; top:${y + 168}px; opacity:.2"></div>`));
+});
+NUMS.forEach(([n, l, c], i) => {
+  const x = [110, 420, 730, 1200, 1510][i];
+  const host = document.getElementById('nums');
+  host.appendChild(el(`<div class="big abs a su n" style="--d:${.4 + i * .18}s; left:${x}px; top:400px; font-size:240px; color:${c}">0</div>`));
+  host.appendChild(el(`<div class="rule a grow" style="--d:${.6 + i * .18}s; left:${x}px; width:280px; top:680px"></div>`));
+  host.appendChild(el(`<div class="mono abs a fade" style="--d:${.8 + i * .18}s; left:${x}px; top:700px; font-size:17px">${l}</div>`));
+});
+
+// ---------------------------------------------------------------------------
+// player: navigation, HUD, timing
+// ---------------------------------------------------------------------------
+const stage = document.getElementById('stage');
+const slides = [...document.querySelectorAll('.slide')];
+const ctxs = slides.map((s) => { const c = s.querySelector('canvas.cv'); return c ? c.getContext('2d') : null; });
+slides.forEach((s) => { const w = document.createElement('div'); w.className = 'wipe'; w.style.background = s.dataset.wipe || 'var(--red)'; s.appendChild(w); });
+const DARK = new Set(['cream', 'red']);
+const qs = new URLSearchParams(location.search);
+const RENDER = qs.has('render');
+let cur = -1, slideStart = 0, t0 = performance.now(), auto = qs.has('auto');
+
+function fit() {
+  const s = Math.min(innerWidth / W, innerHeight / H);
+  stage.style.transform = `scale(${s}) translate(-50%, -50%)`;
+}
+addEventListener('resize', fit); fit();
+
+function hud(globalT) {
+  const f = Math.floor(globalT * 60), fr = f % 60, s = Math.floor(f / 60);
+  const p2 = (n) => String(n).padStart(2, '0');
+  document.getElementById('hudTc').textContent = `00:${p2(Math.floor(s / 60))}:${p2(s % 60)}:${p2(fr)} · 60 FPS`;
+}
+function show(i) {
+  i = clamp(i, 0, slides.length - 1);
+  slides.forEach((s) => s.classList.remove('on'));
+  void stage.offsetWidth;                            // restart CSS animations
+  slides[i].classList.add('on');
+  cur = i; slideStart = performance.now();
+  const cls = [...slides[i].classList].find((c) => ['ink', 'cream', 'red', 'blue'].includes(c));
+  document.getElementById('hud').classList.toggle('dark', DARK.has(cls));
+  document.getElementById('hudName').textContent = `${String(i).padStart(2, '0')} — ${slides[i].dataset.name}`;
+  const sq = slides.map((_, k) => `<span class="sq${k === i ? ' f' : ''}"></span>`).join('');
+  document.getElementById('hudRight').innerHTML = `Uno R3 · 16 MHz · ${String(i + 1).padStart(2, '0')}/${slides.length} ${sq}`;
+  document.getElementById('hudBar').style.width = `${(1920 - 172) * (i + 1) / slides.length}px`;
+  if (!RENDER) history.replaceState(null, '', `#${i}`);
+}
+function draw(t) {
+  const sc = scenes[slides[cur].dataset.scene];
+  if (sc) sc(ctxs[cur], t, slides[cur]);
+}
+
+if (RENDER) {
+  // deterministic frame stepping for tools/render-praesentation.mjs
+  window.GAS = {
+    durations: slides.map((s) => +s.dataset.dur || 4),
+    seek(i, t, globalT) {
+      if (i !== cur) show(i);
+      slides[i].getAnimations({ subtree: true }).forEach((a) => { a.pause(); a.currentTime = t * 1000; });
+      draw(t); hud(globalT);
+    }
+  };
+  document.fonts.ready.then(() => { window.GAS.ready = true; });
+} else {
+  const go = (d) => show(cur + d);
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); go(1); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); go(-1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key === 'f' || e.key === 'F') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    else if (e.key === 'a' || e.key === 'A') auto = !auto;
+  });
+  addEventListener('click', () => go(1));
+  addEventListener('contextmenu', (e) => { e.preventDefault(); go(-1); });
+  document.fonts.ready.then(() => {
+    show(parseInt(location.hash.slice(1), 10) || 0);
+    (function loop(now) {
+      const t = (now - slideStart) / 1000;
+      draw(t); hud((now - t0) / 1000);
+      if (auto && t > (+slides[cur].dataset.dur || 4) && cur < slides.length - 1) show(cur + 1);
+      requestAnimationFrame(loop);
+    })(performance.now());
+  });
+}
+</script>
+</body>
+</html>

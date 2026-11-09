@@ -824,6 +824,78 @@ Geändert bzw. neu:
 
 ---
 
+## 21. Prompt — Präsentation im Motion-Graphics-Stil (09.11.2026)
+
+Drei Prompts in einer Sitzung, die ersten beiden nur Fragen:
+
+> Wir wollen, wenn wir unser Projekt Präsentieren vor der Klasse so eine Coole
+> full motion graphics presentation halten. Wie machen wir das am besten? Ein
+> kollege hat das tatsähclich auch mit claude code mal ausprobiert und das sah
+> crazy aus, da hast du es sogar als powerpoint gemacht.
+>
+> Sag mir mal was da alles möglich ist. Da wir ja sowieso schon 3d assets in
+> unserem projekt haben, bietet es sich ja an dieses auch in der präsentation
+> zu verwenden oder auch noch weiter auszuarbeiten.
+>
+> Mach noch nix, sag erstmal was alles geht
+
+Mit angehängt: ein virales, 15 Sekunden langes Motion-Graphics-Video samt
+dem Prompt, mit dem es erstellt worden sein soll (Stil: Folien in fast
+Schwarz, Creme, Rot #F04A35 und Elektroblau, Sucher-HUD mit Ecken und Timecode,
+breite fette Großbuchstaben, kursive Serifen-Untertitel, Punkt-Partikel).
+
+> ich meine es muss keine pptx sein. Das hier ist eine mp4 von einem extrem
+> viralen video was mit claude erstellt wurden sein soll. Hier ist der Prompt
+> dazu, ist das hier so in einer claude code session möglich?
+
+> Also sounds wollen wir sowieso nicht, das können wir rauslassen.
+> Erstellt mir mal eine komplette Präsentation zu unserem Projekt in diesem
+> motion graphic style. Muss jz nicht aufwendig sein, ich will nur mal einen
+> groben vorgeschmack haben. Verwende einfach das was dir im repo zur verfügung
+> steht und hau mal was raus. Also quasi nen prototyp damit ich halbwegs ne
+> vorstellung hab wie es aussieht
+
+### Antwort
+
+**Zu den Fragen:** Möglich sind eine Web-Präsentation (HTML/three.js, live im
+Browser), eine per Skript erzeugte PowerPoint (Morph-Übergänge, eingebettete
+Videos) oder eine Mischung. Das Referenzvideo ist laut Metadaten mit ffmpeg
+kodiert und zeigt „every frame written in code“: Animation in HTML/JS, Frame
+für Frame im Headless-Browser abfotografiert, mit ffmpeg zum Video gebaut. Das
+geht hier im Container genauso (Chromium/Playwright, ffmpeg, Node vorhanden).
+
+**Umsetzung (Prototyp):**
+
+- [../praesentation/index.html](../praesentation/index.html): 14 Folien,
+  1920 × 1080, skaliert auf jedes Fenster. Weiter mit →/Leertaste/Klick/
+  Presenter, zurück mit ←, `F` Vollbild, `A` Auto-Play (`?auto`).
+  Folien: Intro (Punkt → Ring → Herz → Totenkopf aus OLED-Pixeln), Titel, Idee,
+  6 Bauteile, vier Zustände (Punkt fährt die Stationen ab), Display (128 × 64
+  Pixel, Icons laufen als Welle ein), 17/20 Pins, Gehäuse als Punktwolke,
+  „Probleme“ über einem Truchet-Muster, 2048 Byte SRAM, vier Lösungen,
+  `scanKeypad()` als Schreibmaschinen-Code, Zahlen, Finale.
+- Herz und Totenkopf werden mit denselben Primitiven gezeichnet wie
+  `drawHeart()`/`drawSkull()` in der Firmware. Die Gehäuse-Punktwolke wird aus
+  `docs/viewer/enclosure.js` (also den STLs) flächengewichtet gesampelt.
+- Ohne Ton, keine Demo-/echte PIN auf den Folien.
+- [../tools/render-praesentation.mjs](../tools/render-praesentation.mjs): exportiert
+  die Präsentation als MP4 (`?render`-Modus, jede Animation wird auf den Frame
+  gesetzt, daher ruckelfrei) oder mit `--stills` ein Standbild pro Folie.
+- Wiki: Karte Schritt 21, Zahlen auf `Home.md` und in der Präsentation auf 21.
+
+**Offene Punkte:**
+
+- Prototyp: Inhalte, Reihenfolge und Länge mit dem Team abstimmen; wer welche
+  Folie spricht, steht noch nicht fest.
+- Schriften (Archivo, Instrument Serif, JetBrains Mono) kommen von Google
+  Fonts. Für einen Vortragsrechner ohne Internet lokal in `praesentation/`
+  ablegen.
+- Auf dem Vortragsrechner und Beamer testen (Browser, Leistung, 16:9).
+
+---
+
+---
+
 ## Anhang — Stand der Dateien
 
 | Datei | Zweck |

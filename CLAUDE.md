@@ -61,6 +61,15 @@ Bewegungssensor erkennt Anwesenheit.
   `index.html?shot` ist ein versteckter Modus nur für `tools/render.mjs`.
   `docs/social-preview.png` (1280 × 640, < 1 MB) ist das GitHub-Social-Preview,
   wird von Hand unter Settings → General → Social preview hochgeladen.
+- `praesentation/` — Vortrag vor der Klasse als animierte HTML-Präsentation im
+  Motion-Graphics-Stil (`index.html`, Prototyp, ohne Ton). Farben fast Schwarz,
+  Creme, Rot `#F04A35`, Blau; Sucher-HUD; Schriften Archivo (breit, 900),
+  Instrument Serif kursiv, JetBrains Mono (Google Fonts). Zeichnet Herz und
+  Totenkopf wie die Firmware und eine Punktwolke aus `docs/viewer/enclosure.js`.
+  Steuerung: →/Leertaste/Klick weiter, ← zurück, `F` Vollbild, `A`/`?auto`
+  Auto-Play. `?render` ist nur für `tools/render-praesentation.mjs`
+  (MP4-Export bzw. `--stills`). Ändern sich Pins, Zeiten oder Zahlen, die
+  Folien mitziehen.
 - `tools/` — Node-Skripte: `stl2viewer.mjs` (STL → `enclosure.js`, ohne
   Abhängigkeiten), `render.mjs` (rendert `Gehaeuse/bilder/*.png` und das Social
   Preview und `docs/banner.svg` über den Viewer, braucht Playwright + Chromium),

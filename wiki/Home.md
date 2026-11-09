@@ -69,6 +69,6 @@ Anhang enthält Planung, Kosten und den Verlauf der Entwicklung.
 
 ## Auf einen Blick
 
-| **6** | **4** | **20** | **5** | **5** |
+| **6** | **4** | **21** | **5** | **5** |
 |:---:|:---:|:---:|:---:|:---:|
 | Bauteile am Uno | Arduino-Sketches | Arbeitsschritte im [Entwicklungsverlauf](Entwicklungsverlauf) | Zustände der Anlage | Druckteile fürs Gehäuse |
