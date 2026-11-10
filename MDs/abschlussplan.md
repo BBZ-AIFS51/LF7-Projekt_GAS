@@ -15,9 +15,28 @@ Hinter jeder Aufgabe steht, wer sie erledigen kann:
 
 | Datum | Was | Bedeutung für uns |
 |---|---|---|
-| **Di 24.11.2026** | Abgabe Präsentation | Präsentationsdatei fertig und abgegeben |
+| **Di 24.11.2026** | Abgabe Präsentation | Präsentation als **HTML-Datei** fertig und abgegeben |
 | **Di 01.12.2026** | Start der Präsentationen | ab hier kann unsere Gruppe dran sein, Gerät muss vorführbereit sein |
-| **Di 15.12.2026** | Abgabe Projektdokumentation | Wiki fertig, Sourcecode als Datei, alles abgegeben |
+| **Di 15.12.2026** | Abgabe Projektdokumentation | **das ganze Repository** abgeben, die Doku liegt darin als **PDF** |
+
+## Abgabeform (geklärt am 10.11.2026)
+
+- **Abgegeben wird das komplette Repository.** Der Sourcecode ist damit als
+  eigene Dateien dabei (`Code/`), wie die Vorgabe es verlangt.
+- **Die Dokumentation muss ein PDF sein.** Das PDF wird aus den Wiki-Seiten in
+  `wiki/` erzeugt und liegt im Repository als
+  `Projektdokumentation_GAS.pdf`. Das Wiki bleibt die Quelle, geändert wird
+  nur dort, danach wird das PDF neu erzeugt.
+- **Die Präsentation darf HTML sein.** Sie liegt im Repository unter
+  `praesentation/` und wird als eine einzelne, offline lauffähige HTML-Datei
+  abgegeben.
+
+Folgen für den Plan:
+
+- Weil das ganze Repository abgegeben wird, gehört alles darin zur Abgabe.
+  Veraltete oder verwirrende Dateien müssen aufgeräumt werden (Phase 2).
+- Das PDF braucht ein Export-Skript. Das wird **früh** gebaut (Phase 3), damit
+  Probleme beim Umwandeln nicht erst kurz vor dem 15.12. auffallen.
 
 ## Roter Faden
 
@@ -60,6 +79,7 @@ gantt
 
     section Doku
     TODOs im Wiki füllen             :a2, 2026-11-12, 9d
+    PDF-Export einrichten, Probe-PDF :a2b, 2026-11-12, 6d
     Doku inhaltlich fertig           :milestone, m2, 2026-11-20, 0d
 
     section Präsentation
@@ -81,23 +101,23 @@ Doku, **nicht** die Präsentation.
 
 ## Phase 0 · Sofort klären (bis Fr 13.11.)
 
-Diese Fragen entscheiden, wie die Abgabe aussieht. Am besten in der nächsten
-Stunde direkt fragen und die Antworten hier eintragen.
+Die Fragen zur Abgabeform sind beantwortet (siehe oben). Offen ist noch:
 
-- [ ] **(Lehrkraft)** In welcher Form wird die Doku abgegeben? Reicht der Link
-      zum Wiki, oder braucht ihr eine Datei (PDF/Word)?
-      → Antwort: ✏️
-- [ ] **(Lehrkraft)** Wie wird der Sourcecode abgegeben? (ZIP, Link aufs
-      Repository mit Tag `v1.0`, Upload in Moodle/Teams …)
-      → Antwort: ✏️
-- [ ] **(Lehrkraft)** In welchem Format wird die Präsentation abgegeben?
-      PowerPoint, PDF, HTML-Datei im Browser? Mit welchem Rechner wird
-      präsentiert (eigener Laptop oder Schul-PC, Beamer-Anschluss)?
+- [x] **(Lehrkraft)** Form der Doku → **PDF**
+- [x] **(Lehrkraft)** Form des Sourcecodes → **ganzes Repository**
+- [x] **(Lehrkraft)** Format der Präsentation → **egal, HTML ist in Ordnung**
+- [ ] **(Lehrkraft)** Wie genau wird das Repository geschickt: als ZIP oder als
+      Link? Bei einem Link muss die Lehrkraft Zugriff haben (Repository
+      öffentlich oder als Mitglied eingeladen). Empfehlung: ZIP vom Tag `v1.0`
+      **und** den Link dazu.
       → Antwort: ✏️
 - [ ] **(Lehrkraft)** Ist das Arbeitsprotokoll `MDs/entwicklungsverlauf.md`
-      (enthält die Prompts im Wortlaut) als Anhang im Repository in Ordnung?
-      Im Wiki stehen keine Prompts, es wird nur dorthin verlinkt.
-      (Offen seit Schritt 18.)
+      (enthält die Prompts im Wortlaut) im abgegebenen Repository in Ordnung?
+      Das ist jetzt wichtiger als vorher, weil das ganze Repository abgegeben
+      wird. Ins PDF kommen keine Prompts. (Offen seit Schritt 18.)
+      → Antwort: ✏️
+- [ ] **(Lehrkraft)** Wird auf einem Schul-PC oder auf eurem Laptop
+      präsentiert? (Die HTML-Präsentation muss dort laufen.)
       → Antwort: ✏️
 - [ ] **(Lehrkraft)** Wann ist unsere Gruppe dran? Zählt die Live-Demo in die
       20 Minuten (2 × 10 min) hinein?
@@ -105,7 +125,9 @@ Stunde direkt fragen und die Antworten hier eintragen.
 - [ ] **(Lehrkraft)** Gibt es ein Zitierformat fürs Quellenverzeichnis?
       → Antwort: ✏️
 - [ ] **(Team)** Branch `claude/funny-cannon-vqa19g` (Präsentations-Prototyp):
-      Code **nicht** nach `main` übernehmen. Entscheiden, ob die
+      Code **nicht** nach `main` übernehmen, die neue Präsentation entsteht
+      frisch in `praesentation/` (Teile wie die Offline-Schriften und das
+      Ein-Datei-Build-Skript dürfen wiederverwendet werden). Entscheiden, ob die
       Protokolleinträge 21–24 trotzdem ins Protokoll kommen (empfohlen, das ist
       ehrlicher fürs KI-Kapitel). Dann werden der Eintrag zu diesem Plan und die
       Wiki-Karte entsprechend umnummeriert. Den Branch danach als Archiv
@@ -172,9 +194,18 @@ und 3D-Modell nicht mehr überein.
 - [ ] **(Team)** Fehler, die bei den Tests in Phase 1 auffallen, beheben (mit
       Claude), neu testen
 - [ ] **(Team)** Endstand kompilieren und aufs Gerät laden, kurzer Test
-- [ ] **(Claude)** `Code/alarm_system/alarm_system.ino.bak` aus dem Repository
-      entfernen (alte Sicherung, gehört nicht zur Abgabe)
-- [ ] **(Team)** Git-Tag `v1.0` auf `main` setzen = abgegebener Stand
+- [ ] **(Team)** Git-Tag `v1.0` auf `main` setzen = Stand der Firmware
+
+**Repository aufräumen** (es wird komplett abgegeben):
+
+- [ ] **(Claude)** `Code/alarm_system/alarm_system.ino.bak` entfernen (alte
+      Sicherung)
+- [ ] **(Claude)** `MDs/aufbau.md` ist der Stand vor dem RFID-Umbau. Oben einen
+      Hinweis ergänzen („historische Ausgangsspezifikation, aktuelle Belegung
+      siehe Kapitel 5“), damit niemand die alte Pinbelegung für gültig hält.
+- [ ] **(Claude)** README: Link aufs PDF ergänzen, Status Gehäuse, ein kurzer
+      Abschnitt „Was liegt wo“ für die Lehrkraft (Doku-PDF, Code,
+      Präsentation, Schaltplan, Gehäuse)
 
 ## Phase 3 · Doku inhaltlich fertig (bis Fr 20.11.)
 
@@ -190,12 +221,12 @@ grep -rn "TODO" wiki/
 
 | Kapitel | Was fehlt | Wer |
 |---|---|---|
-| 1 Deckblatt (`Home`) | Datum der Abgabe (15.12.2026 statt „Weis keiner“), Foto/GIF vom Gerät, Zahlen „Auf einen Blick“ aktuell halten | Team (Foto), Claude (Rest) |
-| 2 Idee und Zielsetzung | Zeitraum (Projektstart + 15.12.2026), K5 Gehäuse auf ✅ setzen, sobald montiert | Team (Projektstart), Claude |
+| 1 Deckblatt (`Home`) | Foto vom Gerät (im PDF statisch, also Foto statt GIF), Zahlen „Auf einen Blick“ aktuell halten | Team (Foto), Claude (Rest) |
+| 2 Idee und Zielsetzung | Projektstart beim Zeitraum, K5 Gehäuse auf ✅ setzen, sobald montiert | Team (Projektstart), Claude |
 | 3 Funktionsbeschreibung | nur nachziehen, falls Fehlerton/Zeiten sich ändern | Claude |
 | 4 Verwendete Bauteile | prüfen, ob Batterie, Clip, Mini-Breadboard und Kabel vollständig drin sind | Team prüft |
 | 5 Aufbau und Schaltplan | Foto vom Versuchsaufbau, Laufzeit eintragen, Cirkit-Schaltplan auf VIN umstecken und neu exportieren | Team |
-| 6 Sourcecode | Abgabeform eintragen (aus Phase 0), Fehlerton-Entscheidung | Team entscheidet, Claude schreibt |
+| 6 Sourcecode | Fehlerton-Entscheidung (Abgabeform ist eingetragen) | Team entscheidet, Claude schreibt |
 | 7 Wichtige Codeabschnitte | gemessenen SRAM-Wert eintragen | Team misst, Claude schreibt |
 | 8 Herausforderungen | wie ihr den SH1106 erkannt habt, Probleme beim RC522-Verdrahten, eigene Probleme (Druck, Einbau, Teamarbeit) | **Team** |
 | 9 Fazit und Ausblick | Soll/Ist (Zeit, Kosten, Gehäuse), Fazit 2–3 Sätze, **Reflexion selbst schreiben, ohne KI**, 2–4 Erweiterungsideen auswählen | **Team** |
@@ -212,6 +243,36 @@ grep -rn "TODO" wiki/
 | KI-Einsatz | Tabelle prüfen, wie ihr den Code geprüft habt, was die KI falsch gemacht hat | **Team** |
 | Entwicklungsverlauf | läuft automatisch mit jedem Schritt mit | Claude |
 
+### Doku als PDF
+
+Das PDF wird aus `wiki/` erzeugt, nicht von Hand zusammenkopiert. Sonst laufen
+Wiki und PDF bei jeder Korrektur auseinander.
+
+- [ ] **(Claude)** Export-Skript `tools/wiki2pdf.mjs` bauen (Playwright und
+      Chromium sind schon für `tools/render.mjs` da). Es soll:
+  - die Seiten in der Reihenfolge der Seitenleiste zusammensetzen: Deckblatt,
+    Inhaltsverzeichnis, Kapitel 1–10, Anhang
+  - jedes Kapitel auf einer neuen Seite beginnen, Seitenzahlen in der Fußzeile
+  - **Mermaid-Diagramme** als Grafik rendern (Zeitleiste, Gantt,
+    Zustandsautomat, Systemüberblick)
+  - Bilder aus dem Repository nehmen statt von `raw.githubusercontent.com`
+  - Wiki-Links (`[Kapitel 7](Wichtige-Codeabschnitte)`) in Sprünge innerhalb
+    des PDFs umwandeln, Links nach außen mit sichtbarer URL
+  - die GitHub-Hinweiskästen (`> [!NOTE]` usw.) als Kästen darstellen und den
+    Wiki-Hinweis-Kommentar oben auf jeder Seite weglassen
+- [ ] **(Claude)** Ein **Probe-PDF** erzeugen, auch wenn noch TODOs drin sind,
+      und prüfen, was im PDF anders aussieht als im Wiki:
+  - **animierte SVGs** (Banner, `how-it-works.svg`, `wiring.svg`) zeigen im
+    PDF nur ein Standbild. Ist das Standbild sinnvoll? Sonst eine statische
+    Fassung fürs PDF.
+  - **Emojis** in Überschriften und Tabellen: werden sie gedruckt oder als
+    Kästchen? Notfalls fürs PDF weglassen.
+  - aufklappbare Abschnitte (`<details>`, z. B. die Leitfragen in Kapitel 9)
+    fliegen raus, sobald die Reflexion geschrieben ist
+  - das 3D-Modell ist im PDF nur ein Bild mit Link
+- [ ] **(Team)** Probe-PDF durchblättern: Seitenumbrüche, Lesbarkeit der
+      Diagramme, Umfang. Rückmeldung an Claude.
+
 ### Außerhalb des Wikis
 
 - [ ] **(Team)** `Teile.xlsx`: 9-V-Batterie, Clip, Mini-Breadboard SYB-170
@@ -220,7 +281,6 @@ grep -rn "TODO" wiki/
       aus `MDs/anleitung.md` neu erzeugen (Abschnitt Stromversorgung fehlt)
 - [ ] **(Team)** Social Preview neu hochladen (Settings → General → Social
       preview, Datei `docs/social-preview.png`)
-- [ ] **(Claude)** README auf den Endstand prüfen (Status Gehäuse, Links)
 
 ## Phase 4 · Präsentation neu bauen (Fr 20.11. – Di 24.11.)
 
@@ -234,8 +294,12 @@ Erst wenn die Doku steht. Inhalte werden aus der Doku übernommen.
   Live-Demo
 - **Jeder muss den ganzen Code erklären können**, nicht nur seinen Teil. Das
   wird in der Präsentation geprüft.
-- Format nach der Antwort aus Phase 0. Egal welches Format: zusätzlich ein
-  **PDF als Sicherung** abgeben und auf einem USB-Stick mitbringen.
+- **Format: HTML**, als **eine einzige Datei**, die ohne Internet läuft
+  (Schriften, Bilder und Skripte eingebettet). Quelle in `praesentation/`,
+  die fertige Datei wird abgegeben und liegt ebenfalls im Repository.
+- Einfach halten: Die Präsentation muss auf dem Präsentationsrechner im
+  Browser flüssig laufen. Aufwendige 3D-Effekte nur, wenn sie dort getestet
+  sind; das echte Gerät und das Demo-Video sind wichtiger.
 
 ### Vorschlag für den Ablauf (≈ 22 min + Fragen)
 
@@ -271,13 +335,14 @@ dieselbe Logik.
 
 ### Aufgaben
 
-- [ ] **(Team)** Format und Aufteilung festlegen
-- [ ] **(Claude)** Präsentation nach dem Ablauf oben bauen, Inhalte aus dem Wiki
+- [ ] **(Team)** Aufteilung festlegen (wer ist Person A, wer Person B)
+- [ ] **(Claude)** Präsentation nach dem Ablauf oben als HTML bauen, Inhalte
+      aus dem Wiki, Steuerung mit Pfeiltasten, Vollbild
 - [ ] **(Team)** Folien durchgehen, in eigenen Worten Stichpunkte für die
       Sprechernotizen schreiben
 - [ ] **(Team)** Präsentation **auf dem Präsentationsrechner** testen
-      (läuft sie offline? passt die Auflösung?)
-- [ ] **(Team)** PDF-Sicherung erzeugen, **Abgabe bis Di 24.11.**
+      (läuft sie offline? passt die Auflösung? welcher Browser?)
+- [ ] **(Team)** HTML-Datei abgeben, **Abgabe bis Di 24.11.**
 
 ## Phase 5 · Proben und Vortrag (25.11. – ab 01.12.)
 
@@ -295,7 +360,7 @@ dieselbe Logik.
   - [ ] RFID-Karten (mindestens eine angelernt, eine unbekannte für die Demo)
   - [ ] PIN und Admin-PIN auf einem Zettel
   - [ ] USB-Kabel (Typ B) und Laptop mit Arduino IDE, falls neu geladen werden muss
-  - [ ] Präsentation als Datei + PDF auf USB-Stick
+  - [ ] Präsentation als HTML-Datei auf USB-Stick (zusätzlich zum Laptop)
   - [ ] Demo-Video offline gespeichert
 
 ## Phase 6 · Feedback einarbeiten und abgeben (02.12. – Di 15.12.)
@@ -312,22 +377,30 @@ dieselbe Logik.
         3D-Modell, Präsentation)
   - [ ] keine Prompts im Wiki (Vorgabe)
   - [ ] Rechtschreibung
-- [ ] **(Claude)** Falls eine Datei verlangt ist (Phase 0): Wiki als PDF
-      exportieren, Sourcecode als ZIP packen
-- [ ] **(Team)** Tag `v1.0` prüfen bzw. neu setzen, falls nach dem Code-Freeze
-      noch etwas geändert wurde
+  - [ ] PDF ein letztes Mal komplett durchlesen (nicht nur das Wiki)
+- [ ] **(Claude)** Endgültiges `Projektdokumentation_GAS.pdf` erzeugen und
+      committen
+- [ ] **(Team)** Alles nach `main` mergen, dann Tag `v1.0` auf den
+      Endstand setzen bzw. neu setzen (falls nach dem Code-Freeze noch etwas
+      geändert wurde)
+- [ ] **(Team)** Repository so schicken, wie in Phase 0 geklärt (ZIP vom Tag
+      `v1.0` über GitHub → Releases/Tags → „Source code (zip)“ und/oder Link).
+      Vorher das ZIP einmal entpacken und prüfen, dass PDF, Code und
+      Präsentation drin sind und sich öffnen lassen.
 - [ ] **(Team)** **Abgabe bis Di 15.12.2026**
 
 ---
 
 ## Abgabepaket (Endstand)
 
-| Teil | Wo | Form |
+Abgegeben wird das Repository (Stand Tag `v1.0`). Darin:
+
+| Teil | Wo im Repository | Form |
 |---|---|---|
-| Projektdokumentation (Kap. 1–10 + Anhang) | GitHub-Wiki, Quelle `wiki/` | Link, ggf. zusätzlich PDF |
-| Sourcecode | `Code/` im Repository, Tag `v1.0` | separate Datei(en) / ZIP, in der Doku nur verlinkt |
-| Präsentation | ✏️ (nach Phase 0) | Datei + PDF-Sicherung |
-| Ergänzend | 3D-Modell (GitHub Pages), Bedienungsanleitung (PDF), Gehäuse-STLs, `Teile.xlsx` | im Repository |
+| **Projektdokumentation** (Kap. 1–10 + Anhang) | `Projektdokumentation_GAS.pdf` | PDF, erzeugt aus `wiki/` |
+| **Sourcecode** | `Code/` | eigene `.ino`-Dateien, in der Doku nur verlinkt |
+| **Präsentation** | `praesentation/` | eine HTML-Datei, offline lauffähig (schon am 24.11. abgegeben) |
+| Ergänzend | `Schaltplan/`, `Gehaeuse/`, `Anleitung/`, `docs/viewer/` (3D-Modell), `Teile.xlsx`, `wiki/` (Quelle der Doku) | im Repository |
 
 ## Was bewusst nicht mehr passiert
 

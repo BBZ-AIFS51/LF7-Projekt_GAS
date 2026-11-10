@@ -12,7 +12,7 @@ Die Anforderungen stehen ausführlich in [Kapitel 2](Idee-und-Zielsetzung#anford
 | **Muss** | PIN-Bedienung, Symbole auf dem Display, Töne, Alarm bei Bewegung und nach 3 Fehlversuchen | ✅ 7 / 7 |
 | **Kann** | RFID-Karten, Ausgangsverzögerung, Admin-Menü, RFID-Reset, 3D-Modell | ✅ 5 / 6 |
 | **Kann** | 3D-gedrucktes Gehäuse | 🟡 gedruckt, Einbau läuft (✏️ TODO: fertig montiert?) |
-| **Zeit** | Abgabe bis ✏️ TODO | ✏️ TODO |
+| **Zeit** | Abgabe bis 15.12.2026 | ✏️ TODO |
 | **Kosten** | ✏️ TODO (gab es ein Budget?) | siehe [Kosten](Kosten) |
 
 > [!NOTE]

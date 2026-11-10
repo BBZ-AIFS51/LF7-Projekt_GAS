@@ -85,7 +85,7 @@ Bewusst **nicht** Teil des Projekts:
 | **Mikrocontroller** | Arduino Uno R3: 2 KB Arbeitsspeicher, davon belegt das Display allein die Hälfte |
 | **Anschlüsse** | Bis auf die serielle Schnittstelle sind alle Pins belegt, Erweiterungen (z. B. SD-Karte) passen nicht mehr |
 | **Umfang** | Schulprojekt: lieber wenige Funktionen, die sauber laufen |
-| **Zeitraum** | ✏️ TODO (Team): Projektstart und Abgabetermin eintragen |
+| **Zeitraum** | ✏️ TODO (Team): Projektstart – Abgabe 15.12.2026 |
 
 ---
 

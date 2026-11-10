@@ -17,9 +17,8 @@ erklärt.
 Die Arduino IDE verlangt, dass jeder Sketch in einem eigenen Ordner mit
 gleichem Namen liegt, daher die Unterordner.
 
-> [!NOTE]
-> ✏️ **TODO (Team):** Abgabeform eintragen, z. B. „Die Dateien liegen der
-> Abgabe als `Sourcecode.zip` bei“ oder „Stand: Tag `v1.0` im Repository“.
+Abgegeben wird das komplette Repository. Der Sourcecode liegt dort im Ordner
+`Code/`, maßgeblich ist der Stand mit dem Git-Tag `v1.0`.
 
 ## Kompilieren und hochladen
 

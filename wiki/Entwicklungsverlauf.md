@@ -439,9 +439,10 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 - **Roter Faden:** Erst wird das Gerät fertig, dann die Doku, und erst daraus die Präsentation. Sie folgt denselben Kapiteln wie die Doku.
 - Die Präsentation wird neu gebaut. Der erste Entwurf war nur ein Test.
 - Für jede offene Stelle steht fest, ob das Team, die KI oder die Lehrkraft gefragt ist
+- Abgabeform geklärt: Abgegeben wird das ganze Repository, die Doku darin als PDF (aus diesem Wiki erzeugt), die Präsentation als HTML-Datei. Abgabetermine im Wiki eingetragen.
 
 > [!WARNING]
-> **Offen:** Fragen an die Lehrkraft zur Abgabeform, zum Termin und zum Arbeitsprotokoll.
+> **Offen:** mit der Lehrkraft klären, ob das Repository als ZIP oder Link geschickt wird, ob das Arbeitsprotokoll im Repository bleiben darf und auf welchem Rechner präsentiert wird.
 
 <sub>📄 [`abschlussplan.md`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/abschlussplan.md) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#21-prompt--abschlussplan-10112026)</sub>
 

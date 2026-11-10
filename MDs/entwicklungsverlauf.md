@@ -872,6 +872,30 @@ Protokolleinträge (dort Nr. 21–24) fehlen deshalb hier.
 - Den Plan selbst nicht ins Wiki übernehmen, er ist eine Arbeitsliste fürs
   Team, kein Teil der Dokumentation.
 
+### Nachtrag in derselben Sitzung
+
+> Wir können ihr als abgabe das ganze repo schicken, die dokumentation soll als
+> pdf sein und die präsentation ist egal, kann also html sein
+
+### Antwort
+
+Plan angepasst: neuer Abschnitt „Abgabeform“, Phase 0 abgehakt bis auf ZIP
+oder Link, Prompt-Protokoll im Repository und Präsentationsrechner.
+
+- **Doku als PDF:** Neue Aufgabe in Phase 3, ein Export-Skript
+  `tools/wiki2pdf.mjs` früh zu bauen (Wiki-Seiten in Reihenfolge der
+  Seitenleiste, Mermaid als Grafik, lokale Bilder, Sprünge im PDF) und ein
+  Probe-PDF zu prüfen. Bekannte Stolpersteine: animierte SVGs zeigen nur ein
+  Standbild, Emojis, aufklappbare Abschnitte. Ergebnis:
+  `Projektdokumentation_GAS.pdf` im Repository.
+- **Ganzes Repository als Abgabe:** Aufräumen in Phase 2 (`.bak` raus, Hinweis
+  in `aufbau.md`, dass es der Stand vor dem RFID-Umbau ist, README mit
+  Wegweiser für die Lehrkraft). Abgabe als ZIP vom Tag `v1.0`.
+- **Präsentation als HTML:** eine Datei, offline lauffähig, in
+  `praesentation/`. Keine PDF-Sicherung mehr nötig.
+- Im Wiki eingetragen: Abgabedatum 15.12.2026 (Deckblatt, Fazit, Zielsetzung,
+  Zeitplan mit den drei Terminen) und die Abgabeform im Kapitel Sourcecode.
+
 ---
 
 ## Anhang — Stand der Dateien

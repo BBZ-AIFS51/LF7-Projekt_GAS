@@ -80,4 +80,6 @@ gantt
 | 06.10.2026 | Bugfix: Falsche Eingabe bricht den Alarm nicht mehr ab · Projekt-Wiki |
 | 28.10.2026 | Gehäuse gedruckt, Stromversorgung auf Batterie an VIN umgebaut, Steckplan fürs Mini-Breadboard |
 | ✏️ TODO | Gehäuse fertig montiert und getestet |
-| ✏️ TODO | Abgabe und Präsentation |
+| 24.11.2026 | Abgabe der Präsentation |
+| ✏️ TODO (ab 01.12.2026) | Präsentation vor der Klasse |
+| 15.12.2026 | Abgabe der Projektdokumentation und des Repositorys |

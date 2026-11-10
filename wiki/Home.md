@@ -19,7 +19,7 @@
 | **Projekttitel** | Projekt GAS – Mini-Sicherheitssystem mit Keypad, RFID-Leser und Bewegungsmelder |
 | **Gruppenmitglieder** | Hugo, Jan |
 | **Klasse** | AIFS51 |
-| **Datum der Abgabe** | Weis keiner |
+| **Datum der Abgabe** | 15.12.2026 |
 
 Eine kleine Alarmanlage auf einem Arduino Uno R3, gebaut im Lernfeld 7. Scharf-
 und unscharf geschaltet wird mit einer PIN am 4x4-Keypad oder mit einer
