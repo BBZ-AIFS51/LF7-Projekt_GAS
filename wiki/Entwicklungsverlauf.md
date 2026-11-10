@@ -389,8 +389,8 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 - Vorschlag, wie die gesamte Abgabe und die Präsentation aussehen können
 - Nebenbei korrigiert: Am Uno ist neben D0/D1 auch A3 noch frei
 
-> [!WARNING]
-> **Offen:** mit der Lehrkraft klären, ob das Arbeitsprotokoll im Repository (enthält die Prompts im Wortlaut) als Anhang in Ordnung ist.
+> [!NOTE]
+> **Geklärt am 10.11.2026:** Das Arbeitsprotokoll darf im Repository bleiben, kommt aber nicht in die Dokumentation.
 
 <sub>🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#18-prompt--projektdoku-nach-den-vorgaben-06102026)</sub>
 
@@ -439,10 +439,10 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 - **Roter Faden:** Erst wird das Gerät fertig, dann die Doku, und erst daraus die Präsentation. Sie folgt denselben Kapiteln wie die Doku.
 - Die Präsentation wird neu gebaut. Der erste Entwurf war nur ein Test.
 - Für jede offene Stelle steht fest, ob das Team, die KI oder die Lehrkraft gefragt ist
-- Abgabeform geklärt: Abgegeben wird das ganze Repository, die Doku darin als PDF (aus diesem Wiki erzeugt), die Präsentation als HTML-Datei. Abgabetermine im Wiki eingetragen.
+- Abgabeform geklärt: Abgegeben wird der Link aufs öffentliche Repository, die Doku darin als PDF (aus diesem Wiki erzeugt), die Präsentation als HTML-Datei. Das Arbeitsprotokoll mit den Prompts bleibt im Repository, kommt aber nicht ins PDF. Abgabetermine im Wiki eingetragen.
 
 > [!WARNING]
-> **Offen:** mit der Lehrkraft klären, ob das Repository als ZIP oder Link geschickt wird, ob das Arbeitsprotokoll im Repository bleiben darf und auf welchem Rechner präsentiert wird.
+> **Offen:** mit der Lehrkraft klären, wann unsere Gruppe präsentiert und ob es ein Zitierformat gibt.
 
 <sub>📄 [`abschlussplan.md`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/abschlussplan.md) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#21-prompt--abschlussplan-10112026)</sub>
 

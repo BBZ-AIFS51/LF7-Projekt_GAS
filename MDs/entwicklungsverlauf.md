@@ -896,6 +896,31 @@ oder Link, Prompt-Protokoll im Repository und Präsentationsrechner.
 - Im Wiki eingetragen: Abgabedatum 15.12.2026 (Deckblatt, Fazit, Zielsetzung,
   Zeitplan mit den drei Terminen) und die Abgabeform im Kapitel Sourcecode.
 
+### Zweiter Nachtrag
+
+> Als link, zugriff braucht sie nicht, es ist öffentlich.
+> @MDs/entwicklungsverlauf.md kann im repo bleiben, aber dann nicht in die doku
+> pdf.
+> Wir präsentieren denke ich auf meinem NB, die andere motion graphic
+> präsentation die ich im anderen branch als test erstellt hatte läuft
+> hierdrauf gut.
+>
+> Was sind noch alles für ToDos da?, wir wollen es am besten nach der
+> reihenfolge im plan abarbeiten damit alles gut läuft
+
+### Antwort
+
+Plan angepasst: Abgabe als Link auf den Tag `v1.0` (vorher nicht angemeldet
+prüfen), Arbeitsprotokoll bleibt im Repository, das PDF-Skript bindet es nicht
+ein. Präsentation auf dem eigenen Notebook, die Motion-Graphics-Technik des
+Prototyps darf wiederverwendet werden, Packliste um Netzteil, HDMI und
+Energiesparmodus ergänzt. In der Wiki-Karte zu Schritt 18 ist die offene Frage
+zum Protokoll als geklärt markiert. Im Chat: alle offenen Aufgaben in der
+Reihenfolge des Plans.
+
+**Offene Punkte:** In Phase 0 sind nur noch der Präsentationstermin, das
+Zitierformat, der Prototyp-Branch und das Mergen dieses Branches offen.
+
 ---
 
 ## Anhang — Stand der Dateien

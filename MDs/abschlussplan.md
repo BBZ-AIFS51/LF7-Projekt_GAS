@@ -21,12 +21,18 @@ Hinter jeder Aufgabe steht, wer sie erledigen kann:
 
 ## Abgabeform (geklärt am 10.11.2026)
 
-- **Abgegeben wird das komplette Repository.** Der Sourcecode ist damit als
+- **Abgegeben wird das komplette Repository, als Link.** Das Repository ist
+  öffentlich, die Lehrkraft braucht keinen Zugang. Der Sourcecode ist damit als
   eigene Dateien dabei (`Code/`), wie die Vorgabe es verlangt.
+- **Das Arbeitsprotokoll `MDs/entwicklungsverlauf.md`** (Prompts im Wortlaut)
+  darf im Repository bleiben, kommt aber **nicht ins PDF**.
 - **Die Dokumentation muss ein PDF sein.** Das PDF wird aus den Wiki-Seiten in
   `wiki/` erzeugt und liegt im Repository als
   `Projektdokumentation_GAS.pdf`. Das Wiki bleibt die Quelle, geändert wird
   nur dort, danach wird das PDF neu erzeugt.
+- **Präsentiert wird auf Jans Notebook.** Die Motion-Graphics-Präsentation
+  vom Prototyp-Branch läuft dort flüssig, dieselbe Technik kann also auch für
+  die neue Präsentation genutzt werden.
 - **Die Präsentation darf HTML sein.** Sie liegt im Repository unter
   `praesentation/` und wird als eine einzelne, offline lauffähige HTML-Datei
   abgegeben.
@@ -106,19 +112,12 @@ Die Fragen zur Abgabeform sind beantwortet (siehe oben). Offen ist noch:
 - [x] **(Lehrkraft)** Form der Doku → **PDF**
 - [x] **(Lehrkraft)** Form des Sourcecodes → **ganzes Repository**
 - [x] **(Lehrkraft)** Format der Präsentation → **egal, HTML ist in Ordnung**
-- [ ] **(Lehrkraft)** Wie genau wird das Repository geschickt: als ZIP oder als
-      Link? Bei einem Link muss die Lehrkraft Zugriff haben (Repository
-      öffentlich oder als Mitglied eingeladen). Empfehlung: ZIP vom Tag `v1.0`
-      **und** den Link dazu.
-      → Antwort: ✏️
-- [ ] **(Lehrkraft)** Ist das Arbeitsprotokoll `MDs/entwicklungsverlauf.md`
-      (enthält die Prompts im Wortlaut) im abgegebenen Repository in Ordnung?
-      Das ist jetzt wichtiger als vorher, weil das ganze Repository abgegeben
-      wird. Ins PDF kommen keine Prompts. (Offen seit Schritt 18.)
-      → Antwort: ✏️
-- [ ] **(Lehrkraft)** Wird auf einem Schul-PC oder auf eurem Laptop
-      präsentiert? (Die HTML-Präsentation muss dort laufen.)
-      → Antwort: ✏️
+- [x] **(Lehrkraft)** Wie wird das Repository geschickt? → **als Link**, das
+      Repository ist öffentlich
+- [x] **(Lehrkraft)** Arbeitsprotokoll `MDs/entwicklungsverlauf.md` im
+      Repository? → **darf bleiben, aber nicht ins PDF**
+- [x] **(Team)** Präsentationsrechner → **Jans Notebook**, die
+      Motion-Graphics-Präsentation vom Prototyp läuft dort gut
 - [ ] **(Lehrkraft)** Wann ist unsere Gruppe dran? Zählt die Live-Demo in die
       20 Minuten (2 × 10 min) hinein?
       → Antwort: ✏️
@@ -260,6 +259,10 @@ Wiki und PDF bei jeder Korrektur auseinander.
     des PDFs umwandeln, Links nach außen mit sichtbarer URL
   - die GitHub-Hinweiskästen (`> [!NOTE]` usw.) als Kästen darstellen und den
     Wiki-Hinweis-Kommentar oben auf jeder Seite weglassen
+  - **`MDs/entwicklungsverlauf.md` nicht einbinden.** Ins PDF kommt nur die
+    Wiki-Seite „Entwicklungsverlauf“ (Schritte zusammengefasst, keine
+    Prompts). Die Links „Vollständiger Eintrag“ unter den Karten zeigen aufs
+    Protokoll im Repository, sie bleiben als Verweis stehen.
 - [ ] **(Claude)** Ein **Probe-PDF** erzeugen, auch wenn noch TODOs drin sind,
       und prüfen, was im PDF anders aussieht als im Wiki:
   - **animierte SVGs** (Banner, `how-it-works.svg`, `wiring.svg`) zeigen im
@@ -297,9 +300,12 @@ Erst wenn die Doku steht. Inhalte werden aus der Doku übernommen.
 - **Format: HTML**, als **eine einzige Datei**, die ohne Internet läuft
   (Schriften, Bilder und Skripte eingebettet). Quelle in `praesentation/`,
   die fertige Datei wird abgegeben und liegt ebenfalls im Repository.
-- Einfach halten: Die Präsentation muss auf dem Präsentationsrechner im
-  Browser flüssig laufen. Aufwendige 3D-Effekte nur, wenn sie dort getestet
-  sind; das echte Gerät und das Demo-Video sind wichtiger.
+- Präsentiert wird auf Jans Notebook. Der Prototyp mit 3D und Motion Graphics
+  läuft dort gut, die Technik (Engine, Offline-Schriften, Ein-Datei-Build) darf
+  also wieder genutzt werden. Inhalt und Ablauf werden aber neu gebaut, nach
+  dem Ablauf unten.
+- Trotzdem: Das echte Gerät ist der Höhepunkt, nicht die Effekte. Jede Folie
+  muss auch ohne Animation verständlich sein.
 
 ### Vorschlag für den Ablauf (≈ 22 min + Fragen)
 
@@ -340,8 +346,8 @@ dieselbe Logik.
       aus dem Wiki, Steuerung mit Pfeiltasten, Vollbild
 - [ ] **(Team)** Folien durchgehen, in eigenen Worten Stichpunkte für die
       Sprechernotizen schreiben
-- [ ] **(Team)** Präsentation **auf dem Präsentationsrechner** testen
-      (läuft sie offline? passt die Auflösung? welcher Browser?)
+- [ ] **(Team)** Präsentation auf Jans Notebook **am Beamer im Raum**
+      testen: Anschluss (HDMI/Adapter), Auflösung, Vollbild, läuft sie offline
 - [ ] **(Team)** HTML-Datei abgeben, **Abgabe bis Di 24.11.**
 
 ## Phase 5 · Proben und Vortrag (25.11. – ab 01.12.)
@@ -360,7 +366,9 @@ dieselbe Logik.
   - [ ] RFID-Karten (mindestens eine angelernt, eine unbekannte für die Demo)
   - [ ] PIN und Admin-PIN auf einem Zettel
   - [ ] USB-Kabel (Typ B) und Laptop mit Arduino IDE, falls neu geladen werden muss
-  - [ ] Präsentation als HTML-Datei auf USB-Stick (zusätzlich zum Laptop)
+  - [ ] Präsentation als HTML-Datei auf USB-Stick (zusätzlich zum Notebook)
+  - [ ] Netzteil fürs Notebook, HDMI-Kabel bzw. Adapter
+  - [ ] Energiesparmodus und Benachrichtigungen am Notebook aus
   - [ ] Demo-Video offline gespeichert
 
 ## Phase 6 · Feedback einarbeiten und abgeben (02.12. – Di 15.12.)
@@ -383,24 +391,24 @@ dieselbe Logik.
 - [ ] **(Team)** Alles nach `main` mergen, dann Tag `v1.0` auf den
       Endstand setzen bzw. neu setzen (falls nach dem Code-Freeze noch etwas
       geändert wurde)
-- [ ] **(Team)** Repository so schicken, wie in Phase 0 geklärt (ZIP vom Tag
-      `v1.0` über GitHub → Releases/Tags → „Source code (zip)“ und/oder Link).
-      Vorher das ZIP einmal entpacken und prüfen, dass PDF, Code und
-      Präsentation drin sind und sich öffnen lassen.
+- [ ] **(Team)** Link schicken, am besten direkt auf den Tag:
+      `https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/v1.0`. Vorher in
+      einem privaten Browserfenster (nicht angemeldet) prüfen, dass PDF, Code
+      und Präsentation zu sehen sind und sich öffnen lassen.
 - [ ] **(Team)** **Abgabe bis Di 15.12.2026**
 
 ---
 
 ## Abgabepaket (Endstand)
 
-Abgegeben wird das Repository (Stand Tag `v1.0`). Darin:
+Abgegeben wird der Link aufs öffentliche Repository (Stand Tag `v1.0`). Darin:
 
 | Teil | Wo im Repository | Form |
 |---|---|---|
 | **Projektdokumentation** (Kap. 1–10 + Anhang) | `Projektdokumentation_GAS.pdf` | PDF, erzeugt aus `wiki/` |
 | **Sourcecode** | `Code/` | eigene `.ino`-Dateien, in der Doku nur verlinkt |
 | **Präsentation** | `praesentation/` | eine HTML-Datei, offline lauffähig (schon am 24.11. abgegeben) |
-| Ergänzend | `Schaltplan/`, `Gehaeuse/`, `Anleitung/`, `docs/viewer/` (3D-Modell), `Teile.xlsx`, `wiki/` (Quelle der Doku) | im Repository |
+| Ergänzend | `Schaltplan/`, `Gehaeuse/`, `Anleitung/`, `docs/viewer/` (3D-Modell), `Teile.xlsx`, `wiki/` (Quelle der Doku), `MDs/entwicklungsverlauf.md` (Arbeitsprotokoll, nicht im PDF) | im Repository |
 
 ## Was bewusst nicht mehr passiert
 
