@@ -144,8 +144,9 @@ sketch. To use it offline, just open
 | [Gehaeuse/](Gehaeuse/) | 3D-printable case: OpenSCAD model, STL files, pictures |
 | [tools/](tools/) | scripts that put the STLs into the viewer and render the pictures |
 | [wiki/](wiki/) | source of the project wiki (German), published automatically by `.github/workflows/wiki.yml` |
-| [MDs/](MDs/) | docs (German): [hardware spec](MDs/aufbau.md), [user manual](MDs/anleitung.md), [development log](MDs/entwicklungsverlauf.md) |
+| [MDs/](MDs/) | docs (German): [hardware spec](MDs/aufbau.md), [user manual](MDs/anleitung.md), [development log](MDs/entwicklungsverlauf.md), [wrap-up plan](MDs/abschlussplan.md) |
 | [Anleitung/](Anleitung/) | user manual as a PDF |
+| [Fotos/](Fotos/) | photos of the real build, used in the documentation |
 | [Schaltplan/](Schaltplan/) | schematic (PNG/SVG) and the breadboard plan for the case |
 | [Teile.xlsx](Teile.xlsx) | parts list |
 | [CLAUDE.md](CLAUDE.md) | project context and hardware facts for development with Claude Code |

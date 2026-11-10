@@ -29,10 +29,9 @@ Sirene aus. Das OLED zeigt nur Symbole: ein Herz (unscharf), einen Totenkopf
 angelernt, ganz ohne PC(Computer).
 
 > [!NOTE]
-> ✏️ **TODO (Team):** Hier ein Foto oder GIF vom fertigen Gerät einfügen
-> (z. B. Karte auflegen → Herz wird zum Totenkopf). Bild im Repository unter
-> `wiki/images/` ablegen und so einbinden:
-> `<p align="center"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/wiki/images/geraet.gif" width="60%"></p>`
+> ✏️ **TODO (Team):** Foto vom fertigen Gerät (`Fotos/geraet_vorne.jpg` oder
+> `Fotos/geraet_brett.jpg`), Claude baut es hier ein. Ein Foto statt GIF, weil
+> die Dokumentation als PDF abgegeben wird.
 
 <p align="center">
   <a href="https://bbz-aifs51.github.io/LF7-Projekt_GAS/"><b>▶ 3D-Modell im Browser ausprobieren</b></a>
@@ -69,6 +68,6 @@ Anhang enthält Planung, Kosten und den Verlauf der Entwicklung.
 
 ## Auf einen Blick
 
-| **6** | **4** | **21** | **5** | **5** |
+| **6** | **4** | **22** | **5** | **5** |
 |:---:|:---:|:---:|:---:|:---:|
 | Bauteile am Uno | Arduino-Sketches | Arbeitsschritte im [Entwicklungsverlauf](Entwicklungsverlauf) | Zustände der Anlage | Druckteile fürs Gehäuse |

@@ -79,13 +79,21 @@ Uno über VIN, verteilt wird über ein Mini-Breadboard
 ([Schritt 20](Entwicklungsverlauf#-schritt-20--batterie-an-vin-und-mini-breadboard)).
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/wiki/images/gehaeuse_innen.jpg" alt="Gedrucktes Rückteil mit Arduino Uno und Mini-Breadboard" width="40%"><br>
+  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/gehaeuse_innen.jpg" alt="Gedrucktes Rückteil mit Arduino Uno und Mini-Breadboard" width="40%"><br>
   <sub>Gedrucktes Rückteil mit Uno und Mini-Breadboard</sub>
 </p>
 
+Am 10.11.2026 waren beide Teile verkabelt und verschraubt. Beim Druck mussten
+die Schraubpunkte für den Bewegungsmelder am Deckel des Sensorteils verstärkt
+werden, weil sie sonst abgebrochen wären, siehe
+[Herausforderungen](Herausforderungen#schraubpunkte-am-sensordeckel-zu-schwach).
+Als Nächstes werden beide Teile auf eine Holzplatte montiert, die für die
+Vorführung die Wand mit der Tür darstellt.
+
 > [!NOTE]
-> ✏️ **TODO (Team):** Was hat beim Druck oder Zusammenbau nicht gepasst? Foto
-> vom fertigen Gerät ergänzen.
+> ✏️ **TODO (Team):** Fotos vom offenen und vom fertigen Gerät in den Ordner
+> [`Fotos/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/Fotos)
+> hochladen (Liste dort), Claude baut sie hier ein.
 
 ## 6 · Präsentation im Repository
 
@@ -119,5 +127,6 @@ abbrach. Jetzt wird eine falsche Eingabe im Alarm ignoriert.
 - [ ] RFID-Reset (<kbd>B</kbd>) mit absichtlich getrenntem Leser getestet
 - [ ] Gehäusemaße am echten Aufbau nachgemessen
 - [x] Gehäuse gedruckt
-- [ ] Gehäuse montiert, nach dem Steckplan verkabelt und getestet
+- [x] Gehäuse nach dem Steckplan verkabelt und verschraubt (10.11.2026)
+- [ ] Gehäuse auf der Holzplatte montiert und getestet
 - [ ] Laufzeit mit 9-V-Batterie gemessen

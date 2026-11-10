@@ -59,7 +59,7 @@ Anregung der Lehrkraft.
 | K2 | Ausgangsverzögerung, damit man nach dem Scharfschalten den Raum verlassen kann | Vorschlag von Claude Code | ✅ |
 | K3 | Rechtevergabe: Karten ohne PC anlernen und löschen (Admin-Menü) | Lehrkraft | ✅ |
 | K4 | RFID-Reset, falls der Kartenleser hängt | Lehrkraft | ✅ |
-| K5 | 3D-gedrucktes Gehäuse, Bewegungsmelder getrennt im Raum | eigene Idee | 🟡 gedruckt, Einbau läuft |
+| K5 | 3D-gedrucktes Gehäuse, Bewegungsmelder getrennt im Raum | eigene Idee | 🟡 gedruckt und eingebaut, Test steht aus |
 | K6 | Interaktives 3D-Modell im Browser | eigene Idee | ✅ |
 
 > [!NOTE]

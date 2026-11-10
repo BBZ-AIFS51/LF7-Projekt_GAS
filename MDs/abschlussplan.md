@@ -30,9 +30,15 @@ Hinter jeder Aufgabe steht, wer sie erledigen kann:
   `wiki/` erzeugt und liegt im Repository als
   `Projektdokumentation_GAS.pdf`. Das Wiki bleibt die Quelle, geändert wird
   nur dort, danach wird das PDF neu erzeugt.
-- **Präsentiert wird auf Jans Notebook.** Die Motion-Graphics-Präsentation
-  vom Prototyp-Branch läuft dort flüssig, dieselbe Technik kann also auch für
-  die neue Präsentation genutzt werden.
+- **Präsentiert wird auf Jans Notebook.** Animationen und 3D im Browser laufen
+  dort flüssig (ausprobiert), die neue Präsentation darf also Motion Graphics
+  nutzen.
+- **Termin:** Annahme ist der erste Präsentationstag, **Di 01.12.2026**.
+- **Dauer:** insgesamt **mindestens 15 Minuten**, jeder hat einen erkennbar
+  eigenen Teil.
+- **Zitierweise:** wie an der Hochschule üblich, nummeriert nach **IEEE**.
+  Im Text steht die Nummer in eckigen Klammern, z. B. „laut Datenblatt [4]“,
+  im Quellenverzeichnis die vollständige Angabe.
 - **Die Präsentation darf HTML sein.** Sie liegt im Repository unter
   `praesentation/` und wird als eine einzelne, offline lauffähige HTML-Datei
   abgegeben.
@@ -51,7 +57,7 @@ zusammenpasst, gilt diese Reihenfolge:
 
 ```text
 Gerät fertig + getestet  →  Doku inhaltlich fertig  →  Präsentation aus der Doku bauen
-     (bis 15.11.)               (bis 20.11.)              (20.–24.11.)
+     (bis 20.11.)               (bis 22.11.)              (20.–24.11.)
                                                                 │
           Doku abgeben  ←  Feedback aus der Präsentation einarbeiten  ←  vortragen
            (15.12.)                  (bis 13.12.)                        (ab 01.12.)
@@ -63,8 +69,6 @@ Gerät fertig + getestet  →  Doku inhaltlich fertig  →  Präsentation aus de
 - Zahlen, Fotos und Begriffe stehen zuerst in der Doku und werden von dort in
   die Präsentation übernommen, nicht umgekehrt.
 - Die Präsentation wird **komplett neu** gebaut, als letzter großer Schritt.
-  Der Prototyp vom 09.11. (Branch `claude/funny-cannon-vqa19g`) dient höchstens
-  als Ideenquelle.
 
 ## Übersicht
 
@@ -80,13 +84,14 @@ gantt
     Fragen an die Lehrkraft          :a0, 2026-11-10, 3d
 
     section Gerät
-    Einbau, Tests, Fotos             :a1, 2026-11-10, 6d
-    Code-Freeze v1.0                 :milestone, m1, 2026-11-17, 0d
+    Tests über USB, Fotos            :a1, 2026-11-10, 8d
+    Batterie, Montage auf Holzplatte :a1b, 2026-11-16, 5d
+    Code-Freeze v1.0                 :milestone, m1, 2026-11-20, 0d
 
     section Doku
-    TODOs im Wiki füllen             :a2, 2026-11-12, 9d
+    TODOs im Wiki füllen             :a2, 2026-11-10, 13d
     PDF-Export einrichten, Probe-PDF :a2b, 2026-11-12, 6d
-    Doku inhaltlich fertig           :milestone, m2, 2026-11-20, 0d
+    Doku inhaltlich fertig           :milestone, m2, 2026-11-22, 0d
 
     section Präsentation
     Präsentation neu bauen           :a3, 2026-11-20, 4d
@@ -99,7 +104,7 @@ gantt
     Abgabe Doku                      :milestone, m5, 2026-12-15, 0d
 ```
 
-Puffer: zwischen „Doku inhaltlich fertig“ (20.11.) und der Doku-Abgabe
+Puffer: zwischen „Doku inhaltlich fertig“ (22.11.) und der Doku-Abgabe
 (15.12.) liegen fast vier Wochen. Wenn etwas länger dauert, verschiebt sich die
 Doku, **nicht** die Präsentation.
 
@@ -116,47 +121,55 @@ Die Fragen zur Abgabeform sind beantwortet (siehe oben). Offen ist noch:
       Repository ist öffentlich
 - [x] **(Lehrkraft)** Arbeitsprotokoll `MDs/entwicklungsverlauf.md` im
       Repository? → **darf bleiben, aber nicht ins PDF**
-- [x] **(Team)** Präsentationsrechner → **Jans Notebook**, die
-      Motion-Graphics-Präsentation vom Prototyp läuft dort gut
-- [ ] **(Lehrkraft)** Wann ist unsere Gruppe dran? Zählt die Live-Demo in die
-      20 Minuten (2 × 10 min) hinein?
-      → Antwort: ✏️
-- [ ] **(Lehrkraft)** Gibt es ein Zitierformat fürs Quellenverzeichnis?
-      → Antwort: ✏️
-- [ ] **(Team)** Branch `claude/funny-cannon-vqa19g` (Präsentations-Prototyp):
-      Code **nicht** nach `main` übernehmen, die neue Präsentation entsteht
-      frisch in `praesentation/` (Teile wie die Offline-Schriften und das
-      Ein-Datei-Build-Skript dürfen wiederverwendet werden). Entscheiden, ob die
-      Protokolleinträge 21–24 trotzdem ins Protokoll kommen (empfohlen, das ist
-      ehrlicher fürs KI-Kapitel). Dann werden der Eintrag zu diesem Plan und die
-      Wiki-Karte entsprechend umnummeriert. Den Branch danach als Archiv
-      stehen lassen oder löschen.
-- [ ] **(Team)** Diesen Branch per Pull Request nach `main` holen, damit der
-      Plan und alle folgenden Wiki-Änderungen veröffentlicht werden.
+- [x] **(Team)** Präsentationsrechner → **Jans Notebook**, Animationen und 3D
+      im Browser laufen dort gut
+- [x] **(Team)** Termin → Annahme **Di 01.12.2026**
+- [x] **(Team)** Dauer → insgesamt **mindestens 15 Minuten**
+- [x] **(Team)** Zitierformat → **IEEE** (nummeriert, wie an der Hochschule)
+- [x] **(Team)** Arbeitsweise: Alles wird auf dem Branch
+      `claude/trusting-knuth-awmzj8` erledigt. Wenn alles fertig ist, kommt es
+      mit **einem Pull Request** nach `main` (spätestens in Phase 6). Bis dahin
+      ist das GitHub-Wiki noch auf dem alten Stand, weil es nur bei Änderungen
+      an `main` aktualisiert wird.
 
-## Phase 1 · Gerät fertig bauen und testen (bis So 15.11.)
+## Phase 1 · Gerät fertig bauen und testen (bis Fr 20.11.)
 
 Ohne fertiges Gerät keine Fotos, keine Messwerte und keine Demo. Deshalb zuerst.
 
-**Bevor das Gehäuse zugeschraubt wird:**
+**Fotos** kommen in den Ordner [`Fotos/`](../Fotos/). Dort steht die Fotoliste
+mit Dateinamen und wie man hochlädt.
 
-- [ ] **(Team)** Foto vom **Versuchsaufbau** auf dem großen Breadboard, von
-      oben, alle Kabel sichtbar → `wiki/images/aufbau.jpg`. Pflicht laut
-      Vorgabe (Kapitel 5). Ist der Aufbau schon abgebaut: Foto vom offenen
-      Gehäuse mit Verkabelung und im Wiki ehrlich dazuschreiben.
-- [ ] **(Team)** Foto vom **offenen Bedienteil** mit Steckplan-Belegung
-      (Mini-Breadboard, Batterie) → `wiki/images/gehaeuse_verkabelt.jpg`
-- [ ] **(Team)** Polung an VIN prüfen (kein Verpolungsschutz!), erst dann
-      Batterie anstecken
+- [ ] **(Team)** **Pflichtfoto** für Kapitel 5: Bedienteil **offen**, von oben,
+      alle Kabel und das Mini-Breadboard sichtbar → `Fotos/aufbau_offen.jpg`.
+      Dafür das Gehäuse einmal aufschrauben. Falls noch ein altes Foto vom
+      ersten Aufbau auf dem großen Breadboard existiert, zusätzlich
+      `Fotos/aufbau_breadboard.jpg`.
+- [ ] **(Team)** Sensorteil offen, die verstärkten Schraubpunkte sichtbar →
+      `Fotos/sensorteil_offen.jpg`
+- [ ] **(Claude)** Fotos verkleinern, Metadaten (GPS) entfernen und ins Wiki
+      einbauen
 
 **Einbau:**
 
-- [ ] **(Team)** Bedienteil und Sensorteil nach
-      `Schaltplan/steckplan_gehaeuse.svg` verkabeln und schließen
-- [ ] **(Team)** Notieren, was beim Druck oder Einbau nicht gepasst hat und wie
-      ihr es gelöst habt (für Kapitel 8 und die Präsentation, Stichworte reichen)
+- [x] **(Team)** Bedienteil und Sensorteil verkabelt und verschraubt
+      (10.11.2026), noch lose, nicht auf einer Platte
+- [x] **(Team)** Notiert, was beim Druck nicht gepasst hat: Der Drucker ist
+      nicht der beste, am Deckel des Sensorgehäuses mussten die Schraubpunkte
+      für den Bewegungsmelder verstärkt werden, damit sie nicht abbrechen
+      (steht in Kapitel 8)
+- [ ] **(Team)** Prüfen, ob die verstärkte Version wirklich im Repository ist:
+      In `Gehaeuse/gehaeuse.scad` und `stl/sensor_front.stl` sind die
+      Schraubpunkte noch die ursprünglichen (4 mm Durchmesser, Stand
+      23.09.2026). Wenn die Änderung woanders gemacht wurde (Slicer,
+      Tinkercad …), Claude sagen, was geändert wurde, damit Modell, STL und
+      Bilder zum gedruckten Teil passen.
+- [ ] **(Team)** Beide Teile auf die **Holzplatte** montieren (geplant
+      KW 47, 16.–20.11.)
+- [ ] **(Team)** **9-V-Batterie mitbringen.** Polung an VIN prüfen (kein
+      Verpolungsschutz!), erst dann anstecken
 
-**Tests am fertigen Gerät** (Ergebnis im Wiki auf der Seite
+**Tests am fertigen Gerät.** T1–T9 gehen auch **ohne Batterie über USB**, also
+schon vor der Montage. Nur T10 braucht die Batterie. (Ergebnis im Wiki auf der Seite
 [Projektphasen](../wiki/Projektphasen.md) unter „Stand und offene Punkte“
 abhaken, Messwerte eintragen):
 
@@ -174,12 +187,13 @@ abhaken, Messwerte eintragen):
 | T10 | Laufzeit mit frischer 9-V-Batterie | grob 3–5 h | ✏️ h |
 
 - [ ] **(Team)** Kurzes **Video** vom kompletten Ablauf (Herz → Karte →
-      Totenkopf → Bewegung → Sirene → PIN → Herz). Dient als GIF auf der
-      Startseite **und als Ersatz, falls die Live-Demo ausfällt**.
-- [ ] **(Team)** Foto vom fertigen Gerät (Bedienteil + Sensorteil) →
-      `wiki/images/geraet.jpg`
+      Totenkopf → Bewegung → Sirene → PIN → Herz), am besten nach der
+      Montage. Dient **als Ersatz, falls die Live-Demo ausfällt**, und kommt
+      nicht ins Repository.
+- [ ] **(Team)** Fotos vom fertigen Gerät nach der Montage →
+      `Fotos/geraet_vorne.jpg`, `Fotos/geraet_brett.jpg`
 
-## Phase 2 · Code-Freeze (bis Di 17.11.)
+## Phase 2 · Code-Freeze (bis Fr 20.11.)
 
 Ab hier wird die Firmware nicht mehr geändert, sonst stimmen Doku, Präsentation
 und 3D-Modell nicht mehr überein.
@@ -206,7 +220,7 @@ und 3D-Modell nicht mehr überein.
       Abschnitt „Was liegt wo“ für die Lehrkraft (Doku-PDF, Code,
       Präsentation, Schaltplan, Gehäuse)
 
-## Phase 3 · Doku inhaltlich fertig (bis Fr 20.11.)
+## Phase 3 · Doku inhaltlich fertig (bis So 22.11.)
 
 Alle `✏️ TODO` im Ordner `wiki/` abarbeiten. Was nur ihr wissen könnt, ist mit
 **(Team)** markiert; den Rest kann Claude einarbeiten, sobald die Angaben da
@@ -229,7 +243,8 @@ grep -rn "TODO" wiki/
 | 7 Wichtige Codeabschnitte | gemessenen SRAM-Wert eintragen | Team misst, Claude schreibt |
 | 8 Herausforderungen | wie ihr den SH1106 erkannt habt, Probleme beim RC522-Verdrahten, eigene Probleme (Druck, Einbau, Teamarbeit) | **Team** |
 | 9 Fazit und Ausblick | Soll/Ist (Zeit, Kosten, Gehäuse), Fazit 2–3 Sätze, **Reflexion selbst schreiben, ohne KI**, 2–4 Erweiterungsideen auswählen | **Team** |
-| 10 Quellenverzeichnis | Keypad- und Buzzer-Quelle (Händlerseite), Library-Versionen (Library Manager → „Installiert“), Slicer, eigene Tutorials/Videos, Abrufdatum | Team sammelt, Claude formatiert |
+| 10 Quellenverzeichnis | Keypad- und Buzzer-Quelle (Händlerseite), Library-Versionen (Library Manager → „Installiert“), Slicer, eigene Tutorials/Videos. Format IEEE ist umgestellt (10.11.) | Team sammelt, Claude formatiert |
+| alle Kapitel | Quellen **im Text zitieren** mit [n], z. B. bei Bauteilen (Datenblätter), Codeabschnitten (Bibliotheken, `tone()`, `PROGMEM`) und Herausforderungen | Claude |
 
 ### Anhang
 
@@ -287,12 +302,13 @@ Wiki und PDF bei jeder Korrektur auseinander.
 
 ## Phase 4 · Präsentation neu bauen (Fr 20.11. – Di 24.11.)
 
-Erst wenn die Doku steht. Inhalte werden aus der Doku übernommen.
+Inhalte werden aus der Doku übernommen. Fotos und Messwerte, die bis zum 22.11.
+noch dazukommen, werden zuletzt eingesetzt.
 
 ### Rahmen
 
-- Mindestens **20 Minuten** (2 Personen × 10 min), jeder hat einen
-  **erkennbar eigenen Teil**
+- Insgesamt **mindestens 15 Minuten**, Ziel 16–18 Minuten mit Demo. Jeder
+  hat einen **erkennbar eigenen Teil** (je etwa die Hälfte).
 - Ablauf nach Vorgabe: Idee → Aufbau und Code → Herausforderungen → Fazit →
   Live-Demo
 - **Jeder muss den ganzen Code erklären können**, nicht nur seinen Teil. Das
@@ -300,27 +316,26 @@ Erst wenn die Doku steht. Inhalte werden aus der Doku übernommen.
 - **Format: HTML**, als **eine einzige Datei**, die ohne Internet läuft
   (Schriften, Bilder und Skripte eingebettet). Quelle in `praesentation/`,
   die fertige Datei wird abgegeben und liegt ebenfalls im Repository.
-- Präsentiert wird auf Jans Notebook. Der Prototyp mit 3D und Motion Graphics
-  läuft dort gut, die Technik (Engine, Offline-Schriften, Ein-Datei-Build) darf
-  also wieder genutzt werden. Inhalt und Ablauf werden aber neu gebaut, nach
-  dem Ablauf unten.
+- Präsentiert wird auf Jans Notebook. 3D und Motion Graphics laufen dort
+  flüssig und sind deshalb erlaubt. Gebaut wird komplett neu, nach dem Ablauf
+  unten.
 - Trotzdem: Das echte Gerät ist der Höhepunkt, nicht die Effekte. Jede Folie
   muss auch ohne Animation verständlich sein.
 
-### Vorschlag für den Ablauf (≈ 22 min + Fragen)
+### Vorschlag für den Ablauf (≈ 17 min + Fragen)
 
 Die Aufteilung ist nur ein Vorschlag, entscheidet selbst, wer was übernimmt.
 
 | # | Teil | Inhalt | Doku | Min | Wer |
 |---|---|---|---|---:|---|
-| 1 | Einstieg | Problem und Idee, Ziel in einem Satz, Muss-/Kann-Anforderungen | Kap. 2 | 2 | Person A |
-| 2 | So funktioniert's | Zustände aus Anwendersicht: Herz, Ausgangsverzögerung, Totenkopf, Alarm, Admin | Kap. 3 | 2 | Person A |
-| 3 | Bauteile und Aufbau | Bauteile, Schaltplan, Pin-Zuordnung (I²C, SPI), Foto Versuchsaufbau → Gehäuse, Batterie an VIN | Kap. 4, 5 | 4 | Person B |
-| 4 | Code I | Zustandsautomat, nicht-blockierende Töne mit `millis()` | Kap. 7 | 3 | Person A |
-| 5 | Code II | Keypad selbst scannen statt Library, RFID mit EEPROM und Admin-Menü, RFID-Polling alle 200 ms | Kap. 7 | 3 | Person B |
-| 6 | Herausforderungen | SH1106 statt SSD1306, knapper SRAM (Pixelmüll, Neustarts), `SPI.begin()` und der Buzzer an D10, RC522 nur 3,3 V, Bugfix Alarm, Gehäuse | Kap. 8 | 4 | beide, je 2 Punkte |
-| 7 | Fazit und Ausblick | Soll/Ist, was wir gelernt haben, Erweiterungen, kurz: wie wir KI genutzt haben | Kap. 9 | 2 | Person B |
-| 8 | Live-Demo | nach Demo-Drehbuch unten | — | 3–4 | A bedient, B erklärt |
+| 1 | Einstieg | Problem und Idee, Ziel in einem Satz, Muss-/Kann-Anforderungen | Kap. 2 | 1,5 | Person A |
+| 2 | So funktioniert's | Zustände aus Anwendersicht: Herz, Ausgangsverzögerung, Totenkopf, Alarm, Admin | Kap. 3 | 1,5 | Person A |
+| 3 | Bauteile und Aufbau | Bauteile, Schaltplan, Pin-Zuordnung (I²C, SPI), Foto vom Aufbau, Gehäuse, Batterie an VIN | Kap. 4, 5 | 3 | Person B |
+| 4 | Code I | Zustandsautomat, nicht-blockierende Töne mit `millis()` | Kap. 7 | 2 | Person A |
+| 5 | Code II | Keypad selbst scannen statt Library, RFID mit EEPROM und Admin-Menü, RFID-Polling alle 200 ms | Kap. 7 | 2 | Person B |
+| 6 | Herausforderungen | knapper SRAM (Pixelmüll, Neustarts), `SPI.begin()` und der Buzzer an D10, RC522 nur 3,3 V, Bugfix Alarm, Gehäuse und Druck | Kap. 8 | 3 | beide, je die Hälfte |
+| 7 | Fazit und Ausblick | Soll/Ist, was wir gelernt haben, Erweiterungen, kurz: wie wir KI genutzt haben | Kap. 9 | 1,5 | Person B |
+| 8 | Live-Demo | nach Demo-Drehbuch unten | — | 2,5 | A bedient, B erklärt |
 | 9 | Fragen | | | | beide |
 
 Jede Folie bekommt in der Ecke die Kapitelnummer aus der Doku, das ist der
@@ -352,7 +367,7 @@ dieselbe Logik.
 
 ## Phase 5 · Proben und Vortrag (25.11. – ab 01.12.)
 
-- [ ] **(Team)** Mindestens zwei komplette Durchläufe mit Stoppuhr (Ziel 20–24 min)
+- [ ] **(Team)** Mindestens zwei komplette Durchläufe mit Stoppuhr (Ziel 16–18 min, nie unter 15)
 - [ ] **(Team)** Gegenseitig abfragen: Jeder erklärt die Codeabschnitte des
       anderen. Typische Fragen üben:
   - Warum keine Keypad-Library? (SRAM, ~120 Byte, Neustarts)

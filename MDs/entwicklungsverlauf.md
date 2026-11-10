@@ -849,7 +849,7 @@ in die Doku.
 
 | Phase | Bis | Inhalt |
 |---|---|---|
-| 0 Klären | 13.11. | Fragen an die Lehrkraft: Abgabeform Doku/Code/Präsentation, Prompt-Protokoll als Anhang, Termin, Zitierformat. Umgang mit dem Präsentations-Prototyp |
+| 0 Klären | 13.11. | Fragen an die Lehrkraft: Abgabeform Doku/Code/Präsentation, Prompt-Protokoll als Anhang, Termin, Zitierformat |
 | 1 Gerät | 15.11. | Fotos vor dem Zuschrauben, Einbau nach Steckplan, Testtabelle T1–T10 (u. a. Bugfix Schritt 16, RFID-Reset, SRAM-Wert, Laufzeit), Demo-Video |
 | 2 Code-Freeze | 17.11. | Fehlerton 2 s/3 s entscheiden, `.bak` entfernen, Tag `v1.0` |
 | 3 Doku | 20.11. | alle ✏️ TODO im Wiki, Kapitel für Kapitel mit Zuständigkeit (Team/Claude), Teile.xlsx, PDF-Anleitung, Social Preview |
@@ -860,15 +860,9 @@ in die Doku.
 Dazu: Abgabepaket als Tabelle und was bewusst nicht mehr passiert (keine
 neuen Funktionen nach dem Code-Freeze, kein Neudruck).
 
-Der Präsentations-Prototyp aus den Sitzungen vom 09.11.2026 liegt nur auf dem
-Branch `claude/funny-cannon-vqa19g` und ist nicht in `main`. Seine
-Protokolleinträge (dort Nr. 21–24) fehlen deshalb hier.
-
 **Offene Punkte:**
 
 - Fragen aus Phase 0 an die Lehrkraft stellen.
-- Entscheiden, ob die Protokolleinträge des Prototyp-Branches übernommen
-  werden. Dann diesen Eintrag und die Wiki-Karte umnummerieren.
 - Den Plan selbst nicht ins Wiki übernehmen, er ist eine Arbeitsliste fürs
   Team, kein Teil der Dokumentation.
 
@@ -912,14 +906,81 @@ oder Link, Prompt-Protokoll im Repository und Präsentationsrechner.
 
 Plan angepasst: Abgabe als Link auf den Tag `v1.0` (vorher nicht angemeldet
 prüfen), Arbeitsprotokoll bleibt im Repository, das PDF-Skript bindet es nicht
-ein. Präsentation auf dem eigenen Notebook, die Motion-Graphics-Technik des
-Prototyps darf wiederverwendet werden, Packliste um Netzteil, HDMI und
+ein. Präsentation auf dem eigenen Notebook, Animationen und 3D laufen dort und sind
+damit erlaubt, Packliste um Netzteil, HDMI und
 Energiesparmodus ergänzt. In der Wiki-Karte zu Schritt 18 ist die offene Frage
 zum Protokoll als geklärt markiert. Im Chat: alle offenen Aufgaben in der
 Reihenfolge des Plans.
 
-**Offene Punkte:** In Phase 0 sind nur noch der Präsentationstermin, das
-Zitierformat, der Prototyp-Branch und das Mergen dieses Branches offen.
+**Offene Punkte:** In Phase 0 sind nur noch der Präsentationstermin und das
+Zitierformat offen.
+
+---
+
+## 22. Prompt — Phase 0 abgeschlossen, Fotos, Quellen nach IEEE (10.11.2026)
+
+> Dann arbeiten wir in dieser Branch, bis alles soweit fertig ist und packen es
+> dann auf main (wie nennt man das dann eig? PR?)
+>
+> Phase 0:
+>
+> 1. Wann wir dran sind ist egal, annahme ist der 01.12. Änder die dauer der
+>    Präsentation insgesamt auf min. 15 minuten.
+> 2. Nehm als Zitierformat einf so wie man es auch an der uni machen müsste
+>    oder so
+> 3. Nein die Protokolleinträge kommen nicht nach main, die branch lösch ich
+>    irgendwann, ich hab da nur ein wenig rumgespielt. ignorier die branch einf
+>    komplett.
+>
+> Phase 1:
+>
+> 5. Leg einen Ordner an in den ich die fotos einfügen kann
+> 6. Batterie sollte funktionieren, leider hat heute niemand eine dabei also
+>    können wir es grad nicht testen
+> 7. Alles ist im gehäuse verschraubt und verkabelt, aber lose, also nicht an
+>    einer holzplatte montiert, das wollen wir nächste woche
+> 8. Abgesehen davon, das der drucker hier nicht der beste ist mussten wir bei
+>    der frontplatte vom sensorgehäuse die verschraubungspunkte für den sensor
+>    etwas erweitern, damit sie nicht abbrechen, das ist aber schon die
+>    aktuelle datei im repo
+
+### Antwort
+
+Ja, das ist ein **Pull Request** (PR): Alles bleibt auf diesem Branch, zum
+Schluss wird er per PR nach `main` gemergt. Bis dahin zeigt das GitHub-Wiki
+noch den alten Stand.
+
+**Phase 0 im Plan abgeschlossen:** Termin 01.12.2026 (Annahme), Präsentation
+insgesamt mindestens 15 Minuten (Ablauf auf ≈ 17 Minuten gekürzt, Proben-Ziel
+16–18), Zitierweise IEEE. Der Test-Branch wird ignoriert, alle Verweise darauf
+sind aus Plan und Protokolleintrag 21 entfernt.
+
+- **Quellenverzeichnis** auf IEEE umgestellt: Herausgeber, „Titel“, Art.
+  [Online]. Verfügbar: URL [Zugriff am: …]. Neue Aufgabe in Phase 3: Quellen im
+  Text mit [n] zitieren.
+- **Neuer Ordner [../Fotos/](../Fotos/)** mit Fotoliste (Dateinamen, wofür,
+  Status) und Anleitung zum Hochladen auf diesen Branch. Das vorhandene Foto
+  `gehaeuse_innen.jpg` ist von `wiki/images/` dorthin umgezogen, alle Links,
+  [../CLAUDE.md](../CLAUDE.md) und README angepasst. Fotos werden vor dem
+  Einbinden verkleinert und ohne Metadaten gespeichert (GPS, das Repository ist
+  öffentlich).
+- **Phase 1 im Plan:** Einbau erledigt, neu: Montage auf der Holzplatte
+  (KW 47), Batterie mitbringen, Tests T1–T9 gehen schon über USB. Phase 1 und
+  Code-Freeze bis 20.11., Doku bis 22.11.
+- **Wiki:** Gehäuse-Status (eingebaut, Test und Montage offen) in Zielsetzung,
+  Fazit, Zeitplan und Projektphasen. Neue Herausforderung „Schraubpunkte am
+  Sensordeckel zu schwach“ in Kapitel 8.
+
+**Abweichung gefunden:** In `Gehaeuse/gehaeuse.scad` und
+`Gehaeuse/stl/sensor_front.stl` haben die Schraubpunkte für den
+Bewegungsmelder noch 4 mm Durchmesser. Die STL ist seit dem 23.09.2026
+unverändert. Die verstärkte Version ist also nicht im Repository.
+
+**Offene Punkte:**
+
+- Klären, wo und wie die Schraubpunkte geändert wurden, dann Modell, STL,
+  Viewer und Bilder angleichen.
+- Fotos hochladen, Batterie testen, Montage auf der Holzplatte.
 
 ---
 

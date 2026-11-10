@@ -24,7 +24,9 @@ Bewegungssensor erkennt Anwesenheit.
 
 - `Code/` — Arduino-Sketches. Jeder Sketch in eigenem Unterordner gleichen Namens
   (Arduino-Vorgabe), z. B. `Code/hardware_test/hardware_test.ino`.
-- `MDs/` — Dokumentation (u. a. [MDs/entwicklungsverlauf.md](MDs/entwicklungsverlauf.md):
+- `Fotos/` — Fotos vom echten Aufbau, Fotoliste in `Fotos/README.md`.
+- `MDs/` — Dokumentation (u. a. [MDs/abschlussplan.md](MDs/abschlussplan.md):
+  Plan bis zur Abgabe, nach Phasen abarbeiten; [MDs/entwicklungsverlauf.md](MDs/entwicklungsverlauf.md):
   Protokoll der Prompts und Antworten aus der Entwicklung mit Claude Code)
 - `Schaltplan/` — Schaltplan
 - `Gehaeuse/` — 3D-druckbares Gehäuse: `gehaeuse.scad` (OpenSCAD, parametrisch,
@@ -70,8 +72,10 @@ Bewegungssensor erkennt Anwesenheit.
   ins Wiki-Repo `BBZ-AIFS51/LF7-Projekt_GAS.wiki.git` (Branch `master`).
   **Wiki nur hier bearbeiten**, nicht im Wiki-Web-Editor — der wird beim
   nächsten Lauf überschrieben (jede Seite trägt dazu einen HTML-Kommentar).
-  Eigene Bilder nach `wiki/images/` und per `raw.githubusercontent.com`-URL
-  (`…/main/wiki/images/…`) einbinden. Projektdokumentation für die Schule, auf **Deutsch**,
+  Fotos vom echten Aufbau liegen in `Fotos/` (Fotoliste in `Fotos/README.md`;
+  vor dem Einbinden verkleinern und Metadaten/GPS entfernen, das Repo ist
+  öffentlich) und werden per `raw.githubusercontent.com`-URL
+  (`…/main/Fotos/…`) eingebunden. Projektdokumentation für die Schule, auf **Deutsch**,
   aufgebaut nach den zehn Kapiteln der Lehrkraft-Vorgabe (Seitenleiste
   nummeriert): `Home` (Deckblatt), `Idee-und-Zielsetzung`,
   `Funktionsbeschreibung`, `Verwendete-Bauteile`, `Aufbau-und-Schaltplan`,

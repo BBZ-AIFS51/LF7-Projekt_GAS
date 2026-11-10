@@ -169,6 +169,23 @@ nur ohne dessen Schutzdiode gegen Verpolung ([1]). Deshalb steht die Belegung im
 [Steckplan](Aufbau-und-Schaltplan#stromversorgung-im-gehäuse), und der
 Batterieclip wird erst nach dem Prüfen der Polung angesteckt.
 
+### Schraubpunkte am Sensordeckel zu schwach
+
+**Situation:** Der Bewegungsmelder wird am Deckel des Sensorteils an zwei
+kleinen Schraubpunkten festgeschraubt. Im Modell waren das schmale Zylinder mit
+4 mm Durchmesser. Gedruckt waren sie so dünn, dass sie beim Festschrauben
+abgebrochen wären.
+
+**Ursache:** Kleine, schmale Teile bestehen beim 3D-Druck nur aus wenigen
+Bahnen und halten entsprechend wenig aus. Unser Drucker druckt außerdem nicht
+besonders genau.
+
+**Lösung:** Die Schraubpunkte wurden verbreitert und der Deckel so gedruckt.
+
+> [!NOTE]
+> ✏️ **TODO (Team):** Kurz ergänzen, wie stark ihr die Schraubpunkte verbreitert
+> habt und womit (OpenSCAD, Slicer …). Foto: `Fotos/sensorteil_offen.jpg`.
+
 ---
 
 ## Weitere Herausforderungen
@@ -179,7 +196,6 @@ Batterieclip wird erst nach dem Prüfen der Polung angesteckt.
 > - Bewegungsmelder: Empfindlichkeit und Haltezeit an den Potis einstellen,
 >   Fehlalarme? Nach dem Einschalten braucht er etwa eine Minute, bis er
 >   zuverlässig arbeitet.
-> - 3D-Druck: Passte alles? Was musste nachgearbeitet werden?
 > - Zusammenarbeit, Zeitplanung, Git
 >
 > Gleiches Schema: **Situation**, **Ursache**, **Lösung**.

@@ -19,7 +19,7 @@ Wie das Projekt geplant war und wie es tatsächlich gelaufen ist.
 | Bauteile besorgen und Aufbau | ✏️ TODO | ✏️ TODO |
 | Firmware Grundfunktion | ✏️ TODO | 08.09.2026 |
 | Erweiterungen (RFID, Admin-Menü) | ✏️ TODO | 22.09.2026 |
-| Gehäuse | ✏️ TODO | gedruckt (Stand 28.10.2026), Einbau läuft |
+| Gehäuse | ✏️ TODO | gedruckt (28.10.2026), eingebaut (10.11.2026), Montage auf Holzplatte KW 47 |
 | Dokumentation und Präsentation | ✏️ TODO | ✏️ TODO |
 
 ## Tatsächlicher Ablauf (Ist)
@@ -52,7 +52,7 @@ gantt
     section Dokumentation
     Repository angelegt                 :milestone, 2026-09-22, 0d
     Projekt-Wiki (S17–S19)              :done, 2026-10-06, 1d
-    Abschlussplan (S21)                 :done, 2026-11-10, 1d
+    Abschlussplan, Fotos, Quellen (S21–S22) :done, 2026-11-10, 1d
 ```
 
 > [!NOTE]
@@ -79,7 +79,8 @@ gantt
 | 30.09.2026 | Gehäuse im 3D-Modell, Banner und Social Preview |
 | 06.10.2026 | Bugfix: Falsche Eingabe bricht den Alarm nicht mehr ab · Projekt-Wiki |
 | 28.10.2026 | Gehäuse gedruckt, Stromversorgung auf Batterie an VIN umgebaut, Steckplan fürs Mini-Breadboard |
-| ✏️ TODO | Gehäuse fertig montiert und getestet |
+| 10.11.2026 | Bedienteil und Sensorteil verkabelt und verschraubt |
+| ✏️ TODO | Gehäuse auf der Holzplatte montiert und getestet |
 | 24.11.2026 | Abgabe der Präsentation |
-| ✏️ TODO (ab 01.12.2026) | Präsentation vor der Klasse |
+| 01.12.2026 (Annahme) | Präsentation vor der Klasse |
 | 15.12.2026 | Abgabe der Projektdokumentation und des Repositorys |

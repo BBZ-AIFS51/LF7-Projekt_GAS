@@ -101,15 +101,16 @@ direkt an den Uno.
 <table>
   <tr>
     <td align="center" width="50%"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Schaltplan/SCHALTPLAN.png" alt="Schaltplan"><br><sub>Schaltplan</sub></td>
-    <td align="center" width="50%">✏️ <b>TODO (Team):</b> Foto<br><sub>Echter Aufbau auf dem Breadboard</sub></td>
+    <td align="center" width="50%">✏️ <b>TODO (Team):</b> Foto<br><sub>Echter Aufbau, Bedienteil geöffnet</sub></td>
   </tr>
 </table>
 
 > [!IMPORTANT]
-> ✏️ **TODO (Team):** Foto vom echten Aufbau machen (von oben, alle Kabel gut
-> zu sehen) und im Repository unter `wiki/images/aufbau.jpg` ablegen. Dann in der
-> Tabelle oben die rechte Zelle ersetzen durch:
-> `<img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/wiki/images/aufbau.jpg" alt="Versuchsaufbau">`
+> ✏️ **TODO (Team):** Foto vom echten Aufbau machen: Bedienteil geöffnet, von
+> oben, alle Kabel und das Mini-Breadboard gut zu sehen. Als
+> `Fotos/aufbau_offen.jpg` hochladen (siehe
+> [`Fotos/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/Fotos)),
+> Claude baut es hier ein.
 >
 > Am besten gleich prüfen, ob Schaltplan und Foto übereinstimmen, vor allem
 > die 3,3 V am RFID-Leser und der Bewegungsmelder an A2.
@@ -134,12 +135,13 @@ im [3D-Modell](https://bbz-aifs51.github.io/LF7-Projekt_GAS/#enclosure) lässt
 sich das Gehäuse aufklappen.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/wiki/images/gehaeuse_innen.jpg" alt="Gedrucktes Rückteil des Bedienteils mit Arduino Uno und Mini-Breadboard" width="45%"><br>
+  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/gehaeuse_innen.jpg" alt="Gedrucktes Rückteil des Bedienteils mit Arduino Uno und Mini-Breadboard" width="45%"><br>
   <sub>Das gedruckte Rückteil: Uno unten (USB-Buchse in der Aussparung), darüber das Mini-Breadboard</sub>
 </p>
 
 > [!NOTE]
-> ✏️ **TODO (Team):** Foto vom fertig verkabelten und zugeschraubten Gerät ergänzen.
+> ✏️ **TODO (Team):** Foto vom fertigen Gerät auf der Holzplatte
+> (`Fotos/geraet_brett.jpg`).
 
 ---
 
