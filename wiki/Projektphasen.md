@@ -83,10 +83,10 @@ Uno über VIN, verteilt wird über ein Mini-Breadboard
   <sub>Gedrucktes Rückteil mit Uno und Mini-Breadboard</sub>
 </p>
 
-Am 10.11.2026 waren beide Teile verkabelt und verschraubt. Beim Druck mussten
-die Schraubpunkte für den Bewegungsmelder am Deckel des Sensorteils verstärkt
-werden, weil sie sonst abgebrochen wären, siehe
-[Herausforderungen](Herausforderungen#schraubpunkte-am-sensordeckel-zu-schwach).
+Am 10.11.2026 waren beide Teile verkabelt und verschraubt. Beim ersten Druck
+sind die Schraubpunkte für den Bewegungsmelder am Deckel des Sensorteils
+abgebrochen. Sie wurden verstärkt und der Deckel neu gedruckt, siehe
+[Herausforderungen](Herausforderungen#schraubpunkte-am-sensordeckel-brechen-ab).
 Als Nächstes werden beide Teile auf eine Holzplatte montiert, die für die
 Vorführung die Wand mit der Tür darstellt.
 

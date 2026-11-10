@@ -155,7 +155,7 @@ Eingang ab.
 
 ### Batterie passt nicht ins Gehäuse
 
-**Situation:** Laut Schaltplan wird die 9-V-Batterie über den Hohlstecker des
+**Situation:** Laut ursprünglichem Schaltplan wird die 9-V-Batterie über den Hohlstecker des
 Uno angeschlossen. Im gedruckten Gehäuse hätten Stecker und Batterie dann außen
 am Gehäuse gehangen.
 
@@ -169,22 +169,28 @@ nur ohne dessen Schutzdiode gegen Verpolung ([1]). Deshalb steht die Belegung im
 [Steckplan](Aufbau-und-Schaltplan#stromversorgung-im-gehäuse), und der
 Batterieclip wird erst nach dem Prüfen der Polung angesteckt.
 
-### Schraubpunkte am Sensordeckel zu schwach
+### Schraubpunkte am Sensordeckel brechen ab
 
 **Situation:** Der Bewegungsmelder wird am Deckel des Sensorteils an zwei
-kleinen Schraubpunkten festgeschraubt. Im Modell waren das schmale Zylinder mit
-4 mm Durchmesser. Gedruckt waren sie so dünn, dass sie beim Festschrauben
-abgebrochen wären.
+Zapfen festgeschraubt. Beim ersten Druck brachen die Zapfen schon bei kleinen
+Schrauben ab.
 
-**Ursache:** Kleine, schmale Teile bestehen beim 3D-Druck nur aus wenigen
-Bahnen und halten entsprechend wenig aus. Unser Drucker druckt außerdem nicht
-besonders genau.
+**Ursache:** Die Zapfen waren freistehende Röhrchen mit 4 mm Durchmesser und
+einem 1,6-mm-Loch, also nur 1,2 mm Wand. Solche dünnen Teile bestehen beim
+3D-Druck aus wenigen Bahnen und halten wenig aus, zumal unser Drucker nicht
+besonders genau druckt. Dazu war das Loch nur 4 mm tief. Eine M2×6-Schraube
+ragt nach der Sensorplatine aber 4,8 mm hinein, lief also auf Grund und hat den
+Zapfen zusätzlich auseinandergedrückt.
 
-**Lösung:** Die Schraubpunkte wurden verbreitert und der Deckel so gedruckt.
+**Lösung:** Nach innen ist kein Platz, dort liegt der Linsenrahmen des Sensors
+an. Deshalb wurde jeder Zapfen nach außen zu einem 8 mm breiten, massiven Steg
+verlängert, der bis in die Lippe des Deckels reicht. Das Loch ist jetzt 4,8 mm
+tief, die Schraube passt ganz hinein. Der neu gedruckte Deckel hält
+([Schritt 21](Entwicklungsverlauf#-schritt-21--schraubzapfen-am-sensorteil-brechen-ab)).
 
 > [!NOTE]
-> ✏️ **TODO (Team):** Kurz ergänzen, wie stark ihr die Schraubpunkte verbreitert
-> habt und womit (OpenSCAD, Slicer …). Foto: `Fotos/sensorteil_offen.jpg`.
+> ✏️ **TODO (Team):** Foto vom offenen Sensorteil als
+> `Fotos/sensorteil_offen.jpg` hochladen, Claude baut es hier ein.
 
 ---
 

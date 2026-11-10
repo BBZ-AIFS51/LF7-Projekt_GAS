@@ -14,7 +14,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **22** | **8** | **3** | **2** |
+| **24** | **9** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -49,9 +49,11 @@ timeline
                : S19 Wiki automatisch
     section Einbau
         28.10. : S20 Batterie an VIN, Mini-Breadboard
+        03.11. : S21 Stabilere Sensor-Zapfen
+               : S22 Schaltplan mit VIN
     section Abschluss
-        10.11. : S21 Abschlussplan
-               : S22 Fotos, Quellen nach IEEE
+        10.11. : S23 Abschlussplan
+               : S24 Fotos, Quellen nach IEEE
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -82,8 +84,10 @@ flowchart LR
     P18["📝 S18<br/>Vorgaben"]
     P19["📝 S19<br/>Wiki-Workflow"]
     P20["📦 S20<br/>Batterie an VIN"]
-    P21["📝 S21<br/>Abschlussplan"]
-    P22["📝 S22<br/>Fotos, Quellen"]
+    P21["🐞 S21<br/>Sensor-Zapfen"]
+    P22["📝 S22<br/>Schaltplan VIN"]
+    P23["📝 S23<br/>Abschlussplan"]
+    P24["📝 S24<br/>Fotos, Quellen"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -93,12 +97,14 @@ flowchart LR
     P8 --> P13
     P10 --> P11 --> P12 --> P13
     P12 -- "gedruckt" --> P20
+    P12 -- "Test am Druck" --> P21
+    P20 --> P22
     P13 --> P14 --> P15
     P3 --> P17
     P17 -. "Lehrkraft" .-> P18
     P18 --> P19
-    P18 -. "Termine" .-> P21
-    P21 --> P22
+    P18 -. "Termine" .-> P23
+    P23 --> P24
 
     classDef fw fill:#d0e7ff,stroke:#0969da,color:#0a3069
     classDef bug fill:#ffd8d3,stroke:#cf222e,color:#82071e
@@ -107,11 +113,11 @@ flowchart LR
     classDef box fill:#d2f4dc,stroke:#1a7f37,color:#044f1e
     classDef doc fill:#e6e9ed,stroke:#59636e,color:#1f2328
     class P1,P6,P7 fw
-    class P2,P4,P16 bug
+    class P2,P4,P16,P21 bug
     class P5 info
     class P8,P9,P13,P14,P15 vis
     class P10,P11,P12,P20 box
-    class P3,P17,P18,P19,P21,P22 doc
+    class P3,P17,P18,P19,P22,P23,P24 doc
 ```
 
 <sub>Durchgezogene Pfeile: Ergebnis führt direkt zum nächsten Schritt · gestrichelt: Anregung der Lehrkraft</sub>
@@ -125,11 +131,11 @@ flowchart LR
 | | Bereich | Schritte |
 |:---:|---|---|
 | 💻 | Firmware-Funktionen | 1, 6, 7 |
-| 🐞 | Fehlerbehebung | 2, 4, 16 |
+| 🐞 | Fehlerbehebung | 2, 4, 16, 21 |
 | 💡 | Erklärung / Wissen | 5 |
 | 🎨 | Darstellung (README, 3D-Modell, Grafiken) | 8, 9, 13, 14, 15 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
-| 📝 | Dokumentation | 3, 17, 18, 19, 21, 22 |
+| 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24 |
 
 </td>
 <td width="45%">
@@ -137,11 +143,11 @@ flowchart LR
 ```mermaid
 pie
     "Firmware" : 3
-    "Fehlerbehebung" : 3
+    "Fehlerbehebung" : 4
     "Erklärung" : 1
     "Darstellung" : 5
     "Gehäuse" : 4
-    "Dokumentation" : 6
+    "Dokumentation" : 7
 ```
 
 </td>
@@ -431,9 +437,45 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 
 ---
 
+## 📆 03.11.2026 · Nachbessern am Druck
+
+### 🐞 Schritt 21 — Schraubzapfen am Sensorteil brechen ab
+
+**Problem:** Die beiden Zapfen in der Sensor-Frontplatte, an die der Bewegungsmelder geschraubt wird, brechen schon bei kleinen Schrauben ab.
+
+**Ergebnis**
+- **Ursache:** Die Zapfen waren dünne, freistehende Röhrchen mit nur 1,2 mm Wand. Außerdem war das Schraubloch kürzer als die Schraube, sie lief auf Grund und hat den Zapfen auseinandergedrückt.
+- **Fix:** Jeder Zapfen ist jetzt ein massiver Steg bis zum Rand des Deckels (nach innen ist wegen des Linsenrahmens kein Platz). Das Schraubloch ist tief genug für M2 × 6 mm.
+- STL neu exportiert, 3D-Modell und Bild der Druckplatte aktualisiert
+
+<p align="center"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Gehaeuse/bilder/druckplatte.png" alt="Druckplatte mit der neuen Sensor-Frontplatte" width="85%"></p>
+
+> [!NOTE]
+> **Erledigt:** Die neue Frontplatte ist gedruckt und mit dem Sensor eingebaut (Stand 10.11.2026).
+
+<sub>📄 [`sensor_front.stl`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Gehaeuse/stl/sensor_front.stl) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#21-prompt--schraubzapfen-am-sensorteil-brechen-ab-03112026)</sub>
+
+### 📝 Schritt 22 — Batterie im Schaltplan an VIN
+
+**Anlass:** Seit Schritt 20 hängt die Batterie an VIN, der Schaltplan zeigte sie aber noch am Hohlstecker.
+
+**Ergebnis**
+- Im Schaltplan geht die Batterie jetzt mit **rot an VIN** und **schwarz an GND**, der Hohlstecker ist frei
+- Der Export wurde direkt bearbeitet und das PNG daraus neu erzeugt, weil das Cirkit-Designer-Projekt nicht im Repository liegt
+- Hinweis und TODO auf der Seite [Aufbau und Schaltplan](Aufbau-und-Schaltplan) entfernt
+
+<p align="center"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Schaltplan/SCHALTPLAN.png" alt="Schaltplan mit der Batterie an VIN" width="70%"></p>
+
+> [!WARNING]
+> **Offen:** Das Cirkit-Projekt selbst zeigt noch den alten Stand. Ein neuer Export von dort würde die Änderung überschreiben.
+
+<sub>📄 [`SCHALTPLAN.svg`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Schaltplan/SCHALTPLAN.svg) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#22-prompt--batterie-im-schaltplan-an-vin-03112026)</sub>
+
+---
+
 ## 📆 10.11.2026 · Abschluss planen
 
-### 📝 Schritt 21 — Abschlussplan
+### 📝 Schritt 23 — Abschlussplan
 
 **Anlass:** Die Termine stehen fest: Abgabe der Präsentation am 24.11., Vorträge ab 01.12., Abgabe der Dokumentation am 15.12.2026.
 
@@ -444,12 +486,12 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 - Für jede offene Stelle steht fest, ob das Team, die KI oder die Lehrkraft gefragt ist
 - Abgabeform geklärt: Abgegeben wird der Link aufs öffentliche Repository, die Doku darin als PDF (aus diesem Wiki erzeugt), die Präsentation als HTML-Datei. Das Arbeitsprotokoll mit den Prompts bleibt im Repository, kommt aber nicht ins PDF. Abgabetermine im Wiki eingetragen.
 
-> [!WARNING]
-> **Offen:** mit der Lehrkraft klären, wann unsere Gruppe präsentiert und ob es ein Zitierformat gibt.
+> [!NOTE]
+> **Geklärt in Schritt 24:** Präsentation am 01.12.2026 (Annahme), Zitierweise IEEE.
 
-<sub>📄 [`abschlussplan.md`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/abschlussplan.md) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#21-prompt--abschlussplan-10112026)</sub>
+<sub>📄 [`abschlussplan.md`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/abschlussplan.md) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#23-prompt--abschlussplan-10112026)</sub>
 
-### 📝 Schritt 22 — Fotos, Quellen nach IEEE, Stand des Gehäuses
+### 📝 Schritt 24 — Fotos, Quellen nach IEEE, Stand des Gehäuses
 
 **Anlass:** Die offenen Fragen aus dem Abschlussplan sind beantwortet (Termin, Dauer, Zitierweise), und das Gehäuse ist verkabelt und verschraubt.
 
@@ -457,12 +499,12 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 - Präsentation: insgesamt mindestens 15 Minuten, angenommener Termin 01.12.2026
 - Das [Quellenverzeichnis](Quellenverzeichnis) folgt jetzt der Zitierweise **IEEE**, wie an Hochschulen üblich
 - Neuer Ordner [`Fotos/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/Fotos) mit einer Liste der Fotos, die für die Dokumentation noch fehlen
-- Neue Herausforderung beim 3D-Druck: [Schraubpunkte am Sensordeckel](Herausforderungen#schraubpunkte-am-sensordeckel-zu-schwach)
+- Die stabileren Schraubpunkte aus Schritt 21 stehen jetzt auch als [Herausforderung](Herausforderungen#schraubpunkte-am-sensordeckel-brechen-ab) in Kapitel 8
 
 > [!WARNING]
-> **Offen:** Im 3D-Modell im Repository sind die Schraubpunkte noch die alten. Außerdem fehlen der Batterietest und die Montage auf der Holzplatte.
+> **Offen:** Fotos, der Test mit Batterie und die Montage auf der Holzplatte.
 
-<sub>🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#22-prompt--phase-0-abgeschlossen-fotos-quellen-nach-ieee-10112026)</sub>
+<sub>🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#24-prompt--phase-0-abgeschlossen-fotos-quellen-nach-ieee-10112026)</sub>
 
 ---
 

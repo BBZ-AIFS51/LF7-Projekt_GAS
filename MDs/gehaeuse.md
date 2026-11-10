@@ -300,7 +300,8 @@ Studio, Orca Slicer oder Cura — je nachdem, welcher Drucker es ist.
 **Sensorteil:**
 
 1. HC-SR501 mit der Linse durch die Öffnung stecken und mit 2 M2-Schrauben
-   an die Zapfen schrauben (oder Heißkleber).
+   (höchstens 6 mm lang) an die Zapfen schrauben (oder Heißkleber).
+   Nur handfest anziehen.
 2. Tipp zu den Reglern: Haltezeit-Regler (Time) ganz gegen den Uhrzeigersinn
    = kürzeste Zeit (≈ 3 s), Jumper auf **H** (wiederholtes Auslösen).
 3. Kabel anstecken (VCC, OUT, GND), durch das Loch oder die Kerbe führen,

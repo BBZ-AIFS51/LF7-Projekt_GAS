@@ -154,15 +154,9 @@ mit Dateinamen und wie man hochlädt.
 - [x] **(Team)** Bedienteil und Sensorteil verkabelt und verschraubt
       (10.11.2026), noch lose, nicht auf einer Platte
 - [x] **(Team)** Notiert, was beim Druck nicht gepasst hat: Der Drucker ist
-      nicht der beste, am Deckel des Sensorgehäuses mussten die Schraubpunkte
-      für den Bewegungsmelder verstärkt werden, damit sie nicht abbrechen
-      (steht in Kapitel 8)
-- [ ] **(Team)** Prüfen, ob die verstärkte Version wirklich im Repository ist:
-      In `Gehaeuse/gehaeuse.scad` und `stl/sensor_front.stl` sind die
-      Schraubpunkte noch die ursprünglichen (4 mm Durchmesser, Stand
-      23.09.2026). Wenn die Änderung woanders gemacht wurde (Slicer,
-      Tinkercad …), Claude sagen, was geändert wurde, damit Modell, STL und
-      Bilder zum gedruckten Teil passen.
+      nicht der beste, am Deckel des Sensorgehäuses sind die Schraubpunkte
+      abgebrochen. Verstärkt in Schritt 21 (03.11.2026, auf `main`), neu
+      gedruckt und eingebaut. Steht in Kapitel 8.
 - [ ] **(Team)** Beide Teile auf die **Holzplatte** montieren (geplant
       KW 47, 16.–20.11.)
 - [ ] **(Team)** **9-V-Batterie mitbringen.** Polung an VIN prüfen (kein
@@ -213,6 +207,8 @@ und 3D-Modell nicht mehr überein.
 
 - [ ] **(Claude)** `Code/alarm_system/alarm_system.ino.bak` entfernen (alte
       Sicherung)
+- [ ] **(Claude)** `Gehaeuse/bilder/druckplatte.png` verkleinern (seit
+      Schritt 21 unkomprimiert, ~490 kB statt ~120 kB)
 - [ ] **(Claude)** `MDs/aufbau.md` ist der Stand vor dem RFID-Umbau. Oben einen
       Hinweis ergänzen („historische Ausgangsspezifikation, aktuelle Belegung
       siehe Kapitel 5“), damit niemand die alte Pinbelegung für gültig hält.
@@ -238,7 +234,7 @@ grep -rn "TODO" wiki/
 | 2 Idee und Zielsetzung | Projektstart beim Zeitraum, K5 Gehäuse auf ✅ setzen, sobald montiert | Team (Projektstart), Claude |
 | 3 Funktionsbeschreibung | nur nachziehen, falls Fehlerton/Zeiten sich ändern | Claude |
 | 4 Verwendete Bauteile | prüfen, ob Batterie, Clip, Mini-Breadboard und Kabel vollständig drin sind | Team prüft |
-| 5 Aufbau und Schaltplan | Foto vom Versuchsaufbau, Laufzeit eintragen, Cirkit-Schaltplan auf VIN umstecken und neu exportieren | Team |
+| 5 Aufbau und Schaltplan | Foto vom Versuchsaufbau, Laufzeit eintragen (Schaltplan mit Batterie an VIN ist seit Schritt 22 erledigt) | Team |
 | 6 Sourcecode | Fehlerton-Entscheidung (Abgabeform ist eingetragen) | Team entscheidet, Claude schreibt |
 | 7 Wichtige Codeabschnitte | gemessenen SRAM-Wert eintragen | Team misst, Claude schreibt |
 | 8 Herausforderungen | wie ihr den SH1106 erkannt habt, Probleme beim RC522-Verdrahten, eigene Probleme (Druck, Einbau, Teamarbeit) | **Team** |

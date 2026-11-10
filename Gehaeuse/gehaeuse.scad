@@ -323,16 +323,22 @@ module sensor_front() {
     difference() {
         union() {
             shell_front(su_w, su_h);
-            for (s = [-1, 1])
-                translate([su_w / 2 + s * pir_hole_dist / 2, su_h / 2, -pir_post_h])
-                    cylinder(d = 4, h = pir_post_h);
+            // screw posts for the sensor board. The lens frame leaves no room
+            // inwards, so each post is a solid web running out into the lip.
+            for (m = [0, 1])
+                translate([su_w / 2, su_h / 2, -pir_post_h]) mirror([m, 0, 0])
+                    linear_extrude(pir_post_h) hull() {
+                        translate([pir_hole_dist / 2, 0]) circle(d = 4);
+                        translate([su_w / 2 - lip_in - 3, -4])
+                            square([3 + lip_t / 2, 8]);
+                    }
         }
         // opening for the Fresnel lens
         translate([su_w / 2, su_h / 2, -1]) cylinder(d = pir_dome_d + 0.8, h = lid_t + 2, $fn = 96);
-        // pilot holes for M2 screws
+        // pilot holes for M2 screws, deep enough for M2 x 6 (0.6 mm skin left)
         for (s = [-1, 1])
             translate([su_w / 2 + s * pir_hole_dist / 2, su_h / 2, -pir_post_h - 1])
-                cylinder(d = 1.6, h = pir_post_h + 2);
+                cylinder(d = 1.6, h = pir_post_h + 1 + lid_t - 0.6);
         lip_cut(su_w / 2, wall, true);
     }
 }

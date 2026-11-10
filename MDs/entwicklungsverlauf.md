@@ -5,7 +5,7 @@ Chronologisches Protokoll: Prompts (Jan Mummert) und Antworten (Claude).
 
 - Projekt: LF07 — Mini-Sicherheitssystem / Access Lock (Arduino Uno R3)
 - Daten der Sitzungen: 08.09.2026, 22.09.2026, 23.09.2026 (inkl. Gehäuse),
-  29.09.2026, 30.09.2026, 06.10.2026, 28.10.2026,
+  29.09.2026, 30.09.2026, 06.10.2026, 28.10.2026, 03.11.2026,
   10.11.2026
 - Grundlagen im Kontext: [../CLAUDE.md](../CLAUDE.md), [aufbau.md](aufbau.md)
 
@@ -825,7 +825,77 @@ Geändert bzw. neu:
 
 ---
 
-## 21. Prompt — Abschlussplan (10.11.2026)
+## 21. Prompt — Schraubzapfen am Sensorteil brechen ab (03.11.2026)
+
+> Passe @Gehaeuse/stl/sensor_front.stl etwas an. Die aufnahmen für die
+> schrauben vom sensor sind zu instabil, selbst bei kleinen schrauben brechen
+> sie ab.
+
+### Antwort
+
+**Ursache:** Die beiden Zapfen für den HC-SR501 waren freistehende Zylinder
+mit Ø 4 mm und einem 1,6-mm-Vorbohrloch, also nur 1,2 mm Wand bei 3 mm Höhe.
+Dazu war das Loch nur 4 mm tief (3 mm Zapfen + 1 mm Deckel). Eine M2×6-Schraube
+ragt nach der 1,2-mm-Platine aber 4,8 mm hinein, lief also auf Grund und hat
+den Zapfen zusätzlich auseinandergedrückt.
+
+**Änderung** in [../Gehaeuse/gehaeuse.scad](../Gehaeuse/gehaeuse.scad),
+`sensor_front()`:
+
+- Nach innen ist kein Platz (der 24 × 24 mm große Linsenrahmen des Sensors
+  liegt direkt am Zapfen an). Deshalb wächst jeder Zapfen **nach außen zu
+  einem massiven Steg**, der bis in die Lippe des Deckels reicht (8 mm breit).
+  Der Zapfen hängt damit nicht mehr frei am Deckel, sondern ist mit Deckel und
+  Lippe verbunden.
+- Vorbohrloch auf 4,8 mm vertieft (bis 0,6 mm vor die Sichtseite), M2×6 passt
+  jetzt ganz hinein.
+
+Neu erzeugt: `Gehaeuse/stl/sensor_front.stl` (OpenSCAD 2021),
+`docs/viewer/enclosure.js` und `Gehaeuse/bilder/druckplatte.png`. Die anderen
+Bilder zeigen die Innenseite des Sensordeckels nicht und blieben unverändert.
+
+**Offene Punkte:**
+
+- `sensor_front.stl` neu drucken (≈ 30 min) und mit dem Sensor testen.
+- `druckplatte.png` ist unkomprimiert (~490 kB statt ~120 kB), weil auf dem
+  Rechner kein `pngquant` installiert ist. Bei Gelegenheit mit `pngquant` neu
+  rendern.
+
+---
+
+## 22. Prompt — Batterie im Schaltplan an VIN (03.11.2026)
+
+> commit alles, auf main
+>
+> Fixe vorher noch dem @Schaltplan/SCHALTPLAN.svg , dort ist die batterie noch
+> nicht auf VIN angeschlossen
+
+### Antwort
+
+Offener Punkt aus Schritt 20. Das Cirkit-Designer-Projekt liegt nicht im Repo,
+deshalb ist der Export
+[../Schaltplan/SCHALTPLAN.svg](../Schaltplan/SCHALTPLAN.svg) direkt bearbeitet:
+
+- Die beiden grünen Leitungen Batterie → Hohlstecker entfernt.
+- Neu: **rot** Batterie + → **VIN**, **schwarz** Batterie − → **GND** (der
+  GND-Pin direkt neben VIN, auf dem auch die GND-Leitung des RC522 endet).
+- Pin-Markierungen angepasst: VIN rot, Hohlstecker grau (frei).
+- [../Schaltplan/SCHALTPLAN.png](../Schaltplan/SCHALTPLAN.png) aus dem SVG
+  neu gerendert (gleiche Größe 3000 × 3039, Chromium über Playwright).
+
+Doku: [../CLAUDE.md](../CLAUDE.md), [../README.md](../README.md), Wiki
+(Aufbau und Schaltplan: Hinweis und TODO entfernt, Herausforderungen).
+
+Danach alles aus Schritt 21 und 22 auf `main` committet.
+
+**Offene Punkte:**
+
+- Das Cirkit-Projekt selbst hat die Batterie noch am Hohlstecker. Wird von
+  dort neu exportiert, ist die Änderung weg. Dann im Cirkit Designer umstecken.
+
+---
+
+## 23. Prompt — Abschlussplan (10.11.2026)
 
 Mit angehängt: die Vorgaben der Lehrkraft „Projektdokumentation und
 Präsentation“, jetzt mit Terminen (Abgabe Präsentation 24.11.2026, Start der
@@ -917,7 +987,7 @@ Zitierformat offen.
 
 ---
 
-## 22. Prompt — Phase 0 abgeschlossen, Fotos, Quellen nach IEEE (10.11.2026)
+## 24. Prompt — Phase 0 abgeschlossen, Fotos, Quellen nach IEEE (10.11.2026)
 
 > Dann arbeiten wir in dieser Branch, bis alles soweit fertig ist und packen es
 > dann auf main (wie nennt man das dann eig? PR?)
@@ -953,7 +1023,7 @@ noch den alten Stand.
 **Phase 0 im Plan abgeschlossen:** Termin 01.12.2026 (Annahme), Präsentation
 insgesamt mindestens 15 Minuten (Ablauf auf ≈ 17 Minuten gekürzt, Proben-Ziel
 16–18), Zitierweise IEEE. Der Test-Branch wird ignoriert, alle Verweise darauf
-sind aus Plan und Protokolleintrag 21 entfernt.
+sind aus Plan und Protokolleintrag 23 entfernt.
 
 - **Quellenverzeichnis** auf IEEE umgestellt: Herausgeber, „Titel“, Art.
   [Online]. Verfügbar: URL [Zugriff am: …]. Neue Aufgabe in Phase 3: Quellen im
@@ -971,15 +1041,34 @@ sind aus Plan und Protokolleintrag 21 entfernt.
   Fazit, Zeitplan und Projektphasen. Neue Herausforderung „Schraubpunkte am
   Sensordeckel zu schwach“ in Kapitel 8.
 
-**Abweichung gefunden:** In `Gehaeuse/gehaeuse.scad` und
-`Gehaeuse/stl/sensor_front.stl` haben die Schraubpunkte für den
-Bewegungsmelder noch 4 mm Durchmesser. Die STL ist seit dem 23.09.2026
-unverändert. Die verstärkte Version ist also nicht im Repository.
+**Abweichung gemeldet (falsch, siehe Nachtrag):** In `gehaeuse.scad` und
+`sensor_front.stl` dieses Branches hatten die Schraubpunkte noch 4 mm
+Durchmesser.
+
+### Nachtrag in derselben Sitzung
+
+Mit angehängt: ein Screenshot von Commit `d9e3693` auf `main`
+(„Stronger sensor screw posts, battery on VIN in the schematic“).
+
+> wurde doch hier gemacht
+
+### Antwort
+
+Stimmt. Die verstärkten Schraubpunkte sind seit Schritt 21 (03.11.2026) auf
+`main`. Dieser Branch war vom Stand davor abgezweigt, und `main` war vor dem
+Vergleich nicht neu geholt worden. Deshalb `main` in den Branch gemergt:
+
+- Die Einträge vom 03.11. behalten ihre Nummern 21 und 22. Die beiden
+  Einträge dieser Sitzung heißen jetzt 23 und 24, im Wiki Schritt 23 und 24.
+- Kapitel 8 beschreibt die Schraubpunkte jetzt mit der tatsächlichen Ursache
+  (1,2 mm Wand, zu kurzes Schraubloch) und Lösung (massiver Steg bis zur
+  Deckellippe, Loch für M2 × 6) aus Schritt 21. Der neu gedruckte Deckel ist
+  eingebaut, die Platzhalter dazu sind entfernt.
+- Schritt 22 hat schon den Schaltplan auf VIN umgestellt, die Aufgabe ist im
+  Plan abgehakt.
 
 **Offene Punkte:**
 
-- Klären, wo und wie die Schraubpunkte geändert wurden, dann Modell, STL,
-  Viewer und Bilder angleichen.
 - Fotos hochladen, Batterie testen, Montage auf der Holzplatte.
 
 ---
