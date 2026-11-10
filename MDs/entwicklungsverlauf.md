@@ -1073,6 +1073,88 @@ Vergleich nicht neu geholt worden. Deshalb `main` in den Branch gemergt:
 
 ---
 
+## 25. Prompt — Phase 2: Aufräumen, Wiki gekürzt, Word statt Wiki-PDF (10.11.2026)
+
+> Wir arbeiten im bestehenden Branch claude/trusting-knuth-awmzj8 weiter,
+> nicht in einem neuen.
+> Erst diesen Branch auschecken, dann origin/main holen und mergen, falls dort
+> etwas Neues ist.
+> Lies MDs/abschlussplan.md und die letzten Einträge in
+> MDs/entwicklungsverlauf.md (23 und 24).
+> Wir arbeiten den Plan Phase für Phase ab. Als Nächstes: <eure Aufgabe>
+
+Branch ausgecheckt, auf `main` war nichts Neues. Weil die Aufgabe nur als
+Platzhalter dastand, hat Claude die nächsten offenen Punkte aus dem Plan
+aufgezählt und nachgefragt.
+
+> Ich würde sagen, für die dokumentation die wir abgeben, nehmen wir nicht die
+> wiki oder bauen sie um, sondern erstellen ein word dokument, so können wir
+> auch angenehmer änderungen vornehmen. diese exportieren wir dann zum schluss
+> einfach als pdf.
+>
+> Dann kannst du eig mit Phase 2 starten:
+> Entfern sonst auch einfach aus der aktuellen wiki alles unnötige, das
+> brauchen wir dann ja sowieso nicht für die abgabe. die nicht aktuelle
+> aufbau.md auf den aktuellen stand bringen. In der readme kein wegweiser zur
+> pdf, die geben wir am ende der lehrerin so mit.
+> Der Fehlerton soll solange dauern wie es im aktuellen code steht
+> @Code/alarm_system/alarm_system.ino .
+
+Auf Rückfrage entschieden: Aus dem Wiki kommt das ganze Abgabe-Gerüst raus
+(Seiten Team und Rollen, Zeitplan, Kosten, Fazit und Ausblick, Sourcecode,
+alle ✏️-Platzhalter und die Kapitelnummern). Das Word-Dokument legt Claude
+erst in Phase 3 an.
+
+### Antwort
+
+**Doku als Word-Dokument:** Plan umgestellt. Die Abgabe-Doku wird als
+Word-Dokument geschrieben, am Ende als PDF exportiert und der Lehrkraft
+zusammen mit dem Link gegeben. Statt des PDF-Skripts `tools/wiki2pdf.mjs`
+steht in Phase 3 jetzt: Claude erzeugt eine Startfassung (`.docx`, zehn
+Kapitel, Texte und Grafiken aus dem Wiki, offene Stellen markiert), danach
+arbeitet das Team darin weiter. Was das Team ins Word-Dokument schreiben muss,
+steht weiter in der Tabelle in Phase 3.
+
+**Phase 2 erledigt (Claude-Teil):**
+
+- **Fehlerton bleibt 2 s** (`ERROR_TONE_MS = 2000UL`). Viewer und Wiki
+  hatten schon 2 s. Zwei Kommentare in
+  [../Code/alarm_system/alarm_system.ino](../Code/alarm_system/alarm_system.ino)
+  sagten noch „3 s“, korrigiert (nur Kommentare, kein Verhalten geändert).
+  Die Begründung für 2 statt 3 s kommt in die Doku (Phase 3, Team).
+- `Code/alarm_system/alarm_system.ino.bak` gelöscht.
+- `Gehaeuse/bilder/druckplatte.png` von 488 auf 159 kB verkleinert (Palette
+  mit 256 Farben, kein sichtbarer Unterschied; pngquant war nicht vorhanden).
+- [aufbau.md](aufbau.md) neu geschrieben, auf Deutsch: Bauteile mit
+  Kenndaten, Aufteilung auf Bedien- und Sensorteil, Pin-Belegung,
+  Mini-Breadboard, Tastenbelegung, Hinweise (3,3 V, A2, SPI und Buzzer,
+  Batterie an VIN). Die Cirkit-IDs und die alten Anweisungen an die KI sind
+  raus, der alte Stand liegt in der Git-Historie.
+- **Wiki gekürzt** auf ein Projekt-Wiki: Fünf Seiten gelöscht, die
+  Konstanten-Tabelle aus „Sourcecode“ steht jetzt unter „Wichtige
+  Codeabschnitte“. Auf allen Seiten Platzhalter, Kapitelnummern und
+  Deckblatt-Angaben entfernt, Startseite und Seitenleiste neu, Navigation
+  unten auf den Seiten angepasst, Quellenverzeichnis ohne die zwei leeren
+  Einträge neu nummeriert. In „KI-Einsatz“ steht jetzt, dass 2 s bewusst so
+  bleiben und dass alle Module ins Gehäuse passen. Alle Links im Wiki geprüft.
+- README: Status des Gehäuses (gedruckt und eingebaut), Absatz zum Wiki
+  angepasst. Kein Verweis auf das Doku-PDF.
+- [../CLAUDE.md](../CLAUDE.md): Rolle des Wikis, `aufbau.md` ist aktuell,
+  Fehlerton 2 s. [../Fotos/README.md](../Fotos/README.md): Fotos sind für
+  Word-Doku, Wiki und Präsentation.
+
+**Hinweis:** Am Ende von `alarm_system.ino` steht die Zeile `//Hugo war hier`
+(aus Commit `8e4ef1c`). Sie stört nicht, ist aber Teil des abgegebenen
+Codes. Nicht angefasst.
+
+**Offene Punkte:**
+
+- Phase 2, Team: Fehler aus den Tests beheben, Endstand hochladen, Tag `v1.0`.
+- Ablage des Word-Dokuments festlegen (im Repository oder nur bei euch).
+- Fotos, Tests T1–T10, Montage auf der Holzplatte (Phase 1).
+
+---
+
 ## Anhang — Stand der Dateien
 
 | Datei | Zweck |

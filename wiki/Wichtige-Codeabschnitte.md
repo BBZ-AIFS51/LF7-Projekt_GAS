@@ -1,25 +1,27 @@
 <!-- Diese Seite wird automatisch aus dem Ordner wiki/ im Repository erzeugt. Änderungen im Wiki-Editor werden beim nächsten Abgleich überschrieben. Bearbeiten: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/wiki -->
-# 7 · 🧠 Wichtige Codeabschnitte
+# 🧠 Wichtige Codeabschnitte
 
 Die zentralen Stellen der Hauptfirmware
 [`alarm_system.ino`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Code/alarm_system/alarm_system.ino),
 erklärt. Das übliche Grundgerüst (Variablen, `setup()`, Zeichenfunktionen für
 die Symbole) ist nicht aufgeführt. Die Ausschnitte sind gekürzt: Testausgaben
 über den seriellen Monitor sind weggelassen, `// …` markiert größere Lücken.
-Die Kommentare im Code sind auf Englisch.
+Die Kommentare im Code sind auf Englisch. Alle Sketches liegen im Ordner
+[`Code/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/Code).
 
 | Abschnitt | Funktionen im Code |
 |---|---|
-| [7.1 Programmablauf: nichts darf blockieren](#71-programmablauf-nichts-darf-blockieren) | `loop()` |
-| [7.2 Zustandsautomat](#72-zustandsautomat) | `setState()`, `updateState()` |
-| [7.3 Zugriff erlaubt oder verweigert](#73-zugriff-erlaubt-oder-verweigert) | `accessGranted()`, `accessDenied()` |
-| [7.4 Bewegung erkennen](#74-bewegung-erkennen) | `handleMotion()` |
-| [7.5 Tastenfeld selbst abfragen](#75-tastenfeld-selbst-abfragen) | `scanKeypad()`, `getKeyPress()` |
-| [7.6 RFID-Karten lesen und speichern](#76-rfid-karten-lesen-und-speichern) | `readNewCardUid()`, `loadUidsFromEeprom()` |
-| [7.7 Töne ohne Warten](#77-töne-ohne-warten) | `updateSound()` |
-| [7.8 Arbeitsspeicher sparen](#78-arbeitsspeicher-sparen) | `F()`, `PROGMEM` |
+| [Programmablauf: nichts darf blockieren](#programmablauf-nichts-darf-blockieren) | `loop()` |
+| [Zustandsautomat](#zustandsautomat) | `setState()`, `updateState()` |
+| [Zugriff erlaubt oder verweigert](#zugriff-erlaubt-oder-verweigert) | `accessGranted()`, `accessDenied()` |
+| [Bewegung erkennen](#bewegung-erkennen) | `handleMotion()` |
+| [Tastenfeld selbst abfragen](#tastenfeld-selbst-abfragen) | `scanKeypad()`, `getKeyPress()` |
+| [RFID-Karten lesen und speichern](#rfid-karten-lesen-und-speichern) | `readNewCardUid()`, `loadUidsFromEeprom()` |
+| [Töne ohne Warten](#töne-ohne-warten) | `updateSound()` |
+| [Arbeitsspeicher sparen](#arbeitsspeicher-sparen) | `F()`, `PROGMEM` |
+| [Einstellungen im Code](#einstellungen-im-code) | Konstanten am Anfang des Sketches |
 
-## 7.1 Programmablauf: nichts darf blockieren
+## Programmablauf: nichts darf blockieren
 
 ```cpp
 void loop() {
@@ -48,7 +50,7 @@ sich das Programm, **wann** etwas angefangen hat (`millis()`), und prüft bei
 jedem Durchlauf, ob die Zeit schon um ist. So reagiert die Anlage immer sofort
 auf Tasten, Karten und Bewegung, auch während Töne laufen.
 
-## 7.2 Zustandsautomat
+## Zustandsautomat
 
 ```cpp
 enum SystemState { STATE_DISARMED, STATE_EXIT_DELAY, STATE_ARMED, STATE_ALARM, STATE_ADMIN };
@@ -78,7 +80,7 @@ void updateState() {
 ```
 
 - Die Variable `state` hält fest, in welchem der fünf Zustände die Anlage gerade
-  ist (Diagramm in [Kapitel 3](Funktionsbeschreibung#zustände-der-anlage)). Ein
+  ist (Diagramm in [Funktionsbeschreibung](Funktionsbeschreibung#zustände-der-anlage)). Ein
   `enum` macht den Code lesbar: `STATE_ARMED` statt einer Zahl wie `2`.
 - Jeder Zustandswechsel läuft über `setState()`. Dort wird die Startzeit
   gespeichert. Damit kann `updateState()` mit einer einfachen Subtraktion
@@ -93,7 +95,7 @@ void updateState() {
 > 49 Tagen überläuft und wieder bei 0 anfängt. Ein Vergleich wie
 > `now >= stateStart + ALARM_MS` würde in diesem Moment falsch rechnen.
 
-## 7.3 Zugriff erlaubt oder verweigert
+## Zugriff erlaubt oder verweigert
 
 PIN und RFID-Karte landen am Ende in denselben zwei Funktionen. Dadurch verhalten
 sich beide Wege garantiert gleich.
@@ -141,7 +143,7 @@ void accessDenied(const __FlashStringHelper *reason) {
 Die PIN selbst wird in `submitEntry()` mit `strcmp(entry, PIN_CODE)` verglichen,
 also Zeichen für Zeichen mit der gespeicherten PIN.
 
-## 7.4 Bewegung erkennen
+## Bewegung erkennen
 
 ```cpp
 void handleMotion() {
@@ -165,10 +167,10 @@ void handleMotion() {
   aktuellen Sensorwert. Sieht der Sensor in diesem Moment noch die Person, die
   gerade gegangen ist, zählt das nicht als neue Bewegung.
 
-## 7.5 Tastenfeld selbst abfragen
+## Tastenfeld selbst abfragen
 
 Die übliche Keypad-Library brauchte rund 120 Byte Arbeitsspeicher, die der Uno
-nicht übrig hatte (siehe [7.8](#78-arbeitsspeicher-sparen)). Deshalb fragt die
+nicht übrig hatte (siehe [7.8](#arbeitsspeicher-sparen)). Deshalb fragt die
 Firmware die Tastenmatrix selbst ab.
 
 ```cpp
@@ -201,7 +203,7 @@ beim Drücken ein paar Millisekunden zwischen offen und geschlossen. Eine Taste
 zählt erst, wenn sie 20 ms (`DEBOUNCE_MS`) stabil gedrückt ist, und wird nur
 einmal pro Druck gemeldet.
 
-## 7.6 RFID-Karten lesen und speichern
+## RFID-Karten lesen und speichern
 
 ```cpp
 bool readNewCardUid() {
@@ -243,7 +245,7 @@ Startliste hinein. Gespeichert wird mit `EEPROM.update()`, das eine Zelle nur
 beschreibt, wenn sich ihr Wert ändert. Das schont den Speicher, der nur etwa
 100 000 Schreibvorgänge pro Zelle verträgt.
 
-## 7.7 Töne ohne Warten
+## Töne ohne Warten
 
 ```cpp
 case SOUND_ALARM: {
@@ -268,7 +270,7 @@ case SOUND_ALARM: {
 - `setFreq()` ruft `tone()` nur auf, wenn sich die Frequenz wirklich ändert.
   Sonst würde der Ton bei jedem Durchlauf neu gestartet und knacken.
 
-## 7.8 Arbeitsspeicher sparen
+## Arbeitsspeicher sparen
 
 Der Uno hat nur **2048 Byte** Arbeitsspeicher (SRAM). Das Display braucht davon
 allein 1024 Byte als Bildpuffer. Wird der Rest knapp, überschreibt das Programm
@@ -291,10 +293,22 @@ const char KEYS[4][4] PROGMEM = {
 - Keine Keypad-Library, kein `snprintf`, keine Textpuffer. Beim Start gibt die
   Firmware den freien Speicher über den seriellen Monitor aus (`freeRam()`).
 
-> [!NOTE]
-> ✏️ **TODO (Team):** Gemessenen Wert eintragen: Beim Start meldet die Firmware
-> `free SRAM: ___` Byte. (Vorher, mit Keypad-Library: 205 Byte.)
+## Einstellungen im Code
+
+Alle Zeiten und Grenzwerte stehen als Konstanten am Anfang der Hauptfirmware und
+lassen sich dort ändern, ohne den restlichen Code anzufassen:
+
+| Konstante | Wert | Bedeutung |
+|---|---:|---|
+| `EXIT_DELAY_MS` | 10 000 ms | Ausgangsverzögerung nach dem Scharfschalten |
+| `ALARM_MS` | 30 000 ms | Dauer der Sirene |
+| `ERROR_TONE_MS` | 2 000 ms | Dauer des Fehlertons |
+| `MAX_WRONG_TRIES` | 3 | Fehlversuche bis zum Alarm |
+| `ENTRY_TIMEOUT_MS` | 10 000 ms | halb getippte PIN wird gelöscht |
+| `ADMIN_IDLE_TIMEOUT_MS` | 20 000 ms | Admin-Menü schließt bei Inaktivität |
+| `MAX_STORED_UIDS` | 8 | maximale Zahl gespeicherter Karten |
+| `RFID_POLL_MS` | 200 ms | Abstand zwischen zwei Abfragen des RFID-Lesers |
 
 ---
 
-<sub>← [6 Sourcecode](Sourcecode) · [8 Herausforderungen](Herausforderungen) →</sub>
+<sub>← [Aufbau und Schaltplan](Aufbau-und-Schaltplan) · [Herausforderungen](Herausforderungen) →</sub>

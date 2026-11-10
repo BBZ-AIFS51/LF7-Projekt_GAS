@@ -17,7 +17,7 @@ Hinter jeder Aufgabe steht, wer sie erledigen kann:
 |---|---|---|
 | **Di 24.11.2026** | Abgabe Präsentation | Präsentation als **HTML-Datei** fertig und abgegeben |
 | **Di 01.12.2026** | Start der Präsentationen | ab hier kann unsere Gruppe dran sein, Gerät muss vorführbereit sein |
-| **Di 15.12.2026** | Abgabe Projektdokumentation | **das ganze Repository** abgeben, die Doku liegt darin als **PDF** |
+| **Di 15.12.2026** | Abgabe Projektdokumentation | Link aufs **ganze Repository** und die Doku als **PDF** (aus Word) abgeben |
 
 ## Abgabeform (geklärt am 10.11.2026)
 
@@ -25,11 +25,16 @@ Hinter jeder Aufgabe steht, wer sie erledigen kann:
   öffentlich, die Lehrkraft braucht keinen Zugang. Der Sourcecode ist damit als
   eigene Dateien dabei (`Code/`), wie die Vorgabe es verlangt.
 - **Das Arbeitsprotokoll `MDs/entwicklungsverlauf.md`** (Prompts im Wortlaut)
-  darf im Repository bleiben, kommt aber **nicht ins PDF**.
-- **Die Dokumentation muss ein PDF sein.** Das PDF wird aus den Wiki-Seiten in
-  `wiki/` erzeugt und liegt im Repository als
-  `Projektdokumentation_GAS.pdf`. Das Wiki bleibt die Quelle, geändert wird
-  nur dort, danach wird das PDF neu erzeugt.
+  darf im Repository bleiben, kommt aber **nicht in die Doku**.
+- **Die Dokumentation muss ein PDF sein.** Geschrieben wird sie als
+  **Word-Dokument** (geändert am 10.11.2026, vorher war ein PDF-Export aus dem
+  Wiki geplant). Darin lassen sich Änderungen bequemer machen. Zum Schluss
+  wird es als PDF exportiert und der Lehrkraft **zusammen mit dem Link**
+  gegeben. Die README verweist nicht darauf.
+- **Das Wiki ist nur noch Projekt-Wiki**, nicht die Abgabe. Abgabe-Seiten
+  (Team, Zeitplan, Kosten, Fazit, Sourcecode), Kapitelnummern und
+  ✏️-Platzhalter sind dort entfernt (Schritt 25). Was ins Word-Dokument muss,
+  steht in Phase 3.
 - **Präsentiert wird auf Jans Notebook.** Animationen und 3D im Browser laufen
   dort flüssig (ausprobiert), die neue Präsentation darf also Motion Graphics
   nutzen.
@@ -47,8 +52,8 @@ Folgen für den Plan:
 
 - Weil das ganze Repository abgegeben wird, gehört alles darin zur Abgabe.
   Veraltete oder verwirrende Dateien müssen aufgeräumt werden (Phase 2).
-- Das PDF braucht ein Export-Skript. Das wird **früh** gebaut (Phase 3), damit
-  Probleme beim Umwandeln nicht erst kurz vor dem 15.12. auffallen.
+- Das Word-Dokument wird in Phase 3 von Claude als Startfassung aus den
+  Wiki-Texten angelegt, danach arbeitet ihr darin weiter.
 
 ## Roter Faden
 
@@ -89,8 +94,8 @@ gantt
     Code-Freeze v1.0                 :milestone, m1, 2026-11-20, 0d
 
     section Doku
-    TODOs im Wiki füllen             :a2, 2026-11-10, 13d
-    PDF-Export einrichten, Probe-PDF :a2b, 2026-11-12, 6d
+    Doku-Inhalte sammeln             :a2, 2026-11-10, 13d
+    Word-Dokument anlegen            :a2b, 2026-11-12, 6d
     Doku inhaltlich fertig           :milestone, m2, 2026-11-22, 0d
 
     section Präsentation
@@ -147,7 +152,7 @@ mit Dateinamen und wie man hochlädt.
 - [ ] **(Team)** Sensorteil offen, die verstärkten Schraubpunkte sichtbar →
       `Fotos/sensorteil_offen.jpg`
 - [ ] **(Claude)** Fotos verkleinern, Metadaten (GPS) entfernen und ins Wiki
-      einbauen
+      und ins Word-Dokument einbauen
 
 **Einbau:**
 
@@ -156,7 +161,7 @@ mit Dateinamen und wie man hochlädt.
 - [x] **(Team)** Notiert, was beim Druck nicht gepasst hat: Der Drucker ist
       nicht der beste, am Deckel des Sensorgehäuses sind die Schraubpunkte
       abgebrochen. Verstärkt in Schritt 21 (03.11.2026, auf `main`), neu
-      gedruckt und eingebaut. Steht in Kapitel 8.
+      gedruckt und eingebaut. Steht im Wiki unter „Herausforderungen“.
 - [ ] **(Team)** Beide Teile auf die **Holzplatte** montieren (geplant
       KW 47, 16.–20.11.)
 - [ ] **(Team)** **9-V-Batterie mitbringen.** Polung an VIN prüfen (kein
@@ -192,12 +197,9 @@ abhaken, Messwerte eintragen):
 Ab hier wird die Firmware nicht mehr geändert, sonst stimmen Doku, Präsentation
 und 3D-Modell nicht mehr überein.
 
-- [ ] **(Team)** Entscheiden: Fehlerton **3 s** (wie gefordert) oder bei 2 s
-      bleiben und begründen. Empfehlung: auf 3 s stellen, dann ist der
-      Soll/Ist-Vergleich sauber.
-- [ ] **(Claude)** Falls 3 s: `ERROR_TONE_MS` ändern und Viewer,
-      `Sourcecode.md`, `Wichtige-Codeabschnitte.md`, `Funktionsbeschreibung.md`
-      mitziehen
+- [x] **(Team)** Fehlerton: bleibt bei **2 s**, wie im Code (Entscheidung
+      10.11.2026). Gefordert waren 3 s, die Begründung kommt in die Doku
+      (Phase 3). Code-Kommentare, die noch „3 s“ sagten, sind korrigiert.
 - [ ] **(Team)** Fehler, die bei den Tests in Phase 1 auffallen, beheben (mit
       Claude), neu testen
 - [ ] **(Team)** Endstand kompilieren und aufs Gerät laden, kurzer Test
@@ -205,37 +207,37 @@ und 3D-Modell nicht mehr überein.
 
 **Repository aufräumen** (es wird komplett abgegeben):
 
-- [ ] **(Claude)** `Code/alarm_system/alarm_system.ino.bak` entfernen (alte
+- [x] **(Claude)** `Code/alarm_system/alarm_system.ino.bak` entfernt (alte
       Sicherung)
-- [ ] **(Claude)** `Gehaeuse/bilder/druckplatte.png` verkleinern (seit
-      Schritt 21 unkomprimiert, ~490 kB statt ~120 kB)
-- [ ] **(Claude)** `MDs/aufbau.md` ist der Stand vor dem RFID-Umbau. Oben einen
-      Hinweis ergänzen („historische Ausgangsspezifikation, aktuelle Belegung
-      siehe Kapitel 5“), damit niemand die alte Pinbelegung für gültig hält.
-- [ ] **(Claude)** README: Link aufs PDF ergänzen, Status Gehäuse, ein kurzer
-      Abschnitt „Was liegt wo“ für die Lehrkraft (Doku-PDF, Code,
-      Präsentation, Schaltplan, Gehäuse)
+- [x] **(Claude)** `Gehaeuse/bilder/druckplatte.png` verkleinert (488 → 159 kB)
+- [x] **(Claude)** `MDs/aufbau.md` auf den Stand des fertigen Geräts gebracht
+      (Bauteile, Pins, Mini-Breadboard, Hinweise)
+- [x] **(Claude)** README: Status Gehäuse ergänzt, Beschreibung des Wikis
+      angepasst. Kein Verweis aufs Doku-PDF, das bekommt die Lehrkraft direkt.
+      Die Tabelle „Project structure“ dient als Wegweiser.
+- [x] **(Claude)** Wiki aufs Projekt-Wiki gekürzt (siehe Abgabeform)
+- [ ] **(Claude)** README: `praesentation/` in die Tabelle „Project structure“
+      aufnehmen, sobald es den Ordner gibt (Phase 4)
 
 ## Phase 3 · Doku inhaltlich fertig (bis So 22.11.)
 
-Alle `✏️ TODO` im Ordner `wiki/` abarbeiten. Was nur ihr wissen könnt, ist mit
-**(Team)** markiert; den Rest kann Claude einarbeiten, sobald die Angaben da
-sind. Suche nach allen offenen Stellen:
-
-```bash
-grep -rn "TODO" wiki/
-```
+Die Doku entsteht als **Word-Dokument** mit den zehn Kapiteln der Vorgabe.
+Claude legt eine Startfassung an (siehe „Doku als Word-Dokument“ unten), die
+Texte kommen aus dem Wiki. Was nur ihr wissen könnt, ist mit **(Team)**
+markiert und im Word-Dokument als offene Stelle hervorgehoben; den Rest kann
+Claude einarbeiten, sobald die Angaben da sind. Im Wiki stehen diese
+Platzhalter nicht mehr.
 
 ### Kapitel 1–10 (Pflicht laut Vorgabe)
 
 | Kapitel | Was fehlt | Wer |
 |---|---|---|
-| 1 Deckblatt (`Home`) | Foto vom Gerät (im PDF statisch, also Foto statt GIF), Zahlen „Auf einen Blick“ aktuell halten | Team (Foto), Claude (Rest) |
+| 1 Deckblatt | Titel, Gruppe, Klasse, Abgabedatum, Foto vom Gerät | Team (Foto), Claude (Rest) |
 | 2 Idee und Zielsetzung | Projektstart beim Zeitraum, K5 Gehäuse auf ✅ setzen, sobald montiert | Team (Projektstart), Claude |
-| 3 Funktionsbeschreibung | nur nachziehen, falls Fehlerton/Zeiten sich ändern | Claude |
+| 3 Funktionsbeschreibung | aus dem Wiki übernehmen | Claude |
 | 4 Verwendete Bauteile | prüfen, ob Batterie, Clip, Mini-Breadboard und Kabel vollständig drin sind | Team prüft |
 | 5 Aufbau und Schaltplan | Foto vom Versuchsaufbau, Laufzeit eintragen (Schaltplan mit Batterie an VIN ist seit Schritt 22 erledigt) | Team |
-| 6 Sourcecode | Fehlerton-Entscheidung (Abgabeform ist eingetragen) | Team entscheidet, Claude schreibt |
+| 6 Sourcecode | Dateien und Abgabeform (Code liegt im Repository), **Begründung, warum der Fehlerton 2 s statt der geforderten 3 s dauert** | Team begründet, Claude schreibt |
 | 7 Wichtige Codeabschnitte | gemessenen SRAM-Wert eintragen | Team misst, Claude schreibt |
 | 8 Herausforderungen | wie ihr den SH1106 erkannt habt, Probleme beim RC522-Verdrahten, eigene Probleme (Druck, Einbau, Teamarbeit) | **Team** |
 | 9 Fazit und Ausblick | Soll/Ist (Zeit, Kosten, Gehäuse), Fazit 2–3 Sätze, **Reflexion selbst schreiben, ohne KI**, 2–4 Erweiterungsideen auswählen | **Team** |
@@ -251,43 +253,29 @@ grep -rn "TODO" wiki/
 | Kosten | Preise und Bezugsquellen, was von der Schule kam | **Team** |
 | Projektphasen | Stand und offene Punkte abhaken, Foto vom fertigen Gerät, Testergebnisse | Team, Claude |
 | KI-Einsatz | Tabelle prüfen, wie ihr den Code geprüft habt, was die KI falsch gemacht hat | **Team** |
-| Entwicklungsverlauf | läuft automatisch mit jedem Schritt mit | Claude |
+| Entwicklungsverlauf | Zusammenfassung aus der Wiki-Seite übernehmen (ohne Prompts) | Claude |
 
-### Doku als PDF
+### Doku als Word-Dokument
 
-Das PDF wird aus `wiki/` erzeugt, nicht von Hand zusammenkopiert. Sonst laufen
-Wiki und PDF bei jeder Korrektur auseinander.
-
-- [ ] **(Claude)** Export-Skript `tools/wiki2pdf.mjs` bauen (Playwright und
-      Chromium sind schon für `tools/render.mjs` da). Es soll:
-  - die Seiten in der Reihenfolge der Seitenleiste zusammensetzen: Deckblatt,
-    Inhaltsverzeichnis, Kapitel 1–10, Anhang
-  - jedes Kapitel auf einer neuen Seite beginnen, Seitenzahlen in der Fußzeile
-  - **Mermaid-Diagramme** als Grafik rendern (Zeitleiste, Gantt,
-    Zustandsautomat, Systemüberblick)
-  - Bilder aus dem Repository nehmen statt von `raw.githubusercontent.com`
-  - Wiki-Links (`[Kapitel 7](Wichtige-Codeabschnitte)`) in Sprünge innerhalb
-    des PDFs umwandeln, Links nach außen mit sichtbarer URL
-  - die GitHub-Hinweiskästen (`> [!NOTE]` usw.) als Kästen darstellen und den
-    Wiki-Hinweis-Kommentar oben auf jeder Seite weglassen
-  - **`MDs/entwicklungsverlauf.md` nicht einbinden.** Ins PDF kommt nur die
-    Wiki-Seite „Entwicklungsverlauf“ (Schritte zusammengefasst, keine
-    Prompts). Die Links „Vollständiger Eintrag“ unter den Karten zeigen aufs
-    Protokoll im Repository, sie bleiben als Verweis stehen.
-- [ ] **(Claude)** Ein **Probe-PDF** erzeugen, auch wenn noch TODOs drin sind,
-      und prüfen, was im PDF anders aussieht als im Wiki:
-  - **animierte SVGs** (Banner, `how-it-works.svg`, `wiring.svg`) zeigen im
-    PDF nur ein Standbild. Ist das Standbild sinnvoll? Sonst eine statische
-    Fassung fürs PDF.
-  - **Emojis** in Überschriften und Tabellen: werden sie gedruckt oder als
-    Kästchen? Notfalls fürs PDF weglassen.
-  - aufklappbare Abschnitte (`<details>`, z. B. die Leitfragen in Kapitel 9)
-    fliegen raus, sobald die Reflexion geschrieben ist
-  - das 3D-Modell ist im PDF nur ein Bild mit Link
-- [ ] **(Team)** Probe-PDF durchblättern: Seitenumbrüche, Lesbarkeit der
+- [ ] **(Claude)** Startfassung `Projektdokumentation_GAS.docx` erzeugen:
+  - Deckblatt, Inhaltsverzeichnis (automatisch aus den Überschriften),
+    Kapitel 1–10, Anhang, jedes Kapitel auf einer neuen Seite,
+    Seitenzahlen in der Fußzeile
+  - Texte und Tabellen aus dem Wiki, Diagramme (Zustandsautomat,
+    Systemüberblick, Zeitleiste) und Bilder als feste Grafiken, animierte SVGs
+    als Standbild
+  - offene Stellen für das Team gelb markiert, Leitfragen zur Reflexion als
+    Kommentar
+  - **ohne `MDs/entwicklungsverlauf.md`**, der Anhang „Entwicklungsverlauf“
+    fasst nur die Schritte zusammen (keine Prompts)
+- [ ] **(Team)** Ablage festlegen: Word-Dokument im Repository (dann nach
+      jeder Änderung hochladen) oder nur bei euch (OneDrive o. Ä.)
+- [ ] **(Team)** Im Word-Dokument weiterschreiben. Was ihr dort ändert, muss
+      nicht zurück ins Wiki, außer es ist technisch falsch.
+- [ ] **(Team)** Probefassung durchblättern: Seitenumbrüche, Lesbarkeit der
       Diagramme, Umfang. Rückmeldung an Claude.
 
-### Außerhalb des Wikis
+### Außerhalb der Doku
 
 - [ ] **(Team)** `Teile.xlsx`: 9-V-Batterie, Clip, Mini-Breadboard SYB-170
       ergänzen, Preise passend zur Kostenseite
@@ -354,7 +342,7 @@ dieselbe Logik.
 
 - [ ] **(Team)** Aufteilung festlegen (wer ist Person A, wer Person B)
 - [ ] **(Claude)** Präsentation nach dem Ablauf oben als HTML bauen, Inhalte
-      aus dem Wiki, Steuerung mit Pfeiltasten, Vollbild
+      aus der Doku, Steuerung mit Pfeiltasten, Vollbild
 - [ ] **(Team)** Folien durchgehen, in eigenen Worten Stichpunkte für die
       Sprechernotizen schreiben
 - [ ] **(Team)** Präsentation auf Jans Notebook **am Beamer im Raum**
@@ -385,41 +373,44 @@ dieselbe Logik.
 ## Phase 6 · Feedback einarbeiten und abgeben (02.12. – Di 15.12.)
 
 - [ ] **(Team)** Fragen und Hinweise aus der Präsentation notieren
-- [ ] **(Claude)** Hinweise ins Wiki einarbeiten (z. B. Fragen, die die Doku
-      noch nicht beantwortet hat)
+- [ ] **(Team + Claude)** Hinweise in die Doku einarbeiten (z. B. Fragen, die
+      sie noch nicht beantwortet hat)
 - [ ] **(Team)** Zeitplan und Meilensteine auf den tatsächlichen Stand bringen
       (Präsentation gehalten am ✏️)
 - [ ] **(Team + Claude)** Endkontrolle:
-  - [ ] `grep -rn "TODO" wiki/` findet nichts mehr
+  - [ ] keine gelb markierten offenen Stellen mehr im Word-Dokument,
+        Inhaltsverzeichnis aktualisiert
   - [ ] alle Bilder im Wiki laden, alle Links funktionieren
   - [ ] Pins, Zeiten und Zahlen sind überall gleich (Firmware, Wiki, README,
         3D-Modell, Präsentation)
-  - [ ] keine Prompts im Wiki (Vorgabe)
+  - [ ] keine Prompts in der Doku und im Wiki (Vorgabe)
   - [ ] Rechtschreibung
-  - [ ] PDF ein letztes Mal komplett durchlesen (nicht nur das Wiki)
-- [ ] **(Claude)** Endgültiges `Projektdokumentation_GAS.pdf` erzeugen und
-      committen
+- [ ] **(Team)** Word-Dokument als PDF exportieren (Datei → Exportieren →
+      PDF), Name `Projektdokumentation_GAS.pdf`, und das PDF ein letztes Mal
+      komplett durchlesen
 - [ ] **(Team)** Alles nach `main` mergen, dann Tag `v1.0` auf den
       Endstand setzen bzw. neu setzen (falls nach dem Code-Freeze noch etwas
       geändert wurde)
 - [ ] **(Team)** Link schicken, am besten direkt auf den Tag:
       `https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/v1.0`. Vorher in
-      einem privaten Browserfenster (nicht angemeldet) prüfen, dass PDF, Code
-      und Präsentation zu sehen sind und sich öffnen lassen.
+      einem privaten Browserfenster (nicht angemeldet) prüfen, dass Code und
+      Präsentation zu sehen sind und sich öffnen lassen.
+- [ ] **(Team)** Das PDF der Doku zusammen mit dem Link an die Lehrkraft geben
 - [ ] **(Team)** **Abgabe bis Di 15.12.2026**
 
 ---
 
 ## Abgabepaket (Endstand)
 
-Abgegeben wird der Link aufs öffentliche Repository (Stand Tag `v1.0`). Darin:
+Abgegeben werden der Link aufs öffentliche Repository (Stand Tag `v1.0`) und
+das PDF der Doku:
 
 | Teil | Wo im Repository | Form |
 |---|---|---|
-| **Projektdokumentation** (Kap. 1–10 + Anhang) | `Projektdokumentation_GAS.pdf` | PDF, erzeugt aus `wiki/` |
+| **Projektdokumentation** (Kap. 1–10 + Anhang) | wird direkt an die Lehrkraft gegeben | PDF, aus dem Word-Dokument exportiert |
 | **Sourcecode** | `Code/` | eigene `.ino`-Dateien, in der Doku nur verlinkt |
 | **Präsentation** | `praesentation/` | eine HTML-Datei, offline lauffähig (schon am 24.11. abgegeben) |
-| Ergänzend | `Schaltplan/`, `Gehaeuse/`, `Anleitung/`, `docs/viewer/` (3D-Modell), `Teile.xlsx`, `wiki/` (Quelle der Doku), `MDs/entwicklungsverlauf.md` (Arbeitsprotokoll, nicht im PDF) | im Repository |
+| Ergänzend | `Schaltplan/`, `Gehaeuse/`, `Anleitung/`, `docs/viewer/` (3D-Modell), `Teile.xlsx`, `wiki/` (Projekt-Wiki), `MDs/entwicklungsverlauf.md` (Arbeitsprotokoll, nicht in der Doku) | im Repository |
 
 ## Was bewusst nicht mehr passiert
 

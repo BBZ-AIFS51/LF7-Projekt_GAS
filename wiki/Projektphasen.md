@@ -1,11 +1,9 @@
 <!-- Diese Seite wird automatisch aus dem Ordner wiki/ im Repository erzeugt. Änderungen im Wiki-Editor werden beim nächsten Abgleich überschrieben. Bearbeiten: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/wiki -->
 # 🔧 Projektphasen
 
-<sub>Anhang</sub>
-
 In welchen Phasen das Projekt entstanden ist, und was noch offen ist. Wie die
-Anlage funktioniert, steht in [Kapitel 3](Funktionsbeschreibung), die Probleme
-und Lösungen in [Kapitel 8](Herausforderungen).
+Anlage funktioniert, steht in der [Funktionsbeschreibung](Funktionsbeschreibung), die Probleme
+und Lösungen unter [Herausforderungen](Herausforderungen).
 
 ## 1 · Hardware-Aufbau und Bring-up
 
@@ -14,10 +12,6 @@ Alle Bauteile wurden auf dem Breadboard verdrahtet und mit
 einzeln geprüft: OLED, Keypad, Buzzer und Bewegungsmelder. Dabei hat sich
 herausgestellt, dass das Display einen **SH1106**-Controller hat und nicht den
 weit verbreiteten SSD1306.
-
-> [!NOTE]
-> ✏️ **TODO (Team):** Foto vom Breadboard-Aufbau einfügen und 1–2 Sätze dazu,
-> wie der Aufbau gelaufen ist (z. B. was zuerst nicht funktioniert hat).
 
 ## 2 · Firmware-Grundfunktion
 
@@ -90,11 +84,6 @@ abgebrochen. Sie wurden verstärkt und der Deckel neu gedruckt, siehe
 Als Nächstes werden beide Teile auf eine Holzplatte montiert, die für die
 Vorführung die Wand mit der Tür darstellt.
 
-> [!NOTE]
-> ✏️ **TODO (Team):** Fotos vom offenen und vom fertigen Gerät in den Ordner
-> [`Fotos/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/Fotos)
-> hochladen (Liste dort), Claude baut sie hier ein.
-
 ## 6 · Präsentation im Repository
 
 Damit das Projekt auch ohne Gerät verständlich ist, gibt es animierte Grafiken
@@ -118,14 +107,11 @@ abbrach. Jetzt wird eine falsche Eingabe im Alarm ignoriert.
 
 ## Stand und offene Punkte
 
-> [!NOTE]
-> ✏️ **TODO (Team):** Liste aktuell halten.
-
-- [x] Alle Muss-Anforderungen umgesetzt, siehe [Kapitel 2](Idee-und-Zielsetzung#anforderungen)
+- [x] Alle Muss-Anforderungen umgesetzt, siehe [Idee und Zielsetzung](Idee-und-Zielsetzung#anforderungen)
 - [ ] Bugfix aus Schritt 16 am echten Aufbau getestet
-- [ ] Freier SRAM nach dem Entfernen der Keypad-Library gemessen: ✏️ TODO Byte (erwartet ~320)
+- [ ] Freier SRAM nach dem Entfernen der Keypad-Library gemessen (erwartet ~320 Byte)
 - [ ] RFID-Reset (<kbd>B</kbd>) mit absichtlich getrenntem Leser getestet
-- [ ] Gehäusemaße am echten Aufbau nachgemessen
+- [x] Alle Module passen ins gedruckte Gehäuse (eingebaut am 10.11.2026)
 - [x] Gehäuse gedruckt
 - [x] Gehäuse nach dem Steckplan verkabelt und verschraubt (10.11.2026)
 - [ ] Gehäuse auf der Holzplatte montiert und getestet

@@ -12,26 +12,14 @@
 
 # Projekt GAS – Mini-Sicherheitssystem
 
-<p align="center"><b>Projektdokumentation · Lernfeld 7</b></p>
-
-| | |
-|---|---|
-| **Projekttitel** | Projekt GAS – Mini-Sicherheitssystem mit Keypad, RFID-Leser und Bewegungsmelder |
-| **Gruppenmitglieder** | Hugo, Jan |
-| **Klasse** | AIFS51 |
-| **Datum der Abgabe** | 15.12.2026 |
+<p align="center"><b>Schulprojekt · Lernfeld 7 · Klasse AIFS51 · Hugo und Jan</b></p>
 
 Eine kleine Alarmanlage auf einem Arduino Uno R3, gebaut im Lernfeld 7. Scharf-
 und unscharf geschaltet wird mit einer PIN am 4x4-Keypad oder mit einer
 RFID-Karte. Ist die Anlage scharf, löst der Bewegungsmelder eine 30-sekündige
 Sirene aus. Das OLED zeigt nur Symbole: ein Herz (unscharf), einen Totenkopf
 (scharf) und einen blinkenden Totenkopf (Alarm). Karten werden direkt am Gerät
-angelernt, ganz ohne PC(Computer).
-
-> [!NOTE]
-> ✏️ **TODO (Team):** Foto vom fertigen Gerät (`Fotos/geraet_vorne.jpg` oder
-> `Fotos/geraet_brett.jpg`), Claude baut es hier ein. Ein Foto statt GIF, weil
-> die Dokumentation als PDF abgegeben wird.
+angelernt, ganz ohne PC.
 
 <p align="center">
   <a href="https://bbz-aifs51.github.io/LF7-Projekt_GAS/"><b>▶ 3D-Modell im Browser ausprobieren</b></a>
@@ -41,33 +29,21 @@ angelernt, ganz ohne PC(Computer).
 
 ## Inhalt
 
-Die Kapitel 1–10 folgen dem vorgegebenen Aufbau der Projektdokumentation. Der
-Anhang enthält Planung, Kosten und den Verlauf der Entwicklung.
-
-| Kapitel | Worum es geht |
+| Seite | Worum es geht |
 |---|---|
-| **1** Deckblatt | diese Seite |
-| **2** [💡 Idee und Zielsetzung](Idee-und-Zielsetzung) | Welches Problem das Projekt löst, Anforderungen, Abgrenzung |
-| **3** [🎛️ Funktionsbeschreibung](Funktionsbeschreibung) | Wie die Anlage aus Sicht der Anwender funktioniert |
-| **4** [🧩 Verwendete Bauteile](Verwendete-Bauteile) | Alle Bauteile und wofür sie eingesetzt werden |
-| **5** [🔌 Aufbau und Schaltplan](Aufbau-und-Schaltplan) | Schaltplan, Pin-Zuordnung, Foto vom Aufbau, Gehäuse |
-| **6** [📄 Sourcecode](Sourcecode) | Welche Dateien zum Projekt gehören |
-| **7** [🧠 Wichtige Codeabschnitte](Wichtige-Codeabschnitte) | Kernlogik der Firmware, erklärt |
-| **8** [🧗 Herausforderungen](Herausforderungen) | Probleme mit Bauteilen und wie wir sie gelöst haben |
-| **9** [💭 Fazit und Ausblick](Fazit-und-Ausblick) | Was wir gelernt haben, mögliche Erweiterungen |
-| **10** [📚 Quellenverzeichnis](Quellenverzeichnis) | Datenblätter, Bibliotheken, Werkzeuge |
-
-| Anhang | Worum es geht |
-|---|---|
-| [👥 Team und Rollen](Team-und-Rollen) | Wer hat was gemacht |
-| [📅 Zeitplan](Zeitplan) | Geplanter und tatsächlicher Ablauf |
-| [💶 Kosten](Kosten) | Preise und Gesamtkosten |
-| [🔧 Projektphasen](Projektphasen) | Die sieben Phasen des Projekts, Stand und offene Punkte |
+| [💡 Idee und Zielsetzung](Idee-und-Zielsetzung) | Welches Problem das Projekt löst, Anforderungen, Abgrenzung |
+| [🎛️ Funktionsbeschreibung](Funktionsbeschreibung) | Wie die Anlage aus Sicht der Anwender funktioniert |
+| [🧩 Verwendete Bauteile](Verwendete-Bauteile) | Alle Bauteile und wofür sie eingesetzt werden |
+| [🔌 Aufbau und Schaltplan](Aufbau-und-Schaltplan) | Schaltplan, Pin-Zuordnung, Stromversorgung, Gehäuse |
+| [🧠 Wichtige Codeabschnitte](Wichtige-Codeabschnitte) | Kernlogik der Firmware, erklärt |
+| [🧗 Herausforderungen](Herausforderungen) | Probleme mit Bauteilen und wie wir sie gelöst haben |
+| [🔧 Projektphasen](Projektphasen) | Die Phasen des Projekts, Stand und offene Punkte |
 | [🧭 Entwicklungsverlauf](Entwicklungsverlauf) | Alle Arbeitsschritte als Zeitleiste |
 | [🤖 KI-Einsatz](KI-Einsatz) | Wie wir Claude Code als Hilfsmittel eingesetzt haben |
+| [📚 Quellenverzeichnis](Quellenverzeichnis) | Datenblätter, Bibliotheken, Werkzeuge |
 
 ## Auf einen Blick
 
-| **6** | **4** | **24** | **5** | **5** |
+| **6** | **4** | **25** | **5** | **5** |
 |:---:|:---:|:---:|:---:|:---:|
 | Bauteile am Uno | Arduino-Sketches | Arbeitsschritte im [Entwicklungsverlauf](Entwicklungsverlauf) | Zustände der Anlage | Druckteile fürs Gehäuse |

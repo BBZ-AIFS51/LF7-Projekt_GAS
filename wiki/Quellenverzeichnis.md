@@ -1,5 +1,5 @@
 <!-- Diese Seite wird automatisch aus dem Ordner wiki/ im Repository erzeugt. Änderungen im Wiki-Editor werden beim nächsten Abgleich überschrieben. Bearbeiten: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/wiki -->
-# 10 · 📚 Quellenverzeichnis
+# 📚 Quellenverzeichnis
 
 Verwendete Datenblätter, Dokumentationen, Bibliotheken und Werkzeuge.
 
@@ -7,12 +7,6 @@ Verwendete Datenblätter, Dokumentationen, Bibliotheken und Werkzeuge.
 verweist die Nummer in eckigen Klammern auf den Eintrag, z. B. „laut
 Datenblatt [4]“. Online-Quellen tragen das Datum, an dem sie zuletzt
 aufgerufen wurden.
-
-> [!NOTE]
-> ✏️ **TODO (Team):**
-> - Ergänzen, was ihr selbst genutzt habt: Tutorials, Videos, Foren, Unterlagen
->   aus dem Unterricht. Claude bringt die Einträge ins gleiche Format.
-> - Vor der Abgabe alle Links einmal aufrufen und das Zugriffsdatum anpassen.
 
 ## Datenblätter
 
@@ -25,44 +19,39 @@ aufgerufen wurden.
 | [5] | Sino Wealth, „SH1106 – 132 × 64 Dot Matrix OLED/PLED Segment/Common Driver with Controller“, Datenblatt. [Online]. Verfügbar: https://www.pololu.com/file/0J1813/SH1106.pdf [Zugriff am: 06.10.2026] |
 | [6] | Joy-IT, „SEN-HC-SR501 – Passive infrared motion sensor“, Produktseite mit Datenblatt. [Online]. Verfügbar: https://joy-it.net/en/products/SEN-HC-SR501 [Zugriff am: 06.10.2026] |
 | [7] | Handson Technology, „HC-SR501 PIR Motion Sensor“, Datenblatt. [Online]. Verfügbar: http://www.handsontec.com/dataspecs/SR501%20Motion%20Sensor.pdf [Zugriff am: 06.10.2026] |
-| [8] | ✏️ TODO (Team): 4x4-Keypad und passiver Buzzer, Datenblatt bzw. Produktseite des Händlers. Muster: *Händler*, „*Produktname*“, Produktseite. [Online]. Verfügbar: *URL* [Zugriff am: *TT.MM.JJJJ*] |
 
 ## Arduino-Dokumentation
 
 | Nr. | Quelle |
 |:---:|---|
-| [9] | Arduino, „Language Reference“, Online-Dokumentation. [Online]. Verfügbar: https://docs.arduino.cc/language-reference/ [Zugriff am: 06.10.2026] |
-| [10] | Arduino, „tone()“, Online-Dokumentation. [Online]. Verfügbar: https://docs.arduino.cc/language-reference/en/functions/advanced-io/tone/ [Zugriff am: 06.10.2026] |
-| [11] | Arduino, „noTone()“, Online-Dokumentation. [Online]. Verfügbar: https://docs.arduino.cc/language-reference/en/functions/advanced-io/noTone/ [Zugriff am: 06.10.2026] |
-| [12] | Arduino, „PROGMEM“, Online-Dokumentation. [Online]. Verfügbar: https://docs.arduino.cc/language-reference/en/variables/utilities/PROGMEM [Zugriff am: 06.10.2026] |
-| [13] | Arduino, „Arduino Memory Guide“, Online-Tutorial. [Online]. Verfügbar: https://www.arduino.cc/en/Tutorial/Memory [Zugriff am: 06.10.2026] |
+| [8] | Arduino, „Language Reference“, Online-Dokumentation. [Online]. Verfügbar: https://docs.arduino.cc/language-reference/ [Zugriff am: 06.10.2026] |
+| [9] | Arduino, „tone()“, Online-Dokumentation. [Online]. Verfügbar: https://docs.arduino.cc/language-reference/en/functions/advanced-io/tone/ [Zugriff am: 06.10.2026] |
+| [10] | Arduino, „noTone()“, Online-Dokumentation. [Online]. Verfügbar: https://docs.arduino.cc/language-reference/en/functions/advanced-io/noTone/ [Zugriff am: 06.10.2026] |
+| [11] | Arduino, „PROGMEM“, Online-Dokumentation. [Online]. Verfügbar: https://docs.arduino.cc/language-reference/en/variables/utilities/PROGMEM [Zugriff am: 06.10.2026] |
+| [12] | Arduino, „Arduino Memory Guide“, Online-Tutorial. [Online]. Verfügbar: https://www.arduino.cc/en/Tutorial/Memory [Zugriff am: 06.10.2026] |
 
 ## Bibliotheken
 
 | Nr. | Quelle |
 |:---:|---|
-| [14] | Adafruit Industries, „Adafruit_SH110x“, GitHub-Repository (Version ✏️). [Online]. Verfügbar: https://github.com/adafruit/Adafruit_SH110x [Zugriff am: 06.10.2026] |
-| [15] | Adafruit Industries, „Adafruit-GFX-Library“, GitHub-Repository (Version ✏️). [Online]. Verfügbar: https://github.com/adafruit/Adafruit-GFX-Library [Zugriff am: 06.10.2026] |
-| [16] | Adafruit Industries, „Adafruit_BusIO“, GitHub-Repository (Version ✏️). [Online]. Verfügbar: https://github.com/adafruit/Adafruit_BusIO [Zugriff am: 06.10.2026] |
-| [17] | M. Balboa u. a., „rfid – Arduino RFID Library for MFRC522“, GitHub-Repository (Version ✏️). [Online]. Verfügbar: https://github.com/miguelbalboa/rfid [Zugriff am: 06.10.2026] |
-| [18] | M. Stanley und A. Brevig, „Keypad“, GitHub-Repository, nur in `hardware_test` verwendet (Version ✏️). [Online]. Verfügbar: https://github.com/Chris--A/Keypad [Zugriff am: 06.10.2026] |
-| [19] | `Wire`, `SPI` und `EEPROM`: Bestandteil der Arduino IDE, siehe [20]. |
-
-✏️ TODO (Team): Versionsnummern der installierten Bibliotheken eintragen
-(Arduino IDE → Library Manager → Filter „Installiert“), jeweils statt „Version ✏️“.
+| [13] | Adafruit Industries, „Adafruit_SH110x“, GitHub-Repository. [Online]. Verfügbar: https://github.com/adafruit/Adafruit_SH110x [Zugriff am: 06.10.2026] |
+| [14] | Adafruit Industries, „Adafruit-GFX-Library“, GitHub-Repository. [Online]. Verfügbar: https://github.com/adafruit/Adafruit-GFX-Library [Zugriff am: 06.10.2026] |
+| [15] | Adafruit Industries, „Adafruit_BusIO“, GitHub-Repository. [Online]. Verfügbar: https://github.com/adafruit/Adafruit_BusIO [Zugriff am: 06.10.2026] |
+| [16] | M. Balboa u. a., „rfid – Arduino RFID Library for MFRC522“, GitHub-Repository. [Online]. Verfügbar: https://github.com/miguelbalboa/rfid [Zugriff am: 06.10.2026] |
+| [17] | M. Stanley und A. Brevig, „Keypad“, GitHub-Repository, nur in `hardware_test` verwendet. [Online]. Verfügbar: https://github.com/Chris--A/Keypad [Zugriff am: 06.10.2026] |
+| [18] | `Wire`, `SPI` und `EEPROM`: Bestandteil der Arduino IDE, siehe [19]. |
 
 ## Werkzeuge
 
 | Nr. | Quelle | Wofür |
 |:---:|---|---|
-| [20] | Arduino, „Arduino IDE“, Software. [Online]. Verfügbar: https://www.arduino.cc/en/software [Zugriff am: 06.10.2026] | Programmieren, Hochladen, serieller Monitor |
-| [21] | Cirkit Designer, „Cirkit Designer“, Web-Anwendung. [Online]. Verfügbar: https://www.cirkitdesigner.com [Zugriff am: 06.10.2026] | Schaltplan |
-| [22] | OpenSCAD, „OpenSCAD – The Programmers Solid 3D CAD Modeller“, Software. [Online]. Verfügbar: https://openscad.org [Zugriff am: 06.10.2026] | 3D-Modell des Gehäuses |
-| [23] | three.js, „three.js – JavaScript 3D Library“, Software-Bibliothek. [Online]. Verfügbar: https://threejs.org [Zugriff am: 06.10.2026] | interaktives 3D-Modell im Browser |
-| [24] | GitHub, „LF7-Projekt_GAS“, Git-Repository des Projekts. [Online]. Verfügbar: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS | Versionsverwaltung, Wiki, Veröffentlichung des 3D-Modells |
-| [25] | Anthropic, „Claude Code“, KI-Assistent. [Online]. Verfügbar: https://claude.com/claude-code [Zugriff am: 06.10.2026] | Hilfsmittel beim Programmieren und bei der Fehlersuche, siehe [KI-Einsatz](KI-Einsatz) |
-| [26] | ✏️ TODO (Team): Slicer für den 3D-Druck (z. B. PrusaSlicer, Cura), gleiches Muster wie [20] | Druckdateien für den 3D-Drucker |
+| [19] | Arduino, „Arduino IDE“, Software. [Online]. Verfügbar: https://www.arduino.cc/en/software [Zugriff am: 06.10.2026] | Programmieren, Hochladen, serieller Monitor |
+| [20] | Cirkit Designer, „Cirkit Designer“, Web-Anwendung. [Online]. Verfügbar: https://www.cirkitdesigner.com [Zugriff am: 06.10.2026] | Schaltplan |
+| [21] | OpenSCAD, „OpenSCAD – The Programmers Solid 3D CAD Modeller“, Software. [Online]. Verfügbar: https://openscad.org [Zugriff am: 06.10.2026] | 3D-Modell des Gehäuses |
+| [22] | three.js, „three.js – JavaScript 3D Library“, Software-Bibliothek. [Online]. Verfügbar: https://threejs.org [Zugriff am: 06.10.2026] | interaktives 3D-Modell im Browser |
+| [23] | GitHub, „LF7-Projekt_GAS“, Git-Repository des Projekts. [Online]. Verfügbar: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS | Versionsverwaltung, Wiki, Veröffentlichung des 3D-Modells |
+| [24] | Anthropic, „Claude Code“, KI-Assistent. [Online]. Verfügbar: https://claude.com/claude-code [Zugriff am: 06.10.2026] | Hilfsmittel beim Programmieren und bei der Fehlersuche, siehe [KI-Einsatz](KI-Einsatz) |
 
 ---
 
-<sub>← [9 Fazit und Ausblick](Fazit-und-Ausblick) · [Anhang: Team und Rollen](Team-und-Rollen) →</sub>
+<sub>← [KI-Einsatz](KI-Einsatz)</sub>

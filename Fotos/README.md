@@ -1,7 +1,8 @@
 # Fotos
 
-Fotos vom echten Aufbau. Sie werden in der Dokumentation (Wiki und PDF) und in
-der Präsentation verwendet.
+Fotos vom echten Aufbau. Sie werden in der Abgabe-Dokumentation (Word/PDF),
+im Wiki und in der Präsentation verwendet. Die Kapitelangaben in der Liste
+beziehen sich auf die Kapitel der Abgabe-Dokumentation.
 
 ## So kommen die Fotos hierher
 

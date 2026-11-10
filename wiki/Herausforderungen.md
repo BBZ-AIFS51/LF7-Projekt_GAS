@@ -1,5 +1,5 @@
 <!-- Diese Seite wird automatisch aus dem Ordner wiki/ im Repository erzeugt. Änderungen im Wiki-Editor werden beim nächsten Abgleich überschrieben. Bearbeiten: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/wiki -->
-# 8 · 🧗 Herausforderungen
+# 🧗 Herausforderungen
 
 Bei welchen Bauteilen und Arbeitsschritten es Schwierigkeiten gab oder etwas
 Besonderes zu beachten war, was die Ursache war und wie wir das Problem gelöst
@@ -34,10 +34,6 @@ Beide sehen gleich aus, werden aber unterschiedlich angesteuert.
 ist, danach die Library *Adafruit SH110X* mit der Klasse `Adafruit_SH1106G`
 verwendet.
 
-> [!NOTE]
-> ✏️ **TODO (Team):** Kurz ergänzen, wie ihr den SH1106 erkannt habt (Aufdruck,
-> Datenblatt des Händlers, Ausprobieren?).
-
 ### Arbeitsspeicher zu knapp
 
 **Situation:** Mit der ersten Firmware zeigte das Display Pixelmüll statt Herz
@@ -53,7 +49,7 @@ startete also neu, weil der Speicher überlief.
 1. Alle Texte mit `F()` im Flash-Speicher abgelegt, kein `snprintf`, keine
    Textpuffer.
 2. Die Keypad-Library (ca. 120 Byte) durch eine eigene Abfrage der Tastenmatrix
-   ersetzt, siehe [Kapitel 7.5](Wichtige-Codeabschnitte#75-tastenfeld-selbst-abfragen).
+   ersetzt, siehe [Wichtige Codeabschnitte](Wichtige-Codeabschnitte#tastenfeld-selbst-abfragen).
 
 Seitdem gibt die Firmware beim Start den freien Speicher aus, um das im Blick zu
 behalten.
@@ -117,11 +113,6 @@ der Leser braucht etwa 13–26 mA. Die Datenleitungen kommen weiter mit 5 V vom
 Uno. Laut Datenblatt ist das außerhalb der Spezifikation, funktioniert in der
 Praxis aber zuverlässig.
 
-> [!NOTE]
-> ✏️ **TODO (Team):** Gab es Probleme beim Verdrahten des Lesers (z. B. falsche
-> Pins, lose Kabel)? Der Test-Sketch `rfid_test` zeigt die Version des Lesers:
-> `0x91` oder `0x92` heißt „läuft“, `0x00` oder `0xFF` heißt „antwortet nicht“.
-
 ### Falsche Eingabe beendet den Alarm
 
 **Situation:** Beim Testen ist aufgefallen: Wer während des Alarms eine falsche
@@ -134,7 +125,7 @@ war.
 
 **Lösung:** Während des Alarms werden falsche Eingaben ignoriert. Nur die
 richtige PIN oder eine bekannte Karte beendet ihn, siehe
-[Kapitel 7.3](Wichtige-Codeabschnitte#73-zugriff-erlaubt-oder-verweigert).
+[Wichtige Codeabschnitte](Wichtige-Codeabschnitte#zugriff-erlaubt-oder-verweigert).
 
 ### Wohin mit dem Bewegungsmelder?
 
@@ -188,24 +179,6 @@ verlängert, der bis in die Lippe des Deckels reicht. Das Loch ist jetzt 4,8 mm
 tief, die Schraube passt ganz hinein. Der neu gedruckte Deckel hält
 ([Schritt 21](Entwicklungsverlauf#-schritt-21--schraubzapfen-am-sensorteil-brechen-ab)).
 
-> [!NOTE]
-> ✏️ **TODO (Team):** Foto vom offenen Sensorteil als
-> `Fotos/sensorteil_offen.jpg` hochladen, Claude baut es hier ein.
-
 ---
 
-## Weitere Herausforderungen
-
-> [!NOTE]
-> ✏️ **TODO (Team):** Ergänzt Probleme, die nur ihr kennt, zum Beispiel:
-> - Verdrahtung auf dem Breadboard: Wackelkontakte, vertauschte Kabel?
-> - Bewegungsmelder: Empfindlichkeit und Haltezeit an den Potis einstellen,
->   Fehlalarme? Nach dem Einschalten braucht er etwa eine Minute, bis er
->   zuverlässig arbeitet.
-> - Zusammenarbeit, Zeitplanung, Git
->
-> Gleiches Schema: **Situation**, **Ursache**, **Lösung**.
-
----
-
-<sub>← [7 Wichtige Codeabschnitte](Wichtige-Codeabschnitte) · [9 Fazit und Ausblick](Fazit-und-Ausblick) →</sub>
+<sub>← [Wichtige Codeabschnitte](Wichtige-Codeabschnitte) · [Projektphasen](Projektphasen) →</sub>

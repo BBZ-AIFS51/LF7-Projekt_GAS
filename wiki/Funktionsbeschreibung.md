@@ -1,9 +1,9 @@
 <!-- Diese Seite wird automatisch aus dem Ordner wiki/ im Repository erzeugt. Änderungen im Wiki-Editor werden beim nächsten Abgleich überschrieben. Bearbeiten: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/wiki -->
-# 3 · 🎛️ Funktionsbeschreibung
+# 🎛️ Funktionsbeschreibung
 
 Wie die fertige Anlage aus Sicht der Anwender funktioniert und wie die Bauteile
 dabei zusammenspielen. Wie das im Code umgesetzt ist, steht in
-[Kapitel 7](Wichtige-Codeabschnitte).
+[Wichtige Codeabschnitte](Wichtige-Codeabschnitte).
 
 ## Einsatzort
 
@@ -140,4 +140,4 @@ gleiche Logik wie in der Firmware.
 
 ---
 
-<sub>← [2 Idee und Zielsetzung](Idee-und-Zielsetzung) · [4 Verwendete Bauteile](Verwendete-Bauteile) →</sub>
+<sub>← [Idee und Zielsetzung](Idee-und-Zielsetzung) · [Verwendete Bauteile](Verwendete-Bauteile) →</sub>

@@ -35,7 +35,7 @@
  *
  * Feedback tones (passive buzzer on D10)
  *   accepted    : two short bright notes
- *   rejected    : rough low buzz, 3 s
+ *   rejected    : rough low buzz, 2 s (ERROR_TONE_MS)
  *   3x rejected : full alarm
  *
  * A wrong PIN or unknown card also shows a brief X icon on the OLED for the
@@ -821,7 +821,7 @@ void updateSound() {
       break;
 
     case SOUND_ERROR:
-      // rough low buzz for 3 s (fast switching between two low tones)
+      // rough low buzz for ERROR_TONE_MS (fast switching between two low tones)
       if (t >= ERROR_TONE_MS) {
         stopSound();
       } else {

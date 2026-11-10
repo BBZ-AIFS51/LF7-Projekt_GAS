@@ -1,5 +1,5 @@
 <!-- Diese Seite wird automatisch aus dem Ordner wiki/ im Repository erzeugt. Änderungen im Wiki-Editor werden beim nächsten Abgleich überschrieben. Bearbeiten: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/wiki -->
-# 2 · 💡 Idee und Zielsetzung
+# 💡 Idee und Zielsetzung
 
 Welches Problem das Projekt lösen soll, was die Anlage können muss und was
 bewusst nicht dazugehört.
@@ -16,7 +16,7 @@ das sich per PIN oder RFID-Karte scharf und unscharf schalten lässt und bei
 Bewegung im Raum Alarm gibt.
 
 > [!NOTE]
-> Hugo und ich haben uns für eine Alarmanlage entschieden, da wir nur mit den von der Schule bereitgestellten Materialien arbeiten wollten. Außderm wollten wir etwas schaffen, was man tatsächlich in echt verwenden könnte, oder es zumindest zu versuchen.
+> Hugo und ich haben uns für eine Alarmanlage entschieden, da wir nur mit den von der Schule bereitgestellten Materialien arbeiten wollten. Außerdem wollten wir etwas schaffen, was man tatsächlich in echt verwenden könnte, oder es zumindest zu versuchen.
 
 ## Zielsetzung
 
@@ -62,10 +62,6 @@ Anregung der Lehrkraft.
 | K5 | 3D-gedrucktes Gehäuse, Bewegungsmelder getrennt im Raum | eigene Idee | 🟡 gedruckt und eingebaut, Test steht aus |
 | K6 | Interaktives 3D-Modell im Browser | eigene Idee | ✅ |
 
-> [!NOTE]
-> ✏️ **TODO (Team):** Status von K5 auf ✅ setzen, sobald das Gehäuse fertig
-> montiert ist. Fehlen Anforderungen aus dem Auftrag der Lehrkraft? Dann ergänzen.
-
 ## Abgrenzung
 
 Bewusst **nicht** Teil des Projekts:
@@ -85,8 +81,7 @@ Bewusst **nicht** Teil des Projekts:
 | **Mikrocontroller** | Arduino Uno R3: 2 KB Arbeitsspeicher, davon belegt das Display allein die Hälfte |
 | **Anschlüsse** | Bis auf die serielle Schnittstelle sind alle Pins belegt, Erweiterungen (z. B. SD-Karte) passen nicht mehr |
 | **Umfang** | Schulprojekt: lieber wenige Funktionen, die sauber laufen |
-| **Zeitraum** | ✏️ TODO (Team): Projektstart – Abgabe 15.12.2026 |
 
 ---
 
-<sub>← [1 Deckblatt](Home) · [3 Funktionsbeschreibung](Funktionsbeschreibung) →</sub>
+<sub>← [Startseite](Home) · [Funktionsbeschreibung](Funktionsbeschreibung) →</sub>

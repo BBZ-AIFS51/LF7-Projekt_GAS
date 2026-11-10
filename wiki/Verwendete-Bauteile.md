@@ -1,9 +1,8 @@
 <!-- Diese Seite wird automatisch aus dem Ordner wiki/ im Repository erzeugt. Änderungen im Wiki-Editor werden beim nächsten Abgleich überschrieben. Bearbeiten: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/wiki -->
-# 4 · 🧩 Verwendete Bauteile
+# 🧩 Verwendete Bauteile
 
-Alle Bauteile des Projekts und wofür sie eingesetzt werden. Preise und
-Bezugsquellen stehen im Anhang unter [Kosten](Kosten), die Verdrahtung in
-[Kapitel 5](Aufbau-und-Schaltplan).
+Alle Bauteile des Projekts und wofür sie eingesetzt werden. Die Verdrahtung
+steht unter [Aufbau und Schaltplan](Aufbau-und-Schaltplan).
 
 ## Elektronik
 
@@ -41,17 +40,16 @@ Bezugsquellen stehen im Anhang unter [Kosten](Kosten), die Verdrahtung in
 | Adafruit BusIO | Hilfsschicht für I²C, wird von SH110X benötigt |
 | MFRC522 | Ansteuerung des RFID-Lesers |
 | `Wire`, `SPI`, `EEPROM` | I²C-Bus, SPI-Bus und Kartenspeicher, in der Arduino IDE enthalten |
-| Keypad | nur im Test-Sketch `hardware_test`. Die Hauptfirmware scannt das Tastenfeld selbst, siehe [Kapitel 7](Wichtige-Codeabschnitte#75-tastenfeld-selbst-abfragen). |
+| Keypad | nur im Test-Sketch `hardware_test`. Die Hauptfirmware scannt das Tastenfeld selbst, siehe [Wichtige Codeabschnitte](Wichtige-Codeabschnitte#tastenfeld-selbst-abfragen). |
 
 Quellen zu allen Bauteilen und Bibliotheken: [Quellenverzeichnis](Quellenverzeichnis).
 
 ## Gehäuse
 
 Für das 3D-gedruckte Gehäuse kommen fünf Druckteile aus PLA, Schrauben und ein
-3-adriges Kabel zum Sensorteil dazu. Die vollständige Liste steht unter
-[Kosten](Kosten#gehäuse), Planung und Bauanleitung in der
+3-adriges Kabel zum Sensorteil dazu. Planung, Schraubenliste und Bauanleitung stehen in der
 [Gehäuse-Anleitung](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/gehaeuse.md).
 
 ---
 
-<sub>← [3 Funktionsbeschreibung](Funktionsbeschreibung) · [5 Aufbau und Schaltplan](Aufbau-und-Schaltplan) →</sub>
+<sub>← [Funktionsbeschreibung](Funktionsbeschreibung) · [Aufbau und Schaltplan](Aufbau-und-Schaltplan) →</sub>

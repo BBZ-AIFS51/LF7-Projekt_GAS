@@ -1,5 +1,5 @@
 <!-- Diese Seite wird automatisch aus dem Ordner wiki/ im Repository erzeugt. Änderungen im Wiki-Editor werden beim nächsten Abgleich überschrieben. Bearbeiten: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/wiki -->
-# 5 · 🔌 Aufbau und Schaltplan
+# 🔌 Aufbau und Schaltplan
 
 Wie die Bauteile verdrahtet sind: Schaltplan, Pin-Zuordnung, Stromversorgung
 und ein Foto vom echten Aufbau zum Vergleich.
@@ -83,34 +83,11 @@ direkt an den Uno.
 - **Hochladen:** USB-Kabel anstecken, die Batterie darf dranbleiben. Der Uno
   schaltet selbst auf VIN um, sobald dort mehr als etwa 6,6 V anliegen.
 
-> [!NOTE]
-> ✏️ **TODO (Team):** Laufzeit mit einer frischen Batterie einmal messen und
-> hier eintragen.
-
 ## Verdrahtung als Übersicht
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/docs/wiring.svg" alt="Animierte Übersicht: Verdrahtung aller Bauteile mit dem Arduino Uno" width="100%">
 </p>
-
-## Foto vom Versuchsaufbau
-
-<table>
-  <tr>
-    <td align="center" width="50%"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Schaltplan/SCHALTPLAN.png" alt="Schaltplan"><br><sub>Schaltplan</sub></td>
-    <td align="center" width="50%">✏️ <b>TODO (Team):</b> Foto<br><sub>Echter Aufbau, Bedienteil geöffnet</sub></td>
-  </tr>
-</table>
-
-> [!IMPORTANT]
-> ✏️ **TODO (Team):** Foto vom echten Aufbau machen: Bedienteil geöffnet, von
-> oben, alle Kabel und das Mini-Breadboard gut zu sehen. Als
-> `Fotos/aufbau_offen.jpg` hochladen (siehe
-> [`Fotos/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/Fotos)),
-> Claude baut es hier ein.
->
-> Am besten gleich prüfen, ob Schaltplan und Foto übereinstimmen, vor allem
-> die 3,3 V am RFID-Leser und der Bewegungsmelder an A2.
 
 ## Gehäuse
 
@@ -136,10 +113,6 @@ sich das Gehäuse aufklappen.
   <sub>Das gedruckte Rückteil: Uno unten (USB-Buchse in der Aussparung), darüber das Mini-Breadboard</sub>
 </p>
 
-> [!NOTE]
-> ✏️ **TODO (Team):** Foto vom fertigen Gerät auf der Holzplatte
-> (`Fotos/geraet_brett.jpg`).
-
 ---
 
-<sub>← [4 Verwendete Bauteile](Verwendete-Bauteile) · [6 Sourcecode](Sourcecode) →</sub>
+<sub>← [Verwendete Bauteile](Verwendete-Bauteile) · [Wichtige Codeabschnitte](Wichtige-Codeabschnitte) →</sub>

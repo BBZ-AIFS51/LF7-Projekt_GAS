@@ -10,8 +10,9 @@ ein 4x4-Keypad ein, Rückmeldung über OLED und passiven Buzzer, ein
 Bewegungssensor erkennt Anwesenheit.
 
 - Mikrocontroller: **Arduino Uno R3**
-- Hardware-Spezifikation: [MDs/aufbau.md](MDs/aufbau.md) (Stand vor dem RFID-Umbau;
-  maßgeblich für Pins/Verdrahtung ist die Tabelle weiter unten in dieser Datei)
+- Hardware-Spezifikation: [MDs/aufbau.md](MDs/aufbau.md) (Stand 10.11.2026, fertiges
+  Gerät; stimmt mit der Pin-Tabelle weiter unten überein, bei Änderungen beide
+  anpassen)
 - Schaltplan: [Schaltplan/](Schaltplan/). `SCHALTPLAN.png/.svg` ist der
   Cirkit-Designer-Export des Versuchsaufbaus (großes Breadboard, Quelle nicht
   im Repo). Die Batterie an VIN/GND ist im SVG von Hand nachgetragen und die
@@ -77,25 +78,23 @@ Bewegungssensor erkennt Anwesenheit.
   Fotos vom echten Aufbau liegen in `Fotos/` (Fotoliste in `Fotos/README.md`;
   vor dem Einbinden verkleinern und Metadaten/GPS entfernen, das Repo ist
   öffentlich) und werden per `raw.githubusercontent.com`-URL
-  (`…/main/Fotos/…`) eingebunden. Projektdokumentation für die Schule, auf **Deutsch**,
-  aufgebaut nach den zehn Kapiteln der Lehrkraft-Vorgabe (Seitenleiste
-  nummeriert): `Home` (Deckblatt), `Idee-und-Zielsetzung`,
-  `Funktionsbeschreibung`, `Verwendete-Bauteile`, `Aufbau-und-Schaltplan`,
-  `Sourcecode`, `Wichtige-Codeabschnitte`, `Herausforderungen`,
-  `Fazit-und-Ausblick`, `Quellenverzeichnis`; Anhang: Team, Zeitplan, Kosten,
-  Projektphasen, Entwicklungsverlauf, KI-Einsatz. **Vorgabe: Prompts werden
-  im Wiki nicht abgedruckt** — dort heißen sie „Schritt“ und werden nur
-  zusammengefasst. Pin-Zuordnung und kurze Code-Auszüge mit Erklärung gehören
-  laut Vorgabe ins Wiki, der vollständige Code nicht. Bilder per
-  `raw.githubusercontent.com`-URL aus diesem Repo einbinden. Platzhalter fürs
-  Team sind mit `✏️ TODO` markiert, Reflexion und Team-Angaben nicht selbst
-  ausfüllen. **Neuer Eintrag in `entwicklungsverlauf.md` → in
+  (`…/main/Fotos/…`) eingebunden. Projekt-Wiki auf **Deutsch**, **nicht die
+  Abgabe-Dokumentation** (die wird seit 10.11.2026 als Word-Dokument
+  geschrieben und als PDF abgegeben, s. `MDs/abschlussplan.md`). Seiten:
+  `Home`, `Idee-und-Zielsetzung`, `Funktionsbeschreibung`,
+  `Verwendete-Bauteile`, `Aufbau-und-Schaltplan`, `Wichtige-Codeabschnitte`,
+  `Herausforderungen`, `Projektphasen`, `Entwicklungsverlauf`, `KI-Einsatz`,
+  `Quellenverzeichnis` (IEEE). Keine Kapitelnummern, keine ✏️-TODO-Platzhalter
+  fürs Team, keine Abgabe-Seiten (Team, Zeitplan, Kosten, Reflexion).
+  **Prompts werden im Wiki nicht abgedruckt** — dort heißen sie „Schritt“ und
+  werden nur zusammengefasst. Bilder per
+  `raw.githubusercontent.com`-URL aus diesem Repo einbinden. **Neuer Eintrag in `entwicklungsverlauf.md` → in
   `wiki/Entwicklungsverlauf.md` eine Karte ergänzen und Zeitleiste, Diagramme und
   Zahlen (Schritte, Sitzungen, auch auf `Home.md`) anpassen.
   Ändert sich Verhalten, Zeit, Pin oder Code in der Firmware →
-  `Funktionsbeschreibung.md` (Zustandsdiagramm), `Aufbau-und-Schaltplan.md`,
-  `Sourcecode.md` (Konstanten) und die Auszüge in
-  `Wichtige-Codeabschnitte.md` mitziehen.**
+  `Funktionsbeschreibung.md` (Zustandsdiagramm), `Aufbau-und-Schaltplan.md`
+  und in `Wichtige-Codeabschnitte.md` die Auszüge und die Tabelle
+  „Einstellungen im Code“ mitziehen.**
 
 ## Angeschlossene Bauteile & Pin-Belegung
 
@@ -147,11 +146,8 @@ const byte COL_PINS[4] = {5, 4, 3, 2};
 
 - **OLED-Controller: SH1106**, 128x64, I2C-Adresse **0x3C**. NICHT SSD1306.
   Verwende `Adafruit_SH1106G` aus der Library `Adafruit SH110X`.
-- **I2C-Pins am Uno sind fest: SDA = A4, SCL = A5.** In `aufbau.md` sind SDA/SCL
-  vertauscht notiert (SDA→A5, SCL→A4) — die reale Verdrahtung nutzt A4/A5 korrekt.
-- **`MDs/aufbau.md` ist für den RFID-Umbau nicht aktuell** — der RC522 und der
-  Umzug des Bewegungssensors auf A2 stehen dort nicht drin. Maßgeblich ist die
-  Pin-Tabelle in dieser Datei.
+- **I2C-Pins am Uno sind fest: SDA = A4, SCL = A5.** (Im ersten Cirkit-Export
+  waren SDA/SCL vertauscht notiert, die reale Verdrahtung war immer A4/A5.)
 - Bewegungssensor: OUT ist **active HIGH** bei erkannter Bewegung. Sitzt seit
   dem RFID-Umbau auf **A2**, weil D11 fest der SPI-MOSI-Pin ist. `A2` ist am
   Uno einfach Digitalpin 16 und funktioniert normal mit `digitalRead()`.
@@ -227,7 +223,9 @@ statisches SRAM (im Wesentlichen die `Uid`-Struktur), Flash rund 5–7 kB.
 - `Code/alarm_system/alarm_system.ino` — **Hauptfirmware**: Zustandsautomat
   (UNSCHARF → Ausgangsverzögerung → SCHARF → ALARM → ADMIN), PIN über Keypad
   (Maskierung mit `*`, Bestätigung mit `#`, Abbruch mit `*`), Totenkopf/Herz
-  auf dem OLED, nicht-blockierende Töne (OK / Fehler 3 s / Sirene 30 s).
+  auf dem OLED, nicht-blockierende Töne (OK / Fehler 2 s / Sirene 30 s; gefordert waren
+  3 s für den Fehlerton, das Team hat sich am 10.11.2026 bewusst für 2 s
+  entschieden, `ERROR_TONE_MS` nicht ändern).
   PIN und Zeiten stehen als Konstanten oben im Sketch.
   **Kein Keypad-Library-Einsatz**: der Sketch scannt die Matrix selbst
   (`scanKeypad()`, Keymap im PROGMEM). Die Library kostete ~120 Byte SRAM,

@@ -84,7 +84,8 @@ Two printed enclosures, connected by a 3-wire cable: the **control unit** (keypa
 OLED, RC522, buzzer, Uno, mini breadboard, 9 V battery) goes outside next to the door, the **sensor unit** sits
 on the room side on a 60° wedge that turns it towards the entrance. The PIR can't
 see through the wall, so standing at the keypad never triggers it. Five STL files,
-no supports needed. Planning, print settings and assembly (in German):
+no supports needed. **Status:** printed and assembled (November 2026), both
+units wired and screwed together. Planning, print settings and assembly (in German):
 [MDs/gehaeuse.md](MDs/gehaeuse.md), model and STLs: [Gehaeuse/](Gehaeuse/).
 
 ## Getting started
@@ -153,10 +154,10 @@ sketch. To use it offline, just open
 
 The firmware was written together with Claude Code. Every prompt and answer is
 logged (in German) in [MDs/entwicklungsverlauf.md](MDs/entwicklungsverlauf.md).
-The school project documentation (assignment, team, schedule, costs, a visual
-timeline of the development log, reflection) lives in the
-[project wiki](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/wiki) (German). Its pages
-are edited in [wiki/](wiki/); every push to `main` publishes them to the wiki.
+The [project wiki](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/wiki) (German)
+explains the idea, the build, the key parts of the code, the problems we ran
+into and the development timeline. Its pages are edited in [wiki/](wiki/);
+every push to `main` publishes them to the wiki.
 
 ## License
 

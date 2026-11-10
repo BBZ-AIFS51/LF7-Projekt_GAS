@@ -1,8 +1,6 @@
 <!-- Diese Seite wird automatisch aus dem Ordner wiki/ im Repository erzeugt. Änderungen im Wiki-Editor werden beim nächsten Abgleich überschrieben. Bearbeiten: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/wiki -->
 # 🧭 Entwicklungsverlauf
 
-<sub>Anhang</sub>
-
 Die Firmware, das 3D-Modell und das Gehäuse sind Schritt für Schritt entstanden,
 mit dem KI-Assistenten **Claude Code** als Hilfsmittel (siehe
 [KI-Einsatz](KI-Einsatz)). Diese Seite zeigt den Verlauf als Zeitleiste: pro
@@ -14,7 +12,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **24** | **9** | **4** | **2** |
+| **25** | **9** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -54,6 +52,7 @@ timeline
     section Abschluss
         10.11. : S23 Abschlussplan
                : S24 Fotos, Quellen nach IEEE
+               : S25 Aufräumen, Wiki gekürzt
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -88,6 +87,7 @@ flowchart LR
     P22["📝 S22<br/>Schaltplan VIN"]
     P23["📝 S23<br/>Abschlussplan"]
     P24["📝 S24<br/>Fotos, Quellen"]
+    P25["📝 S25<br/>Aufräumen"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -104,7 +104,7 @@ flowchart LR
     P17 -. "Lehrkraft" .-> P18
     P18 --> P19
     P18 -. "Termine" .-> P23
-    P23 --> P24
+    P23 --> P24 --> P25
 
     classDef fw fill:#d0e7ff,stroke:#0969da,color:#0a3069
     classDef bug fill:#ffd8d3,stroke:#cf222e,color:#82071e
@@ -117,7 +117,7 @@ flowchart LR
     class P5 info
     class P8,P9,P13,P14,P15 vis
     class P10,P11,P12,P20 box
-    class P3,P17,P18,P19,P22,P23,P24 doc
+    class P3,P17,P18,P19,P22,P23,P24,P25 doc
 ```
 
 <sub>Durchgezogene Pfeile: Ergebnis führt direkt zum nächsten Schritt · gestrichelt: Anregung der Lehrkraft</sub>
@@ -135,7 +135,7 @@ flowchart LR
 | 💡 | Erklärung / Wissen | 5 |
 | 🎨 | Darstellung (README, 3D-Modell, Grafiken) | 8, 9, 13, 14, 15 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
-| 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24 |
+| 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24, 25 |
 
 </td>
 <td width="45%">
@@ -147,7 +147,7 @@ pie
     "Erklärung" : 1
     "Darstellung" : 5
     "Gehäuse" : 4
-    "Dokumentation" : 7
+    "Dokumentation" : 8
 ```
 
 </td>
@@ -488,6 +488,8 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 
 > [!NOTE]
 > **Geklärt in Schritt 24:** Präsentation am 01.12.2026 (Annahme), Zitierweise IEEE.
+>
+> **Geändert in Schritt 25:** Die Doku wird als Word-Dokument geschrieben und am Ende als PDF abgegeben, nicht mehr aus diesem Wiki erzeugt.
 
 <sub>📄 [`abschlussplan.md`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/abschlussplan.md) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#23-prompt--abschlussplan-10112026)</sub>
 
@@ -499,12 +501,28 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 - Präsentation: insgesamt mindestens 15 Minuten, angenommener Termin 01.12.2026
 - Das [Quellenverzeichnis](Quellenverzeichnis) folgt jetzt der Zitierweise **IEEE**, wie an Hochschulen üblich
 - Neuer Ordner [`Fotos/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/Fotos) mit einer Liste der Fotos, die für die Dokumentation noch fehlen
-- Die stabileren Schraubpunkte aus Schritt 21 stehen jetzt auch als [Herausforderung](Herausforderungen#schraubpunkte-am-sensordeckel-brechen-ab) in Kapitel 8
+- Die stabileren Schraubpunkte aus Schritt 21 stehen jetzt auch unter [Herausforderungen](Herausforderungen#schraubpunkte-am-sensordeckel-brechen-ab)
 
 > [!WARNING]
 > **Offen:** Fotos, der Test mit Batterie und die Montage auf der Holzplatte.
 
 <sub>🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#24-prompt--phase-0-abgeschlossen-fotos-quellen-nach-ieee-10112026)</sub>
+
+### 📝 Schritt 25 — Aufräumen, Wiki als Projekt-Wiki
+
+**Anlass:** Die Doku für die Abgabe wird als Word-Dokument geschrieben, nicht mehr aus dem Wiki erzeugt. Damit beginnt Phase 2 des Abschlussplans: Code-Freeze vorbereiten und das Repository aufräumen, weil es komplett abgegeben wird.
+
+**Ergebnis**
+- Fehlerton bleibt bei **2 s** (`ERROR_TONE_MS`), zwei Kommentare in der Firmware, die noch „3 s“ sagten, korrigiert
+- Alte Sicherung `alarm_system.ino.bak` gelöscht, Gehäusebild `druckplatte.png` von 488 auf 159 kB verkleinert
+- [`MDs/aufbau.md`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/aufbau.md) neu geschrieben: Bauteile, Pin-Belegung, Stromverteilung und Hinweise auf dem Stand des fertigen Geräts
+- Wiki gekürzt: Die Seiten Team und Rollen, Zeitplan, Kosten, Fazit und Ausblick sowie Sourcecode sind raus, ebenso alle Platzhalter und die Kapitelnummern der Abgabe-Vorgabe. Die Konstanten aus „Sourcecode“ stehen jetzt unter [Wichtige Codeabschnitte](Wichtige-Codeabschnitte#einstellungen-im-code).
+- README: Status des Gehäuses ergänzt, Beschreibung des Wikis angepasst
+
+> [!WARNING]
+> **Offen:** Fotos, Tests am Gerät, Montage auf der Holzplatte. Das Word-Dokument wird in Phase 3 angelegt.
+
+<sub>📄 [`aufbau.md`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/aufbau.md) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#25-prompt--phase-2-aufräumen-wiki-gekürzt-word-statt-wiki-pdf-10112026)</sub>
 
 ---
 
