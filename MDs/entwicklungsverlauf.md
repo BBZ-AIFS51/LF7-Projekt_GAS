@@ -5,7 +5,8 @@ Chronologisches Protokoll: Prompts (Jan Mummert) und Antworten (Claude).
 
 - Projekt: LF07 — Mini-Sicherheitssystem / Access Lock (Arduino Uno R3)
 - Daten der Sitzungen: 08.09.2026, 22.09.2026, 23.09.2026 (inkl. Gehäuse),
-  29.09.2026, 30.09.2026, 06.10.2026, 28.10.2026
+  29.09.2026, 30.09.2026, 06.10.2026, 28.10.2026,
+  10.11.2026
 - Grundlagen im Kontext: [../CLAUDE.md](../CLAUDE.md), [aufbau.md](aufbau.md)
 
 ---
@@ -821,6 +822,55 @@ Geändert bzw. neu:
 - Social Preview neu hochladen (Settings → General → Social preview).
 - Laufzeit der Batterie einmal messen. `Teile.xlsx` enthält Batterie und
   Breadboard noch nicht.
+
+---
+
+## 21. Prompt — Abschlussplan (10.11.2026)
+
+Mit angehängt: die Vorgaben der Lehrkraft „Projektdokumentation und
+Präsentation“, jetzt mit Terminen (Abgabe Präsentation 24.11.2026, Start der
+Präsentationen 01.12.2026, Abgabe Projektdokumentation 15.12.2026).
+
+> Plane wie wir die Abgabe unseres Projekts gestalten, also Plane es komplett
+> durch. Wir haben auf der anderen Branch zwar schon zum test eine Präsentation
+> mit dir erstellt. Die Präsentation an sich machen wir aber nochmal neu und
+> stellen sie ganz ans ende, damit es einen roten faden gibt.
+>
+> Also Plane einmal die komplettn abschluss des Projekts durch, was noch alles
+> gemacht werden muss usw.
+
+### Antwort
+
+Neuer Plan [abschlussplan.md](abschlussplan.md) mit Rückwärtsplanung ab den
+drei Terminen. Grundidee für den roten Faden: Da die Präsentation **vor** der
+Doku abgegeben wird, wird zuerst das Gerät fertig, dann die Doku inhaltlich,
+und erst daraus die Präsentation gebaut. Nach dem Vortrag fließt das Feedback
+in die Doku.
+
+| Phase | Bis | Inhalt |
+|---|---|---|
+| 0 Klären | 13.11. | Fragen an die Lehrkraft: Abgabeform Doku/Code/Präsentation, Prompt-Protokoll als Anhang, Termin, Zitierformat. Umgang mit dem Präsentations-Prototyp |
+| 1 Gerät | 15.11. | Fotos vor dem Zuschrauben, Einbau nach Steckplan, Testtabelle T1–T10 (u. a. Bugfix Schritt 16, RFID-Reset, SRAM-Wert, Laufzeit), Demo-Video |
+| 2 Code-Freeze | 17.11. | Fehlerton 2 s/3 s entscheiden, `.bak` entfernen, Tag `v1.0` |
+| 3 Doku | 20.11. | alle ✏️ TODO im Wiki, Kapitel für Kapitel mit Zuständigkeit (Team/Claude), Teile.xlsx, PDF-Anleitung, Social Preview |
+| 4 Präsentation | 24.11. | neu bauen, Ablauf ≈ 22 min nach den Doku-Kapiteln mit Aufteilung auf zwei Personen, Demo-Drehbuch, Plan B (Video, 3D-Modell), PDF-Sicherung |
+| 5 Proben | ab 01.12. | Durchläufe mit Stoppuhr, typische Prüfungsfragen, Packliste |
+| 6 Abschluss | 15.12. | Feedback einarbeiten, Endkontrolle, ggf. PDF/ZIP-Export, Abgabe |
+
+Dazu: Abgabepaket als Tabelle und was bewusst nicht mehr passiert (keine
+neuen Funktionen nach dem Code-Freeze, kein Neudruck).
+
+Der Präsentations-Prototyp aus den Sitzungen vom 09.11.2026 liegt nur auf dem
+Branch `claude/funny-cannon-vqa19g` und ist nicht in `main`. Seine
+Protokolleinträge (dort Nr. 21–24) fehlen deshalb hier.
+
+**Offene Punkte:**
+
+- Fragen aus Phase 0 an die Lehrkraft stellen.
+- Entscheiden, ob die Protokolleinträge des Prototyp-Branches übernommen
+  werden. Dann diesen Eintrag und die Wiki-Karte umnummerieren.
+- Den Plan selbst nicht ins Wiki übernehmen, er ist eine Arbeitsliste fürs
+  Team, kein Teil der Dokumentation.
 
 ---
 

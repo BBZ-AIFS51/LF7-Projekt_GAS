@@ -14,7 +14,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **20** | **7** | **3** | **2** |
+| **21** | **8** | **3** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -49,6 +49,8 @@ timeline
                : S19 Wiki automatisch
     section Einbau
         28.10. : S20 Batterie an VIN, Mini-Breadboard
+    section Abschluss
+        10.11. : S21 Abschlussplan
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -79,6 +81,7 @@ flowchart LR
     P18["📝 S18<br/>Vorgaben"]
     P19["📝 S19<br/>Wiki-Workflow"]
     P20["📦 S20<br/>Batterie an VIN"]
+    P21["📝 S21<br/>Abschlussplan"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -92,6 +95,7 @@ flowchart LR
     P3 --> P17
     P17 -. "Lehrkraft" .-> P18
     P18 --> P19
+    P18 -. "Termine" .-> P21
 
     classDef fw fill:#d0e7ff,stroke:#0969da,color:#0a3069
     classDef bug fill:#ffd8d3,stroke:#cf222e,color:#82071e
@@ -104,7 +108,7 @@ flowchart LR
     class P5 info
     class P8,P9,P13,P14,P15 vis
     class P10,P11,P12,P20 box
-    class P3,P17,P18,P19 doc
+    class P3,P17,P18,P19,P21 doc
 ```
 
 <sub>Durchgezogene Pfeile: Ergebnis führt direkt zum nächsten Schritt · gestrichelt: Anregung der Lehrkraft</sub>
@@ -122,7 +126,7 @@ flowchart LR
 | 💡 | Erklärung / Wissen | 5 |
 | 🎨 | Darstellung (README, 3D-Modell, Grafiken) | 8, 9, 13, 14, 15 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
-| 📝 | Dokumentation | 3, 17, 18, 19 |
+| 📝 | Dokumentation | 3, 17, 18, 19, 21 |
 
 </td>
 <td width="45%">
@@ -134,7 +138,7 @@ pie
     "Erklärung" : 1
     "Darstellung" : 5
     "Gehäuse" : 4
-    "Dokumentation" : 4
+    "Dokumentation" : 5
 ```
 
 </td>
@@ -421,6 +425,25 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 > **Offen:** nicht am Aufbau getestet. VIN hat keinen Verpolungsschutz, also vor dem ersten Anstecken die Polung prüfen. Die PDF-Anleitung und der Cirkit-Schaltplan müssen noch nachgezogen werden.
 
 <sub>📄 [`steckplan_gehaeuse.svg`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Schaltplan/steckplan_gehaeuse.svg) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#20-prompt--batterie-an-vin-und-mini-breadboard-28102026)</sub>
+
+---
+
+## 📆 10.11.2026 · Abschluss planen
+
+### 📝 Schritt 21 — Abschlussplan
+
+**Anlass:** Die Termine stehen fest: Abgabe der Präsentation am 24.11., Vorträge ab 01.12., Abgabe der Dokumentation am 15.12.2026.
+
+**Ergebnis**
+- Ein Plan für alles, was bis zur Abgabe noch fehlt, in sechs Phasen: klären, Gerät fertig und getestet, Code-Freeze, Doku fertig, Präsentation, Proben, Abschluss
+- **Roter Faden:** Erst wird das Gerät fertig, dann die Doku, und erst daraus die Präsentation. Sie folgt denselben Kapiteln wie die Doku.
+- Die Präsentation wird neu gebaut. Der erste Entwurf war nur ein Test.
+- Für jede offene Stelle steht fest, ob das Team, die KI oder die Lehrkraft gefragt ist
+
+> [!WARNING]
+> **Offen:** Fragen an die Lehrkraft zur Abgabeform, zum Termin und zum Arbeitsprotokoll.
+
+<sub>📄 [`abschlussplan.md`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/abschlussplan.md) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#21-prompt--abschlussplan-10112026)</sub>
 
 ---
 

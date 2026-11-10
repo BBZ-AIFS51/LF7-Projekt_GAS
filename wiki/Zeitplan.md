@@ -51,7 +51,8 @@ gantt
 
     section Dokumentation
     Repository angelegt                 :milestone, 2026-09-22, 0d
-    Projekt-Wiki (S17–S19)              :active, 2026-10-06, 1d
+    Projekt-Wiki (S17–S19)              :done, 2026-10-06, 1d
+    Abschlussplan (S21)                 :done, 2026-11-10, 1d
 ```
 
 > [!NOTE]
