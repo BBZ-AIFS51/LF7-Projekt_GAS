@@ -197,9 +197,8 @@ abhaken, Messwerte eintragen):
 Ab hier wird die Firmware nicht mehr geändert, sonst stimmen Doku, Präsentation
 und 3D-Modell nicht mehr überein.
 
-- [x] **(Team)** Fehlerton: bleibt bei **2 s**, wie im Code (Entscheidung
-      10.11.2026). Gefordert waren 3 s, die Begründung kommt in die Doku
-      (Phase 3). Code-Kommentare, die noch „3 s“ sagten, sind korrigiert.
+- [x] **(Team)** Fehlerton: **2 s**, festgelegt. Code, Kommentare, Viewer,
+      Wiki und Doku sagen überall 2 s.
 - [ ] **(Team)** Fehler, die bei den Tests in Phase 1 auffallen, beheben (mit
       Claude), neu testen
 - [ ] **(Team)** Endstand kompilieren und aufs Gerät laden, kurzer Test
@@ -237,7 +236,7 @@ Platzhalter nicht mehr.
 | 3 Funktionsbeschreibung | aus dem Wiki übernehmen | Claude |
 | 4 Verwendete Bauteile | prüfen, ob Batterie, Clip, Mini-Breadboard und Kabel vollständig drin sind | Team prüft |
 | 5 Aufbau und Schaltplan | Foto vom Versuchsaufbau, Laufzeit eintragen (Schaltplan mit Batterie an VIN ist seit Schritt 22 erledigt) | Team |
-| 6 Sourcecode | Dateien und Abgabeform (Code liegt im Repository), **Begründung, warum der Fehlerton 2 s statt der geforderten 3 s dauert** | Team begründet, Claude schreibt |
+| 6 Sourcecode | Dateien und Abgabeform (Code liegt im Repository) | Claude |
 | 7 Wichtige Codeabschnitte | gemessenen SRAM-Wert eintragen | Team misst, Claude schreibt |
 | 8 Herausforderungen | wie ihr den SH1106 erkannt habt, Probleme beim RC522-Verdrahten, eigene Probleme (Druck, Einbau, Teamarbeit) | **Team** |
 | 9 Fazit und Ausblick | Soll/Ist (Zeit, Kosten, Gehäuse), Fazit 2–3 Sätze, **Reflexion selbst schreiben, ohne KI**, 2–4 Erweiterungsideen auswählen | **Team** |

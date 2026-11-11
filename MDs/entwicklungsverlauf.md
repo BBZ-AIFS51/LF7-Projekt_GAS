@@ -1121,7 +1121,6 @@ steht weiter in der Tabelle in Phase 3.
   hatten schon 2 s. Zwei Kommentare in
   [../Code/alarm_system/alarm_system.ino](../Code/alarm_system/alarm_system.ino)
   sagten noch „3 s“, korrigiert (nur Kommentare, kein Verhalten geändert).
-  Die Begründung für 2 statt 3 s kommt in die Doku (Phase 3, Team).
 - `Code/alarm_system/alarm_system.ino.bak` gelöscht.
 - `Gehaeuse/bilder/druckplatte.png` von 488 auf 159 kB verkleinert (Palette
   mit 256 Farben, kein sichtbarer Unterschied; pngquant war nicht vorhanden).
@@ -1152,6 +1151,26 @@ Codes. Nicht angefasst.
 - Phase 2, Team: Fehler aus den Tests beheben, Endstand hochladen, Tag `v1.0`.
 - Ablage des Word-Dokuments festlegen (im Repository oder nur bei euch).
 - Fotos, Tests T1–T10, Montage auf der Holzplatte (Phase 1).
+
+### Nachtrag (11.11.2026)
+
+> wo steht denn bitte das unsere lehrkraft 3s fordert? und warum sollten wir
+> nur 2s machen?
+
+> das thema hatten wir schon 3 mal und du hast mir mehfach versichert, dass
+> alles mittlerweile gleich ist. Der Ton geht 2 Sekunden lang, du hast sogar in
+> diesem chat selber geschrieben das du es in den md und so berichtigt hast
+
+### Antwort
+
+Die Lehrkraft fordert keine 3 s, das hatte Claude in der Zusammenfassung
+falsch geschrieben. Die 3 s stammten aus dem ersten eigenen Prompt
+(Schritt 1). Der Fehlerton dauert **2 s**, das ist festgelegt. Entfernt wurden
+die letzten Stellen, die 2 s noch als Abweichung behandelten: die
+Begründungs-Aufgabe im Abschlussplan (Phase 2 und Kapitel 6 in Phase 3), die
+Zeile „Abweichung von der Anforderung“ im Wiki unter „KI-Einsatz“ und der
+Zusatz in [../CLAUDE.md](../CLAUDE.md). Code, Viewer, Wiki und Plan sagen jetzt
+überall nur noch 2 s.
 
 ---
 

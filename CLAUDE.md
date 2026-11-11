@@ -223,9 +223,9 @@ statisches SRAM (im Wesentlichen die `Uid`-Struktur), Flash rund 5–7 kB.
 - `Code/alarm_system/alarm_system.ino` — **Hauptfirmware**: Zustandsautomat
   (UNSCHARF → Ausgangsverzögerung → SCHARF → ALARM → ADMIN), PIN über Keypad
   (Maskierung mit `*`, Bestätigung mit `#`, Abbruch mit `*`), Totenkopf/Herz
-  auf dem OLED, nicht-blockierende Töne (OK / Fehler 2 s / Sirene 30 s; gefordert waren
-  3 s für den Fehlerton, das Team hat sich am 10.11.2026 bewusst für 2 s
-  entschieden, `ERROR_TONE_MS` nicht ändern).
+  auf dem OLED, nicht-blockierende Töne (OK / Fehler 2 s / Sirene 30 s). Der Fehlerton
+  dauert **2 s**, das ist festgelegt und überall so dokumentiert — nicht
+  wieder als Abweichung oder offenen Punkt aufführen.
   PIN und Zeiten stehen als Konstanten oben im Sketch.
   **Kein Keypad-Library-Einsatz**: der Sketch scannt die Matrix selbst
   (`scanKeypad()`, Keymap im PROGMEM). Die Library kostete ~120 Byte SRAM,
