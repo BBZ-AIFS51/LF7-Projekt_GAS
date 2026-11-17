@@ -133,8 +133,10 @@ Die Fragen zur Abgabeform sind beantwortet (siehe oben). Offen ist noch:
 - [x] **(Team)** Zitierformat → **IEEE** (nummeriert, wie an der Hochschule)
 - [x] **(Team)** Arbeitsweise: Alles wird auf dem Branch
       `claude/trusting-knuth-awmzj8` erledigt. Wenn alles fertig ist, kommt es
-      mit **einem Pull Request** nach `main` (spätestens in Phase 6). Bis dahin
-      ist das GitHub-Wiki noch auf dem alten Stand, weil es nur bei Änderungen
+      mit **einem Pull Request** nach `main` (spätestens in Phase 6).
+      Zwischenstand am 17.11.2026 direkt nach `main` übernommen (Fast-Forward),
+      Wiki und 3D-Modell sind damit aktuell. Danach wieder: Bis zum nächsten
+      Übernehmen ist das GitHub-Wiki auf dem alten Stand, weil es nur bei Änderungen
       an `main` aktualisiert wird.
 
 ## Phase 1 · Gerät fertig bauen und testen (bis Fr 20.11.)

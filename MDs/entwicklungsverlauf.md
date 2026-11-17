@@ -1275,6 +1275,14 @@ Hinweise auf den anderen Branch in [abschlussplan.md](abschlussplan.md) und
 [../Fotos/README.md](../Fotos/README.md) sind zurückgenommen, gearbeitet wird
 weiter auf `claude/trusting-knuth-awmzj8`.
 
+> warte bevor ich das mach, können wir eigentlich auch diesen branch hier auf
+> main raufhauen. mach das
+
+`main` hatte keine eigenen neuen Commits, deshalb wurde der Branch ohne
+Konflikte als Fast-Forward nach `main` übernommen. Damit liefen die Workflows
+für das Wiki und das 3D-Modell auf GitHub Pages, die Fotos sind jetzt auch im
+GitHub-Wiki zu sehen.
+
 ---
 
 ## Anhang — Stand der Dateien
