@@ -126,14 +126,18 @@ gleiche Logik wie in der Firmware, wahlweise als loser Aufbau oder im Gehäuse.
 ## 7 · Feinschliff
 
 Beim Testen fiel auf, dass eine falsche Eingabe während des Alarms die Sirene
-abbrach. Jetzt wird eine falsche Eingabe im Alarm ignoriert.
-→ [Schritt 16](Entwicklungsverlauf#-schritt-16--falsche-eingabe-bricht-den-alarm-ab)
+abbrach. Seitdem gibt es im Alarm keinen Fehlerton mehr. Kurz vor dem
+Code-Freeze kam dazu: Eine falsche Eingabe im Alarm startet die 30 Sekunden
+neu, damit man während der Sirene nicht ungestraft Codes durchprobieren kann.
+→ [Schritt 16](Entwicklungsverlauf#-schritt-16--falsche-eingabe-bricht-den-alarm-ab) ·
+[Schritt 28](Entwicklungsverlauf#-schritt-28--falsche-eingabe-verlängert-den-alarm)
 
 ## Stand und offene Punkte
 
 - [x] Alle Muss-Anforderungen umgesetzt, siehe [Idee und Zielsetzung](Idee-und-Zielsetzung#anforderungen)
 - [x] Alle Funktionen am fertigen Gerät getestet (17.11.2026): Scharfschalten mit PIN und Karte, Alarm, Alarm beenden, 3 Fehlversuche, Admin-Menü
 - [x] Bugfix aus Schritt 16 am echten Aufbau getestet
+- [ ] Änderung aus Schritt 28 (falsche Eingabe startet den Alarm neu) am Gerät testen
 - [x] Freier SRAM gemessen: **252 Byte** beim Start
 - [x] RFID-Reset (<kbd>B</kbd>) mit absichtlich getrenntem Leser getestet
 - [x] Alle Module passen ins gedruckte Gehäuse (eingebaut am 10.11.2026)

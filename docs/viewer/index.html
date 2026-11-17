@@ -580,9 +580,11 @@ function accessGranted() {
 }
 
 function accessDenied(reason) {
-  // a wrong PIN/card must not interrupt or restart a running siren
+  // a wrong PIN/card must not stop the siren - it restarts the alarm time
   if (fw.state === ST.ALARM) {
-    serial('[ALARM] wrong entry ignored, siren keeps running');
+    fw.stateStart = millis();
+    fw.displayDirty = true;
+    serial('[ALARM] wrong entry - alarm time restarted');
     return;
   }
   fw.wrongTries++;

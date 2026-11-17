@@ -118,7 +118,8 @@ void accessGranted() {
 
 void accessDenied(const __FlashStringHelper *reason) {
   if (state == STATE_ALARM) {
-    return;                       // wrong entry must not stop the siren
+    stateStart = millis();        // wrong entry restarts the 30 s alarm
+    return;                       // no error tone, the siren keeps running
   }
   wrongTries++;
   if (wrongTries >= MAX_WRONG_TRIES) {
@@ -136,9 +137,12 @@ void accessDenied(const __FlashStringHelper *reason) {
 - **Falsche Eingabe** erhöht den Zähler. Beim dritten Mal (`MAX_WRONG_TRIES`)
   gibt es Alarm, sonst nur den Fehlerton. Das verhindert, dass jemand die PIN
   einfach durchprobiert.
-- **Während des Alarms** wird eine falsche Eingabe ignoriert. Vorher hat der
-  Fehlerton die Sirene ersetzt, und nach dem Fehlerton war Ruhe (siehe
+- **Während des Alarms** zählt eine falsche Eingabe nicht als Fehlversuch und
+  spielt keinen Fehlerton, sonst würde der Fehlerton die Sirene ersetzen (siehe
   [Herausforderungen](Herausforderungen#falsche-eingabe-beendet-den-alarm)).
+  Stattdessen setzt `stateStart = millis()` die Alarmzeit zurück: Die Restzeit
+  springt wieder auf 30 Sekunden. Dafür braucht es keine neue Variable, also
+  auch keinen zusätzlichen Arbeitsspeicher.
 
 Die PIN selbst wird in `submitEntry()` mit `strcmp(entry, PIN_CODE)` verglichen,
 also Zeichen für Zeichen mit der gespeicherten PIN.
@@ -301,7 +305,7 @@ lassen sich dort ändern, ohne den restlichen Code anzufassen:
 | Konstante | Wert | Bedeutung |
 |---|---:|---|
 | `EXIT_DELAY_MS` | 10 000 ms | Ausgangsverzögerung nach dem Scharfschalten |
-| `ALARM_MS` | 30 000 ms | Dauer der Sirene |
+| `ALARM_MS` | 30 000 ms | Dauer der Sirene, startet bei falscher Eingabe im Alarm neu |
 | `ERROR_TONE_MS` | 2 000 ms | Dauer des Fehlertons |
 | `MAX_WRONG_TRIES` | 3 | Fehlversuche bis zum Alarm |
 | `ENTRY_TIMEOUT_MS` | 10 000 ms | halb getippte PIN wird gelöscht |

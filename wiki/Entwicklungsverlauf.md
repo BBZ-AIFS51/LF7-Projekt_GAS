@@ -12,7 +12,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **27** | **10** | **4** | **2** |
+| **28** | **10** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -55,6 +55,7 @@ timeline
                : S25 Aufräumen, Wiki gekürzt
         17.11. : S26 Fotos vom echten Aufbau
                : S27 Tests bestanden
+               : S28 Alarm verlängern
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -92,6 +93,7 @@ flowchart LR
     P25["📝 S25<br/>Aufräumen"]
     P26["📝 S26<br/>Fotos"]
     P27["📝 S27<br/>Tests"]
+    P28["💻 S28<br/>Alarm verlängern"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -109,6 +111,8 @@ flowchart LR
     P18 --> P19
     P18 -. "Termine" .-> P23
     P23 --> P24 --> P25 --> P26 --> P27
+    P16 --> P28
+    P27 -- "Test am Gerät" --> P28
 
     classDef fw fill:#d0e7ff,stroke:#0969da,color:#0a3069
     classDef bug fill:#ffd8d3,stroke:#cf222e,color:#82071e
@@ -116,7 +120,7 @@ flowchart LR
     classDef vis fill:#ead9ff,stroke:#8250df,color:#3e1f79
     classDef box fill:#d2f4dc,stroke:#1a7f37,color:#044f1e
     classDef doc fill:#e6e9ed,stroke:#59636e,color:#1f2328
-    class P1,P6,P7 fw
+    class P1,P6,P7,P28 fw
     class P2,P4,P16,P21 bug
     class P5 info
     class P8,P9,P13,P14,P15 vis
@@ -134,7 +138,7 @@ flowchart LR
 
 | | Bereich | Schritte |
 |:---:|---|---|
-| 💻 | Firmware-Funktionen | 1, 6, 7 |
+| 💻 | Firmware-Funktionen | 1, 6, 7, 28 |
 | 🐞 | Fehlerbehebung | 2, 4, 16, 21 |
 | 💡 | Erklärung / Wissen | 5 |
 | 🎨 | Darstellung (README, 3D-Modell, Grafiken) | 8, 9, 13, 14, 15 |
@@ -146,7 +150,7 @@ flowchart LR
 
 ```mermaid
 pie
-    "Firmware" : 3
+    "Firmware" : 4
     "Fehlerbehebung" : 4
     "Erklärung" : 1
     "Darstellung" : 5
@@ -562,6 +566,20 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 > **Offen:** Laufzeit mit Batterie (T10), Montage auf der Holzplatte.
 
 <sub>🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#27-prompt--tests-t1t9-bestanden-board-und-drucker-17112026)</sub>
+
+### 💻 Schritt 28 — Falsche Eingabe verlängert den Alarm
+
+**Problem:** Beim Testen ist eine Lücke aufgefallen. Während des Alarms konnte man beliebig viele falsche PINs und Karten ausprobieren, ohne dass etwas passierte, und nach dem Alarm stand der Zähler für Fehlversuche wieder bei 0.
+
+**Ergebnis**
+- Jede falsche Eingabe im Alarm startet die 30 Sekunden neu, die Restzeit auf dem Display springt zurück. Weiterhin kein Fehlerton, die Sirene läuft durch (siehe Schritt 16)
+- Eine Zeile in `accessDenied()`: `stateStart = millis()`. Keine neue Variable, also **kein zusätzlicher Arbeitsspeicher**
+- Das 3D-Modell verhält sich gleich
+
+> [!WARNING]
+> **Offen:** in der Arduino IDE kompilieren, aufs Gerät laden und testen, danach Code-Freeze.
+
+<sub>📄 [`alarm_system.ino`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Code/alarm_system/alarm_system.ino) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#28-prompt--falsche-eingabe-im-alarm-startet-ihn-neu-17112026)</sub>
 
 ---
 

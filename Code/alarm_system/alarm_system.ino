@@ -8,6 +8,7 @@
  *   - ARMED     : skull icon, motion on the sensor triggers the alarm.
  *   - ALARM     : flashing skull + countdown, loud siren for 30 s
  *                 (or until the PIN is entered / a known card is presented).
+ *                 A wrong PIN or unknown card restarts the 30 s.
  *
  * Two ways to arm and disarm
  *   Keypad : PIN + '#'
@@ -580,10 +581,14 @@ void accessGranted() {
 }
 
 void accessDenied(const __FlashStringHelper *reason) {
-  // while the siren runs, a wrong PIN/card must not interrupt or restart it -
-  // only the correct PIN or a known card ends the alarm
+  // while the siren runs, a wrong PIN/card must not stop it (no error tone).
+  // Instead the alarm time starts over at ALARM_MS, so trying codes or cards
+  // during the alarm only makes it last longer. Only the correct PIN or a
+  // known card ends the alarm early.
   if (state == STATE_ALARM) {
-    Serial.println(F("[ALARM] wrong entry ignored, siren keeps running"));
+    stateStart = millis();
+    displayDirty = true;
+    Serial.println(F("[ALARM] wrong entry - alarm time restarted"));
     return;
   }
 

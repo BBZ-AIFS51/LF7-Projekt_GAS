@@ -1283,6 +1283,47 @@ Konflikte als Fast-Forward nach `main` übernommen. Damit liefen die Workflows
 für das Wiki und das 3D-Modell auf GitHub Pages, die Fotos sind jetzt auch im
 GitHub-Wiki zu sehen.
 
+
+## 28. Prompt — Falsche Eingabe im Alarm startet ihn neu (17.11.2026)
+
+> Wir arbeiten im bestehenden Branch claude/trusting-knuth-awmzj8 weiter,
+> nicht in einem neuen. Erst diesen Branch auschecken, dann origin/main holen
+> und mergen, falls dort etwas Neues ist.
+> Lies MDs/abschlussplan.md und die letzten Einträge in
+> MDs/entwicklungsverlauf.md (26 und 27).
+> Als Nächstes: würden wir gerne, wenn es dann ram technisch überhaupt geht noch etwas am code ändern bevor wir ihn freezen.
+>
+> Und zwar kann man, während der alarm ausgelöst ist falsche codes und karten eingeben und einlesen, ohne das was passiert und nach dem alarm ist der count für wrong tries wieder bei 0. Deshalb soll, wenn während dem alarm eine falsche eingabe kommt, der alarm resettet werden, also wieder auf die 30sek springen
+
+### Antwort
+
+- **Branch:** `claude/trusting-knuth-awmzj8` auf den Stand von `origin`
+  gebracht (Fast-Forward). `origin/main` hatte nichts Neues, kein Merge nötig.
+- **Firmware:** In `accessDenied()` setzt eine falsche PIN, Admin-PIN oder
+  unbekannte Karte im Zustand ALARM jetzt `stateStart = millis()`. Die
+  Restzeit springt damit auf 30 s zurück, die Anzeige wird neu gezeichnet.
+  Weiterhin **kein Fehlerton** (der würde die Sirene ersetzen, s. Schritt 16)
+  und kein Zähler: Der Alarm selbst ist die Strafe. Die Sirene läuft ohne
+  Unterbrechung weiter, ihr Ton hängt an `soundStart`, nicht an `stateStart`.
+- **SRAM:** geht. Es kommt **keine neue Variable** dazu, `stateStart` gibt es
+  schon. Der neue Serial-Text liegt mit `F()` im Flash. Der freie SRAM beim
+  Start sollte also weiter bei 252 Byte liegen, Flash wächst um ein paar Byte.
+- **3D-Modell** (`docs/viewer/index.html`) gleich geändert und im Browser
+  geprüft: Alarm auslösen, 1 s warten, falsche Eingabe → `stateStart` springt
+  neu, Zustand bleibt ALARM, Zähler bleibt 0.
+- **Nachgezogen:** README, CLAUDE.md, `anleitung.md`, Abschlussplan (T4 als
+  neu zu testen, Demo-Drehbuch, Phase 2), Wiki: Funktionsbeschreibung (Tabelle
+  und Zustandsdiagramm mit Übergang Alarm → Alarm), Wichtige Codeabschnitte
+  (Auszug, Erklärung, Tabelle „Einstellungen im Code“), Herausforderungen,
+  Projektphasen, Entwicklungsverlauf (Karte 28, Zahlen), Home (28 Schritte).
+
+**Offene Punkte:**
+
+- Nicht kompiliert (keine arduino-cli in der Sitzung). In der Arduino IDE
+  kompilieren, hochladen und T4 wiederholen, `free SRAM:` ablesen.
+- PDF der Anleitung neu erzeugen (stand schon im Plan, jetzt auch mit dem
+  neuen Satz zum Alarm).
+- Danach Code-Freeze und Tag `v1.0`.
 ---
 
 ## Anhang — Stand der Dateien

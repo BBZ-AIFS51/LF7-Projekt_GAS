@@ -29,7 +29,7 @@ steht. Erst wer den Raum betritt, wird erkannt.
 | 5 | Zurückkommen | PIN + <kbd>#</kbd> oder Karte | Heller Doppelton, ❤️ Herz: wieder unscharf. Ein laufender Alarm wird damit sofort beendet. |
 | 6 | Falsche PIN oder unbekannte Karte | – | Rauer, tiefer Brummton, Display zeigt kurz ein ✖. |
 | 7 | **3 Fehlversuche** hintereinander | – | Sofort Alarm, auch wenn die Anlage gerade unscharf war. |
-| 8 | Falsche Eingabe während des Alarms | – | Wird ignoriert, die Sirene läuft weiter. Nur die richtige PIN oder eine bekannte Karte beendet den Alarm. |
+| 8 | Falsche Eingabe während des Alarms | – | Kein Fehlerton, die Sirene läuft weiter und **die 30 Sekunden beginnen von vorn**. Wer im Alarm Codes oder Karten durchprobiert, verlängert ihn also nur. Nur die richtige PIN oder eine bekannte Karte beendet den Alarm. |
 
 > [!TIP]
 > Die PIN erscheint beim Tippen nur als `*`. Eine halb getippte PIN verschwindet
@@ -51,6 +51,7 @@ stateDiagram-v2
     Scharf --> Unscharf: PIN oder Karte
     Alarm --> Unscharf: PIN oder Karte
     Alarm --> Scharf: nach 30 s
+    Alarm --> Alarm: falsche Eingabe (30 s neu)
     Unscharf --> Admin: A + Admin-PIN
     Admin --> Unscharf: * oder 20 s Leerlauf
 

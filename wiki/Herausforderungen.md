@@ -14,7 +14,7 @@ haben.
 | 📶 RFID | [Tastenfeld träge, Sirene stockt](#tastenfeld-träge-sirene-stockt) | Kartenleser nur alle 200 ms abfragen |
 | 📶 RFID | [Kartenleser antwortet nicht mehr](#kartenleser-antwortet-nicht-mehr) | Neustart des Lesers per Taste <kbd>B</kbd> |
 | 📶 RFID | [Versorgungsspannung](#versorgungsspannung-des-rfid-lesers) | 3,3 V statt 5 V |
-| 🔊 Alarm | [Falsche Eingabe beendet den Alarm](#falsche-eingabe-beendet-den-alarm) | falsche Eingaben im Alarm ignorieren |
+| 🔊 Alarm | [Falsche Eingabe beendet den Alarm](#falsche-eingabe-beendet-den-alarm) | falsche Eingaben im Alarm starten die 30 s neu |
 | 📦 Gehäuse | [Wohin mit dem Bewegungsmelder?](#wohin-mit-dem-bewegungsmelder) | eigenes Sensorteil im Raum, auf einem 60°-Keil |
 | 🔋 Stromversorgung | [Batterie passt nicht ins Gehäuse](#batterie-passt-nicht-ins-gehäuse) | Batterie innen an VIN statt am Hohlstecker |
 
@@ -124,9 +124,16 @@ war die Sirene aus.
 Sirene ersetzt, und nach seinem Ende war Stille, obwohl die Anlage noch im Alarm
 war.
 
-**Lösung:** Während des Alarms werden falsche Eingaben ignoriert. Nur die
-richtige PIN oder eine bekannte Karte beendet ihn, siehe
+**Lösung:** Während des Alarms gibt es bei falschen Eingaben keinen Fehlerton
+mehr, die Sirene läuft weiter. Nur die richtige PIN oder eine bekannte Karte
+beendet den Alarm, siehe
 [Wichtige Codeabschnitte](Wichtige-Codeabschnitte#zugriff-erlaubt-oder-verweigert).
+
+**Nachgebessert:** Bei den Tests am fertigen Gerät ist eine Lücke aufgefallen.
+Falsche Eingaben im Alarm hatten gar keine Folgen, und nach dem Alarm stand
+der Zähler für Fehlversuche wieder bei 0. Man konnte also während der Sirene
+in Ruhe Codes und Karten durchprobieren. Jetzt startet jede falsche Eingabe im
+Alarm die 30 Sekunden neu.
 
 ### Wohin mit dem Bewegungsmelder?
 

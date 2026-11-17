@@ -188,7 +188,7 @@ abhaken, Messwerte eintragen):
 | T1 | PIN + `#` im Zustand UNSCHARF | 10 s Ausgangsverzögerung, dann Totenkopf | ✅ |
 | T2 | Bewegung im Zustand SCHARF | Sirene 30 s, Totenkopf blinkt | ✅ |
 | T3 | Richtige PIN im Alarm | Sirene aus, Herz | ✅ |
-| T4 | Falsche PIN / falsche Karte im Alarm (Bugfix Schritt 16) | wird ignoriert, Sirene läuft weiter | ✅ |
+| T4 | Falsche PIN / falsche Karte im Alarm (Schritt 16, geändert in Schritt 28) | kein Fehlerton, Sirene läuft weiter, Restzeit springt auf 30 s zurück | ✅ (alt), ✏️ neu testen |
 | T5 | 3 × falsche PIN im Zustand UNSCHARF | Alarm | ✅ |
 | T6 | Bekannte Karte auflegen | schaltet scharf bzw. unscharf | ✅ |
 | T7 | Admin-Menü: `A` + Admin-PIN, Karte anlernen, löschen | Karte wird gespeichert, bleibt nach Neustart | ✅ |
@@ -230,6 +230,14 @@ und 3D-Modell nicht mehr überein.
       Wiki und Doku sagen überall 2 s.
 - [x] **(Team)** Fehler aus den Tests in Phase 1 beheben → keine gefunden,
       T1–T9 bestanden (17.11.2026)
+- [x] **(Claude)** Letzte Änderung vor dem Freeze (Schritt 28, 17.11.2026):
+      Falsche PIN oder Karte im Alarm startet die 30 s neu. Kostet keinen
+      zusätzlichen SRAM (keine neue Variable), nur ein paar Byte Flash.
+      3D-Modell, Wiki, README und Anleitung sind nachgezogen.
+- [ ] **(Team)** T4 mit der neuen Firmware wiederholen: Alarm auslösen,
+      nach ~15 s falsche PIN + `#` → Restzeit springt auf 30, Sirene läuft
+      ohne Fehlerton weiter; danach richtige PIN → Herz. Beim Start
+      `free SRAM:` ablesen, es sollten weiter **252 Byte** sein.
 - [ ] **(Team)** Endstand kompilieren und aufs Gerät laden, kurzer Test
 - [ ] **(Team)** Git-Tag `v1.0` auf `main` setzen = Stand der Firmware
 
@@ -358,7 +366,7 @@ sichtbare rote Faden.
 1. Gerät läuft, Herz auf dem Display (UNSCHARF)
 2. Karte auflegen → OK-Ton, 10 s Ausgangsverzögerung → Totenkopf (SCHARF)
 3. Hand vor den Bewegungsmelder → Sirene, Totenkopf blinkt (ALARM)
-4. Falsche PIN eingeben → wird ignoriert, Sirene läuft weiter
+4. Falsche PIN eingeben → Sirene läuft weiter, Restzeit springt auf 30 s zurück
 5. Richtige PIN + `#` → Herz (UNSCHARF)
 6. Optional, wenn Zeit ist: `A` + Admin-PIN, neue Karte anlernen
 

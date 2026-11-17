@@ -42,6 +42,8 @@ verlassen (kurzes Piepen), bevor die Anlage wirklich scharf ist.
   **3 falschen** PIN-Eingaben bzw. unbekannten Karten.
 - Der Alarm dauert 30 Sekunden oder endet sofort mit der richtigen PIN oder
   einer bekannten Karte.
+- Eine falsche PIN oder unbekannte Karte während des Alarms startet die
+  30 Sekunden neu.
 
 ## Neue Karten hinzufügen oder löschen
 
