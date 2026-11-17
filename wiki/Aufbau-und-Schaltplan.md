@@ -83,6 +83,15 @@ direkt an den Uno.
 - **Hochladen:** USB-Kabel anstecken, die Batterie darf dranbleiben. Der Uno
   schaltet selbst auf VIN um, sobald dort mehr als etwa 6,6 V anliegen.
 
+## Der echte Aufbau
+
+<table>
+  <tr>
+    <td align="center" width="50%"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/aufbau_breadboard.jpg" alt="Erster Versuchsaufbau auf dem großen Breadboard"><br><sub>Erster Versuchsaufbau auf dem großen Breadboard, noch ohne RFID-Leser</sub></td>
+    <td align="center" width="50%"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/aufbau_offen.jpg" alt="Bedienteil offen: Deckel mit Display, RFID-Leser und Buzzer, Rückteil mit Uno und Mini-Breadboard"><br><sub>Im Gehäuse: links der Deckel mit Display, RFID-Leser und Buzzer, rechts Uno und Mini-Breadboard</sub></td>
+  </tr>
+</table>
+
 ## Verdrahtung als Übersicht
 
 <p align="center">
@@ -108,10 +117,12 @@ Planung, Druckeinstellungen und Zusammenbau:
 im [3D-Modell](https://bbz-aifs51.github.io/LF7-Projekt_GAS/#enclosure) lässt
 sich das Gehäuse aufklappen.
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/gehaeuse_innen.jpg" alt="Gedrucktes Rückteil des Bedienteils mit Arduino Uno und Mini-Breadboard" width="45%"><br>
-  <sub>Das gedruckte Rückteil: Uno unten (USB-Buchse in der Aussparung), darüber das Mini-Breadboard</sub>
-</p>
+<table>
+  <tr>
+    <td align="center" width="50%"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/gehaeuse_innen.jpg" alt="Gedrucktes Rückteil des Bedienteils mit Arduino Uno und Mini-Breadboard"><br><sub>Das gedruckte Rückteil: Uno unten (USB-Buchse in der Aussparung), darüber das Mini-Breadboard</sub></td>
+    <td align="center" width="50%"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/geraet_vorne.jpg" alt="Fertiges Bedienteil von vorne mit Display, RFID-Feld und Keypad"><br><sub>Das fertige Bedienteil von vorne: Display, RFID-Feld, Keypad</sub></td>
+  </tr>
+</table>
 
 ---
 

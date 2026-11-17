@@ -1172,6 +1172,47 @@ Zeile „Abweichung von der Anforderung“ im Wiki unter „KI-Einsatz“ und de
 Zusatz in [../CLAUDE.md](../CLAUDE.md). Code, Viewer, Wiki und Plan sagen jetzt
 überall nur noch 2 s.
 
+## 26. Prompt — Fotos vom echten Aufbau (17.11.2026)
+
+> Arbeite in dieser branch weiter, erstelle keine neue.
+>
+> Wir machen gerade @abschlussplan.md
+> Hier sind die Fotos, wir haben noch keine Holzlatten, deshalb kann der
+> Aufbau noch nicht an einer holzplatte montiert werden
+
+Dazu acht Fotos: Bedienteil offen und von vorne, Sensorteil offen, drei Fotos
+vom Drucker (zwei während des Drucks, ein misslungener Druck), das Rückteil mit
+Uno und Mini-Breadboard und der erste Aufbau auf dem großen Breadboard.
+
+### Antwort
+
+- **Fotos zugeordnet** nach der Liste in [../Fotos/README.md](../Fotos/README.md):
+  `aufbau_offen.jpg` (Pflichtfoto Kap. 5), `aufbau_breadboard.jpg`,
+  `sensorteil_offen.jpg`, `geraet_vorne.jpg`, dazu neu `druck.jpg`,
+  `druck_nah.jpg` und `druck_misslungen.jpg`. Das Foto vom Rückteil ist
+  dasselbe wie das schon vorhandene `gehaeuse_innen.jpg` und wurde nicht
+  doppelt abgelegt.
+- **Verkleinert** auf höchstens 1600 px (je 120–400 kB) und **alle Metadaten
+  entfernt** (EXIF; GPS war in den hochgeladenen Dateien nicht enthalten).
+- **Im Wiki eingebaut:** Startseite (Gerät von vorne), „Aufbau und
+  Schaltplan“ (neuer Abschnitt „Der echte Aufbau“, Gerät von vorne beim
+  Gehäuse), „Projektphasen“ (erster Aufbau in Phase 1, Druck, Einbau und
+  fertiges Gerät in Phase 5, Hinweis auf die fehlenden Holzlatten),
+  „Herausforderungen“ (Sensorteil offen bei den Schraubpunkten).
+- **Abschlussplan:** Fotos abgehakt, Montage auf der Holzplatte verschoben
+  (Holzlatten fehlen, spätestens 30.11.), Arbeitsbranch ist jetzt
+  `claude/charming-faraday-17lzyv`.
+- **Auf den Fotos aufgefallen:** Im Gehäuse steckt ein Elegoo UNO R3, beim
+  ersten Einpassen (28.10.) war es noch ein Original-Arduino. Gedruckt wurde
+  auf einem Snapmaker. Beides als Frage für Kapitel 4 bzw. den Anhang „Team
+  und Rollen“ in den Plan geschrieben.
+
+**Offene Punkte:**
+
+- Was ist beim misslungenen Druck passiert, welches Teil war es? (Kap. 8)
+- Welches Board ist verbaut, welches Snapmaker-Modell und welcher Slicer?
+- Holzplatte, `geraet_brett.jpg`, Tests T1–T10.
+
 ---
 
 ## Anhang — Stand der Dateien

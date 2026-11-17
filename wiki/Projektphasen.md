@@ -13,6 +13,11 @@ einzeln geprüft: OLED, Keypad, Buzzer und Bewegungsmelder. Dabei hat sich
 herausgestellt, dass das Display einen **SH1106**-Controller hat und nicht den
 weit verbreiteten SSD1306.
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/aufbau_breadboard.jpg" alt="Erster Versuchsaufbau auf dem großen Breadboard mit Uno, Keypad, OLED, Buzzer und Bewegungsmelder" width="40%"><br>
+  <sub>Erster Versuchsaufbau auf dem großen Breadboard, noch ohne RFID-Leser</sub>
+</p>
+
 ## 2 · Firmware-Grundfunktion
 
 In einem Schritt entstand der komplette Zustandsautomat: PIN mit `*`-Maske,
@@ -72,17 +77,30 @@ Hohlstecker außen am Gehäuse hängen würde. Sie sitzt jetzt innen und speist 
 Uno über VIN, verteilt wird über ein Mini-Breadboard
 ([Schritt 20](Entwicklungsverlauf#-schritt-20--batterie-an-vin-und-mini-breadboard)).
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/gehaeuse_innen.jpg" alt="Gedrucktes Rückteil mit Arduino Uno und Mini-Breadboard" width="40%"><br>
-  <sub>Gedrucktes Rückteil mit Uno und Mini-Breadboard</sub>
-</p>
+<table>
+  <tr>
+    <td align="center" width="50%"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/druck.jpg" alt="Deckel des Bedienteils und Kleinteile im 3D-Drucker"><br><sub>Deckel des Bedienteils und Kleinteile im Druck</sub></td>
+    <td align="center" width="50%"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/druck_misslungen.jpg" alt="Misslungener Druck mit Filamentsalat auf dem Druckbett"><br><sub>Nicht jeder Druck hat geklappt</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/gehaeuse_innen.jpg" alt="Gedrucktes Rückteil mit Arduino Uno und Mini-Breadboard"><br><sub>Erste Anprobe: Uno und Mini-Breadboard im Rückteil</sub></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/aufbau_offen.jpg" alt="Bedienteil offen und fertig verkabelt"><br><sub>Fertig verkabelt (10.11.2026)</sub></td>
+  </tr>
+</table>
 
 Am 10.11.2026 waren beide Teile verkabelt und verschraubt. Beim ersten Druck
 sind die Schraubpunkte für den Bewegungsmelder am Deckel des Sensorteils
 abgebrochen. Sie wurden verstärkt und der Deckel neu gedruckt, siehe
 [Herausforderungen](Herausforderungen#schraubpunkte-am-sensordeckel-brechen-ab).
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/geraet_vorne.jpg" alt="Fertiges Bedienteil von vorne, auf dem Display das Herz" width="40%"><br>
+  <sub>Das fertige Bedienteil, Anlage unscharf (Herz)</sub>
+</p>
+
 Als Nächstes werden beide Teile auf eine Holzplatte montiert, die für die
-Vorführung die Wand mit der Tür darstellt.
+Vorführung die Wand mit der Tür darstellt. Dafür fehlen noch die Holzlatten
+(Stand 17.11.2026).
 
 ## 6 · Präsentation im Repository
 

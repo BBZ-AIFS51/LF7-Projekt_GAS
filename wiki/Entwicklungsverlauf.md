@@ -12,7 +12,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **25** | **9** | **4** | **2** |
+| **26** | **10** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -53,6 +53,7 @@ timeline
         10.11. : S23 Abschlussplan
                : S24 Fotos, Quellen nach IEEE
                : S25 Aufräumen, Wiki gekürzt
+        17.11. : S26 Fotos vom echten Aufbau
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -88,6 +89,7 @@ flowchart LR
     P23["📝 S23<br/>Abschlussplan"]
     P24["📝 S24<br/>Fotos, Quellen"]
     P25["📝 S25<br/>Aufräumen"]
+    P26["📝 S26<br/>Fotos"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -104,7 +106,7 @@ flowchart LR
     P17 -. "Lehrkraft" .-> P18
     P18 --> P19
     P18 -. "Termine" .-> P23
-    P23 --> P24 --> P25
+    P23 --> P24 --> P25 --> P26
 
     classDef fw fill:#d0e7ff,stroke:#0969da,color:#0a3069
     classDef bug fill:#ffd8d3,stroke:#cf222e,color:#82071e
@@ -117,7 +119,7 @@ flowchart LR
     class P5 info
     class P8,P9,P13,P14,P15 vis
     class P10,P11,P12,P20 box
-    class P3,P17,P18,P19,P22,P23,P24,P25 doc
+    class P3,P17,P18,P19,P22,P23,P24,P25,P26 doc
 ```
 
 <sub>Durchgezogene Pfeile: Ergebnis führt direkt zum nächsten Schritt · gestrichelt: Anregung der Lehrkraft</sub>
@@ -135,7 +137,7 @@ flowchart LR
 | 💡 | Erklärung / Wissen | 5 |
 | 🎨 | Darstellung (README, 3D-Modell, Grafiken) | 8, 9, 13, 14, 15 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
-| 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24, 25 |
+| 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24, 25, 26 |
 
 </td>
 <td width="45%">
@@ -147,7 +149,7 @@ pie
     "Erklärung" : 1
     "Darstellung" : 5
     "Gehäuse" : 4
-    "Dokumentation" : 8
+    "Dokumentation" : 9
 ```
 
 </td>
@@ -523,6 +525,26 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 > **Offen:** Fotos, Tests am Gerät, Montage auf der Holzplatte. Das Word-Dokument wird in Phase 3 angelegt.
 
 <sub>📄 [`aufbau.md`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/aufbau.md) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#25-prompt--phase-2-aufräumen-wiki-gekürzt-word-statt-wiki-pdf-10112026)</sub>
+
+## 📆 17.11.2026 · Fotos vom echten Aufbau
+
+### 📝 Schritt 26 — Fotos vom echten Aufbau
+
+**Anlass:** Das Gerät ist eingebaut und verkabelt, die Fotos für Dokumentation und Präsentation sind gemacht. Die Montage auf der Holzplatte muss warten, die Holzlatten fehlen noch.
+
+**Ergebnis**
+- Sieben Fotos im Ordner [`Fotos/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/Fotos): erster Aufbau auf dem Breadboard, Bedienteil offen und von vorne, Sensorteil offen, Druck und ein misslungener Druck
+- Alle verkleinert und ohne Metadaten, weil das Repository öffentlich ist
+- Eingebaut auf der Startseite, unter [Aufbau und Schaltplan](Aufbau-und-Schaltplan#der-echte-aufbau), [Projektphasen](Projektphasen#5--gehäuse) und [Herausforderungen](Herausforderungen#schraubpunkte-am-sensordeckel-brechen-ab)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/aufbau_offen.jpg" alt="Bedienteil offen und fertig verkabelt" width="35%">
+</p>
+
+> [!WARNING]
+> **Offen:** Montage auf der Holzplatte (Holzlatten fehlen), Tests am Gerät.
+
+<sub>🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#26-prompt--fotos-vom-echten-aufbau-17112026)</sub>
 
 ---
 

@@ -22,6 +22,10 @@ Sirene aus. Das OLED zeigt nur Symbole: ein Herz (unscharf), einen Totenkopf
 angelernt, ganz ohne PC.
 
 <p align="center">
+  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/geraet_vorne.jpg" alt="Das fertige Bedienteil: Display mit Herz, RFID-Feld und Keypad im gedruckten Gehäuse" width="35%">
+</p>
+
+<p align="center">
   <a href="https://bbz-aifs51.github.io/LF7-Projekt_GAS/"><b>▶ 3D-Modell im Browser ausprobieren</b></a>
   &nbsp;·&nbsp; <a href="https://github.com/BBZ-AIFS51/LF7-Projekt_GAS">Repository mit Sourcecode</a>
   &nbsp;·&nbsp; <a href="https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Anleitung/Mini%20Security%20System%20Manual.pdf">Bedienungsanleitung (PDF)</a>
@@ -44,6 +48,6 @@ angelernt, ganz ohne PC.
 
 ## Auf einen Blick
 
-| **6** | **4** | **25** | **5** | **5** |
+| **6** | **4** | **26** | **5** | **5** |
 |:---:|:---:|:---:|:---:|:---:|
 | Bauteile am Uno | Arduino-Sketches | Arbeitsschritte im [Entwicklungsverlauf](Entwicklungsverlauf) | Zustände der Anlage | Druckteile fürs Gehäuse |

@@ -1,6 +1,6 @@
 # Abschlussplan — Projekt GAS
 
-Stand: 10.11.2026. Plan für alles, was bis zur Abgabe noch passieren muss.
+Stand: 17.11.2026. Plan für alles, was bis zur Abgabe noch passieren muss.
 Grundlage sind die Vorgaben der Lehrkraft (zehn Kapitel, Präsentation, Regeln
 zum KI-Einsatz) und der aktuelle Stand im Repository.
 
@@ -90,7 +90,7 @@ gantt
 
     section Gerät
     Tests über USB, Fotos            :a1, 2026-11-10, 8d
-    Batterie, Montage auf Holzplatte :a1b, 2026-11-16, 5d
+    Batterie, Montage auf Holzplatte :a1b, 2026-11-16, 15d
     Code-Freeze v1.0                 :milestone, m1, 2026-11-20, 0d
 
     section Doku
@@ -132,7 +132,9 @@ Die Fragen zur Abgabeform sind beantwortet (siehe oben). Offen ist noch:
 - [x] **(Team)** Dauer → insgesamt **mindestens 15 Minuten**
 - [x] **(Team)** Zitierformat → **IEEE** (nummeriert, wie an der Hochschule)
 - [x] **(Team)** Arbeitsweise: Alles wird auf dem Branch
-      `claude/trusting-knuth-awmzj8` erledigt. Wenn alles fertig ist, kommt es
+      `claude/trusting-knuth-awmzj8` erledigt, ab 17.11.2026 auf
+      `claude/charming-faraday-17lzyv` (gleicher Stand, dort geht es weiter).
+      Wenn alles fertig ist, kommt es
       mit **einem Pull Request** nach `main` (spätestens in Phase 6). Bis dahin
       ist das GitHub-Wiki noch auf dem alten Stand, weil es nur bei Änderungen
       an `main` aktualisiert wird.
@@ -144,15 +146,18 @@ Ohne fertiges Gerät keine Fotos, keine Messwerte und keine Demo. Deshalb zuerst
 **Fotos** kommen in den Ordner [`Fotos/`](../Fotos/). Dort steht die Fotoliste
 mit Dateinamen und wie man hochlädt.
 
-- [ ] **(Team)** **Pflichtfoto** für Kapitel 5: Bedienteil **offen**, von oben,
-      alle Kabel und das Mini-Breadboard sichtbar → `Fotos/aufbau_offen.jpg`.
-      Dafür das Gehäuse einmal aufschrauben. Falls noch ein altes Foto vom
-      ersten Aufbau auf dem großen Breadboard existiert, zusätzlich
-      `Fotos/aufbau_breadboard.jpg`.
-- [ ] **(Team)** Sensorteil offen, die verstärkten Schraubpunkte sichtbar →
-      `Fotos/sensorteil_offen.jpg`
-- [ ] **(Claude)** Fotos verkleinern, Metadaten (GPS) entfernen und ins Wiki
-      und ins Word-Dokument einbauen
+- [x] **(Team)** **Pflichtfoto** für Kapitel 5: Bedienteil **offen**, alle
+      Kabel und das Mini-Breadboard sichtbar → `Fotos/aufbau_offen.jpg`.
+      Dazu der erste Aufbau auf dem großen Breadboard →
+      `Fotos/aufbau_breadboard.jpg` (17.11.2026)
+- [x] **(Team)** Sensorteil offen → `Fotos/sensorteil_offen.jpg` (17.11.2026)
+- [x] **(Team)** Fotos vom Drucker → `Fotos/druck.jpg`, `druck_nah.jpg`,
+      `druck_misslungen.jpg` (17.11.2026)
+- [x] **(Claude)** Fotos verkleinert (max. 1600 px), Metadaten entfernt und
+      ins Wiki eingebaut (17.11.2026). Ins Word-Dokument kommen sie, sobald
+      es in Phase 3 angelegt wird.
+- [ ] **(Team)** Was ist beim misslungenen Druck (`druck_misslungen.jpg`)
+      passiert, welches Teil war es? Gehört als Beispiel in Kapitel 8.
 
 **Einbau:**
 
@@ -162,8 +167,12 @@ mit Dateinamen und wie man hochlädt.
       nicht der beste, am Deckel des Sensorgehäuses sind die Schraubpunkte
       abgebrochen. Verstärkt in Schritt 21 (03.11.2026, auf `main`), neu
       gedruckt und eingebaut. Steht im Wiki unter „Herausforderungen“.
-- [ ] **(Team)** Beide Teile auf die **Holzplatte** montieren (geplant
-      KW 47, 16.–20.11.)
+- [ ] **(Team)** Beide Teile auf die **Holzplatte** montieren. Geplant war
+      KW 47 (16.–20.11.), **die Holzlatten fehlen noch** (Stand 17.11.).
+      Wenn sie bis zum 20.11. nicht da sind: Tests T1–T9 und die Fotos laufen
+      ohne Platte weiter, die Montage rutscht bis spätestens 30.11. (vor dem
+      ersten Präsentationstag). In der Präsentation dann das Foto vom
+      Gehäuse statt vom Brett nehmen.
 - [ ] **(Team)** **9-V-Batterie mitbringen.** Polung an VIN prüfen (kein
       Verpolungsschutz!), erst dann anstecken
 
@@ -189,8 +198,8 @@ abhaken, Messwerte eintragen):
       Totenkopf → Bewegung → Sirene → PIN → Herz), am besten nach der
       Montage. Dient **als Ersatz, falls die Live-Demo ausfällt**, und kommt
       nicht ins Repository.
-- [ ] **(Team)** Fotos vom fertigen Gerät nach der Montage →
-      `Fotos/geraet_vorne.jpg`, `Fotos/geraet_brett.jpg`
+- [x] **(Team)** Bedienteil von vorne → `Fotos/geraet_vorne.jpg` (17.11.2026)
+- [ ] **(Team)** Foto nach der Montage → `Fotos/geraet_brett.jpg`
 
 ## Phase 2 · Code-Freeze (bis Fr 20.11.)
 
@@ -231,11 +240,11 @@ Platzhalter nicht mehr.
 
 | Kapitel | Was fehlt | Wer |
 |---|---|---|
-| 1 Deckblatt | Titel, Gruppe, Klasse, Abgabedatum, Foto vom Gerät | Team (Foto), Claude (Rest) |
+| 1 Deckblatt | Titel, Gruppe, Klasse, Abgabedatum, Foto vom Gerät (`geraet_vorne.jpg` ist da, nach der Montage evtl. `geraet_brett.jpg`) | Claude |
 | 2 Idee und Zielsetzung | Projektstart beim Zeitraum, K5 Gehäuse auf ✅ setzen, sobald montiert | Team (Projektstart), Claude |
 | 3 Funktionsbeschreibung | aus dem Wiki übernehmen | Claude |
-| 4 Verwendete Bauteile | prüfen, ob Batterie, Clip, Mini-Breadboard und Kabel vollständig drin sind | Team prüft |
-| 5 Aufbau und Schaltplan | Foto vom Versuchsaufbau, Laufzeit eintragen (Schaltplan mit Batterie an VIN ist seit Schritt 22 erledigt) | Team |
+| 4 Verwendete Bauteile | prüfen, ob Batterie, Clip, Mini-Breadboard und Kabel vollständig drin sind. Auf den Fotos steckt im Gehäuse ein **Elegoo UNO R3** (in `gehaeuse_innen.jpg` noch ein Original-Arduino): angeben, welches Board es ist | Team prüft |
+| 5 Aufbau und Schaltplan | Laufzeit eintragen (Fotos vom Aufbau sind seit 17.11. da, Schaltplan mit Batterie an VIN seit Schritt 22) | Team |
 | 6 Sourcecode | Dateien und Abgabeform (Code liegt im Repository) | Claude |
 | 7 Wichtige Codeabschnitte | gemessenen SRAM-Wert eintragen | Team misst, Claude schreibt |
 | 8 Herausforderungen | wie ihr den SH1106 erkannt habt, Probleme beim RC522-Verdrahten, eigene Probleme (Druck, Einbau, Teamarbeit) | **Team** |
@@ -247,7 +256,7 @@ Platzhalter nicht mehr.
 
 | Seite | Was fehlt | Wer |
 |---|---|---|
-| Team und Rollen | wer hat was gemacht, wie habt ihr euch abgestimmt, Drucker/Slicer | **Team** |
+| Team und Rollen | wer hat was gemacht, wie habt ihr euch abgestimmt, Drucker/Slicer (auf den Fotos ein Snapmaker, genaues Modell und Slicer fehlen) | **Team** |
 | Zeitplan | gab es eine Planung? Meilensteine mit Datum (Projektstart, `hardware_test`, RFID verdrahtet, Gehäuse montiert), Präsentation und Abgabe | Team liefert Daten, Claude trägt ein |
 | Kosten | Preise und Bezugsquellen, was von der Schule kam | **Team** |
 | Projektphasen | Stand und offene Punkte abhaken, Foto vom fertigen Gerät, Testergebnisse | Team, Claude |

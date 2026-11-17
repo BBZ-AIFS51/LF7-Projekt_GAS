@@ -179,6 +179,11 @@ verlängert, der bis in die Lippe des Deckels reicht. Das Loch ist jetzt 4,8 mm
 tief, die Schraube passt ganz hinein. Der neu gedruckte Deckel hält
 ([Schritt 21](Entwicklungsverlauf#-schritt-21--schraubzapfen-am-sensorteil-brechen-ab)).
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/sensorteil_offen.jpg" alt="Sensorteil offen: Gehäuse auf dem Keil, daneben der Deckel mit dem festgeschraubten Bewegungsmelder" width="45%"><br>
+  <sub>Sensorteil offen: rechts der neue Deckel mit dem festgeschraubten Bewegungsmelder</sub>
+</p>
+
 ---
 
 <sub>← [Wichtige Codeabschnitte](Wichtige-Codeabschnitte) · [Projektphasen](Projektphasen) →</sub>
