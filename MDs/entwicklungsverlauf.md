@@ -1299,7 +1299,7 @@ GitHub-Wiki zu sehen.
 
 - **Branch:** `claude/trusting-knuth-awmzj8` auf den Stand von `origin`
   gebracht (Fast-Forward). `origin/main` hatte nichts Neues, kein Merge nötig.
-- **Firmware:** In `accessDenied()` setzt eine falsche PIN, Admin-PIN oder
+- **Firmware:** In `accessDenied()` setzt eine falsche PIN oder eine
   unbekannte Karte im Zustand ALARM jetzt `stateStart = millis()`. Die
   Restzeit springt damit auf 30 s zurück, die Anzeige wird neu gezeichnet.
   Weiterhin **kein Fehlerton** (der würde die Sirene ersetzen, s. Schritt 16)
