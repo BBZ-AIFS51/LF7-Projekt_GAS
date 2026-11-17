@@ -127,5 +127,7 @@ RC522 3,3 V und GND gehen direkt an den Uno (3V3 und zweiter GND-Pin), nicht
 - **Laufzeit** mit einer frischen 9-V-Batterie grob 3–5 h (Gesamtstrom etwa
   100 mA). Ausschalten = Clip abziehen. USB darf zum Hochladen gleichzeitig
   stecken.
-- **Prüfwert RC522:** `VersionReg` antwortet `0x91` oder `0x92`. `0x00` oder
-  `0xFF` heißt: Modul antwortet nicht (Verdrahtung oder 5 V statt 3,3 V).
+- **Prüfwert RC522:** `VersionReg` antwortet beim Original `0x91` oder `0x92`,
+  unser Nachbau meldet `0xB2` (läuft normal). `0x00` oder `0xFF` heißt: Modul
+  antwortet nicht (Verdrahtung oder 5 V statt 3,3 V).
+- **Freier SRAM** beim Start: **252 Byte** (gemessen 17.11.2026).

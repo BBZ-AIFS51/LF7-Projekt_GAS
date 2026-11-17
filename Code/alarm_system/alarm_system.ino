@@ -58,7 +58,7 @@
  *   therefore scans the keypad itself (see scanKeypad()) and keeps every string
  *   in flash. The MFRC522 library costs about 15 bytes of static SRAM (mostly
  *   the Uid struct), so there is still room; setup() prints the free SRAM and
- *   it should stay well above 250.
+ *   it should stay above 250 (measured on the finished device: 252).
  *
  * Libraries: Adafruit SH110X, Adafruit GFX, MFRC522, SPI, EEPROM
  *            (Keypad library NOT needed)
@@ -212,8 +212,9 @@ void setup() {
     Serial.println(F("[OLED] not found - check SDA=A4 / SCL=A5 and address 0x3C"));
   }
 
-  // VersionReg answers 0x91 / 0x92 on a genuine RC522. 0x00 or 0xFF means the
-  // reader is not answering - wiring, or 5 V instead of 3.3 V on VCC.
+  // VersionReg answers 0x91 / 0x92 on a genuine RC522, clones answer other
+  // values (ours: 0xB2). 0x00 or 0xFF means the reader is not answering -
+  // wiring, or 5 V instead of 3.3 V on VCC.
   byte ver = mfrc522.PCD_ReadRegister(MFRC522::VersionReg);
   rfidOk = (ver != 0x00 && ver != 0xFF);
   Serial.print(F("[RFID] version 0x"));

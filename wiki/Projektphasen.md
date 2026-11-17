@@ -80,13 +80,19 @@ Uno über VIN, verteilt wird über ein Mini-Breadboard
 <table>
   <tr>
     <td align="center" width="50%"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/druck.jpg" alt="Deckel des Bedienteils und Kleinteile im 3D-Drucker"><br><sub>Deckel des Bedienteils und Kleinteile im Druck</sub></td>
-    <td align="center" width="50%"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/druck_misslungen.jpg" alt="Misslungener Druck mit Filamentsalat auf dem Druckbett"><br><sub>Nicht jeder Druck hat geklappt</sub></td>
+    <td align="center" width="50%"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/druck_misslungen.jpg" alt="Misslungener Druck mit Filamentsalat auf dem Druckbett"><br><sub>Misslungen: Frontplatte und Sensorteil im Filamentsalat</sub></td>
   </tr>
   <tr>
     <td align="center"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/gehaeuse_innen.jpg" alt="Gedrucktes Rückteil mit Arduino Uno und Mini-Breadboard"><br><sub>Erste Anprobe: Uno und Mini-Breadboard im Rückteil</sub></td>
     <td align="center"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/Fotos/aufbau_offen.jpg" alt="Bedienteil offen und fertig verkabelt"><br><sub>Fertig verkabelt (10.11.2026)</sub></td>
   </tr>
 </table>
+
+Gedruckt wurde auf dem **Snapmaker Artisan** der Berufsschule [26], von dessen
+Druckkopf nur die rechte Düse funktioniert. Die Druckdateien entstanden mit dem
+Slicer **Snapmaker Luban** [25]. Ein Druck mit der Frontplatte des Bedienteils
+und allen Teilen des Sensorteils ist ohne erkennbaren Grund misslungen und
+musste wiederholt werden.
 
 Am 10.11.2026 waren beide Teile verkabelt und verschraubt. Beim ersten Druck
 sind die Schraubpunkte für den Bewegungsmelder am Deckel des Sensorteils
@@ -126,9 +132,10 @@ abbrach. Jetzt wird eine falsche Eingabe im Alarm ignoriert.
 ## Stand und offene Punkte
 
 - [x] Alle Muss-Anforderungen umgesetzt, siehe [Idee und Zielsetzung](Idee-und-Zielsetzung#anforderungen)
-- [ ] Bugfix aus Schritt 16 am echten Aufbau getestet
-- [ ] Freier SRAM nach dem Entfernen der Keypad-Library gemessen (erwartet ~320 Byte)
-- [ ] RFID-Reset (<kbd>B</kbd>) mit absichtlich getrenntem Leser getestet
+- [x] Alle Funktionen am fertigen Gerät getestet (17.11.2026): Scharfschalten mit PIN und Karte, Alarm, Alarm beenden, 3 Fehlversuche, Admin-Menü
+- [x] Bugfix aus Schritt 16 am echten Aufbau getestet
+- [x] Freier SRAM gemessen: **252 Byte** beim Start
+- [x] RFID-Reset (<kbd>B</kbd>) mit absichtlich getrenntem Leser getestet
 - [x] Alle Module passen ins gedruckte Gehäuse (eingebaut am 10.11.2026)
 - [x] Gehäuse gedruckt
 - [x] Gehäuse nach dem Steckplan verkabelt und verschraubt (10.11.2026)

@@ -1213,6 +1213,54 @@ Uno und Mini-Breadboard und der erste Aufbau auf dem großen Breadboard.
 - Welches Board ist verbaut, welches Snapmaker-Modell und welcher Slicer?
 - Holzplatte, `geraet_brett.jpg`, Tests T1–T10.
 
+## 27. Prompt — Tests T1–T9 bestanden, Board und Drucker (17.11.2026)
+
+> 1. Es ist der Elegoo UNO R3, sind ja aber baugleich
+> 2. Was passiert ist weis wohl nur der Drucker, auf jeden fall nichts gutes.
+>    Es war die Frontplate vom steuerteil und alles vom sensor auf der
+>    druckplatte
+> 3. Es ist der Snapmaker Artisan 3 in 1, bei dem nur die rechte düse vom
+>    druckkopf funktioniert. Als slicer haben wir Snapmaker Luban verwendet.
+>    der Drucker wurde uns von unser Berufsschule zur verfügung gestellt.
+>
+> Die Tests können wir eig auch alle abhaken (T1-T9). und beim start sind 252
+> sram frei, hier direkt aus dem serial monitor, was beim start aufploppt:
+>
+> ```text
+> [RFID] version 0xB2
+> === Alarm system ready (disarmed) ===
+> PIN + '#' or a known RFID card arms / disarms.
+> stored RFID cards: 2
+> free SRAM: 252
+> ```
+
+### Antwort
+
+- **Tests:** T1–T9 im Abschlussplan abgehakt, Startausgabe dort abgelegt. Im
+  Wiki unter „Projektphasen → Stand und offene Punkte“ abgehakt. Fehler sind
+  keine aufgefallen, der Punkt „Fehler beheben“ in Phase 2 ist damit erledigt.
+- **SRAM 252 Byte** statt der geschätzten ~320: Die Schätzung stammt aus
+  Schritt 4, vor RFID-Leser und Admin-Menü (Kartenliste 8 × 4 Byte,
+  Leser-Objekt, Menü-Variablen). Bei 205 Byte gab es Neustarts, 252 laufen
+  stabil. Eingetragen in Wiki (Herausforderungen), `aufbau.md`, CLAUDE.md und
+  im Kommentar der Firmware.
+- **RFID-Version 0xB2:** Der Leser ist ein Nachbau, ein Original meldet 0x91
+  oder 0x92. Die Firmware prüft nur auf 0x00/0xFF, deshalb kein Problem. Die
+  Stellen, die 0x91/0x92 als einzig gültige Werte nannten, sind angepasst
+  (README, `aufbau.md`, CLAUDE.md, Kommentare in `alarm_system.ino` und
+  `rfid_test.ino`, Testtabelle). Das 3D-Modell gibt jetzt auch 0xB2 aus.
+  An der Firmware selbst hat sich nur der Kommentar geändert.
+- **Board:** Elegoo UNO R3 unter „Verwendete Bauteile“ und in CLAUDE.md.
+- **Drucker:** Snapmaker Artisan der Berufsschule (nur die rechte Düse geht),
+  Slicer Snapmaker Luban. Beides im Quellenverzeichnis als [25] und [26] und
+  unter „Projektphasen“. Bildunterschrift zum misslungenen Druck ergänzt
+  (Frontplatte und Sensorteil).
+
+**Offene Punkte:**
+
+- T10 Laufzeit mit Batterie, Montage auf der Holzplatte, `geraet_brett.jpg`.
+- Endstand hochladen und Tag `v1.0` (Phase 2).
+
 ---
 
 ## Anhang — Stand der Dateien

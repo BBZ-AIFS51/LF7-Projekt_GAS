@@ -8,7 +8,7 @@ steht unter [Aufbau und Schaltplan](Aufbau-und-Schaltplan).
 
 | Bauteil | Typ / Kenndaten | Aufgabe im Projekt |
 |---|---|---|
-| 🧠 **Mikrocontroller** | Arduino Uno R3 (ATmega328P, 16 MHz, 32 KB Flash, **2 KB SRAM**, 1 KB EEPROM) | Das „Gehirn“: fragt alle Eingaben ab, führt den Zustandsautomaten aus und steuert Display und Buzzer. Im internen EEPROM liegen die erlaubten RFID-Karten. |
+| 🧠 **Mikrocontroller** | Arduino Uno R3, verbaut ist der baugleiche **Elegoo UNO R3** (ATmega328P, 16 MHz, 32 KB Flash, **2 KB SRAM**, 1 KB EEPROM) | Das „Gehirn“: fragt alle Eingaben ab, führt den Zustandsautomaten aus und steuert Display und Buzzer. Im internen EEPROM liegen die erlaubten RFID-Karten. |
 | ⌨️ **Tastenfeld** | 4x4-Folien-Keypad, 16 Tasten, 8 Anschlüsse (4 Reihen, 4 Spalten) | PIN-Eingabe, Bestätigen (<kbd>#</kbd>), Löschen (<kbd>*</kbd>), Admin-Menü (<kbd>A</kbd>) und RFID-Reset (<kbd>B</kbd>) |
 | 🖥️ **Display** | OLED 1,3 Zoll, 128 × 64 Pixel, monochrom, Controller **SH1106**, I²C, Adresse `0x3C` | Zeigt den Zustand als Symbol (Herz, Totenkopf, ✖), die PIN als `*`, Countdowns und das Admin-Menü |
 | 📶 **RFID-Leser** | RC522-Modul (NXP MFRC522), 13,56 MHz, SPI, **Versorgung 3,3 V** | Liest die Kennung (UID) von Karten und Schlüsselanhängern, zweiter Weg zum Scharf- und Unscharfschalten |

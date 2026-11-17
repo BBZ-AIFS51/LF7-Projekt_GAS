@@ -22,6 +22,8 @@ Bewegungssensor erkennt Anwesenheit.
   VIN). Ändert sich die Belegung, Steckplan, `docs/wiring.svg` und
   `buildCase()` im Viewer gemeinsam anpassen.
 - Teileliste: [Teile.xlsx](Teile.xlsx)
+- Gedruckt auf dem **Snapmaker Artisan** der Berufsschule (nur die rechte Düse
+  funktioniert), Slicer **Snapmaker Luban**.
 
 ## Ordnerstruktur
 
@@ -162,8 +164,14 @@ const byte COL_PINS[4] = {5, 4, 3, 2};
   Antwort-Timeout). Deshalb nicht in jedem `loop()`-Durchlauf pollen, sondern
   nur alle `RFID_POLL_MS` (200 ms) — sonst wird das Keypad träge und der
   Sirenen-Sweep stockt.
-- `VersionReg` des RC522 antwortet **0x91 oder 0x92**. 0x00 oder 0xFF heißt:
-  Modul antwortet nicht (Verdrahtung oder 5 V statt 3,3 V).
+- `VersionReg` des RC522 antwortet beim Original **0x91 oder 0x92**, unser
+  verbauter Nachbau meldet **0xB2** (läuft normal, die Firmware wertet nur
+  0x00/0xFF als Fehler). 0x00 oder 0xFF heißt: Modul antwortet nicht
+  (Verdrahtung oder 5 V statt 3,3 V).
+- **Freier SRAM beim Start: 252 Byte** (gemessen am fertigen Gerät,
+  17.11.2026). Alle Tests T1–T9 laufen damit stabil, aber keinen weiteren
+  SRAM-Verbrauch mehr einbauen.
+- Board: **Elegoo UNO R3** (baugleich zum Arduino Uno R3).
 - **Stromversorgung: 9-V-Block an VIN, nicht am Hohlstecker.** Mit Hohlstecker
   hinge Batterie oder Kabel außen am Gehäuse, so liegt die Batterie innen
   links neben dem Breadboard. Der Uno macht aus VIN mit seinem Regler die 5 V.
@@ -257,7 +265,7 @@ statisches SRAM (im Wesentlichen die `Uid`-Struktur), Flash rund 5–7 kB.
   **RFID-Reset:** Taste `B` im Zustand UNSCHARF ruft `resetRfid()` auf
   (`PCD_Reset()` + `PCD_Init()`, danach `VersionReg` neu prüfen). Manuelle
   Abhilfe, falls der RC522-Klon mal nicht mehr auf SPI antwortet (0x00/0xFF
-  statt 0x91/0x92) — ohne das bliebe nur ein kompletter Neustart des Uno.
+  statt einer gültigen Version) — ohne das bliebe nur ein kompletter Neustart des Uno.
 
 ## Konventionen
 

@@ -51,6 +51,8 @@ aufgerufen wurden.
 | [22] | three.js, „three.js – JavaScript 3D Library“, Software-Bibliothek. [Online]. Verfügbar: https://threejs.org [Zugriff am: 06.10.2026] | interaktives 3D-Modell im Browser |
 | [23] | GitHub, „LF7-Projekt_GAS“, Git-Repository des Projekts. [Online]. Verfügbar: https://github.com/BBZ-AIFS51/LF7-Projekt_GAS | Versionsverwaltung, Wiki, Veröffentlichung des 3D-Modells |
 | [24] | Anthropic, „Claude Code“, KI-Assistent. [Online]. Verfügbar: https://claude.com/claude-code [Zugriff am: 06.10.2026] | Hilfsmittel beim Programmieren und bei der Fehlersuche, siehe [KI-Einsatz](KI-Einsatz) |
+| [25] | Snapmaker, „Snapmaker Luban“, Software. [Online]. Verfügbar: https://www.snapmaker.com/snapmaker-luban [Zugriff am: 17.11.2026] | Slicer: Gehäuseteile für den Druck vorbereiten |
+| [26] | Snapmaker, „Snapmaker Artisan 3-in-1 3D Printer“, Produktseite. [Online]. Verfügbar: https://www.snapmaker.com/snapmaker-artisan [Zugriff am: 17.11.2026] | 3D-Drucker der Berufsschule, Druck des Gehäuses |
 
 ---
 

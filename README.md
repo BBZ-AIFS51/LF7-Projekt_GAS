@@ -97,7 +97,7 @@ units wired and screwed together. Planning, print settings and assembly (in Germ
    - `Wire`, `SPI` and `EEPROM` already come with the IDE.
 2. Set the PIN and admin PIN at the top of [alarm_system.ino](Code/alarm_system/alarm_system.ino) (`PIN_CODE`, `ADMIN_PIN`).
 3. Select the **Arduino Uno** board and the right port, then upload.
-4. Set the serial monitor to **9600 baud**. On start-up it shows the RC522 version (`0x91`/`0x92` = OK), the number of stored cards and the free SRAM.
+4. Set the serial monitor to **9600 baud**. On start-up it shows the RC522 version (anything but `0x00`/`0xFF` = OK; a genuine RC522 says `0x91`/`0x92`, our clone says `0xB2`), the number of stored cards and the free SRAM.
 5. On the very first start the EEPROM is empty, so the sketch writes the factory list `DEFAULT_UIDS` into it. After that you manage cards only through the admin menu.
 
 If something doesn't work, the test sketches check each part on its own:

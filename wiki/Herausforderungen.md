@@ -52,7 +52,8 @@ startete also neu, weil der Speicher überlief.
    ersetzt, siehe [Wichtige Codeabschnitte](Wichtige-Codeabschnitte#tastenfeld-selbst-abfragen).
 
 Seitdem gibt die Firmware beim Start den freien Speicher aus, um das im Blick zu
-behalten.
+behalten. Am fertigen Gerät mit RFID-Leser und Admin-Menü sind es
+`free SRAM: 252`, damit laufen alle Tests stabil.
 
 ### Zwei Bauteile, ein Pin
 

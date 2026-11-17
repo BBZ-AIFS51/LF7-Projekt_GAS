@@ -396,7 +396,7 @@ const io = { keys: [], card: null, motionUntil: 0 };
 const motionPin = () => millis() < io.motionUntil;
 
 function setup() {
-  serial('[RFID] version 0x92');
+  serial('[RFID] version 0xB2');
   loadUidsFromEeprom();
   serial('=== Alarm system ready (disarmed) ===');
   serial("PIN + '#' or a known RFID card arms / disarms.");
@@ -504,7 +504,7 @@ function readNewCardUid() {
 function resetRfid() {
   serial('[RFID] manual reset');
   fx.spi();
-  serial('[RFID] version 0x92');
+  serial('[RFID] version 0xB2');
   startSound(SND.OK);
 }
 

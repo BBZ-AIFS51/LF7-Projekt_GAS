@@ -12,7 +12,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **26** | **10** | **4** | **2** |
+| **27** | **10** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -54,6 +54,7 @@ timeline
                : S24 Fotos, Quellen nach IEEE
                : S25 Aufräumen, Wiki gekürzt
         17.11. : S26 Fotos vom echten Aufbau
+               : S27 Tests bestanden
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -90,6 +91,7 @@ flowchart LR
     P24["📝 S24<br/>Fotos, Quellen"]
     P25["📝 S25<br/>Aufräumen"]
     P26["📝 S26<br/>Fotos"]
+    P27["📝 S27<br/>Tests"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -106,7 +108,7 @@ flowchart LR
     P17 -. "Lehrkraft" .-> P18
     P18 --> P19
     P18 -. "Termine" .-> P23
-    P23 --> P24 --> P25 --> P26
+    P23 --> P24 --> P25 --> P26 --> P27
 
     classDef fw fill:#d0e7ff,stroke:#0969da,color:#0a3069
     classDef bug fill:#ffd8d3,stroke:#cf222e,color:#82071e
@@ -119,7 +121,7 @@ flowchart LR
     class P5 info
     class P8,P9,P13,P14,P15 vis
     class P10,P11,P12,P20 box
-    class P3,P17,P18,P19,P22,P23,P24,P25,P26 doc
+    class P3,P17,P18,P19,P22,P23,P24,P25,P26,P27 doc
 ```
 
 <sub>Durchgezogene Pfeile: Ergebnis führt direkt zum nächsten Schritt · gestrichelt: Anregung der Lehrkraft</sub>
@@ -137,7 +139,7 @@ flowchart LR
 | 💡 | Erklärung / Wissen | 5 |
 | 🎨 | Darstellung (README, 3D-Modell, Grafiken) | 8, 9, 13, 14, 15 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
-| 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24, 25, 26 |
+| 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24, 25, 26, 27 |
 
 </td>
 <td width="45%">
@@ -149,7 +151,7 @@ pie
     "Erklärung" : 1
     "Darstellung" : 5
     "Gehäuse" : 4
-    "Dokumentation" : 9
+    "Dokumentation" : 10
 ```
 
 </td>
@@ -545,6 +547,21 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 > **Offen:** Montage auf der Holzplatte (Holzlatten fehlen), Tests am Gerät.
 
 <sub>🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#26-prompt--fotos-vom-echten-aufbau-17112026)</sub>
+
+### 📝 Schritt 27 — Tests am fertigen Gerät bestanden
+
+**Anlass:** Alle Funktionen wurden am eingebauten Gerät über USB getestet, und die Angaben zu Board und Drucker standen noch aus.
+
+**Ergebnis**
+- Tests T1–T9 bestanden: Scharfschalten mit PIN und Karte, Alarm, Alarm beenden, Fehleingaben im Alarm, 3 Fehlversuche, Admin-Menü, RFID-Reset
+- Freier Arbeitsspeicher beim Start: **252 Byte**. Weniger als die alte Schätzung (~320), weil RFID-Leser und Admin-Menü danach dazukamen, aber stabil
+- Der RFID-Leser ist ein Nachbau und meldet die Version `0xB2` statt `0x91`/`0x92`. Die Firmware akzeptiert das, die Doku sagt es jetzt auch
+- Verbaut ist ein **Elegoo UNO R3** (baugleich), gedruckt wurde auf dem **Snapmaker Artisan** der Berufsschule mit dem Slicer **Snapmaker Luban**, beides im [Quellenverzeichnis](Quellenverzeichnis#werkzeuge)
+
+> [!WARNING]
+> **Offen:** Laufzeit mit Batterie (T10), Montage auf der Holzplatte.
+
+<sub>🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#27-prompt--tests-t1t9-bestanden-board-und-drucker-17112026)</sub>
 
 ---
 

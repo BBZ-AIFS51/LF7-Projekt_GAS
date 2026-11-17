@@ -6,7 +6,8 @@
  *
  * Run this FIRST, before touching the main firmware:
  *   1. Open the Serial Monitor at 9600 baud.
- *   2. Check that the version line says 0x91 or 0x92.
+ *   2. Check the version line: 0x91 / 0x92 on a genuine RC522, clones show
+ *      other values (ours: 0xB2). Only 0x00 or 0xFF means no answer.
  *   3. Hold each card / key fob to the reader and note the printed line.
  *
  * Wiring (RC522 -> Arduino Uno)
@@ -37,8 +38,8 @@ void setup() {
   mfrc522.PCD_Init();
   delay(50);                 // give the module time to come up
 
-  // VersionReg answers 0x91 / 0x92 on a genuine RC522. 0x00 or 0xFF means
-  // the reader is not talking to us at all.
+  // VersionReg answers 0x91 / 0x92 on a genuine RC522, clones answer other
+  // values (ours: 0xB2). 0x00 or 0xFF means the reader is not talking at all.
   byte ver = mfrc522.PCD_ReadRegister(MFRC522::VersionReg);
   Serial.print(F("[RFID] version 0x"));
   Serial.println(ver, HEX);

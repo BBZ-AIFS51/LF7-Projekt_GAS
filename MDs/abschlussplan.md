@@ -156,8 +156,10 @@ mit Dateinamen und wie man hochlädt.
 - [x] **(Claude)** Fotos verkleinert (max. 1600 px), Metadaten entfernt und
       ins Wiki eingebaut (17.11.2026). Ins Word-Dokument kommen sie, sobald
       es in Phase 3 angelegt wird.
-- [ ] **(Team)** Was ist beim misslungenen Druck (`druck_misslungen.jpg`)
-      passiert, welches Teil war es? Gehört als Beispiel in Kapitel 8.
+- [x] **(Team)** Misslungener Druck (`druck_misslungen.jpg`): Frontplatte des
+      Bedienteils und alle Teile des Sensorteils, Ursache unbekannt. Gedruckt
+      auf dem Snapmaker Artisan der Berufsschule, bei dem nur die rechte Düse
+      funktioniert, Slicer Snapmaker Luban.
 
 **Einbau:**
 
@@ -177,22 +179,40 @@ mit Dateinamen und wie man hochlädt.
       Verpolungsschutz!), erst dann anstecken
 
 **Tests am fertigen Gerät.** T1–T9 gehen auch **ohne Batterie über USB**, also
-schon vor der Montage. Nur T10 braucht die Batterie. (Ergebnis im Wiki auf der Seite
+schon vor der Montage. Nur T10 braucht die Batterie. **T1–T9 bestanden am 17.11.2026.** (Ergebnis im Wiki auf der Seite
 [Projektphasen](../wiki/Projektphasen.md) unter „Stand und offene Punkte“
 abhaken, Messwerte eintragen):
 
 | # | Test | Erwartet | Ergebnis |
 |---|---|---|---|
-| T1 | PIN + `#` im Zustand UNSCHARF | 10 s Ausgangsverzögerung, dann Totenkopf | ✏️ |
-| T2 | Bewegung im Zustand SCHARF | Sirene 30 s, Totenkopf blinkt | ✏️ |
-| T3 | Richtige PIN im Alarm | Sirene aus, Herz | ✏️ |
-| T4 | Falsche PIN / falsche Karte im Alarm (Bugfix Schritt 16) | wird ignoriert, Sirene läuft weiter | ✏️ |
-| T5 | 3 × falsche PIN im Zustand UNSCHARF | Alarm | ✏️ |
-| T6 | Bekannte Karte auflegen | schaltet scharf bzw. unscharf | ✏️ |
-| T7 | Admin-Menü: `A` + Admin-PIN, Karte anlernen, löschen | Karte wird gespeichert, bleibt nach Neustart | ✏️ |
-| T8 | RFID-Reset `B` mit kurz abgezogenem Leser | Leser antwortet danach wieder (0x91/0x92) | ✏️ |
-| T9 | Serieller Monitor beim Start | `free SRAM:` Wert notieren (erwartet ~320 Byte) | ✏️ Byte |
+| T1 | PIN + `#` im Zustand UNSCHARF | 10 s Ausgangsverzögerung, dann Totenkopf | ✅ |
+| T2 | Bewegung im Zustand SCHARF | Sirene 30 s, Totenkopf blinkt | ✅ |
+| T3 | Richtige PIN im Alarm | Sirene aus, Herz | ✅ |
+| T4 | Falsche PIN / falsche Karte im Alarm (Bugfix Schritt 16) | wird ignoriert, Sirene läuft weiter | ✅ |
+| T5 | 3 × falsche PIN im Zustand UNSCHARF | Alarm | ✅ |
+| T6 | Bekannte Karte auflegen | schaltet scharf bzw. unscharf | ✅ |
+| T7 | Admin-Menü: `A` + Admin-PIN, Karte anlernen, löschen | Karte wird gespeichert, bleibt nach Neustart | ✅ |
+| T8 | RFID-Reset `B` mit kurz abgezogenem Leser | Leser antwortet danach wieder (nicht 0x00/0xFF; unser Klon meldet 0xB2) | ✅ |
+| T9 | Serieller Monitor beim Start | `free SRAM:` Wert notieren | ✅ **252 Byte** |
 | T10 | Laufzeit mit frischer 9-V-Batterie | grob 3–5 h | ✏️ h |
+
+Ausgabe im seriellen Monitor beim Start (17.11.2026):
+
+```text
+[RFID] version 0xB2
+=== Alarm system ready (disarmed) ===
+PIN + '#' or a known RFID card arms / disarms.
+stored RFID cards: 2
+free SRAM: 252
+```
+
+- **0xB2** statt 0x91/0x92: Der Leser ist ein Nachbau des RC522. Die Firmware
+  wertet nur 0x00/0xFF als Fehler, deshalb läuft er normal.
+- **252 Byte** statt der geschätzten ~320: Die Schätzung stammt aus Schritt 4,
+  vor dem RFID-Leser und dem Admin-Menü (Kartenliste mit 8 × 4 Byte,
+  Leser-Objekt, Variablen fürs Menü). Bei 205 Byte gab es damals Neustarts,
+  252 Byte laufen in allen Tests stabil. Mehr Speicher sollte die Firmware
+  aber nicht mehr brauchen, ein Grund mehr für den Code-Freeze.
 
 - [ ] **(Team)** Kurzes **Video** vom kompletten Ablauf (Herz → Karte →
       Totenkopf → Bewegung → Sirene → PIN → Herz), am besten nach der
@@ -208,8 +228,8 @@ und 3D-Modell nicht mehr überein.
 
 - [x] **(Team)** Fehlerton: **2 s**, festgelegt. Code, Kommentare, Viewer,
       Wiki und Doku sagen überall 2 s.
-- [ ] **(Team)** Fehler, die bei den Tests in Phase 1 auffallen, beheben (mit
-      Claude), neu testen
+- [x] **(Team)** Fehler aus den Tests in Phase 1 beheben → keine gefunden,
+      T1–T9 bestanden (17.11.2026)
 - [ ] **(Team)** Endstand kompilieren und aufs Gerät laden, kurzer Test
 - [ ] **(Team)** Git-Tag `v1.0` auf `main` setzen = Stand der Firmware
 
@@ -243,20 +263,20 @@ Platzhalter nicht mehr.
 | 1 Deckblatt | Titel, Gruppe, Klasse, Abgabedatum, Foto vom Gerät (`geraet_vorne.jpg` ist da, nach der Montage evtl. `geraet_brett.jpg`) | Claude |
 | 2 Idee und Zielsetzung | Projektstart beim Zeitraum, K5 Gehäuse auf ✅ setzen, sobald montiert | Team (Projektstart), Claude |
 | 3 Funktionsbeschreibung | aus dem Wiki übernehmen | Claude |
-| 4 Verwendete Bauteile | prüfen, ob Batterie, Clip, Mini-Breadboard und Kabel vollständig drin sind. Auf den Fotos steckt im Gehäuse ein **Elegoo UNO R3** (in `gehaeuse_innen.jpg` noch ein Original-Arduino): angeben, welches Board es ist | Team prüft |
+| 4 Verwendete Bauteile | prüfen, ob Batterie, Clip, Mini-Breadboard und Kabel vollständig drin sind. Verbaut ist ein **Elegoo UNO R3** (baugleich zum Arduino Uno R3), steht seit 17.11. im Wiki | Team prüft |
 | 5 Aufbau und Schaltplan | Laufzeit eintragen (Fotos vom Aufbau sind seit 17.11. da, Schaltplan mit Batterie an VIN seit Schritt 22) | Team |
 | 6 Sourcecode | Dateien und Abgabeform (Code liegt im Repository) | Claude |
-| 7 Wichtige Codeabschnitte | gemessenen SRAM-Wert eintragen | Team misst, Claude schreibt |
+| 7 Wichtige Codeabschnitte | gemessener SRAM-Wert: **252 Byte** (17.11.), steht im Wiki | Claude |
 | 8 Herausforderungen | wie ihr den SH1106 erkannt habt, Probleme beim RC522-Verdrahten, eigene Probleme (Druck, Einbau, Teamarbeit) | **Team** |
 | 9 Fazit und Ausblick | Soll/Ist (Zeit, Kosten, Gehäuse), Fazit 2–3 Sätze, **Reflexion selbst schreiben, ohne KI**, 2–4 Erweiterungsideen auswählen | **Team** |
-| 10 Quellenverzeichnis | Keypad- und Buzzer-Quelle (Händlerseite), Library-Versionen (Library Manager → „Installiert“), Slicer, eigene Tutorials/Videos. Format IEEE ist umgestellt (10.11.) | Team sammelt, Claude formatiert |
+| 10 Quellenverzeichnis | Keypad- und Buzzer-Quelle (Händlerseite), Library-Versionen (Library Manager → „Installiert“), eigene Tutorials/Videos. Slicer und Drucker sind drin ([25], [26]). Format IEEE ist umgestellt (10.11.) | Team sammelt, Claude formatiert |
 | alle Kapitel | Quellen **im Text zitieren** mit [n], z. B. bei Bauteilen (Datenblätter), Codeabschnitten (Bibliotheken, `tone()`, `PROGMEM`) und Herausforderungen | Claude |
 
 ### Anhang
 
 | Seite | Was fehlt | Wer |
 |---|---|---|
-| Team und Rollen | wer hat was gemacht, wie habt ihr euch abgestimmt, Drucker/Slicer (auf den Fotos ein Snapmaker, genaues Modell und Slicer fehlen) | **Team** |
+| Team und Rollen | wer hat was gemacht, wie habt ihr euch abgestimmt, Drucker/Slicer (Snapmaker Artisan der Berufsschule, nur die rechte Düse geht, Slicer Snapmaker Luban; Quellen [25], [26]) | **Team** |
 | Zeitplan | gab es eine Planung? Meilensteine mit Datum (Projektstart, `hardware_test`, RFID verdrahtet, Gehäuse montiert), Präsentation und Abgabe | Team liefert Daten, Claude trägt ein |
 | Kosten | Preise und Bezugsquellen, was von der Schule kam | **Team** |
 | Projektphasen | Stand und offene Punkte abhaken, Foto vom fertigen Gerät, Testergebnisse | Team, Claude |
