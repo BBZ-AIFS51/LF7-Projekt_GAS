@@ -6,7 +6,7 @@ beziehen sich auf die Kapitel der Abgabe-Dokumentation.
 
 ## So kommen die Fotos hierher
 
-1. Auf GitHub oben links den Branch **`claude/charming-faraday-17lzyv`**
+1. Auf GitHub oben links den Branch **`claude/trusting-knuth-awmzj8`**
    auswählen (nicht `main`).
 2. In diesen Ordner `Fotos/` wechseln → **Add file** → **Upload files**.
 3. Dateien hineinziehen, Dateinamen wie in der Liste unten, **Commit changes**.

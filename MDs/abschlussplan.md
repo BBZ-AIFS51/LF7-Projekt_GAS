@@ -132,9 +132,7 @@ Die Fragen zur Abgabeform sind beantwortet (siehe oben). Offen ist noch:
 - [x] **(Team)** Dauer → insgesamt **mindestens 15 Minuten**
 - [x] **(Team)** Zitierformat → **IEEE** (nummeriert, wie an der Hochschule)
 - [x] **(Team)** Arbeitsweise: Alles wird auf dem Branch
-      `claude/trusting-knuth-awmzj8` erledigt, ab 17.11.2026 auf
-      `claude/charming-faraday-17lzyv` (gleicher Stand, dort geht es weiter).
-      Wenn alles fertig ist, kommt es
+      `claude/trusting-knuth-awmzj8` erledigt. Wenn alles fertig ist, kommt es
       mit **einem Pull Request** nach `main` (spätestens in Phase 6). Bis dahin
       ist das GitHub-Wiki noch auf dem alten Stand, weil es nur bei Änderungen
       an `main` aktualisiert wird.

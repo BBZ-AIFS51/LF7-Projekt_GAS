@@ -1200,8 +1200,8 @@ Uno und Mini-Breadboard und der erste Aufbau auf dem großen Breadboard.
   fertiges Gerät in Phase 5, Hinweis auf die fehlenden Holzlatten),
   „Herausforderungen“ (Sensorteil offen bei den Schraubpunkten).
 - **Abschlussplan:** Fotos abgehakt, Montage auf der Holzplatte verschoben
-  (Holzlatten fehlen, spätestens 30.11.), Arbeitsbranch ist jetzt
-  `claude/charming-faraday-17lzyv`.
+  (Holzlatten fehlen, spätestens 30.11.). Gearbeitet wurde versehentlich auf
+  `claude/charming-faraday-17lzyv`, siehe Nachtrag zu Schritt 27.
 - **Auf den Fotos aufgefallen:** Im Gehäuse steckt ein Elegoo UNO R3, beim
   ersten Einpassen (28.10.) war es noch ein Original-Arduino. Gedruckt wurde
   auf einem Snapmaker. Beides als Frage für Kapitel 4 bzw. den Anhang „Team
@@ -1260,6 +1260,20 @@ Uno und Mini-Breadboard und der erste Aufbau auf dem großen Breadboard.
 
 - T10 Laufzeit mit Batterie, Montage auf der Holzplatte, `geraet_brett.jpg`.
 - Endstand hochladen und Tag `v1.0` (Phase 2).
+
+### Nachtrag (17.11.2026)
+
+> kannst du dann bitte wieder zu der branach "claude-trusting-knuth-awmzj8"
+> mergen? da wo du auch eigentlich arbeiten solltest
+
+### Antwort
+
+Die Schritte 26 und 27 waren auf `claude/charming-faraday-17lzyv` entstanden.
+Beide Branches hatten denselben Ausgangsstand, deshalb ließ sich
+`claude/trusting-knuth-awmzj8` ohne Konflikte nachziehen (Fast-Forward). Die
+Hinweise auf den anderen Branch in [abschlussplan.md](abschlussplan.md) und
+[../Fotos/README.md](../Fotos/README.md) sind zurückgenommen, gearbeitet wird
+weiter auf `claude/trusting-knuth-awmzj8`.
 
 ---
 
