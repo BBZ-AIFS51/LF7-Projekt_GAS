@@ -137,7 +137,7 @@ neu, damit man während der Sirene nicht ungestraft Codes durchprobieren kann.
 - [x] Alle Muss-Anforderungen umgesetzt, siehe [Idee und Zielsetzung](Idee-und-Zielsetzung#anforderungen)
 - [x] Alle Funktionen am fertigen Gerät getestet (17.11.2026): Scharfschalten mit PIN und Karte, Alarm, Alarm beenden, 3 Fehlversuche, Admin-Menü
 - [x] Bugfix aus Schritt 16 am echten Aufbau getestet
-- [ ] Änderung aus Schritt 28 (falsche Eingabe startet den Alarm neu) am Gerät testen
+- [x] Änderung aus Schritt 28 (falsche Eingabe startet den Alarm neu) am Gerät getestet
 - [x] Freier SRAM gemessen: **252 Byte** beim Start
 - [x] RFID-Reset (<kbd>B</kbd>) mit absichtlich getrenntem Leser getestet
 - [x] Alle Module passen ins gedruckte Gehäuse (eingebaut am 10.11.2026)

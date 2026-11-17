@@ -304,6 +304,9 @@ lassen sich dort ändern, ohne den restlichen Code anzufassen:
 
 | Konstante | Wert | Bedeutung |
 |---|---:|---|
+| `PIN_CODE` | `1234` | PIN zum Scharf- und Unscharfschalten (Beispielwert, siehe unten) |
+| `ADMIN_PIN` | `0000` | PIN fürs Admin-Menü (Beispielwert) |
+| `DEFAULT_UIDS` | `3F A1 7C 02` | Werkskarte, wird nur bei leerem EEPROM gespeichert (Beispielwert) |
 | `EXIT_DELAY_MS` | 10 000 ms | Ausgangsverzögerung nach dem Scharfschalten |
 | `ALARM_MS` | 30 000 ms | Dauer der Sirene, startet bei falscher Eingabe im Alarm neu |
 | `ERROR_TONE_MS` | 2 000 ms | Dauer des Fehlertons |
@@ -312,6 +315,13 @@ lassen sich dort ändern, ohne den restlichen Code anzufassen:
 | `ADMIN_IDLE_TIMEOUT_MS` | 20 000 ms | Admin-Menü schließt bei Inaktivität |
 | `MAX_STORED_UIDS` | 8 | maximale Zahl gespeicherter Karten |
 | `RFID_POLL_MS` | 200 ms | Abstand zwischen zwei Abfragen des RFID-Lesers |
+
+> [!NOTE]
+> Das Repository ist öffentlich. Deshalb stehen dort nur Beispielwerte für PIN,
+> Admin-PIN und Werkskarte, dieselben wie im
+> [3D-Modell](https://bbz-aifs51.github.io/LF7-Projekt_GAS/). Die echten Werte
+> tragen wir vor dem Hochladen nur lokal ein. Karten, die schon im EEPROM
+> gespeichert sind, bleiben beim Hochladen erhalten.
 
 ---
 

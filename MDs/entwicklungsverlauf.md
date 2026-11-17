@@ -1321,9 +1321,46 @@ GitHub-Wiki zu sehen.
 
 - Nicht kompiliert (keine arduino-cli in der Sitzung). In der Arduino IDE
   kompilieren, hochladen und T4 wiederholen, `free SRAM:` ablesen.
+  → erledigt, vom Team am Gerät getestet (Schritt 29).
 - PDF der Anleitung neu erzeugen (stand schon im Plan, jetzt auch mit dem
   neuen Satz zum Alarm).
 - Danach Code-Freeze und Tag `v1.0`.
+
+## 29. Prompt — Beispielwerte statt echter PINs, alles auf main (17.11.2026)
+
+> Ich habs getestet es funktioniert. Hau alles auf main. wenn du schon dabei bist kannst du einmal die pins und uids die in tatsächlichen code sind auf standart mustercodes und uids umändern. schau das das 3d modell auch danach noch funktioniert. alles auf main
+
+### Antwort
+
+- **Test aus Schritt 28** vom Team am Gerät bestanden, T4 im Abschlussplan
+  und im Wiki (Projektphasen) abgehakt.
+- **Beispielwerte im Code:** In `alarm_system.ino` standen die echten PINs
+  und die UID des Schlüsselanhängers. Ersetzt durch dieselben Werte, die das
+  3D-Modell schon hatte: PIN `1234`, Admin-PIN `0000`, Werkskarte
+  `3F A1 7C 02` (im Modell „Card A“). Sketch und Modell stimmen damit überein.
+  Auch das UID-Beispiel im Kommentar von `printUidHex()` ist geändert. Die
+  alten Werte stehen weiterhin in der Git-Historie, das lässt sich ohne
+  Umschreiben der Historie nicht ändern.
+- **Hinweis zum Hochladen:** Wer den Sketch so hochlädt, hat am Gerät
+  `1234`/`0000`. Die echten PINs vor dem Hochladen lokal eintragen und nicht
+  committen. Angelernte Karten liegen im EEPROM und bleiben erhalten,
+  `DEFAULT_UIDS` wirkt nur bei leerem EEPROM.
+- **3D-Modell:** Nur Kommentare und der Hinweistext („the same example PINs
+  as in the sketch“) geändert. Im Browser durchgespielt: `1234#` schaltet
+  scharf und wieder unscharf, Card A ebenso, Card B zählt als Fehlversuch,
+  `A` + `0000#` öffnet das Admin-Menü, falsche PIN zählt hoch. Keine Fehler in
+  der Konsole, auch der Tab „Enclosure“ lädt.
+- **Doku:** README (Hinweis auf Beispielwerte), CLAUDE.md, Abschlussplan
+  (Phase 2), Wiki: Wichtige Codeabschnitte (Tabelle „Einstellungen im Code“
+  um PIN, Admin-PIN und Werkskarte ergänzt), Entwicklungsverlauf (Karte 29,
+  Zahlen), Home (29 Schritte).
+- **`main`:** Der Branch ist nach `main` übernommen, damit laufen die
+  Workflows für Wiki und 3D-Modell.
+
+**Offene Punkte:**
+
+- Endstand mit den eigenen PINs (lokal) hochladen, danach Tag `v1.0`.
+- Laufzeit mit Batterie (T10), Montage auf der Holzplatte.
 ---
 
 ## Anhang — Stand der Dateien

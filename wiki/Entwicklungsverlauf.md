@@ -12,7 +12,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **28** | **10** | **4** | **2** |
+| **29** | **10** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -56,6 +56,7 @@ timeline
         17.11. : S26 Fotos vom echten Aufbau
                : S27 Tests bestanden
                : S28 Alarm verlängern
+               : S29 Beispiel-PINs im Code
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -94,6 +95,7 @@ flowchart LR
     P26["📝 S26<br/>Fotos"]
     P27["📝 S27<br/>Tests"]
     P28["💻 S28<br/>Alarm verlängern"]
+    P29["📝 S29<br/>Beispiel-PINs"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -112,7 +114,7 @@ flowchart LR
     P18 -. "Termine" .-> P23
     P23 --> P24 --> P25 --> P26 --> P27
     P16 --> P28
-    P27 -- "Test am Gerät" --> P28
+    P27 -- "Test am Gerät" --> P28 --> P29
 
     classDef fw fill:#d0e7ff,stroke:#0969da,color:#0a3069
     classDef bug fill:#ffd8d3,stroke:#cf222e,color:#82071e
@@ -125,7 +127,7 @@ flowchart LR
     class P5 info
     class P8,P9,P13,P14,P15 vis
     class P10,P11,P12,P20 box
-    class P3,P17,P18,P19,P22,P23,P24,P25,P26,P27 doc
+    class P3,P17,P18,P19,P22,P23,P24,P25,P26,P27,P29 doc
 ```
 
 <sub>Durchgezogene Pfeile: Ergebnis führt direkt zum nächsten Schritt · gestrichelt: Anregung der Lehrkraft</sub>
@@ -143,7 +145,7 @@ flowchart LR
 | 💡 | Erklärung / Wissen | 5 |
 | 🎨 | Darstellung (README, 3D-Modell, Grafiken) | 8, 9, 13, 14, 15 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
-| 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24, 25, 26, 27 |
+| 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24, 25, 26, 27, 29 |
 
 </td>
 <td width="45%">
@@ -155,7 +157,7 @@ pie
     "Erklärung" : 1
     "Darstellung" : 5
     "Gehäuse" : 4
-    "Dokumentation" : 10
+    "Dokumentation" : 11
 ```
 
 </td>
@@ -575,11 +577,21 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 - Jede falsche Eingabe im Alarm startet die 30 Sekunden neu, die Restzeit auf dem Display springt zurück. Weiterhin kein Fehlerton, die Sirene läuft durch (siehe Schritt 16)
 - Eine Zeile in `accessDenied()`: `stateStart = millis()`. Keine neue Variable, also **kein zusätzlicher Arbeitsspeicher**
 - Das 3D-Modell verhält sich gleich
-
-> [!WARNING]
-> **Offen:** in der Arduino IDE kompilieren, aufs Gerät laden und testen, danach Code-Freeze.
+- Am Gerät getestet, funktioniert
 
 <sub>📄 [`alarm_system.ino`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Code/alarm_system/alarm_system.ino) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#28-prompt--falsche-eingabe-im-alarm-startet-ihn-neu-17112026)</sub>
+
+### 📝 Schritt 29 — Beispielwerte statt echter PINs, alles auf `main`
+
+**Anlass:** Das Repository ist öffentlich und wird so abgegeben. Im Code standen aber unsere echten PINs und die UID unseres Schlüsselanhängers.
+
+**Ergebnis**
+- Im Code stehen jetzt Beispielwerte: PIN `1234`, Admin-PIN `0000`, Werkskarte `3F A1 7C 02`. Das sind dieselben Werte wie im 3D-Modell, Sketch und Modell passen damit zusammen
+- Die echten Werte tragen wir vor dem Hochladen nur lokal ein. Angelernte Karten liegen im EEPROM und bleiben beim Hochladen erhalten
+- 3D-Modell im Browser geprüft: PIN, Admin-PIN und Karte funktionieren wie vorher
+- Der Stand mit Schritt 28 und 29 ist auf `main` übernommen
+
+<sub>📄 [`alarm_system.ino`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Code/alarm_system/alarm_system.ino) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#29-prompt--beispielwerte-statt-echter-pins-alles-auf-main-17112026)</sub>
 
 ---
 

@@ -188,7 +188,7 @@ abhaken, Messwerte eintragen):
 | T1 | PIN + `#` im Zustand UNSCHARF | 10 s Ausgangsverzögerung, dann Totenkopf | ✅ |
 | T2 | Bewegung im Zustand SCHARF | Sirene 30 s, Totenkopf blinkt | ✅ |
 | T3 | Richtige PIN im Alarm | Sirene aus, Herz | ✅ |
-| T4 | Falsche PIN / falsche Karte im Alarm (Schritt 16, geändert in Schritt 28) | kein Fehlerton, Sirene läuft weiter, Restzeit springt auf 30 s zurück | ✅ (alt), ✏️ neu testen |
+| T4 | Falsche PIN / falsche Karte im Alarm (Schritt 16, geändert in Schritt 28) | kein Fehlerton, Sirene läuft weiter, Restzeit springt auf 30 s zurück | ✅ (neu getestet 17.11.) |
 | T5 | 3 × falsche PIN im Zustand UNSCHARF | Alarm | ✅ |
 | T6 | Bekannte Karte auflegen | schaltet scharf bzw. unscharf | ✅ |
 | T7 | Admin-Menü: `A` + Admin-PIN, Karte anlernen, löschen | Karte wird gespeichert, bleibt nach Neustart | ✅ |
@@ -234,11 +234,17 @@ und 3D-Modell nicht mehr überein.
       Falsche PIN oder Karte im Alarm startet die 30 s neu. Kostet keinen
       zusätzlichen SRAM (keine neue Variable), nur ein paar Byte Flash.
       3D-Modell, Wiki, README und Anleitung sind nachgezogen.
-- [ ] **(Team)** T4 mit der neuen Firmware wiederholen: Alarm auslösen,
+- [x] **(Team)** T4 mit der neuen Firmware wiederholen (17.11.2026, funktioniert): Alarm auslösen,
       nach ~15 s falsche PIN + `#` → Restzeit springt auf 30, Sirene läuft
       ohne Fehlerton weiter; danach richtige PIN → Herz. Beim Start
       `free SRAM:` ablesen, es sollten weiter **252 Byte** sein.
-- [ ] **(Team)** Endstand kompilieren und aufs Gerät laden, kurzer Test
+- [x] **(Claude)** Echte PINs und die echte Karten-UID aus dem Code entfernt,
+      im Repository stehen jetzt Beispielwerte: PIN `1234`, Admin-PIN `0000`,
+      Werkskarte `3F A1 7C 02` (wie im 3D-Modell), Schritt 29 (17.11.2026)
+- [ ] **(Team)** Endstand kompilieren und aufs Gerät laden, kurzer Test.
+      **Vorher die eigenen PINs lokal oben im Sketch eintragen und nicht
+      committen**, sonst gilt auf dem Gerät `1234`/`0000`. Die angelernten
+      Karten bleiben im EEPROM, die müssen nicht neu angelernt werden.
 - [ ] **(Team)** Git-Tag `v1.0` auf `main` setzen = Stand der Firmware
 
 **Repository aufräumen** (es wird komplett abgegeben):

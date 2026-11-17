@@ -76,8 +76,10 @@
 // ---------------------------------------------------------------------------
 // Settings - change these if needed
 // ---------------------------------------------------------------------------
-const char PIN_CODE[]  = "55559";                 // access code
-const char ADMIN_PIN[] = "19283";                 // opens the RFID admin menu
+// Example values, same as in the 3D model - set your own before uploading
+// and do not commit them (the repository is public).
+const char PIN_CODE[]  = "1234";                  // access code
+const char ADMIN_PIN[] = "0000";                  // opens the RFID admin menu
 
 const unsigned long ALARM_MS         = 30000UL;  // siren length
 const unsigned long ERROR_TONE_MS    = 2000UL;   // wrong-PIN buzz length
@@ -99,7 +101,7 @@ const byte DEBOUNCE_MS     = 20;                 // keypad debounce
 // reports 7 bytes instead, set UID_LEN to 7 and use 7 bytes per row.
 const byte UID_LEN = 4;
 const byte DEFAULT_UIDS[][UID_LEN] PROGMEM = {
-  {0x9C, 0xEB, 0x1F, 0x49},   // key fob <-- REPLACE with your own UID
+  {0x3F, 0xA1, 0x7C, 0x02},   // example UID <-- REPLACE with your own card
 };
 const byte DEFAULT_UID_COUNT = sizeof(DEFAULT_UIDS) / UID_LEN;
 
@@ -975,7 +977,7 @@ void drawAdminScreen() {
   }
 }
 
-// prints a UID as space-separated hex byte pairs, e.g. "9C EB 1F 49"
+// prints a UID as space-separated hex byte pairs, e.g. "3F A1 7C 02"
 void printUidHex(const byte *uid) {
   for (byte i = 0; i < UID_LEN; i++) {
     if (i > 0) {

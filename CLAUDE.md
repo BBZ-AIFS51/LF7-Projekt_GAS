@@ -56,7 +56,7 @@ Bewegungssensor erkennt Anwesenheit.
   animierte SVG-Ebenen — **Vorlage bearbeiten, nicht `docs/banner.svg`**) und
   `docs/viewer/`: 3D-Modell
   (three.js, `three.min.js` liegt bei) mit nachgebauter Firmware-Logik aus
-  `alarm_system.ino` (Demo-PINs `1234`/`0000`). Wird per
+  `alarm_system.ino` (Beispiel-PINs `1234`/`0000`, dieselben wie im Sketch). Wird per
   `.github/workflows/pages.yml` auf GitHub Pages veröffentlicht. **Ändert sich
   Verhalten, Zeit oder Pin in der Firmware, den Viewer mitziehen.**
   Zwei Tabs: „Breadboard“ (Teile lose nach Schaltplan) und „Enclosure“
@@ -234,7 +234,10 @@ statisches SRAM (im Wesentlichen die `Uid`-Struktur), Flash rund 5–7 kB.
   auf dem OLED, nicht-blockierende Töne (OK / Fehler 2 s / Sirene 30 s). Der Fehlerton
   dauert **2 s**, das ist festgelegt und überall so dokumentiert — nicht
   wieder als Abweichung oder offenen Punkt aufführen.
-  PIN und Zeiten stehen als Konstanten oben im Sketch.
+  PIN und Zeiten stehen als Konstanten oben im Sketch. Im Repository stehen
+  nur **Beispielwerte** (PIN `1234`, Admin-PIN `0000`, Werks-UID
+  `3F A1 7C 02`, dieselben wie im 3D-Modell), die echten Werte trägt das Team
+  vor dem Hochladen lokal ein und committet sie nicht (Schritt 29).
   **Kein Keypad-Library-Einsatz**: der Sketch scannt die Matrix selbst
   (`scanKeypad()`, Keymap im PROGMEM). Die Library kostete ~120 Byte SRAM,
   wodurch nur ~205 Byte frei blieben — das führte zu sporadischen Resets und

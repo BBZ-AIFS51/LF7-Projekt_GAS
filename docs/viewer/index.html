@@ -161,7 +161,7 @@
 
     <h2>Keypad</h2>
     <div class="keypad" id="keypad"></div>
-    <p class="hint">Demo PIN <code>1234</code> · admin PIN <code>0000</code> (the real PINs are in the sketch). Your keyboard works too: Enter = <code>#</code>, Esc = <code>*</code>.</p>
+    <p class="hint">Demo PIN <code>1234</code> · admin PIN <code>0000</code> (the same example PINs as in the sketch). Your keyboard works too: Enter = <code>#</code>, Esc = <code>*</code>.</p>
 
     <h2>Actions</h2>
     <div class="actions">
@@ -374,8 +374,8 @@ function blitOled() {
 // ===========================================================================
 // Firmware - ported 1:1 from Code/alarm_system/alarm_system.ino
 // ===========================================================================
-const PIN_CODE = '1234';    // demo value, the real PIN lives in the sketch
-const ADMIN_PIN = '0000';   // demo value, the real admin PIN lives in the sketch
+const PIN_CODE = '1234';    // example value, same as in the sketch
+const ADMIN_PIN = '0000';   // example value, same as in the sketch
 const ALARM_MS = 30000, ERROR_TONE_MS = 2000, EXIT_DELAY_MS = 10000, ENTRY_TIMEOUT_MS = 10000;
 const ADMIN_IDLE_TIMEOUT_MS = 20000, ADMIN_MSG_MS = 1500;
 const MAX_WRONG_TRIES = 3, MAX_ENTRY_LEN = 8, UID_LEN = 4, MAX_STORED_UIDS = 8, RFID_POLL_MS = 200;

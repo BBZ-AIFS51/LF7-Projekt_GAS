@@ -95,7 +95,7 @@ units wired and screwed together. Planning, print settings and assembly (in Germ
    - **MFRC522** (GithubCommunity)
    - **Keypad** (Mark Stanley / Alexander Brevig), only needed for `hardware_test`
    - `Wire`, `SPI` and `EEPROM` already come with the IDE.
-2. Set the PIN and admin PIN at the top of [alarm_system.ino](Code/alarm_system/alarm_system.ino) (`PIN_CODE`, `ADMIN_PIN`).
+2. Set your own PIN and admin PIN at the top of [alarm_system.ino](Code/alarm_system/alarm_system.ino) (`PIN_CODE`, `ADMIN_PIN`). The repository only contains the example values `1234` and `0000`, keep your real ones out of it.
 3. Select the **Arduino Uno** board and the right port, then upload.
 4. Set the serial monitor to **9600 baud**. On start-up it shows the RC522 version (anything but `0x00`/`0xFF` = OK; a genuine RC522 says `0x91`/`0x92`, our clone says `0xB2`), the number of stored cards and the free SRAM.
 5. On the very first start the EEPROM is empty, so the sketch writes the factory list `DEFAULT_UIDS` into it. After that you manage cards only through the admin menu.
@@ -124,8 +124,8 @@ sounds and OLED graphics are the same:
 - The buzzer plays through WebAudio, and there is a serial monitor and an EEPROM card list.
 - The **Enclosure** tab ([direct link](https://bbz-aifs51.github.io/LF7-Projekt_GAS/#enclosure)) puts the same parts into the 3D-printed case, built from the real STL files. Show the case solid, as X-ray or hidden, open it, and watch the signals run through the wires and the cable to the sensor unit.
 
-The model uses demo PINs (`1234` and admin `0000`), not the real ones from the
-sketch. To use it offline, just open
+The model uses the same example PINs as the sketch (`1234` and admin `0000`)
+and the same example card. To use it offline, just open
 [docs/viewer/index.html](docs/viewer/index.html) in your browser.
 
 ## Pitfalls we solved
