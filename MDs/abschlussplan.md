@@ -141,7 +141,8 @@ Die Fragen zur Abgabeform sind beantwortet (siehe oben). Offen ist noch:
       mit **einem Pull Request** nach `main` (spätestens in Phase 6).
       Zwischenstand am 17.11.2026 direkt nach `main` übernommen (Fast-Forward),
       Wiki und 3D-Modell sind damit aktuell. Nach Schritt 29 noch einmal
-      per Fast-Forward nach `main` übernommen (17.11.2026). Danach wieder: Bis zum nächsten
+      per Fast-Forward nach `main` übernommen (17.11.2026), nach Schritt 34
+      mit der Präsentation ein drittes Mal (24.11.2026). Danach wieder: Bis zum nächsten
       Übernehmen ist das GitHub-Wiki auf dem alten Stand, weil es nur bei Änderungen
       an `main` aktualisiert wird.
 

@@ -1587,6 +1587,13 @@ GitHub-Wiki zu sehen.
 - `[Euer Teil: ...]` in den Notizen füllen.
 - Auf Jans Notebook mit Beamer testen (Bildschirm erweitern, Popups erlauben).
 
+> hau alles auf main rauf, hast meine erlaubnis
+
+`main` hatte keine eigenen neuen Commits, deshalb wurde der Branch ohne
+Konflikte als Fast-Forward nach `main` übernommen. Damit sind die Schritte 30
+bis 34 und die Präsentation auf `main`, die Workflows für das Wiki und das
+3D-Modell auf GitHub Pages laufen mit diesem Stand.
+
 ---
 
 ## Anhang — Stand der Dateien
