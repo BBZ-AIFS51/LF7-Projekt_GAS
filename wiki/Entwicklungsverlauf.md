@@ -12,7 +12,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **32** | **11** | **4** | **2** |
+| **33** | **11** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -60,6 +60,7 @@ timeline
         24.11. : S30 Platte und Batterie gestrichen
                : S31 Projektdokumentation
                : S32 Präsentation
+               : S33 Nur Stichpunkte
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -102,6 +103,7 @@ flowchart LR
     P30["📝 S30<br/>ohne Platte"]
     P31["📝 S31<br/>Doku in Word"]
     P32["🎨 S32<br/>Präsentation"]
+    P33["🎨 S33<br/>Stichpunkte"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -121,7 +123,7 @@ flowchart LR
     P23 --> P24 --> P25 --> P26 --> P27
     P16 --> P28
     P27 -- "Test am Gerät" --> P28 --> P29
-    P27 --> P30 --> P31 --> P32
+    P27 --> P30 --> P31 --> P32 --> P33
     P13 --> P32
 
     classDef fw fill:#d0e7ff,stroke:#0969da,color:#0a3069
@@ -133,7 +135,7 @@ flowchart LR
     class P1,P6,P7,P28 fw
     class P2,P4,P16,P21 bug
     class P5 info
-    class P8,P9,P13,P14,P15,P32 vis
+    class P8,P9,P13,P14,P15,P32,P33 vis
     class P10,P11,P12,P20 box
     class P3,P17,P18,P19,P22,P23,P24,P25,P26,P27,P29,P30,P31 doc
 ```
@@ -151,7 +153,7 @@ flowchart LR
 | 💻 | Firmware-Funktionen | 1, 6, 7, 28 |
 | 🐞 | Fehlerbehebung | 2, 4, 16, 21 |
 | 💡 | Erklärung / Wissen | 5 |
-| 🎨 | Darstellung (README, 3D-Modell, Grafiken, Präsentation) | 8, 9, 13, 14, 15, 32 |
+| 🎨 | Darstellung (README, 3D-Modell, Grafiken, Präsentation) | 8, 9, 13, 14, 15, 32, 33 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
 | 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24, 25, 26, 27, 29, 30, 31 |
 
@@ -163,7 +165,7 @@ pie
     "Firmware" : 4
     "Fehlerbehebung" : 4
     "Erklärung" : 1
-    "Darstellung" : 6
+    "Darstellung" : 7
     "Gehäuse" : 4
     "Dokumentation" : 13
 ```
@@ -645,6 +647,21 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 > **Offen:** Folien mit dem Word-Dokument abgleichen, eigene Stellen füllen, am Beamer testen.
 
 <sub>📁 [`praesentation/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/praesentation) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#32-prompt--präsentation-als-html-mit-3d-modell-24112026)</sub>
+
+### 🎨 Schritt 33 — Folien nur mit Stichpunkten
+
+**Anlass:** Auf den Folien stand noch zu viel Text in ganzen Sätzen. Für eine Präsentation sollten es Stichpunkte in einer Schrift sein, die man auch hinten im Raum lesen kann.
+
+**Ergebnis**
+- Auf allen 34 Folien nur noch Stichpunkte, Tabellen und Code. Was wegfiel, steht in den Sprechernotizen
+- Schrift deutlich größer, zwei Code-Ausschnitte gekürzt, damit sie größer werden
+- Kritische Durchsicht aller Folien: kleine Fehler behoben, zum Beispiel zwei Klicks für eine Zeile und ein abgeschnittenes Modell. Beim Bewegungsmelder dreht sich das Sensorteil im Modell jetzt sichtbar auf den 60°-Keil
+- Selbstbewertung: Note 2+. Stark bei Vorgaben, rotem Faden und Gestaltung. Schwächer: viele Folien für die Zeit, etwas kleiner Code auf vier Folien, Test am Beamer steht noch aus
+
+> [!WARNING]
+> **Offen:** Fazit und Reflexion in eigenen Worten, Probe mit Stoppuhr, Test am Beamer.
+
+<sub>🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#33-prompt--folien-nur-mit-stichpunkten-selbstkritik-24112026)</sub>
 
 ---
 

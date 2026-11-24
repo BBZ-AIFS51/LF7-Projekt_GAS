@@ -399,6 +399,9 @@ dieselbe Logik.
       oder Presenter, <kbd>F</kbd> Vollbild, <kbd>N</kbd> Notizen mit
       Stoppuhr, <kbd>O</kbd> Übersicht, <kbd>M</kbd> Animationen aus.
       Bedienung: [`praesentation/README.md`](../praesentation/README.md)
+- [x] **(Claude)** Folien auf Stichpunkte umgestellt, Schrift vergrößert,
+      Details in die Sprechernotizen verschoben, Selbstkritik (24.11.2026,
+      Schritt 33)
 - [ ] **(Team)** Folien gegen das Word-Dokument prüfen: Stimmen Reihenfolge,
       Zahlen und Begriffe? Wo die Doku etwas anders sagt, Folie anpassen
       (Texte in `praesentation/src/index.html`, danach

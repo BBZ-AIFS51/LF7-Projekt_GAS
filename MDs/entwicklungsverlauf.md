@@ -1505,6 +1505,46 @@ GitHub-Wiki zu sehen.
   Worten.
 - Auf Jans Notebook am Beamer testen, HTML-Datei abgeben.
 
+## 33. Prompt — Folien nur mit Stichpunkten, Selbstkritik (24.11.2026)
+
+> Sieht schon sehr gut aus. Entferne bitte alles an Text/Sätzen, es soll nur stichpunkte geben. Passe dann auch die Schriftgröße an, wenn weniger Text dasteht, damit man es gut lesen kann, es ist ja eine Präsentation. Und dann schau dir danach selber nochmal mit kritischem blick die präsentation an und bewerte sie mal selber
+
+### Antwort
+
+- **Nur Stichpunkte:** Auf allen 34 Folien stehen keine ganzen Sätze mehr,
+  nur kurze Stichpunkte, Tabellen und Code. Was dabei wegfiel (Begründungen,
+  Zahlen, Beispiele), steht jetzt in den Sprechernotizen (<kbd>N</kbd>),
+  ebenfalls als Stichpunkte.
+- **Größere Schrift:** Stichpunkte 42 statt 32 px, Tabellen 33 statt 27 px,
+  Problem/Ursache/Lösung 41 statt 30 px, Zustandsdiagramm, Zeitleiste,
+  Bildunterschriften, 3D-Beschriftungen und Kopfzeile ebenfalls größer (bezogen
+  auf 1920 × 1080). Zwei Code-Ausschnitte gekürzt, damit sie größer werden
+  können: beim Zustandsautomaten nur der Alarm-Zweig (Ausgangsverzögerung
+  läuft genauso), bei „Zugriff“ nur `accessDenied()`.
+- **Kritische Durchsicht** aller Folien als Bild. Direkt behoben:
+  - Begriff und Text bei Problem/Ursache/Lösung brauchten zwei Klicks, jetzt einer
+  - In der Bauteile-Liste waren am Ende alle Punkte außer dem letzten ausgegraut
+  - Folie 18 schnitt das Gerät oben ab
+  - Folien 19 und 28 zeigen statt der Wandszene das Sensorteil groß, beim
+    Keil dreht es sich im Modell von flach über 30° auf 60°
+  - Unschöner Umbruch auf Folie 29, Überschrift auf Folie 25 in die
+    Vergangenheit gesetzt, Hinweis auf die Quellen auf der letzten Folie
+- **Selbstbewertung (Note 2+):** Vorgaben, roter Faden und Gestaltung
+  sehr gut, Lesbarkeit nach dem Umbau gut. Schwächen: 34 Folien in etwa
+  23 Minuten sind viel (rund 40 Sekunden pro Folie), Code auf vier Folien
+  ist mit 20 bis 22 px für die letzte Reihe knapp, die Wandszenen auf den
+  Folien 3 und 5 sind im Modell die schwächsten Bilder, auf dem Notebook am
+  Beamer ist die Präsentation noch nicht getestet, und Fazit und Reflexion
+  müssen noch von uns selbst kommen.
+
+**Offene Punkte:**
+
+- Fazit, Reflexion, Erweiterungen und die SH1106-Geschichte in eigenen Worten
+  (Notizen der Folien 23, 29, 30, 31).
+- Probe mit Stoppuhr: Falls es zu lang wird, zuerst die Folien 13, 19 und 21
+  kürzer halten.
+- Test auf Jans Notebook am Beamer.
+
 ---
 
 ## Anhang — Stand der Dateien

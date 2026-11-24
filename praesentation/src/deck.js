@@ -141,8 +141,11 @@
   prog.appendChild(num);
 
   // ---- steps ----
-  const steps = slides.map((s) => $$('.step', s).filter((el) => !el.classList.contains('shown')));
   slides.forEach((s) => $$('.step.shown', s).forEach((el) => { el.dataset.init = '1'; }));
+  // a dd right after a dt step belongs to that step (term and text in one click)
+  const partner = (el) => (el.tagName === 'DD' && el.previousElementSibling && el.previousElementSibling.tagName === 'DT' &&
+    el.previousElementSibling.classList.contains('step') ? el.previousElementSibling : el);
+  const steps = slides.map((s) => $$('.step', s).filter((el) => !el.classList.contains('shown') && partner(el) === el));
 
   // ---- state ----
   let cur = 0, step = 0, started = 0, black = false;
@@ -158,7 +161,7 @@
   function sceneFor(i, k) {
     const s = slides[i];
     let name = s.dataset.scene;
-    const shown = $$('.step', s).filter((el) => el.dataset.init || steps[i].indexOf(el) < k);
+    const shown = $$('.step', s).filter((el) => el.dataset.init || partner(el).dataset.init || (steps[i].indexOf(partner(el)) >= 0 && steps[i].indexOf(partner(el)) < k));
     shown.forEach((el) => { if (el.dataset.scene) name = el.dataset.scene; });
     return { name, shown };
   }
@@ -168,8 +171,9 @@
     slides.forEach((x, i) => x.classList.toggle('on', i === cur));
     const { name, shown } = sceneFor(cur, step);
     $$('.step', s).forEach((el) => el.classList.toggle('shown', shown.includes(el)));
-    // older list items fade back a little
-    $$('.step', s).forEach((el) => el.classList.toggle('past', shown.includes(el) && shown[shown.length - 1] !== el));
+    // older list items fade back a little, the last step shows the whole list again
+    const done = step >= steps[cur].length;
+    $$('.step', s).forEach((el) => el.classList.toggle('past', !done && shown.includes(el) && shown[shown.length - 1] !== el));
     // state diagram
     if (s.id === 's-states') {
       let st = 'disarmed';
