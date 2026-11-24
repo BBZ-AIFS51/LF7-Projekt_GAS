@@ -1626,6 +1626,11 @@ bis 34 und die Präsentation auf `main`, die Workflows für das Wiki und das
 - Am Notebook noch einmal prüfen: Referentenansicht öffnen, weiterklicken,
   die Sekunden müssen von selbst weiterlaufen.
 
+> jo auch auf main
+
+Wieder als Fast-Forward nach `main` übernommen, `main` hatte keine eigenen
+neuen Commits.
+
 ---
 
 ## Anhang — Stand der Dateien
