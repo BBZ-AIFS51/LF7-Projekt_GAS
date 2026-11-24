@@ -1596,6 +1596,38 @@ bis 34 und die Präsentation auf `main`, die Workflows für das Wiki und das
 
 ---
 
+## 35. Prompt — Stoppuhr in der Referentenansicht steht still (24.11.2026)
+
+> der sekunden zähler in der P ansicht aktualisiert nicht selber, er aktualisiert sich erst wenn man die folie wechselt
+
+### Antwort
+
+- **Ursache:** Die Stoppuhr der Referentenansicht wurde vom Folienfenster aus
+  weitergezählt (Timer alle 250 ms). Liegt das Folienfenster verdeckt hinter
+  der Referentenansicht oder ist es minimiert, bremst der Browser dort die
+  Timer stark oder hält sie an. Die Anzeige wurde dann nur noch beim
+  Blättern neu geschrieben.
+- **Fix:** Die Referentenansicht hat jetzt einen eigenen Timer
+  (`pw.setInterval` in `openPresenter()` in `praesentation/src/deck.js`). Sie
+  ist das Fenster, das vor einem liegt, deshalb zählt die Uhr dort ohne
+  Bremse weiter. Beim erneuten Drücken von <kbd>P</kbd> wird der alte Timer
+  vorher gestoppt, es läuft immer nur einer.
+- Geprüft mit Playwright: Im Folienfenster wurden die Timer abgeschaltet, wie
+  bei einem stark gebremsten Fenster. Mit dem alten Stand blieb die Uhr bei
+  00:00 stehen, mit dem neuen zählt sie im Sekundentakt weiter, auch nach
+  zweimal <kbd>P</kbd>. Keine Fehler in der Konsole.
+- Beide HTML-Dateien neu gebaut. In `praesentation/README.md` ergänzt: Das
+  Live-Bild vom 3D-Modell in der Vorschau läuft nur, solange das
+  Folienfenster sichtbar ist. Am Beamer ist das der Fall, beim Üben mit nur
+  einem Bildschirm kann es stehen bleiben.
+
+**Offene Punkte:**
+
+- Am Notebook noch einmal prüfen: Referentenansicht öffnen, weiterklicken,
+  die Sekunden müssen von selbst weiterlaufen.
+
+---
+
 ## Anhang — Stand der Dateien
 
 | Datei | Zweck |

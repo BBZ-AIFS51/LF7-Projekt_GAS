@@ -3577,6 +3577,10 @@ body.pres { margin: 0; height: 100vh; display: grid; grid-template-rows: auto mi
     pdoc.addEventListener('keydown', (e) => onKey(e, true));
     pw.addEventListener('resize', layoutPresenter);
     mirror = pdoc.querySelector('#pv-cur canvas');
+    // The stopwatch runs on the presenter window's own timer: browsers slow down
+    // or pause timers in the slide window while it is hidden or behind others.
+    try { pw.clearInterval(pw.gasTick); } catch (e) { /* ignore */ }
+    pw.gasTick = pw.setInterval(tickPresenter, 250);
     layoutPresenter();
     renderPresenter();
   }

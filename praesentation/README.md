@@ -53,6 +53,11 @@ Die Referentenansicht zeigt:
 Stellen mit `[Euer Teil: ...]` in den Notizen füllt ihr selbst, zum Beispiel
 Fazit und Reflexion.
 
+Das Live-Bild vom 3D-Modell in der Vorschau kommt aus dem Folienfenster und
+läuft nur, solange dieses sichtbar ist. Am Beamer ist das so. Übt ihr mit nur
+einem Bildschirm und die Referentenansicht verdeckt das Folienfenster, bleibt
+das Bild stehen. Stoppuhr und Notizen laufen trotzdem.
+
 ## Ohne zweiten Bildschirm
 
 Nur ein Fenster: <kbd>N</kbd> blendet Notizen und Stoppuhr unten ein (sieht

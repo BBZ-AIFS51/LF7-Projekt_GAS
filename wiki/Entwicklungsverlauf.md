@@ -12,7 +12,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **34** | **11** | **4** | **2** |
+| **35** | **11** | **5** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -62,6 +62,7 @@ timeline
                : S32 Präsentation
                : S33 Nur Stichpunkte
                : S34 Vortragsversion
+               : S35 Stoppuhr-Fix
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -106,6 +107,7 @@ flowchart LR
     P32["🎨 S32<br/>Präsentation"]
     P33["🎨 S33<br/>Stichpunkte"]
     P34["🎨 S34<br/>Vortragsversion"]
+    P35["🐞 S35<br/>Stoppuhr"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -126,6 +128,7 @@ flowchart LR
     P16 --> P28
     P27 -- "Test am Gerät" --> P28 --> P29
     P27 --> P30 --> P31 --> P32 --> P33 --> P34
+    P34 -- "Test am Notebook" --> P35
     P13 --> P32
 
     classDef fw fill:#d0e7ff,stroke:#0969da,color:#0a3069
@@ -135,7 +138,7 @@ flowchart LR
     classDef box fill:#d2f4dc,stroke:#1a7f37,color:#044f1e
     classDef doc fill:#e6e9ed,stroke:#59636e,color:#1f2328
     class P1,P6,P7,P28 fw
-    class P2,P4,P16,P21 bug
+    class P2,P4,P16,P21,P35 bug
     class P5 info
     class P8,P9,P13,P14,P15,P32,P33,P34 vis
     class P10,P11,P12,P20 box
@@ -153,7 +156,7 @@ flowchart LR
 | | Bereich | Schritte |
 |:---:|---|---|
 | 💻 | Firmware-Funktionen | 1, 6, 7, 28 |
-| 🐞 | Fehlerbehebung | 2, 4, 16, 21 |
+| 🐞 | Fehlerbehebung | 2, 4, 16, 21, 35 |
 | 💡 | Erklärung / Wissen | 5 |
 | 🎨 | Darstellung (README, 3D-Modell, Grafiken, Präsentation) | 8, 9, 13, 14, 15, 32, 33, 34 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
@@ -165,7 +168,7 @@ flowchart LR
 ```mermaid
 pie
     "Firmware" : 4
-    "Fehlerbehebung" : 4
+    "Fehlerbehebung" : 5
     "Erklärung" : 1
     "Darstellung" : 8
     "Gehäuse" : 4
@@ -679,6 +682,20 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 > **Offen:** Code mit den Notizen lernen und frei erklären, Platzhalter füllen, Test am Beamer.
 
 <sub>📁 [`praesentation/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/praesentation) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#34-prompt--vortragsversion-mit-referentenansicht-und-sprechernotizen-24112026)</sub>
+
+### 🐞 Schritt 35 — Stoppuhr in der Referentenansicht steht still
+
+**Problem:** Beim Ausprobieren am Notebook zählte die Stoppuhr in der Referentenansicht nicht von selbst weiter. Sie sprang erst beim Folienwechsel auf die richtige Zeit.
+
+**Ergebnis**
+- **Ursache:** Die Uhr wurde vom Folienfenster aus weitergezählt. Liegt das verdeckt im Hintergrund, bremst der Browser dort die Timer oder hält sie an
+- **Fix:** Die Referentenansicht zählt jetzt mit einem eigenen Timer, sie liegt ja vorne
+- Nachgestellt und geprüft: Mit abgeschalteten Timern im Folienfenster blieb die Uhr vorher bei 00:00 stehen, jetzt läuft sie weiter
+
+> [!WARNING]
+> **Offen:** am Notebook noch einmal ausprobieren.
+
+<sub>📄 [`deck.js`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/praesentation/src/deck.js) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#35-prompt--stoppuhr-in-der-referentenansicht-steht-still-24112026)</sub>
 
 ---
 
