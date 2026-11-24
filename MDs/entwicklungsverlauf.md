@@ -1545,6 +1545,48 @@ GitHub-Wiki zu sehen.
   kürzer halten.
 - Test auf Jans Notebook am Beamer.
 
+## 34. Prompt — Vortragsversion mit Referentenansicht und Sprechernotizen (24.11.2026)
+
+> gut, pack auch die präsi mit ins repository rein. Und dann erstelle eine version von der präsi, für uns zum präsentieren.
+> Dort soll wie in powerpoint in einem zweiten fenster eine übersicht sein, mit aktueller und nächster folie. Erstelle dazu noch sprechernotizen, diese sollen dort natürlich auch zu sehen sein. schreibe die sprechernotizen mit /humanizer:humanizer und denk daran, das publikum ist unsere berufsschulklasse und kein altenheim. Das Übersichtsfenster muss nicht schön sein, nur funktionell und übersichtlich. Erkläre vorallem die folien mit dem code gut ,weil wir haben kein plan vom arduino code xD
+
+### Antwort
+
+- **Im Repository:** Die Präsentation liegt seit Schritt 32 in
+  `praesentation/` auf dem Arbeitsbranch. Nach `main` kommt sie mit dem
+  nächsten Übernehmen.
+- **Zwei Dateien** aus derselben Quelle (`node praesentation/build.mjs`):
+  `Praesentation_GAS.html` zur Abgabe, nur Folien, ohne Notizen.
+  `Praesentation_GAS_Vortrag.html` zum Vortragen, mit Notizen und
+  Referentenansicht.
+- **Referentenansicht:** Taste <kbd>P</kbd> öffnet ein zweites Fenster wie
+  bei PowerPoint: aktuelle Folie mit Live-Bild vom 3D-Modell, darunter der
+  nächste Klick oder die nächste Folie, rechts die Notizen. Oben Stoppuhr,
+  Zielzeit bis zum Folienende (orange bei Verzug), Uhrzeit, Liste zum
+  Springen, „Bild schwarz“, Schriftgröße der Notizen. Gesteuert wird aus
+  beiden Fenstern, auch mit einem Presenter. Tasten, die auf dem Beamer
+  etwas einblenden würden (Notizen, Übersicht), wirken aus der
+  Referentenansicht nicht.
+- **Sprechernotizen** für alle 34 Folien, nach der Humanizer-Anleitung
+  geschrieben: gesprochene Sprache, „wir“, für die eigene Klasse. Code-Folien
+  in drei Teilen: „So erklärt ihr es“, „Zeile für Zeile“ (jede Zeile in
+  normalen Worten, auch `%`, `&&`, `return`, `enum`, Pull-up, Flanke) und
+  „Falls jemand fragt“. Auf der letzten Folie Antworten auf typische Fragen.
+  Wo eigene Erfahrung gefragt ist (SH1106 erkannt, Bauen, Fazit,
+  Reflexion), steht `[Euer Teil: ...]`.
+- Geprüft mit Playwright: Referentenfenster öffnet, Steuerung aus beiden
+  Fenstern, Vorschau mit 3D-Bild, keine Fehler in der Konsole. Die
+  Abgabe-Datei hat keine Notizen und öffnet kein zweites Fenster.
+- README (Ordner `praesentation/` und Hauptseite), CLAUDE.md, Abschlussplan,
+  Wiki nachgezogen.
+
+**Offene Punkte:**
+
+- Code-Folien mit den Notizen lernen und frei erklären, die Lehrkraft prüft
+  das Verständnis.
+- `[Euer Teil: ...]` in den Notizen füllen.
+- Auf Jans Notebook mit Beamer testen (Bildschirm erweitern, Popups erlauben).
+
 ---
 
 ## Anhang — Stand der Dateien

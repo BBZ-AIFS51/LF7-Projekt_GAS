@@ -1,6 +1,9 @@
 // Builds the single-file presentation: inlines CSS, fonts, scripts and pictures
-// from praesentation/src/ into praesentation/Praesentation_GAS.html, so it runs
-// offline from a USB stick. No dependencies.
+// from praesentation/src/ so it runs offline from a USB stick. No dependencies.
+//
+//   Praesentation_GAS.html          for handing in: slides only, no speaker notes
+//   Praesentation_GAS_Vortrag.html  for presenting: speaker notes and the
+//                                   presenter window (key P)
 //
 // Usage (from the repo root):  node praesentation/build.mjs
 
@@ -10,7 +13,6 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SRC = join(HERE, 'src');
-const OUT = join(HERE, 'Praesentation_GAS.html');
 const MIME = { '.woff2': 'font/woff2', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml' };
 
 const dataUri = (file) => `data:${MIME[extname(file).toLowerCase()]};base64,${readFileSync(file).toString('base64')}`;
@@ -37,5 +39,15 @@ html = html.replace(/<script src="([^"]+)"><\/script>/g, (_, src) => {
 // pictures
 html = html.replace(/<img src="([^"]+)"/g, (_, src) => `<img src="${dataUri(join(SRC, src))}"`);
 
-writeFileSync(OUT, html);
-console.log(`${OUT}: ${(Buffer.byteLength(html) / 1024 / 1024).toFixed(2)} MB`);
+function write(name, text) {
+  const out = join(HERE, name);
+  writeFileSync(out, text);
+  console.log(`${out}: ${(Buffer.byteLength(text) / 1024 / 1024).toFixed(2)} MB`);
+}
+
+// presenting: everything
+write('Praesentation_GAS_Vortrag.html', html.replace('<title>Projekt GAS Präsentation</title>', '<title>Projekt GAS Vortrag</title>'));
+
+// handing in: without the speaker notes
+const notes = /\s*<aside class="notes">[\s\S]*?<\/aside>/g;
+write('Praesentation_GAS.html', html.replace(notes, ''));

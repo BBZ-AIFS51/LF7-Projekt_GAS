@@ -12,7 +12,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **33** | **11** | **4** | **2** |
+| **34** | **11** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -61,6 +61,7 @@ timeline
                : S31 Projektdokumentation
                : S32 Präsentation
                : S33 Nur Stichpunkte
+               : S34 Vortragsversion
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -104,6 +105,7 @@ flowchart LR
     P31["📝 S31<br/>Doku in Word"]
     P32["🎨 S32<br/>Präsentation"]
     P33["🎨 S33<br/>Stichpunkte"]
+    P34["🎨 S34<br/>Vortragsversion"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -123,7 +125,7 @@ flowchart LR
     P23 --> P24 --> P25 --> P26 --> P27
     P16 --> P28
     P27 -- "Test am Gerät" --> P28 --> P29
-    P27 --> P30 --> P31 --> P32 --> P33
+    P27 --> P30 --> P31 --> P32 --> P33 --> P34
     P13 --> P32
 
     classDef fw fill:#d0e7ff,stroke:#0969da,color:#0a3069
@@ -135,7 +137,7 @@ flowchart LR
     class P1,P6,P7,P28 fw
     class P2,P4,P16,P21 bug
     class P5 info
-    class P8,P9,P13,P14,P15,P32,P33 vis
+    class P8,P9,P13,P14,P15,P32,P33,P34 vis
     class P10,P11,P12,P20 box
     class P3,P17,P18,P19,P22,P23,P24,P25,P26,P27,P29,P30,P31 doc
 ```
@@ -153,7 +155,7 @@ flowchart LR
 | 💻 | Firmware-Funktionen | 1, 6, 7, 28 |
 | 🐞 | Fehlerbehebung | 2, 4, 16, 21 |
 | 💡 | Erklärung / Wissen | 5 |
-| 🎨 | Darstellung (README, 3D-Modell, Grafiken, Präsentation) | 8, 9, 13, 14, 15, 32, 33 |
+| 🎨 | Darstellung (README, 3D-Modell, Grafiken, Präsentation) | 8, 9, 13, 14, 15, 32, 33, 34 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
 | 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24, 25, 26, 27, 29, 30, 31 |
 
@@ -165,7 +167,7 @@ pie
     "Firmware" : 4
     "Fehlerbehebung" : 4
     "Erklärung" : 1
-    "Darstellung" : 7
+    "Darstellung" : 8
     "Gehäuse" : 4
     "Dokumentation" : 13
 ```
@@ -662,6 +664,21 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 > **Offen:** Fazit und Reflexion in eigenen Worten, Probe mit Stoppuhr, Test am Beamer.
 
 <sub>🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#33-prompt--folien-nur-mit-stichpunkten-selbstkritik-24112026)</sub>
+
+### 🎨 Schritt 34 — Vortragsversion mit Referentenansicht
+
+**Anlass:** Zum Vortragen wollten wir wie bei PowerPoint ein zweites Fenster mit aktueller und nächster Folie und mit Sprechernotizen. Den Arduino-Code haben wir nicht selbst geschrieben, deshalb sollten die Notizen gerade die Code-Folien gut erklären.
+
+**Ergebnis**
+- Zwei Dateien: `Praesentation_GAS.html` zur Abgabe ohne Notizen, `Praesentation_GAS_Vortrag.html` zum Vortragen
+- Taste P öffnet die Referentenansicht: aktuelle Folie mit dem 3D-Modell, nächster Klick, Notizen, Stoppuhr mit Zielzeit, Uhrzeit, Sprung-Liste. Gesteuert wird aus beiden Fenstern, auch mit Presenter
+- Sprechernotizen zu allen 34 Folien, in gesprochener Sprache für unsere Klasse. Code-Folien mit „So erklärt ihr es“, „Zeile für Zeile“ und „Falls jemand fragt“
+- Eigene Erfahrungen und Reflexion bleiben als Platzhalter für uns
+
+> [!WARNING]
+> **Offen:** Code mit den Notizen lernen und frei erklären, Platzhalter füllen, Test am Beamer.
+
+<sub>📁 [`praesentation/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/praesentation) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#34-prompt--vortragsversion-mit-referentenansicht-und-sprechernotizen-24112026)</sub>
 
 ---
 

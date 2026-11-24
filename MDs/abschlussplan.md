@@ -402,6 +402,11 @@ dieselbe Logik.
 - [x] **(Claude)** Folien auf Stichpunkte umgestellt, Schrift vergrößert,
       Details in die Sprechernotizen verschoben, Selbstkritik (24.11.2026,
       Schritt 33)
+- [x] **(Claude)** Vortragsversion `praesentation/Praesentation_GAS_Vortrag.html`
+      mit ausführlichen Sprechernotizen (Code Zeile für Zeile erklärt) und
+      Referentenansicht im zweiten Fenster wie bei PowerPoint (Taste
+      <kbd>P</kbd>). Die Abgabe-Datei `Praesentation_GAS.html` hat keine
+      Notizen (24.11.2026, Schritt 34)
 - [ ] **(Team)** Folien gegen das Word-Dokument prüfen: Stimmen Reihenfolge,
       Zahlen und Begriffe? Wo die Doku etwas anders sagt, Folie anpassen
       (Texte in `praesentation/src/index.html`, danach
@@ -419,6 +424,9 @@ dieselbe Logik.
 ## Phase 5 · Proben und Vortrag (25.11. – ab 01.12.)
 
 - [ ] **(Team)** Mindestens zwei komplette Durchläufe mit Stoppuhr (Ziel 21–23 min, nie unter 20)
+- [ ] **(Team)** Code-Folien mit den Sprechernotizen lernen (Abschnitte
+      „So erklärt ihr es“ und „Zeile für Zeile“). In der Präsentation frei
+      erklären, nicht ablesen: Die Lehrkraft prüft, ob jeder den Code versteht
 - [ ] **(Team)** Gegenseitig abfragen: Jeder erklärt die Codeabschnitte des
       anderen. Typische Fragen üben:
   - Warum keine Keypad-Library? (SRAM, ~120 Byte, Neustarts)

@@ -219,6 +219,7 @@
     try { history.replaceState(null, '', '#' + (cur + 1) + (step ? '.' + step : '')); } catch (e) { /* file:// in some browsers */ }
     renderNotes();
     renderOverview();
+    renderPresenter();
   }
 
   function next() {
@@ -252,7 +253,180 @@
     const sec = Math.floor(ms / 1000);
     return String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0');
   }
-  setInterval(() => { $('.clock', notes).textContent = fmt(started ? performance.now() - started : 0); }, 250);
+  setInterval(() => {
+    $('.clock', notes).textContent = fmt(started ? performance.now() - started : 0);
+    tickPresenter();
+  }, 250);
+
+  // ---- presenter view: second window with current and next slide, notes, stopwatch ----
+  // Only in the version with speaker notes (Praesentation_GAS_Vortrag.html).
+  const HAS_NOTES = $$('aside.notes').length > 0;
+  if (!HAS_NOTES) $$('[data-vortrag]').forEach((el) => el.remove());
+  let pw = null, pdoc = null, mirror = null, mirrorN = 0;
+  const PRES_CSS = `
+body.pres { margin: 0; height: 100vh; display: grid; grid-template-rows: auto minmax(0, 1fr); background: #0d1117; color: #e6edf3; overflow: hidden;
+  font: 16px/1.4 "GAS Sans", Calibri, Carlito, "Segoe UI", Arial, sans-serif; }
+.pres header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; padding: 8px 14px; background: #161b22; border-bottom: 1px solid #30363d; }
+.pres .pos b { font-size: 24px; }
+.pres .pos span { margin-left: 10px; font-size: 19px; color: #c9d1d9; }
+.pres .who { font-size: 22px; font-weight: 700; color: #58a6ff; }
+.pres .clk { display: flex; flex-direction: column; line-height: 1.05; }
+.pres .clk span { font-size: 32px; font-variant-numeric: tabular-nums; }
+.pres .clk small { font-size: 13px; color: #9da7b3; }
+.pres .clk.late span { color: #f0883e; }
+.pres .btns { margin-left: auto; display: flex; flex-wrap: wrap; gap: 6px; }
+.pres button, .pres select { font: inherit; font-size: 15px; padding: 6px 12px; border-radius: 6px; border: 1px solid #30363d; background: #21262d; color: #e6edf3; cursor: pointer; }
+.pres button.on { background: #8b1d1d; border-color: #da3633; }
+.pres main { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 14px; padding: 12px 14px; min-height: 0; }
+.pres .left { display: flex; flex-direction: column; gap: 6px; min-height: 0; overflow: auto; }
+.pres .lab { font-size: 15px; color: #9da7b3; }
+.pres .lab b { color: #e6edf3; }
+.pres .lab .clicks { color: #e3b341; font-weight: 700; }
+.pres .pv { position: relative; flex: none; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #000; border: 2px solid #2f81f7; border-radius: 4px; cursor: pointer; }
+.pres .pv.next { width: 62%; border-color: #30363d; }
+.pres .pv canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pres .pv .fr { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; pointer-events: none; }
+.pres .pv .fr .slide { opacity: 1; visibility: visible; }
+.pres .pv .fr .slide, .pres .pv .fr .step, .pres .pv .fr .in, .pres .pv .fr #shade { transition: none !important; }
+.pres .pv .fr .slide .in { transform: none; }
+.pres #p-notes { overflow: auto; padding: 12px 20px; background: #0b0f15; border: 1px solid #30363d; border-radius: 6px; font-size: var(--nf, 21px); line-height: 1.5; color: #e6edf3; }
+.pres #p-notes p { margin: 0 0 .7em; font-size: 1em; line-height: 1.5; color: #e6edf3; }
+.pres #p-notes h4 { margin: 1em 0 .3em; font-size: .78em; letter-spacing: .02em; color: #58a6ff; }
+.pres #p-notes h4:first-child { margin-top: 0; }
+.pres #p-notes ul, .pres #p-notes ol { margin: 0 0 .7em; padding-left: 1.3em; }
+.pres #p-notes li { margin: .25em 0; }
+.pres #p-notes i { color: #e3b341; font-style: normal; font-weight: 700; }
+.pres #p-notes code { font-size: .85em; }
+`;
+  function openPresenter() {
+    if (!HAS_NOTES) return;
+    pw = window.open('', 'gas-referent', 'width=1400,height=880');
+    if (!pw) { alert('Das Fenster wurde blockiert. Bitte Popups für diese Datei erlauben und P noch einmal drücken.'); return; }
+    const styles = $$('style, link[rel="stylesheet"]').map((n) => (n.tagName === 'LINK' ? '<link rel="stylesheet" href="' + n.href + '">' : '<style>' + n.textContent + '</style>')).join('\n');
+    pdoc = pw.document;
+    pdoc.open();
+    pdoc.write('<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Referentenansicht Projekt GAS</title><base href="' + location.href.replace(/"/g, '&quot;') + '">' +
+      styles + '<style>' + PRES_CSS + '</style></head><body class="pres">' +
+      '<header><div class="pos"><b id="p-num"></b><span id="p-title"></span></div><div class="who" id="p-who"></div>' +
+      '<div class="clk" id="p-clk"><span id="p-elapsed">00:00</span><small id="p-goal"></small></div>' +
+      '<div class="clk"><span id="p-time"></span><small>Uhrzeit</small></div>' +
+      '<div class="btns"><button data-a="prev">Zurück</button><button data-a="next">Weiter</button><select id="p-jump" title="Zu Folie springen"></select>' +
+      '<button data-a="timer">Stoppuhr auf 0</button><button data-a="black" id="p-black">Bild schwarz</button><button data-a="smaller">Notizen kleiner</button><button data-a="bigger">Notizen größer</button></div></header>' +
+      '<main><section class="left"><div class="lab" id="p-now"></div><div class="pv" id="pv-cur"><canvas></canvas><div class="fr"></div></div>' +
+      '<div class="lab" id="p-nextlab"></div><div class="pv next" id="pv-next"><div class="fr"></div></div></section>' +
+      '<section id="p-notes"></section></main></body></html>');
+    pdoc.close();
+    const sel = pdoc.getElementById('p-jump');
+    slides.forEach((s, i) => {
+      const o = pdoc.createElement('option');
+      o.value = i;
+      o.textContent = (i + 1) + ' ' + s.dataset.title + ' (' + (s.dataset.who || '') + ')';
+      sel.appendChild(o);
+    });
+    sel.addEventListener('change', () => goto(Number(sel.value), 0));
+    let nf = 21;
+    try { nf = Number(localStorage.getItem('gas-nf')) || 21; } catch (e) { /* ignore */ }
+    pdoc.body.style.setProperty('--nf', nf + 'px');
+    pdoc.querySelector('header').addEventListener('click', (e) => {
+      const a = e.target.dataset && e.target.dataset.a;
+      if (a === 'prev') prev();
+      else if (a === 'next') next();
+      else if (a === 'timer') started = performance.now();
+      else if (a === 'black') toggleBlack();
+      else if (a === 'smaller' || a === 'bigger') {
+        nf = Math.max(14, Math.min(34, nf + (a === 'bigger' ? 2 : -2)));
+        pdoc.body.style.setProperty('--nf', nf + 'px');
+        try { localStorage.setItem('gas-nf', nf); } catch (err) { /* ignore */ }
+      }
+    });
+    pdoc.getElementById('pv-cur').addEventListener('click', next);
+    pdoc.getElementById('pv-next').addEventListener('click', next);
+    pdoc.addEventListener('keydown', (e) => onKey(e, true));
+    pw.addEventListener('resize', layoutPresenter);
+    mirror = pdoc.querySelector('#pv-cur canvas');
+    layoutPresenter();
+    renderPresenter();
+  }
+  function presenterOpen() { return pw && !pw.closed && pdoc; }
+  function layoutPresenter() {
+    if (!presenterOpen()) return;
+    ['pv-cur', 'pv-next'].forEach((id) => {
+      const pv = pdoc.getElementById(id);
+      pv.querySelector('.fr').style.transform = 'scale(' + (pv.clientWidth / 1920) + ')';
+    });
+    mirror.width = Math.round(mirror.clientWidth);
+    mirror.height = Math.round(mirror.clientHeight);
+  }
+  // copy of a slide in the state it has at step k
+  function cloneSlide(i, k) {
+    const src = slides[i];
+    const c = pdoc.importNode(src, true);
+    c.classList.add('on');
+    const { shown } = sceneFor(i, k);
+    const a = $$('.step', src), b = $$('.step', c);
+    a.forEach((el, j) => { b[j].classList.toggle('shown', shown.includes(el)); b[j].classList.remove('past'); });
+    c.querySelectorAll('aside.notes').forEach((n) => n.remove());
+    return c;
+  }
+  function fillPreview(id, i, k, shade) {
+    const fr = pdoc.querySelector('#' + id + ' .fr');
+    fr.innerHTML = '';
+    const sh = pdoc.createElement('div');
+    sh.id = 'shade';
+    sh.className = shade;
+    sh.style.position = 'absolute';
+    fr.appendChild(sh);
+    fr.appendChild(cloneSlide(i, k));
+  }
+  function renderPresenter() {
+    if (!presenterOpen()) return;
+    const s = slides[cur], total = steps[cur].length;
+    pdoc.getElementById('p-num').textContent = (cur + 1) + ' / ' + slides.length;
+    pdoc.getElementById('p-title').textContent = (s.dataset.kap ? 'Kap. ' + s.dataset.kap + ', ' : '') + s.dataset.title;
+    pdoc.getElementById('p-who').textContent = s.dataset.who || '';
+    pdoc.getElementById('p-jump').value = cur;
+    pdoc.getElementById('p-now').innerHTML = '<b>Jetzt</b>' + (total ? ' <span class="clicks">Klick ' + step + ' von ' + total + '</span>' : '');
+    fillPreview('pv-cur', cur, step, s.dataset.shade || 'left');
+    let ni = cur, nk = step + 1;
+    if (step >= total) { ni = cur + 1; nk = 0; }
+    const nl = pdoc.getElementById('p-nextlab'), nv = pdoc.getElementById('pv-next');
+    if (ni < slides.length) {
+      const n = slides[ni];
+      nl.innerHTML = ni === cur ? '<b>Nächster Klick</b> auf dieser Folie' : '<b>Nächste Folie:</b> ' + (ni + 1) + ' ' + n.dataset.title + ' (' + (n.dataset.who || '') + ')';
+      fillPreview('pv-next', ni, nk, n.dataset.shade || 'left');
+      nv.style.display = '';
+    } else {
+      nl.innerHTML = '<b>Ende</b> der Präsentation';
+      nv.style.display = 'none';
+    }
+    const a = $('aside.notes', s);
+    const box = pdoc.getElementById('p-notes');
+    box.innerHTML = a ? a.innerHTML : '';
+    box.scrollTop = 0;
+    pdoc.getElementById('p-black').classList.toggle('on', black);
+    tickPresenter();
+  }
+  function tickPresenter() {
+    if (!presenterOpen()) return;
+    const el = started ? performance.now() - started : 0;
+    pdoc.getElementById('p-elapsed').textContent = fmt(el);
+    pdoc.getElementById('p-goal').textContent = 'Ziel bis Ende dieser Folie ' + fmt(cum[cur] * 60000);
+    pdoc.getElementById('p-clk').classList.toggle('late', el > cum[cur] * 60000 + 30000);
+    const d = new Date();
+    pdoc.getElementById('p-time').textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+  // live picture of the 3D model in the current preview (every third frame)
+  if (window.GAS3D) {
+    GAS3D.onFrame = (glCanvas) => {
+      if (!presenterOpen() || !mirror || (mirrorN++ % 3)) return;
+      try { mirror.getContext('2d').drawImage(glCanvas, 0, 0, mirror.width, mirror.height); } catch (e) { /* ignore */ }
+    };
+  }
+  function toggleBlack() {
+    black = !black;
+    frame.style.opacity = black ? 0 : 1;
+    if (presenterOpen()) pdoc.getElementById('p-black').classList.toggle('on', black);
+  }
 
   // ---- overview ----
   const ov = $('#overview');
@@ -278,28 +452,34 @@
   }
 
   // ---- input ----
-  document.addEventListener('keydown', (e) => {
+  // keys from the slide window and from the presenter window; the presenter
+  // window only steers, it never opens notes or menus on the projector
+  function onKey(e, fromPresenter) {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     const k = e.key;
+    if (fromPresenter && e.target && e.target.tagName === 'SELECT') return;
     if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(k)) { e.preventDefault(); next(); }
     else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(k)) { e.preventDefault(); prev(); }
     else if (k === 'Home') goto(0, 0);
     else if (k === 'End') goto(slides.length - 1, 0);
+    else if (k === 't' || k === 'T') started = performance.now();
+    else if (k === 'b' || k === 'B' || k === '.') toggleBlack();
+    else if (fromPresenter) return;
+    else if (k === 'p' || k === 'P') openPresenter();
     else if (k === 'f' || k === 'F') {
       if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
       else document.exitFullscreen && document.exitFullscreen();
-    } else if (k === 'n' || k === 'N') notes.classList.toggle('on');
+    } else if ((k === 'n' || k === 'N') && HAS_NOTES) notes.classList.toggle('on');
     else if (k === 'o' || k === 'O' || k === 'Escape') { ov.classList.toggle('on', k === 'Escape' ? false : !ov.classList.contains('on')); renderOverview(); }
     else if (k === 'h' || k === 'H' || k === '?') $('#help').classList.toggle('on');
-    else if (k === 't' || k === 'T') started = performance.now();
-    else if (k === 'b' || k === 'B' || k === '.') { black = !black; frame.style.opacity = black ? 0 : 1; }
     else if (k === 'm' || k === 'M') {
       reduced = !reduced;
       try { localStorage.setItem(reducedKey, reduced ? '1' : '0'); } catch (err) { /* ignore */ }
       applyReduced();
       render(true);
     }
-  });
+  }
+  document.addEventListener('keydown', (e) => onKey(e, false));
   frame.addEventListener('click', (e) => {
     if (e.target.closest('button, a, #overview, #notes')) return;
     if (e.clientX < window.innerWidth * 0.2) prev(); else next();
@@ -320,5 +500,5 @@
   goto((Number(h[0]) || 1) - 1, Number(h[1]) || 0, true);
   if (location.search.indexOf('bare') >= 0) document.documentElement.classList.add('bare');
   requestAnimationFrame(tickMatrix);
-  window.GAS_DECK = { next, prev, goto, get cur() { return cur; }, get step() { return step; }, slides, steps };
+  window.GAS_DECK = { next, prev, goto, openPresenter, get presenter() { return pw; }, get cur() { return cur; }, get step() { return step; }, slides, steps };
 })();

@@ -1516,6 +1516,8 @@ vec3 gasLayerBump(vec3 surfPos, vec3 surfNorm, float h) {
     step(dt);
     placeCamera();
     renderer.render(scene, camera);
+    // the presenter window copies the picture right after rendering
+    if (window.GAS3D && window.GAS3D.onFrame) window.GAS3D.onFrame(canvas);
     updateLabels();
     if (running) requestAnimationFrame(frame);
   }

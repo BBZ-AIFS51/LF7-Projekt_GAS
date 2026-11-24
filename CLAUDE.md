@@ -68,8 +68,13 @@ Bewegungssensor erkennt Anwesenheit.
   `index.html?shot` ist ein versteckter Modus nur für `tools/render.mjs`.
   `docs/social-preview.png` (1280 × 640, < 1 MB) ist das GitHub-Social-Preview,
   wird von Hand unter Settings → General → Social preview hochgeladen.
-- `praesentation/` — **Präsentation** als eine offline lauffähige HTML-Datei
-  `Praesentation_GAS.html` (wird abgegeben, nicht von Hand ändern). Quelle in
+- `praesentation/` — **Präsentation** als offline lauffähige HTML-Dateien,
+  beide gebaut, nicht von Hand ändern: `Praesentation_GAS.html` (Abgabe, nur
+  Folien, ohne Notizen) und `Praesentation_GAS_Vortrag.html` (zum Vortragen:
+  Sprechernotizen, Taste P öffnet die Referentenansicht im zweiten Fenster mit
+  aktueller und nächster Folie, Notizen, Stoppuhr). Folien nur mit Stichpunkten,
+  ausführliche Erklärungen (Code Zeile für Zeile, für das Team, das den
+  Arduino-Code nicht selbst geschrieben hat) in den Notizen. Quelle in
   `praesentation/src/`: `index.html` (Folien, Sprechernotizen in
   `aside.notes`), `scenes.js` (was das 3D-Modell pro Folie zeigt), `scene.js`
   (detaillierte 3D-Modelle aller Bauteile, Gehäuse aus `docs/viewer/enclosure.js`,

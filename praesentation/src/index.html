@@ -26,11 +26,10 @@
           <span>Schule</span><span>BBZ Dithmarschen</span>
         </div>
       </div>
-      <aside class="notes"><ul>
-        <li>Begrüßung, wir stellen uns vor</li>
-        <li>Rechts: fertiges Gerät als 3D-Modell, aus unseren Druckdateien</li>
-        <li>Echtes Gerät am Ende live</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Hi, wir sind Jan und Hugo. Unser Projekt heißt GAS und ist eine kleine Alarmanlage für eine Tür, gebaut auf einem Arduino Uno.</p>
+<p>Rechts seht ihr das Gerät als 3D-Modell. Das Gehäuse im Modell ist aus denselben Dateien gebaut, mit denen wir gedruckt haben. Das echte Gerät zeigen wir am Ende live.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 2 Ablauf -->
@@ -45,10 +44,10 @@
           <div class="row"><span class="n">5</span><span>Live-Demo</span><span class="w">beide</span><span class="m">3 min</span></div>
         </div>
       </div>
-      <aside class="notes"><ul>
-        <li>Fünf Teile, wer was erzählt</li>
-        <li>Nummer oben links = Kapitel der Doku, so findet man alles wieder</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Wir machen das in fünf Teilen. Ich erzähle zuerst die Idee und wie die Anlage funktioniert. Dann zeigt Hugo Bauteile und Aufbau, danach teilen wir uns den Code und die Probleme, die wir unterwegs hatten. Hugo macht das Fazit, die Demo machen wir zusammen.</p>
+<p>Die Zahl oben links ist immer das Kapitel in unserer Doku. Wer später etwas nachlesen will, findet es dort unter derselben Nummer.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 3 Idee -->
@@ -63,11 +62,11 @@
           <li>Nur Bauteile aus der Schule</li>
         </ul>
       </div>
-      <aside class="notes"><ul>
-        <li>Problem: Raum gegen unbefugtes Betreten sichern</li>
-        <li>Idee in einem Satz: Mini-Sicherheitssystem für eine Tür, PIN oder Karte, Alarm bei Bewegung</li>
-        <li>Warum Alarmanlage: nur Schulmaterial, etwas, das man tatsächlich benutzen könnte</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Ausgangspunkt war ein Raum, in den nicht jeder reinkommen soll, zum Beispiel ein Lager oder ein Serverraum.</p>
+<p>Wer den Raum verlässt, schaltet die Anlage an der Tür scharf. Wer zurückkommt, schaltet sie wieder unscharf. Das geht mit einer PIN am Tastenfeld oder mit einer RFID-Karte. Läuft jemand in den Raum, während die Anlage scharf ist, geht eine laute Sirene los.</p>
+<p>Wir wollten nur mit Bauteilen arbeiten, die es bei uns in der Schule gibt, und etwas bauen, das man tatsächlich benutzen könnte.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 4 Anforderungen -->
@@ -102,11 +101,11 @@
         </div>
         <p class="kpi">13 von 13 umgesetzt</p>
       </div>
-      <aside class="notes"><ul>
-        <li>Muss = unsere erste Beschreibung der Anlage</li>
-        <li>Kann: eigene Ideen, Lehrkraft, KI-Vorschlag Ausgangsverzögerung</li>
-        <li>Bewusst nicht dabei: Netzwerk, App, Protokoll, Dauerbetrieb</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Links stehen die Muss-Anforderungen. Die kommen aus unserer allerersten Beschreibung der Anlage: PIN mit Raute bestätigen, PIN nur als Sternchen anzeigen, Alarm nur im scharfen Zustand, 30 Sekunden Sirene, zwei verschiedene Töne für richtig und falsch, nach drei Fehlversuchen Alarm, und auf dem Display Herz oder Totenkopf.</p>
+<p>Rechts die Kann-Anforderungen, die unterwegs dazugekommen sind. Die RFID-Karte war unsere Idee. Die Ausgangsverzögerung von 10 Sekunden hat Claude Code vorgeschlagen, sonst löst man beim Rausgehen den eigenen Alarm aus. Karten am Gerät anlernen und den RFID-Reset hat unsere Lehrkraft angeregt. Gehäuse und 3D-Modell waren wieder unsere Ideen.</p>
+<p>Alle 13 sind umgesetzt. Bewusst weggelassen haben wir Netzwerk, App, ein Protokoll wer wann rein ist, und Dauerbetrieb.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 5 Einsatzort -->
@@ -137,11 +136,10 @@
           <text class="pl-ang" x="215" y="230" text-anchor="end">60°</text>
         </svg>
       </div>
-      <aside class="notes"><ul>
-        <li>Bedienteil außen, Sensorteil innen, 3-adriges Kabel durch die Wand</li>
-        <li>Melder sieht nicht durch die Wand: wer draußen tippt, löst nichts aus</li>
-        <li>Blaue Fläche = Erfassungsbereich, deckt den Eingang ab</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Die Anlage besteht aus zwei Gehäusen. Das Bedienteil hängt außen neben der Tür, da sind Tastenfeld, Display, Kartenleser und Buzzer drin. Das Sensorteil mit dem Bewegungsmelder sitzt innen im Raum. Verbunden sind beide über ein dreiadriges Kabel durch die Wand: 5 Volt, Masse und das Signal vom Sensor.</p>
+<p>Der Bewegungsmelder sieht nicht durch die Wand. Wer draußen steht und die PIN eintippt, löst also nichts aus. Erkannt wird nur, wer den Raum betritt. Die blaue Fläche in der Skizze ist der Bereich, den der Sensor erfasst. Warum der Sensor schräg auf einem Keil sitzt, erklärt Hugo später.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 6 Zustände -->
@@ -178,12 +176,18 @@
         <span class="step" data-scene="st-disarm" data-st="disarmed"></span>
         <span class="step" data-scene="st-admin" data-st="admin"></span>
       </div>
-      <aside class="notes"><ul>
-        <li>Pro Klick ein Zustand, Display im Modell wie am echten Gerät</li>
-        <li>Unscharf: Bewegung wird ignoriert</li>
-        <li>Nach dem Alarm wieder scharf, nicht unscharf</li>
-        <li>Außerhalb des Alarms: 3 falsche Eingaben lösen sofort Alarm aus</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Die Anlage ist immer in genau einem von fünf Zuständen. Bei jedem Klick springen wir einen Zustand weiter, und das Display im Modell zeigt das Gleiche wie das echte Gerät.</p>
+<ul>
+<li>Unscharf: Herz auf dem Display, Bewegung ist egal.</li>
+<li>PIN und Raute oder Karte: Ausgangsverzögerung. 10 Sekunden Zeit zum Rausgehen, es piept jede Sekunde, Totenkopf mit Countdown.</li>
+<li>Scharf: Totenkopf, jetzt passt der Bewegungsmelder auf.</li>
+<li>Bewegung: Alarm. Sirene für 30 Sekunden, das Display blinkt und zeigt die Restzeit.</li>
+<li>Richtige PIN oder Karte beendet den Alarm sofort, wir sind wieder unscharf. Ohne Eingabe hört die Sirene nach 30 Sekunden auf, die Anlage bleibt aber scharf. Sonst müsste ein Einbrecher nur kurz warten.</li>
+<li>Admin-Menü: Aus dem unscharfen Zustand mit Taste A und der Admin-PIN. Da verwaltet man die Karten.</li>
+</ul>
+<p>Außerdem: Drei falsche Eingaben hintereinander lösen sofort Alarm aus, auch wenn die Anlage gerade unscharf war.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 7 Rückmeldungen -->
@@ -205,11 +209,17 @@
           <button class="snd" data-sound="siren"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/></svg>Sirene</button>
         </div>
       </div>
-      <aside class="notes"><ul>
-        <li>Display zeigt bewusst keinen Text, auf einen Blick verständlich</li>
-        <li>Buttons spielen die Töne mit den Frequenzen aus der Firmware, Sirene 3 s</li>
-        <li>Falsche Eingabe im Alarm: kein Fehlerton, die 30 s beginnen neu</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Das Display zeigt absichtlich keinen Text, nur Symbole. Man soll im Vorbeigehen sehen, was los ist.</p>
+<p>Zu jeder Aktion gibt es einen eigenen Ton. Mit den Buttons können wir sie abspielen. Die Frequenzen sind dieselben wie in unserer Firmware, der echte Buzzer klingt aber rauer als die Lautsprecher hier.</p>
+<ul>
+<li>OK: zwei helle Töne hintereinander.</li>
+<li>Fehler: tiefes Brummen, 2 Sekunden lang.</li>
+<li>Piep: einmal pro Sekunde während der Ausgangsverzögerung.</li>
+<li>Sirene: geht schnell hoch und runter. Hier nur 3 Sekunden, echt sind es 30.</li>
+</ul>
+<p>Die PIN erscheint beim Tippen nur als Sternchen. Eine halb getippte PIN verschwindet nach 10 Sekunden von selbst.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 8 Bauteile -->
@@ -226,13 +236,18 @@
           <li class="step" data-scene="parts-7"><b>Mini-Breadboard</b>, 9-V-Block</li>
         </ul>
       </div>
-      <aside class="notes"><ul>
-        <li>Pro Klick fliegt ein Bauteil ins Bild</li>
-        <li>Uno: verbaut ist der baugleiche Elegoo UNO R3, ATmega328P, 1 KB EEPROM</li>
-        <li>OLED 128 x 64 Pixel, RC522 mit 13,56 MHz, Melder HIGH bei Bewegung</li>
-        <li>Passiver Buzzer: jede Tonhöhe über tone(), nur so Sirene und verschiedene Töne</li>
-        <li>SH1106 statt SSD1306: kommt bei den Herausforderungen</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Pro Klick fliegt ein Bauteil ins Bild.</p>
+<ul>
+<li>Arduino Uno: das Gehirn. Verbaut ist ein Elegoo UNO R3, der ist baugleich zum Original. Prozessor ATmega328P mit 16 MHz, 32 KB Flash für das Programm, nur 2 KB Arbeitsspeicher und 1 KB EEPROM. Die 2 KB werden später noch ein Thema.</li>
+<li>Keypad: Folientastatur mit 16 Tasten und 8 Anschlüssen.</li>
+<li>OLED: 1,3 Zoll, 128 mal 64 Pixel. Der Controller heißt SH1106, dazu später mehr.</li>
+<li>RFID-Leser RC522: liest die Kennung, also die UID, von Karten und Schlüsselanhängern. Funkt auf 13,56 MHz und läuft nur mit 3,3 Volt.</li>
+<li>Bewegungsmelder HC-SR501: ein PIR-Sensor, der auf Wärmebewegung reagiert, zum Beispiel einen Menschen. Bei Bewegung gibt er HIGH aus.</li>
+<li>Passiver Buzzer: Er braucht ein Rechtecksignal vom Arduino und kann dadurch jede Tonhöhe spielen. Ein aktiver Buzzer kann nur einen festen Ton, damit wäre keine Sirene möglich.</li>
+<li>Mini-Breadboard und 9-Volt-Block: für die Stromverteilung im Gehäuse.</li>
+</ul>
+      </aside>
     </section>
 
     <!-- ===================================================== 9 Pins -->
@@ -250,12 +265,18 @@
         <ul class="list tight step"><li>Frei: nur A3, D0/D1</li></ul>
         <div class="schem step" data-scene="pins-schem"><img src="img/schaltplan.jpg" alt="Schaltplan aus Cirkit Designer: Uno mit Keypad, OLED, RC522, Buzzer, Bewegungsmelder und 9-V-Batterie"></div>
       </div>
-      <aside class="notes"><ul>
-        <li>Keypad: Reihen D9 bis D6, Spalten D5 bis D2, jede Leitung ein Pin</li>
-        <li>I²C und SPI liegen beim Uno fest, nur SS und RST frei wählbar</li>
-        <li>D0/D1 = serielle Schnittstelle, für Upload und Monitor</li>
-        <li>Letzter Klick: Schaltplan aus Cirkit Designer (Kapitel 5)</li>
-      </ul></aside>
+      <aside class="notes">
+<p>So hängt alles am Uno. Pro Klick kommen die Kabel einer Gruppe dazu, und die Signale laufen im Modell über die Leitungen.</p>
+<ul>
+<li>Keypad: braucht 8 Pins, D2 bis D9. Vier für die Reihen, vier für die Spalten. Wie das Abfragen funktioniert, zeigt Hugo beim Code.</li>
+<li>OLED über I²C: Das ist ein Bus mit nur zwei Leitungen, Daten (SDA) und Takt (SCL). Beim Uno liegen die fest auf A4 und A5, die kann man nicht frei wählen.</li>
+<li>RFID-Leser über SPI: schneller als I²C und mit getrennten Leitungen für hin (MOSI) und zurück (MISO) plus Takt (SCK). Die liegen beim Uno fest auf D11, D12 und D13.</li>
+<li>Dazu SS auf A0, damit wählt der Uno den Leser aus, und RST auf A1 zum Neustarten. Strom bekommt der Leser von 3,3 Volt.</li>
+<li>Bewegungsmelder auf A2, Buzzer auf D10.</li>
+</ul>
+<p>Damit ist der Uno fast voll. Frei sind nur noch A3 und D0/D1, und D0/D1 brauchen wir für den Upload und den seriellen Monitor.</p>
+<p>Letzter Klick: der Schaltplan, gezeichnet mit Cirkit Designer. Der zeigt den ersten Aufbau auf dem großen Breadboard.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 10 Strom -->
@@ -275,13 +296,13 @@
           <tr><td>17</td><td>+9 V</td><td>Batterie zu VIN</td></tr>
         </table>
       </div>
-      <aside class="notes"><ul>
-        <li>Am Hohlstecker hätten Stecker und Batterie außen gehangen, deshalb VIN</li>
-        <li>Uno macht aus VIN 5 V, der RC522 bekommt 3,3 V vom Uno</li>
-        <li>Plus und Minus vertauscht = Uno kaputt</li>
-        <li>Laufzeit: etwa 100 mA aus 400 bis 500 mAh, nicht gemessen, keine Batterie da</li>
-        <li>Mini-Breadboard SYB-170 verteilt nur Strom, Signale gehen direkt an den Uno</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Geplant war ein 9-Volt-Block im Gehäuse, angeschlossen an den Pin VIN. Den Hohlstecker haben wir nicht genommen, weil Stecker und Batterie dann außen am Gehäuse gehangen hätten.</p>
+<p>Der Spannungsregler auf dem Uno macht aus den 9 Volt die 5 Volt für alle Module. Der RFID-Leser bekommt 3,3 Volt vom Uno.</p>
+<p>Wichtig: VIN hat keinen Verpolungsschutz, die Schutzdiode sitzt nur hinter dem Hohlstecker. Plus und Minus vertauscht heißt Uno kaputt.</p>
+<p>Verteilt wird über das Mini-Breadboard. Spalte 13 ist 5 Volt, Spalte 15 Masse, Spalte 17 die 9 Volt von der Batterie zum VIN. Signale gehen alle direkt an den Uno.</p>
+<p>Ehrlich gesagt: Wir hatten keine Batterie. Die Laufzeit von 3 bis 5 Stunden ist geschätzt, die Schaltung zieht etwa 100 mA und ein 9-Volt-Block hat 400 bis 500 mAh. Heute läuft das Gerät über USB.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 11 echter Aufbau -->
@@ -293,11 +314,10 @@
           <figure class="ph"><img src="../../Fotos/aufbau_offen.jpg" alt="Bedienteil offen: Deckel mit Display, RFID-Leser und Buzzer, Rückteil mit Uno und Mini-Breadboard" style="height:620px"><figcaption>Im Gehäuse, rechts als Modell</figcaption></figure>
         </div>
       </div>
-      <aside class="notes"><ul>
-        <li>Links: erster Aufbau auf dem großen Breadboard</li>
-        <li>Mitte: Bedienteil offen, Deckel mit Display, RFID-Leser, Buzzer, Rückteil mit Uno und Mini-Breadboard</li>
-        <li>Rechts: dasselbe im 3D-Modell</li>
-      </ul></aside>
+      <aside class="notes">
+<p>So sieht das in echt aus.</p>
+<p>Links unser erster Versuchsaufbau auf dem großen Breadboard, da war der RFID-Leser noch nicht dabei. In der Mitte das Bedienteil offen: im Deckel Display, RFID-Leser und Buzzer, im Rückteil der Uno und das orange Mini-Breadboard. Rechts das Gleiche im 3D-Modell, so kann man es mit dem Steckplan vergleichen.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 12 Gehäuse -->
@@ -311,12 +331,13 @@
           <li class="step" data-scene="case-4">Sensorteil: 60°-Keil, 3-adriges Kabel</li>
         </ul>
       </div>
-      <aside class="notes"><ul>
-        <li>Teile fliegen ins Rückteil, Deckel geht zu</li>
-        <li>Maße aus Datenblättern, beim Einbau hat alles gepasst</li>
-        <li>Kabel: 5 V, GND, Signal des Melders</li>
-        <li>Gedruckt auf dem Snapmaker Artisan der Schule, nur die rechte Düse geht</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Das Gehäuse besteht aus fünf Druckteilen aus PLA: Rückteil und Frontplatte fürs Bedienteil, Rückteil, Deckel und Keil fürs Sensorteil. Geplant haben wir es zusammen mit Claude Code in OpenSCAD. Da beschreibt man das Modell mit Code statt mit der Maus, Maße lassen sich so leicht ändern.</p>
+<p>Klick für Klick: Die Module gehen ins Rückteil, dann schließt sich der Deckel. Im Bedienteil steckt alles außer dem Bewegungsmelder.</p>
+<p>Der RFID-Leser sitzt hinter der Frontplatte und liest durch 2,4 mm Kunststoff. Auf der Front ist das RFID-Feld markiert, da hält man die Karte hin.</p>
+<p>Zum Schluss das Sensorteil auf seinem Keil, verbunden über das dreiadrige Kabel.</p>
+<p>Die Maße der Module stammen aus Datenblättern. Beim Einbau hat trotzdem alles gepasst. Gedruckt haben wir auf dem Snapmaker Artisan der Schule, mit dem Slicer Luban.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 13 Sourcecode -->
@@ -335,11 +356,12 @@
           <li>SH110X, GFX, MFRC522, EEPROM</li>
         </ul>
       </div>
-      <aside class="notes"><ul>
-        <li>Testsketches haben beim Eingrenzen von Fehlern geholfen</li>
-        <li>Im Repository nur Beispiel-PINs (1234, 0000), echte PINs nur lokal</li>
-        <li>Bibliotheken: Adafruit SH110X und GFX, MFRC522, dazu Wire, SPI, EEPROM</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Jetzt zum Code. Wir haben vier Sketches. Ein Sketch ist bei Arduino einfach ein Programm.</p>
+<p>Die eigentliche Firmware ist <code>alarm_system</code>, gut 1000 Zeilen. Die drei anderen sind Tests: <code>hardware_test</code> prüft jedes Bauteil einzeln, <code>display_test</code> nur das Display und <code>rfid_test</code> nur den Kartenleser. Die haben uns geholfen, Fehler einzugrenzen.</p>
+<p>Dazu kommen Bibliotheken, also fertiger Code von anderen: Adafruit SH110X und GFX fürs Display, MFRC522 für den Kartenleser. Wire, SPI und EEPROM sind bei der Arduino IDE schon dabei.</p>
+<p>Der komplette Code liegt in unserem Repository. Dort stehen nur Beispiel-PINs, 1234 und 0000. Die echten tragen wir nur lokal ein, bevor wir hochladen.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 14 loop -->
@@ -364,12 +386,28 @@
           <li>Jede Funktion kehrt sofort zurück</li>
         </ul>
       </div>
-      <aside class="notes"><ul>
-        <li>loop() läuft tausende Male pro Sekunde</li>
-        <li>Mit delay(30000) für die Sirene könnte niemand den Alarm beenden</li>
-        <li>millis() merkt sich, wann etwas angefangen hat, jeder Durchlauf prüft, ob die Zeit um ist</li>
-        <li>Rechts: Gehäuse durchsichtig, alle Signale laufen gleichzeitig</li>
-      </ul></aside>
+      <aside class="notes">
+<h4>So erklärt ihr es</h4>
+<p>Jedes Arduino-Programm hat zwei Funktionen. <code>setup()</code> läuft einmal beim Start. <code>loop()</code> läuft danach immer wieder, endlos, tausende Male pro Sekunde.</p>
+<p>Unsere <code>loop()</code> macht nichts anderes, als der Reihe nach kurze Funktionen aufzurufen. Jede schaut nach, ob es für sie gerade etwas zu tun gibt, und ist sofort wieder fertig.</p>
+<p>Die wichtigste Regel: kein <code>delay()</code>. <code>delay()</code> hält das komplette Programm an. Würden wir für die Sirene <code>delay(30000)</code> schreiben, wäre der Arduino 30 Sekunden lang taub. Keine Taste, keine Karte, man könnte den Alarm nicht ausschalten.</p>
+<p>Stattdessen nehmen wir <code>millis()</code>. Das sind die Millisekunden seit dem Start. Wir merken uns, wann etwas angefangen hat, und schauen bei jedem Durchlauf, ob die Zeit schon um ist. Wie wenn man auf die Uhr schaut, statt 30 Sekunden vor dem Ofen zu stehen.</p>
+<h4>Zeile für Zeile</h4>
+<ul>
+<li><code>if (state == STATE_ADMIN)</code>: Sind wir im Admin-Menü? Dann gelten Tasten und Karten fürs Menü (<code>handleAdminKeypad</code>, <code>handleAdminRfid</code>).</li>
+<li><code>else</code>: Sonst ganz normal. <code>handleKeypad()</code> liest das Tastenfeld, <code>handleRfid()</code> fragt den Kartenleser.</li>
+<li><code>handleMotion()</code>: Schaut auf den Bewegungsmelder.</li>
+<li><code>updateState()</code>: Prüft Zeiten, zum Beispiel ob die 30 Sekunden Alarm um sind.</li>
+<li><code>updateSound()</code>: Stellt die Tonhöhe des Buzzers ein, zum Beispiel für die Sirene.</li>
+<li><code>updateDisplay()</code>: Zeichnet das Display neu, wenn sich etwas geändert hat.</li>
+</ul>
+<p>Rechts im Modell: Gehäuse durchsichtig, alle Signale laufen gleichzeitig. Genau das schafft der Arduino, weil nichts blockiert.</p>
+<h4>Falls jemand fragt</h4>
+<ul>
+<li><i>Warum keine Interrupts?</i> Brauchen wir nicht. <code>loop()</code> ist so schnell, dass jede Eingabe sofort bemerkt wird.</li>
+<li><i>Was passiert, wenn <code>millis()</code> überläuft?</i> Das passiert nach etwa 49 Tagen. Unsere Zeitrechnung kommt damit klar, das steht auf der nächsten Folie.</li>
+</ul>
+      </aside>
     </section>
 
     <!-- ===================================================== 15 Zustandsautomat -->
@@ -393,12 +431,28 @@ void updateState() {
 }</pre>
         <ul class="list tight"><li>Nach dem Alarm: wieder scharf</li></ul>
       </div>
-      <aside class="notes"><ul>
-        <li>enum mit fünf Zuständen, jeder Wechsel über setState()</li>
-        <li>Ausschnitt gekürzt: Ausgangsverzögerung (10 s) läuft genauso</li>
-        <li>Sonst könnte ein Einbrecher einfach 30 s warten</li>
-        <li>now minus stateStart rechnet auch richtig, wenn millis() nach etwa 49 Tagen überläuft</li>
-      </ul></aside>
+      <aside class="notes">
+<h4>So erklärt ihr es</h4>
+<p>Der Zustandsautomat entscheidet, was die Anlage tut. Eine Variable <code>state</code> merkt sich, in welchem der fünf Zustände wir sind. Je nach Zustand reagiert die Anlage anders auf Tasten, Karten und Bewegung.</p>
+<p>Jeder Wechsel läuft über <code>setState()</code>. Dort merken wir uns auch, wann der neue Zustand angefangen hat. In <code>updateState()</code> rechnen wir dann: jetzt minus Startzeit. Das ist, wie lange der Zustand schon läuft. Sind es beim Alarm 30 Sekunden oder mehr, ist der Alarm vorbei.</p>
+<p>Und dann geht die Anlage auf scharf, nicht auf unscharf. Sonst könnte ein Einbrecher einfach 30 Sekunden warten und wäre danach drin.</p>
+<h4>Zeile für Zeile</h4>
+<ul>
+<li><code>void setState(SystemState next)</code>: Funktion, die den nächsten Zustand bekommt. <code>void</code> heißt, sie gibt nichts zurück. <code>SystemState</code> ist ein <code>enum</code>, also eine Liste mit Namen: <code>STATE_DISARMED</code>, <code>STATE_EXIT_DELAY</code>, <code>STATE_ARMED</code>, <code>STATE_ALARM</code>, <code>STATE_ADMIN</code>. Lesbarer als Zahlen.</li>
+<li><code>state = next;</code> Neuer Zustand gilt ab jetzt.</li>
+<li><code>stateStart = millis();</code> Startzeit merken.</li>
+<li><code>unsigned long now = millis();</code> Aktuelle Zeit holen. <code>unsigned long</code> ist eine Ganzzahl mit 32 Bit ohne Vorzeichen, da passen knapp 50 Tage in Millisekunden rein.</li>
+<li>Der Kommentar mit <code>...</code> steht für die Ausgangsverzögerung. Die funktioniert genauso, nur mit 10 Sekunden, und danach geht es auf scharf.</li>
+<li><code>if (state == STATE_ALARM)</code>: Nur wenn gerade Alarm ist.</li>
+<li><code>if (now - stateStart &gt;= ALARM_MS)</code>: Läuft der Alarm schon 30 000 ms oder länger? <code>ALARM_MS</code> ist eine Konstante oben im Sketch.</li>
+<li><code>stopSound();</code> Sirene aus. <code>setState(STATE_ARMED);</code> zurück auf scharf.</li>
+</ul>
+<h4>Falls jemand fragt</h4>
+<ul>
+<li><i>Warum <code>now - stateStart &gt;= ALARM_MS</code> und nicht <code>now &gt;= stateStart + ALARM_MS</code>?</i> Nach etwa 49 Tagen springt <code>millis()</code> wieder auf 0. Die Subtraktion rechnet dann trotzdem richtig, die Addition nicht.</li>
+<li><i>Wo werden die anderen Zustände behandelt?</i> In den Funktionen für Tasten, Karten und Bewegung. Die fragen jeweils <code>state</code> ab.</li>
+</ul>
+      </aside>
     </section>
 
     <!-- ===================================================== 16 Zugriff -->
@@ -423,13 +477,28 @@ void updateState() {
           <li>PIN und Karte: dieselben Funktionen</li>
         </ul>
       </div>
-      <aside class="notes"><ul>
-        <li>Beide Wege verhalten sich dadurch garantiert gleich</li>
-        <li>Richtig: aktiv wird unscharf, unscharf startet die Ausgangsverzögerung</li>
-        <li>Falsch: Zähler, beim dritten Mal Alarm</li>
-        <li>Im Alarm: keine Zählung, kein Fehlerton, Alarmzeit beginnt neu</li>
-        <li>accessGranted(): Zähler auf 0, switch über die Zustände, OK-Ton</li>
-      </ul></aside>
+      <aside class="notes">
+<h4>So erklärt ihr es</h4>
+<p>Egal ob jemand eine PIN tippt oder eine Karte hinhält: Am Ende landet alles in zwei Funktionen. <code>accessGranted()</code> für richtig, <code>accessDenied()</code> für falsch. Dadurch verhalten sich PIN und Karte garantiert gleich.</p>
+<p>Auf der Folie steht <code>accessDenied()</code>, die ist spannender. Wenn gerade Alarm ist, passiert bei einer falschen Eingabe nur eins: Die 30 Sekunden fangen von vorne an. Kein Fehlerton, die Sirene läuft weiter. Wer im Alarm Codes durchprobiert, macht ihn also nur länger.</p>
+<p>Außerhalb des Alarms zählen wir die Fehlversuche. Beim dritten gibt es Alarm, vorher nur den Fehlerton.</p>
+<h4>Zeile für Zeile</h4>
+<ul>
+<li><code>accessDenied(const __FlashStringHelper *reason)</code>: <code>reason</code> ist ein Text, warum abgelehnt wurde, zum Beispiel "wrong PIN". Der landet im seriellen Monitor. Der komische Typ heißt nur, dass der Text im Flash liegt und nicht im knappen Arbeitsspeicher.</li>
+<li><code>if (state == STATE_ALARM)</code>: Läuft gerade der Alarm?</li>
+<li><code>stateStart = millis();</code> Startzeit des Alarms auf jetzt setzen. Damit sind es wieder volle 30 Sekunden, siehe letzte Folie.</li>
+<li><code>return;</code> Funktion sofort verlassen. Alles darunter wird übersprungen, also auch der Fehlerton.</li>
+<li><code>wrongTries++;</code> Fehlversuche plus eins.</li>
+<li><code>if (wrongTries &gt;= MAX_WRONG_TRIES)</code>: Sind es drei oder mehr? Dann Zähler auf 0 und <code>triggerAlarm(reason)</code>, also Zustand Alarm und Sirene an.</li>
+<li><code>else startSound(SOUND_ERROR);</code> Sonst nur der Fehlerton.</li>
+</ul>
+<p>Das Gegenstück <code>accessGranted()</code> setzt den Zähler auf 0, schaltet um (aktiv wird unscharf, unscharf startet die Ausgangsverzögerung) und spielt den OK-Ton.</p>
+<h4>Falls jemand fragt</h4>
+<ul>
+<li><i>Wie wird die PIN geprüft?</i> Mit <code>strcmp()</code>. Das vergleicht die getippte Eingabe Zeichen für Zeichen mit der gespeicherten PIN.</li>
+<li><i>Und die Karte?</i> Die UID der Karte wird Byte für Byte mit der Liste der erlaubten Karten verglichen.</li>
+</ul>
+      </aside>
     </section>
 
     <!-- ===================================================== 17 Töne -->
@@ -458,13 +527,24 @@ void updateState() {
           <button class="snd" data-sound="error"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/></svg>Fehlerton</button>
         </div>
       </div>
-      <aside class="notes"><ul>
-        <li>t = Zeit seit Beginn des Tons, daraus jedes Mal die Frequenz</li>
-        <li>Sirene: 2500 bis 3700 Hz, auf und ab alle 500 ms, dort ist der Buzzer am lautesten</li>
-        <li>Fehlerton wechselt alle 35 ms, klingt dadurch rau</li>
-        <li>OK: 1568 Hz, dann 2093 Hz</li>
-        <li>setFreq() ruft tone() nur bei neuer Frequenz auf, sonst knackt es</li>
-      </ul></aside>
+      <aside class="notes">
+<h4>So erklärt ihr es</h4>
+<p>Töne laufen nach demselben Prinzip wie die Zustände: Bei jedem Durchlauf rechnet die Firmware aus, welcher Ton gerade dran ist. Pausen gibt es keine.</p>
+<p>Unser Buzzer ist passiv. Mit <code>tone()</code> legt der Arduino ein Rechtecksignal auf D10, und der Buzzer schwingt genau mit dieser Frequenz. Für die Sirene ändern wir die Frequenz ständig: in einer Viertelsekunde von 2500 auf 3700 Hz hoch, in der nächsten wieder runter. Das ist die Zickzack-Kurve. In dem Bereich ist der Buzzer am lautesten.</p>
+<h4>Zeile für Zeile</h4>
+<ul>
+<li><code>t</code> ist die Zeit in Millisekunden, seit der Ton angefangen hat.</li>
+<li><code>phase = t % 500UL</code>: <code>%</code> ist Modulo, also der Rest beim Teilen. Dadurch zählt <code>phase</code> immer wieder von 0 bis 499 hoch, ein Durchgang dauert eine halbe Sekunde. <code>UL</code> heißt nur, dass die Zahl als <code>unsigned long</code> gerechnet wird.</li>
+<li><code>step = (phase % 250UL) / 10UL</code>: Innerhalb jeder Viertelsekunde eine Stufe von 0 bis 24, alle 10 ms eine Stufe weiter.</li>
+<li><code>(phase &lt; 250UL) ? ... : ...</code>: Kurzform für if/else. Erste Hälfte: <code>2500 + step * 50</code>, die Frequenz steigt. Zweite Hälfte: <code>3700 - step * 50</code>, sie fällt.</li>
+<li><code>setFreq(freq)</code>: Ruft <code>tone()</code> nur auf, wenn sich die Frequenz wirklich geändert hat. Sonst würde der Ton bei jedem Durchlauf neu starten und knacken.</li>
+</ul>
+<p>Der Fehlerton wechselt alle 35 ms zwischen 95 und 135 Hz, 2 Sekunden lang. Deshalb klingt er so rau. Der OK-Ton ist 1568 Hz und danach 2093 Hz.</p>
+<h4>Falls jemand fragt</h4>
+<ul>
+<li><i>Warum kann nur ein Ton gleichzeitig laufen?</i> Ein Buzzer, ein Pin, eine Frequenz. Das war auch die Ursache für den Fehler, den ich gleich bei den Herausforderungen zeige.</li>
+</ul>
+      </aside>
     </section>
 
     <!-- ===================================================== 18 Keypad -->
@@ -494,13 +574,31 @@ void updateState() {
           <li>Keypad-Library hätte 120 Byte gekostet</li>
         </ul>
       </div>
-      <aside class="notes"><ul>
-        <li>Reihen mit Pull-up lesen normal HIGH</li>
-        <li>OUTPUT zieht die Spalte auf LOW, INPUT gibt sie wieder frei</li>
-        <li>Reihe liest LOW: Taste an dieser Kreuzung gedrückt (Beispiel Taste 5)</li>
-        <li>Entprellen: Taste zählt erst nach 20 ms stabil</li>
-        <li>Kommentare im Ausschnitt weggelassen</li>
-      </ul></aside>
+      <aside class="notes">
+<h4>So erklärt ihr es</h4>
+<p>Das Tastenfeld hat 16 Tasten, aber nur 8 Leitungen. Die Tasten sitzen wie in einem Gitter auf 4 Reihen und 4 Spalten. Drückt man eine Taste, verbindet sie ihre Reihe mit ihrer Spalte.</p>
+<p>Zum Abfragen machen wir Folgendes: Die Reihen haben einen eingebauten Pull-up-Widerstand und stehen deshalb normal auf HIGH. Jetzt ziehen wir eine Spalte nach der anderen auf LOW und lesen dabei alle Reihen. Liest eine Reihe plötzlich LOW, ist die Taste an genau dieser Kreuzung gedrückt. Rechts im Modell und in der Tabelle seht ihr, wie die Spalten durchlaufen, gedrückt ist gerade die 5.</p>
+<p>Für sowas gibt es eine fertige Keypad-Library. Die hätte uns aber rund 120 Byte Arbeitsspeicher gekostet, und davon hatten wir zu wenig. Deshalb haben wir das selbst geschrieben.</p>
+<h4>Zeile für Zeile</h4>
+<ul>
+<li><code>char scanKeypad()</code>: Gibt die gedrückte Taste als Zeichen zurück, zum Beispiel '5'. <code>found = 0</code> heißt: noch nichts gefunden.</li>
+<li><code>for (byte c = 0; c &lt; 4 &amp;&amp; found == 0; c++)</code>: Schleife über die 4 Spalten. Hört auf, sobald eine Taste gefunden wurde.</li>
+<li><code>pinMode(COL_PINS[c], OUTPUT)</code>: Die Spalte wird zum Ausgang. Ihr Pegel ist vorher auf LOW gestellt, also liegt die Spalte jetzt auf LOW.</li>
+<li><code>delayMicroseconds(5)</code>: 5 Mikrosekunden warten, bis die Leitung stabil ist. Das ist so kurz, dass es nichts blockiert.</li>
+<li><code>for (byte r = 0; r &lt; 4; r++)</code>: Alle 4 Reihen durchgehen.</li>
+<li><code>if (digitalRead(ROW_PINS[r]) == LOW)</code>: Ist diese Reihe LOW? Dann ist die Taste an Reihe r und Spalte c gedrückt.</li>
+<li><code>found = pgm_read_byte(&amp;KEYS[r][c])</code>: Das Zeichen aus der Tastentabelle holen. Die Tabelle liegt im Flash (PROGMEM), deshalb braucht man <code>pgm_read_byte</code> zum Lesen.</li>
+<li><code>break</code>: Raus aus der Reihen-Schleife.</li>
+<li><code>pinMode(COL_PINS[c], INPUT)</code>: Spalte wieder freigeben, damit sie die nächste Messung nicht stört.</li>
+<li><code>return found</code>: Taste zurückgeben, oder 0, wenn keine gedrückt war.</li>
+</ul>
+<p>Dazu kommt Entprellen: Ein Kontakt flattert beim Drücken ein paar Millisekunden. Eine Taste zählt deshalb erst, wenn sie 20 ms stabil gedrückt ist, und nur einmal pro Druck. Das macht die Funktion <code>getKeyPress()</code>.</p>
+<h4>Falls jemand fragt</h4>
+<ul>
+<li><i>Warum heißt LOW gedrückt?</i> Wegen des Pull-ups steht die Reihe sonst auf HIGH. Die gedrückte Taste verbindet sie mit der Spalte, und die liegt auf LOW.</li>
+<li><i>Welche Pins?</i> Reihen D9 bis D6, Spalten D5 bis D2.</li>
+</ul>
+      </aside>
     </section>
 
     <!-- ===================================================== 19 Bewegung -->
@@ -521,11 +619,19 @@ void updateState() {
           <li>Nur im Zustand scharf</li>
         </ul>
       </div>
-      <aside class="notes"><ul>
-        <li>Eine lange Bewegung löst nur einmal aus</li>
-        <li>Nicht während der Ausgangsverzögerung</li>
-        <li>Beim Scharfschalten wird lastMotion auf den aktuellen Wert gesetzt: sieht der Sensor noch die Person, zählt das nicht</li>
-      </ul></aside>
+      <aside class="notes">
+<h4>So erklärt ihr es</h4>
+<p>Der Bewegungsmelder gibt HIGH aus, solange er Bewegung sieht. Das kann ein paar Sekunden dauern. Würden wir einfach bei HIGH Alarm auslösen, würde der Alarm in jedem Durchlauf von <code>loop()</code> neu starten.</p>
+<p>Deshalb reagieren wir nur auf den Moment, in dem das Signal von LOW auf HIGH springt. Das nennt man steigende Flanke. Eine lange Bewegung löst so genau einmal aus. Und das Ganze nur im Zustand scharf.</p>
+<h4>Zeile für Zeile</h4>
+<ul>
+<li><code>bool motion = (digitalRead(MOTION_PIN) == HIGH)</code>: Sensor lesen. <code>motion</code> ist wahr, wenn er gerade Bewegung sieht. <code>MOTION_PIN</code> ist A2.</li>
+<li><code>if (motion &amp;&amp; !lastMotion &amp;&amp; state == STATE_ARMED)</code>: <code>&amp;&amp;</code> heißt UND, <code>!</code> heißt NICHT. Also: jetzt Bewegung, beim letzten Mal keine, und die Anlage ist scharf.</li>
+<li><code>triggerAlarm(F("motion detected"))</code>: Alarm auslösen. Der Text ist für den seriellen Monitor, <code>F()</code> lässt ihn im Flash.</li>
+<li><code>lastMotion = motion</code>: Den Wert für den nächsten Durchlauf merken.</li>
+</ul>
+<p>Noch ein Detail: Beim Scharfschalten wird <code>lastMotion</code> auf den aktuellen Wert gesetzt. Sieht der Sensor in dem Moment noch die Person, die gerade rausgegangen ist, zählt das nicht als neue Bewegung.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 20 RFID + EEPROM -->
@@ -551,13 +657,21 @@ void updateState() {
           <tr><td>ab 2</td><td>4 Byte pro Karte</td></tr>
         </table>
       </div>
-      <aside class="notes"><ul>
-        <li>Abfrage ohne Karte wartet etwa 25 ms, deshalb nur alle 200 ms</li>
-        <li>PICC_HaltA(): liegengelassene Karte schaltet nicht ständig um</li>
-        <li>EEPROM behält die Karten ohne Strom und beim Neu-Hochladen</li>
-        <li>Kennbyte fehlt = neuer Chip, dann wird die Startliste geschrieben</li>
-        <li>EEPROM.update() schreibt nur bei Änderung, schont die etwa 100 000 Schreibzyklen</li>
-      </ul></aside>
+      <aside class="notes">
+<h4>So erklärt ihr es</h4>
+<p>Der Kartenleser hat einen Haken: Fragt man ihn, ob eine Karte da ist, und es ist keine da, wartet er etwa 25 ms auf eine Antwort. Würden wir ihn in jedem Durchlauf fragen, wäre das Tastenfeld träge und die Sirene würde stocken. Deshalb fragen wir nur alle 200 ms. Eine Karte wird trotzdem praktisch sofort erkannt, nach höchstens 200 ms.</p>
+<p>Die erlaubten Karten stehen im EEPROM. Das ist ein kleiner Speicher im Uno, 1 KB, der seinen Inhalt ohne Strom behält und auch beim Neu-Hochladen des Programms. Wer seine Karte einmal angelernt hat, bleibt drin.</p>
+<h4>Zeile für Zeile</h4>
+<ul>
+<li><code>if (!rfidOk || millis() - lastRfidPoll &lt; RFID_POLL_MS)</code>: <code>||</code> heißt ODER. Antwortet der Leser nicht (<code>rfidOk</code> ist falsch) oder sind seit der letzten Abfrage noch keine 200 ms vergangen? Dann sofort <code>return false</code>, also keine Karte.</li>
+<li><code>lastRfidPoll = millis()</code>: Uhrzeit dieser Abfrage merken.</li>
+<li><code>PICC_IsNewCardPresent()</code>: Ist eine neue Karte im Feld? <code>PICC_ReadCardSerial()</code>: Ihre UID auslesen. Klappt eins davon nicht, gibt es <code>false</code>.</li>
+<li><code>PICC_HaltA()</code>: Schickt die Karte schlafen. Bleibt sie liegen, schaltet sie die Anlage nicht ständig hin und her. Erst wenn man sie wegnimmt und wieder hinhält, zählt sie neu.</li>
+<li><code>return true</code>: Karte gelesen. Danach wird die UID mit der Liste verglichen.</li>
+</ul>
+<p>PICC ist in der Library die Karte, PCD der Leser. UID ist die feste Kennung der Karte, bei uns 4 Byte.</p>
+<p>Aufbau im EEPROM: An Adresse 0 steht ein Kennbyte <code>0xA5</code>. Fehlt es, ist der Chip neu, und die Firmware schreibt eine Startliste hinein. An Adresse 1 steht die Anzahl der Karten, ab Adresse 2 je 4 Byte pro Karte. Geschrieben wird mit <code>EEPROM.update()</code>, das schreibt nur, wenn sich der Wert wirklich ändert. Jede Zelle hält nämlich nur etwa 100 000 Schreibvorgänge aus.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 21 Admin -->
@@ -575,15 +689,16 @@ void updateState() {
           <li>Höchstens 8 Karten</li>
         </ul>
       </div>
-      <aside class="notes"><ul>
-        <li>Anregung der Lehrkraft: Rechtevergabe ohne PC</li>
-        <li>Nur im Zustand unscharf</li>
-        <li>Anlernen: Karte einfach an den Leser halten, Display meldet Saved, Known oder Full</li>
-        <li>Liste: mit # blättern</li>
-        <li>Nach 20 s ohne Eingabe schließt das Menü selbst</li>
-        <li>Falsche Admin-PIN zählt als Fehlversuch</li>
-        <li>8 Karten wegen des knappen Speichers</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Welche Karten die Anlage schalten dürfen, legen wir direkt am Gerät fest, ohne PC. Das war eine Anregung unserer Lehrkraft.</p>
+<ul>
+<li>Im unscharfen Zustand A drücken, Admin-PIN eintippen, mit Raute bestätigen. Das Display zeigt das Menü.</li>
+<li>1: Karte anlernen. Einfach an den Leser halten. Das Display meldet Saved, Known, wenn sie schon drin ist, oder Full.</li>
+<li>2: Liste der Karten. Mit Raute blättern, mit D die angezeigte Karte löschen.</li>
+<li>Stern: zurück oder raus. Nach 20 Sekunden ohne Eingabe schließt das Menü von selbst.</li>
+</ul>
+<p>Eine falsche Admin-PIN zählt als Fehlversuch, genau wie eine falsche normale PIN. Mehr als 8 Karten gehen nicht, weil die Liste im knappen Arbeitsspeicher liegt.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 22 Der Weg -->
@@ -599,13 +714,18 @@ void updateState() {
           <div class="row step" data-scene="way-6"><span class="d">17.11.</span><span class="x"><b>Tests</b> T1 bis T9 bestanden</span></div>
         </div>
       </div>
-      <aside class="notes"><ul>
-        <li>Wann welche Hürde kam, rechts baut sich das Gerät in dieser Reihenfolge auf</li>
-        <li>Erster Aufbau: Melder noch an D11</li>
-        <li>Druck und Einbau 28.10. bis 10.11.: Druck misslungen, Zapfen abgebrochen, Batterie passt nicht</li>
-        <li>Am Ende 252 Byte SRAM frei</li>
-        <li>Danach: Jan Display, Speicher, Alarm-Bugfix, Hugo Hardware und Gehäuse</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Bevor wir auf einzelne Probleme eingehen, einmal der Weg von September bis heute. Pro Klick ein Abschnitt, rechts baut sich das Gerät in derselben Reihenfolge auf.</p>
+<ul>
+<li>September: Breadboard und erste Firmware. Das Display zeigt erst nichts, später Pixelmüll, dann startet der Arduino immer wieder neu.</li>
+<li>Dann kommt der RFID-Leser dazu. Der Bewegungsmelder hing da noch an D11, und genau den Pin braucht der Leser. Im Modell seht ihr das Kabel erst an D11.</li>
+<li>23.09.: Das Gehäuse entsteht. Die große Frage: Wohin mit dem Bewegungsmelder?</li>
+<li>06.10.: Ein Fehler im Alarm, dazu gleich mehr.</li>
+<li>28.10. bis 10.11.: Drucken und Einbauen. Ein Druck ging schief, Schraubzapfen sind abgebrochen, die Batterie passte nicht.</li>
+<li>17.11.: Alle Tests am fertigen Gerät bestanden.</li>
+</ul>
+<p>Ich erkläre jetzt Display, Speicher und den Fehler im Alarm. Danach übernimmt Hugo die Hardware und das Gehäuse.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 23 SH1106 -->
@@ -618,12 +738,12 @@ void updateState() {
           <dt class="step" data-scene="sh-1">Lösung</dt><dd class="step" data-scene="sh-1"><code>Adafruit_SH1106G</code>, <code>0x3C</code></dd>
         </dl>
       </div>
-      <aside class="notes"><ul>
-        <li>Fast alle Anleitungen für 128x64-OLEDs nutzen den SSD1306, beide sehen gleich aus</li>
-        <li>Hier erzählen, wie wir den SH1106 erkannt haben (Kapitel 8.1 der Doku)</li>
-        <li>Lösung: Library Adafruit SH110X, I²C-Adresse 0x3C</li>
-        <li>Steht seitdem in CLAUDE.md, damit kein SSD1306-Code mehr entsteht</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Das erste Problem hatten wir gleich am Anfang mit dem Display. Fast alle Anleitungen für solche 128x64-OLEDs nutzen den Controller SSD1306. Mit deren Code zeigt unser Display nichts oder nur Streifen, so wie gerade rechts im Modell.</p>
+<p>Der Grund: Unser 1,3-Zoll-Display hat einen anderen Controller, den SH1106. Von außen sehen beide gleich aus, angesteuert werden sie aber unterschiedlich.</p>
+<p>[Euer Teil: Erzählt hier kurz, wie ihr gemerkt habt, dass es ein SH1106 ist.]</p>
+<p>Klick: Die Lösung ist die Library Adafruit SH110X mit der Klasse <code>Adafruit_SH1106G</code>. Das Display hängt am I²C-Bus unter der Adresse <code>0x3C</code>. Damit kam das Herz.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 24 SRAM -->
@@ -644,13 +764,17 @@ void updateState() {
           <li>Heute: <b>252 Byte frei</b>, stabil</li>
         </ul>
       </div>
-      <aside class="notes"><ul>
-        <li>Display-Puffer belegt allein die Hälfte des SRAM</li>
-        <li>Wird es knapp, wächst der Stack in den Puffer: Pixelmüll, Neustarts</li>
-        <li>Ausgabe brach mitten im Wort ab, dann kam die Startmeldung: Neustart</li>
-        <li>Lösung: F() und PROGMEM, kein snprintf, keine Textpuffer, Keypad selbst abfragen (rund 120 Byte)</li>
-        <li>252 Byte = fertiges Gerät mit RFID und Admin-Menü, Firmware gibt den Wert beim Start aus</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Das größte Problem war der Arbeitsspeicher. Erst zeigte das Display Pixelmüll statt Herz und Totenkopf, so wie rechts. Nach dem ersten Fix lief es zwar, aber nach einmal scharf und unscharf schalten war die richtige PIN plötzlich falsch. Im seriellen Monitor stand <code>free SRAM: 205</code>, und eine Ausgabe brach mitten im Wort ab, danach kam die Startmeldung. Der Arduino ist also neu gestartet.</p>
+<p>Zur Erklärung der Balken: Der Uno hat 2048 Byte Arbeitsspeicher. Allein das Display braucht 1024 davon, weil der Arduino jedes der 128 mal 64 Pixel als ein Bit im Speicher hält. Den Rest teilen sich Variablen, Libraries und der Stack. Der Stack wächst, wenn Funktionen aufgerufen werden. Wird es zu eng, schreibt er in fremde Daten. Dann gibt es Pixelmüll, Abstürze oder kaputte Variablen wie unsere PIN.</p>
+<p>Klick, was wir dagegen gemacht haben:</p>
+<ul>
+<li>Alle Texte mit <code>F()</code>. Dann bleiben sie im Flash, da ist mit 32 KB genug Platz, und werden nicht in den Arbeitsspeicher kopiert. Feste Tabellen wie die Tastenbelegung mit <code>PROGMEM</code>.</li>
+<li>Kein <code>snprintf</code> und keine Textpuffer mehr.</li>
+<li>Die Keypad-Library raus, das waren rund 120 Byte.</li>
+</ul>
+<p>Heute sind mit RFID und Admin-Menü 252 Byte frei, und alle Tests laufen stabil. Die Firmware schreibt den freien Speicher beim Start in den seriellen Monitor, so behalten wir das im Blick.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 25 Alarm-Bugfix -->
@@ -664,12 +788,12 @@ void updateState() {
           <dt class="step" data-scene="bug-1">Dazu</dt><dd class="step" data-scene="bug-1">Falsche Eingabe: 30 s neu</dd>
         </dl>
       </div>
-      <aside class="notes"><ul>
-        <li>Fehlerton hat die Sirene ersetzt, Anlage war noch im Alarm, aber still</li>
-        <li>Beim Test am fertigen Gerät: im Alarm konnte man in Ruhe Codes durchprobieren</li>
-        <li>Jetzt startet jede falsche Eingabe die 30 s neu, im Modell springt die Restzeit zurück</li>
-        <li>Eine Zeile, stateStart = millis(), kein zusätzlicher Speicher</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Den Fehler haben wir beim Testen gefunden: Während der Sirene haben wir eine falsche PIN eingegeben. Kurz kam der Fehlerton, danach war Ruhe. Die Anlage war aber noch im Alarm.</p>
+<p>Die Ursache: Es kann immer nur ein Ton gleichzeitig laufen. Der Fehlerton hat die Sirene ersetzt, und als er vorbei war, kam nichts mehr.</p>
+<p>Die erste Lösung im Oktober: Im Alarm gibt es keinen Fehlerton mehr, die Sirene läuft einfach weiter.</p>
+<p>Klick: Beim Test am fertigen Gerät ist uns noch eine Lücke aufgefallen. Falsche Eingaben im Alarm hatten jetzt gar keine Folgen, man konnte während der Sirene in Ruhe Codes durchprobieren. Jetzt startet jede falsche Eingabe die 30 Sekunden neu. Das ist die eine Zeile <code>stateStart = millis()</code>, die wir bei <code>accessDenied()</code> gesehen haben. Im Modell seht ihr, wie die Restzeit nach der falschen Eingabe wieder auf 30 springt.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 26 Pin-Konflikt -->
@@ -682,12 +806,11 @@ void updateState() {
           <dt class="step" data-scene="pin-2">Dazu</dt><dd class="step" data-scene="pin-2"><code>SPI.begin()</code> setzt D10 auf HIGH</dd>
         </dl>
       </div>
-      <aside class="notes"><ul>
-        <li>RFID braucht D11 als MOSI, SPI liegt beim Uno fest auf D11, D12, D13</li>
-        <li>Analoge Pins funktionieren auch als Digitalpins</li>
-        <li>D10 ist der SS-Pin von SPI, dort hängt der Buzzer</li>
-        <li>setup(): erst SPI.begin(), danach Buzzer-Pin auf LOW</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Als der RFID-Leser dazukam, hatten wir einen Pin doppelt. Der Bewegungsmelder hing an D11, und der Leser braucht D11 als MOSI für SPI. Die SPI-Leitungen liegen beim Uno fest auf D11, D12 und D13, die kann man nicht verlegen. Im Modell seht ihr beide Kabel an D11.</p>
+<p>Klick: Den Bewegungsmelder haben wir auf A2 umgesteckt. Die analogen Pins kann man ganz normal als Digitalpins benutzen, A2 ist intern einfach Pin 16. Im Code steht dafür die Konstante <code>MOTION_PIN</code>.</p>
+<p>Klick: Und noch eine versteckte Falle. <code>SPI.begin()</code> schaltet D10 automatisch auf Ausgang und HIGH, weil D10 beim Uno der SS-Pin von SPI ist. Genau da hängt aber unser Buzzer. Deshalb ruft <code>setup()</code> zuerst <code>SPI.begin()</code> auf und setzt erst danach den Buzzer-Pin auf LOW. So startet der Buzzer immer still.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 27 RC522 -->
@@ -700,13 +823,12 @@ void updateState() {
           <dt class="step" data-scene="rc-1">Nachbau</dt><dd class="step" data-scene="rc-1">Version <code>0xB2</code></dd>
         </dl>
       </div>
-      <aside class="notes"><ul>
-        <li>3,3-V-Pin liefert 50 mA, Leser braucht 13 bis 26 mA</li>
-        <li>Datenleitungen mit 5 V: laut Datenblatt außerhalb der Spezifikation, funktioniert</li>
-        <li>Günstige Nachbauten hängen sich auf, Anregung der Lehrkraft: Reset per Taste B</li>
-        <li>Original meldet 0x91 oder 0x92, Firmware wertet nur 0x00 und 0xFF als Fehler</li>
-        <li>Test T8: Leser kurz abgezogen, mit B wieder da</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Der RFID-Leser hatte zwei Besonderheiten.</p>
+<p>Erstens die Spannung. Alle anderen Module laufen mit 5 Volt, der RC522 ist für 3,3 Volt gebaut. 5 Volt würden ihn zerstören. Deshalb hängt er am 3,3-Volt-Pin vom Uno. Der liefert 50 mA, der Leser braucht 13 bis 26 mA, das reicht. Die Datenleitungen kommen trotzdem mit 5 Volt vom Uno. Laut Datenblatt ist das außerhalb der Spezifikation, in der Praxis läuft es.</p>
+<p>Klick: Zweitens hängen sich günstige Nachbauten manchmal auf. Dann werden keine Karten mehr gelesen. Darauf hat uns unsere Lehrkraft hingewiesen. Vorher half nur, den ganzen Arduino neu zu starten. Jetzt startet Taste B im unscharfen Zustand nur den Leser neu und prüft danach, ob er antwortet. Heller Ton heißt: wieder da, Brummen heißt: immer noch weg.</p>
+<p>Unser Leser ist so ein Nachbau. Er meldet als Version <code>0xB2</code>, ein Original meldet <code>0x91</code> oder <code>0x92</code>. Die Firmware wertet nur <code>0x00</code> und <code>0xFF</code> als Fehler, das bedeutet nämlich, dass gar keine Antwort kommt. Getestet haben wir das, indem wir den Leser kurz abgezogen und mit B wieder zurückgeholt haben.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 28 Keil -->
@@ -737,13 +859,12 @@ void updateState() {
           <text class="pl-ang" x="215" y="230" text-anchor="end">flach</text>
         </svg>
       </div>
-      <aside class="notes"><ul>
-        <li>Im Bedienteil hätte der Melder die Person gesehen, die gerade die PIN eintippt</li>
-        <li>Deshalb eigenes Gehäuse innen, Wand dazwischen</li>
-        <li>Flach schaut er geradeaus in den Raum</li>
-        <li>Zwei Keile gedruckt: erst 30°, dann 60°</li>
-        <li>Bei 60° reicht der Bereich bis an die Wand</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Wohin mit dem Bewegungsmelder? Im Bedienteil hätte er die Person gesehen, die gerade draußen die PIN eintippt. Deshalb sitzt er in einem eigenen Gehäuse innen im Raum, mit der Wand dazwischen.</p>
+<p>Flach an der Wand schaut er aber geradeaus in den Raum. Die Tür liegt dann nur am Rand des Erfassungsbereichs. Das seht ihr in der Skizze.</p>
+<p>Klick: Deshalb ein Keil, der den Sensor zur Tür dreht. Der erste hatte 30 Grad. Besser, aber noch nicht sicher.</p>
+<p>Klick: Mit 60 Grad reicht der Erfassungsbereich bis an die Wand und deckt den ganzen Eingang ab. Rechts im Modell dreht sich das Sensorteil mit.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 29 Druck -->
@@ -760,13 +881,13 @@ void updateState() {
           </dl>
         </div>
       </div>
-      <aside class="notes"><ul>
-        <li>Misslungen: Frontplatte und Sensorteil im Filamentsalat, Ursache unbekannt</li>
-        <li>Zapfen: 1,2 mm Wand, Schraube lief auf Grund. Jetzt 8 mm Steg, Loch 4,8 mm tief</li>
-        <li>Batterie: am Hohlstecker hätte sie außen gehangen</li>
-        <li>Snapmaker Artisan der Schule, nur die rechte Düse funktioniert</li>
-        <li>Hier eigene Erfahrungen ergänzen (Kapitel 8.6 der Doku)</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Beim echten Bauen ist auch einiges schiefgegangen.</p>
+<p>Links ein misslungener Druck. Frontplatte und alle Teile vom Sensorteil sind im Filamentsalat geendet, warum genau, wissen wir nicht. Gedruckt haben wir auf dem Snapmaker Artisan der Schule, da funktioniert nur die rechte Düse. Also nochmal gedruckt.</p>
+<p>Am Deckel vom Sensorteil sind die Schraubzapfen für den Bewegungsmelder abgebrochen, schon bei kleinen Schrauben. Die Zapfen waren dünne Röhrchen mit nur 1,2 mm Wand, und das Loch war zu flach, die Schraube lief auf Grund und hat den Zapfen auseinandergedrückt. Jetzt ist jeder Zapfen ein 8 mm breiter Steg und das Loch 4,8 mm tief. Der neue Deckel hält, den seht ihr in der Mitte.</p>
+<p>Und die Batterie: Am Hohlstecker hätte sie außen am Gehäuse gehangen. Deshalb kommt sie innen an VIN, das hat Hugo vorhin bei der Stromversorgung gezeigt.</p>
+<p>[Euer Teil: eigene Erfahrungen beim Drucken und Einbauen.]</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 30 Fazit -->
@@ -783,12 +904,11 @@ void updateState() {
           <tr><td>Laufzeit mit Batterie</td><td class="c">geschätzt</td></tr>
         </table>
       </div>
-      <aside class="notes"><ul>
-        <li>Soll und Ist ehrlich gegenüberstellen</li>
-        <li>Holzlatten für die Montage kamen nicht, Gerät funktioniert auch lose</li>
-        <li>Keine Batterie da, Laufzeit nur geschätzt (3 bis 5 h)</li>
-        <li>Hier unser eigenes Fazit in zwei, drei Sätzen (Kapitel 9 der Doku)</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Was am Ende steht: Alle sieben Muss- und alle sechs Kann-Anforderungen sind umgesetzt. Am 17.11. haben wir alle Tests am fertigen Gerät gemacht, T1 bis T9, alle bestanden. Das Gehäuse ist gedruckt und eingebaut.</p>
+<p>Nicht geschafft haben wir zwei Sachen. Die Montage auf einer Holzplatte, weil die Latten nicht rechtzeitig kamen. Das Gerät funktioniert aber auch lose. Und die Laufzeit mit Batterie konnten wir nicht messen, weil wir keine hatten. Die ist nur geschätzt.</p>
+<p>[Euer Teil: euer Fazit in zwei, drei Sätzen.]</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 31 Gelernt + Ausblick -->
@@ -817,11 +937,19 @@ void updateState() {
           </div>
         </div>
       </div>
-      <aside class="notes"><ul>
-        <li>Erweiterungen auswählen, die wir selbst gut finden (Kapitel 9.4)</li>
-        <li>Uno voll: nur noch A3 frei, 252 Byte SRAM</li>
-        <li>Reflexion in eigenen Worten</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Links, was wir gelernt haben:</p>
+<ul>
+<li>Erst ins Datenblatt schauen, dann Code schreiben. Siehe SH1106.</li>
+<li>2 KB Arbeitsspeicher sind schnell voll, jedes Byte zählt.</li>
+<li>Nie blockieren: <code>millis()</code> statt <code>delay()</code>.</li>
+<li>Feste Pins wie I²C und SPI früh einplanen, sonst muss man umstecken.</li>
+<li>Dünne Teile im 3D-Druck halten wenig aus.</li>
+</ul>
+<p>Rechts, was man noch erweitern könnte: eine Nachricht aufs Handy bei Alarm, dafür bräuchte es WLAN, zum Beispiel mit einem ESP32. Ein Protokoll, wer wann welche Karte benutzt hat. Ein Netzteil für Dauerbetrieb. Und einen Sabotagekontakt am Gehäuse.</p>
+<p>Für vieles davon ist der Uno zu klein. Es ist nur noch A3 frei und es sind 252 Byte Arbeitsspeicher übrig.</p>
+<p>[Euer Teil: was ihr persönlich mitnehmt. Die Reflexion schreibt ihr ohne KI.]</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 32 KI -->
@@ -840,13 +968,13 @@ void updateState() {
           <li>Geprüfte Fakten in <code>CLAUDE.md</code></li>
         </ul>
       </div>
-      <aside class="notes"><ul>
-        <li>KI als Hilfsmittel, wie in der Vorgabe erlaubt</li>
-        <li>Wir haben jede Version kompiliert, hochgeladen und am Gerät geprüft</li>
-        <li>CLAUDE.md: Pins, Display-Controller, Speicher, die KI liest sie bei jedem Schritt</li>
-        <li>Prompts stehen nicht in der Doku</li>
-        <li>Jeden Codeabschnitt können wir selbst erklären, gerne nachfragen</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Wir haben Claude Code benutzt, einen KI-Assistenten fürs Programmieren. Das ist laut Vorgabe als Hilfsmittel erlaubt.</p>
+<p>Unser Teil: die Idee und die Anforderungen, Aufbau und Verkabelung, und jede Version selbst kompiliert, hochgeladen und am Gerät getestet. Entschieden haben wir.</p>
+<p>Claude Code hat nach unseren Anforderungen die Firmware geschrieben, Fehler aus unseren Beschreibungen und Logs gesucht, das Gehäuse in OpenSCAD geplant, das 3D-Modell und die Grafiken gebaut und ein Protokoll geführt.</p>
+<p>Die KI hatte keinen Zugriff auf die Hardware und hat nie selbst getestet. Fehler wie der mit dem Fehlerton sind erst bei unseren Tests aufgefallen. Damit sie keine Pins erfindet, gibt es die Datei <code>CLAUDE.md</code>. Da stehen die am Gerät geprüften Fakten drin, zum Beispiel Pinbelegung, Display-Controller und Speicher, und die liest sie bei jedem Schritt.</p>
+<p>Die Prompts stehen nicht in der Doku. Das Protokoll liegt im Repository.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 33 Demo -->
@@ -862,13 +990,19 @@ void updateState() {
           <li>Neue Karte anlernen</li>
         </ol>
       </div>
-      <aside class="notes"><ul>
-        <li>Jan bedient, Hugo erklärt</li>
-        <li>Falsche PIN im Alarm: Sirene läuft weiter, Restzeit springt auf 30 s</li>
-        <li>Karte anlernen nur, wenn Zeit ist</li>
-        <li>Plan B: Videos auf dem Handy, danach das 3D-Modell im Browser</li>
-        <li>Gerät über USB am Notebook oder an der Powerbank</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Jetzt das echte Gerät. Jan bedient, Hugo erklärt.</p>
+<ol>
+<li>Anlage ist unscharf, Herz auf dem Display.</li>
+<li>Karte an das RFID-Feld halten: OK-Ton, 10 Sekunden Piepen, dann Totenkopf.</li>
+<li>Hand vor den Bewegungsmelder: Sirene, der Totenkopf blinkt.</li>
+<li>Falsche PIN und Raute: Sirene läuft weiter, die Restzeit springt zurück auf 30.</li>
+<li>Richtige PIN und Raute: Herz.</li>
+<li>Wenn noch Zeit ist: A, Admin-PIN, Raute, 1 und eine neue Karte anlernen.</li>
+</ol>
+<p>Vorher prüfen: Gerät hängt per USB am Notebook oder an der Powerbank, PINs auf dem Zettel, eine angelernte und eine unbekannte Karte dabei.</p>
+<p>Plan B, falls die Hardware streikt: die Videos auf dem Handy, danach das 3D-Modell im Browser.</p>
+      </aside>
     </section>
 
     <!-- ===================================================== 34 Fragen -->
@@ -879,12 +1013,20 @@ void updateState() {
         <div class="qr"><img src="img/qr-3d.svg" alt="QR-Code zum 3D-Modell"><div><b>3D-Modell</b><span>im Browser ausprobieren</span></div></div>
         <ul class="list tight"><li>Quellen: Kapitel 10 der Doku</li></ul>
       </div>
-      <aside class="notes"><ul>
-        <li>Danke fürs Zuhören</li>
-        <li>Quellen: Kapitel 10 der Doku (Datenblätter, Bibliotheken, Werkzeuge)</li>
-        <li>Repository: github.com/BBZ-AIFS51/LF7-Projekt_GAS, 3D-Modell: bbz-aifs51.github.io/LF7-Projekt_GAS</li>
-        <li>Typische Fragen: keine Keypad-Library? Warum A2? Warum 3,3 V? Wo liegen die Karten? Was hat die KI gemacht?</li>
-      </ul></aside>
+      <aside class="notes">
+<p>Danke fürs Zuhören. Habt ihr Fragen?</p>
+<p>Über die QR-Codes kommt ihr ins Repository mit Code, Doku und Wiki und zum 3D-Modell, das man im Browser ausprobieren kann. Die Quellen stehen in Kapitel 10 der Doku.</p>
+<h4>Antworten auf typische Fragen</h4>
+<ul>
+<li><i>Warum keine Keypad-Library?</i> Kostet rund 120 Byte Arbeitsspeicher. Mit ihr waren nur 205 Byte frei, und der Arduino ist abgestürzt.</li>
+<li><i>Warum <code>millis()</code> statt <code>delay()</code>?</i> <code>delay()</code> hält alles an. Während einer Pause könnte niemand den Alarm ausschalten.</li>
+<li><i>Warum hängt der Bewegungsmelder an A2?</i> D11 ist beim Uno fest der MOSI-Pin für SPI, den braucht der RFID-Leser.</li>
+<li><i>Warum 3,3 Volt für den Leser?</i> Der Chip ist dafür gebaut, 5 Volt zerstören ihn.</li>
+<li><i>Wo sind die Karten gespeichert?</i> Im EEPROM des Uno. Sie bleiben ohne Strom und beim Neu-Hochladen erhalten.</li>
+<li><i>Wie sicher ist das Ding?</i> Für ein Schulprojekt ok, für echt zu wenig. Es gibt keinen Sabotagekontakt, und wer das Kabel abzieht, schaltet die Anlage aus.</li>
+<li><i>Was hat die KI gemacht?</i> Siehe Folie 32: Code, Gehäuse und Grafiken mit ihr, Aufbau, Tests und Entscheidungen von uns.</li>
+</ul>
+      </aside>
     </section>
 
   </main>
@@ -895,7 +1037,8 @@ void updateState() {
   <div id="overview"></div>
   <div id="help">
     <div><kbd>→</kbd> <kbd>Leertaste</kbd> weiter, <kbd>←</kbd> zurück</div>
-    <div><kbd>F</kbd> Vollbild, <kbd>N</kbd> Notizen und Stoppuhr</div>
+    <div><kbd>F</kbd> Vollbild</div>
+    <div data-vortrag><kbd>P</kbd> Referentenansicht im zweiten Fenster, <kbd>N</kbd> Notizen hier unten</div>
     <div><kbd>O</kbd> Übersicht, <kbd>B</kbd> schwarz, <kbd>M</kbd> Animationen aus</div>
     <div><kbd>T</kbd> Stoppuhr zurücksetzen, <kbd>H</kbd> diese Hilfe</div>
   </div>
