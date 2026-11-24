@@ -1,8 +1,9 @@
 # Abschlussplan — Projekt GAS
 
 Stand: 24.11.2026. Plan für alles, was bis zur Abgabe noch passieren muss.
-Grundlage sind die Vorgaben der Lehrkraft (zehn Kapitel, Präsentation, Regeln
-zum KI-Einsatz) und der aktuelle Stand im Repository.
+Grundlage sind die Vorgaben der Lehrkraft ([vorgaben.md](vorgaben.md): zehn
+Kapitel, Präsentation, Regeln zum KI-Einsatz) und der aktuelle Stand im
+Repository.
 
 Hinter jeder Aufgabe steht, wer sie erledigen kann:
 
@@ -39,8 +40,11 @@ Hinter jeder Aufgabe steht, wer sie erledigen kann:
   dort flüssig (ausprobiert), die neue Präsentation darf also Motion Graphics
   nutzen.
 - **Termin:** Annahme ist der erste Präsentationstag, **Di 01.12.2026**.
-- **Dauer:** insgesamt **mindestens 15 Minuten**, jeder hat einen erkennbar
-  eigenen Teil.
+- **Dauer:** laut Vorgabe **mindestens 10 Minuten pro Person**, bei uns also
+  **mindestens 20 Minuten** (vorher stand hier 15, korrigiert am 24.11.2026).
+  Jeder hat einen erkennbar eigenen Teil.
+- **Umfang der Doku:** laut Lehrkraft etwa 10 Seiten, wir bleiben bei
+  **höchstens 15**.
 - **Zitierweise:** wie an der Hochschule üblich, nummeriert nach **IEEE**.
   Im Text steht die Nummer in eckigen Klammern, z. B. „laut Datenblatt [4]“,
   im Quellenverzeichnis die vollständige Angabe.
@@ -129,7 +133,8 @@ Die Fragen zur Abgabeform sind beantwortet (siehe oben). Offen ist noch:
 - [x] **(Team)** Präsentationsrechner → **Jans Notebook**, Animationen und 3D
       im Browser laufen dort gut
 - [x] **(Team)** Termin → Annahme **Di 01.12.2026**
-- [x] **(Team)** Dauer → insgesamt **mindestens 15 Minuten**
+- [x] **(Team)** Dauer → **mindestens 10 Minuten pro Person**, also 20 Minuten
+      (laut Vorgabe, am 24.11. korrigiert, vorher 15)
 - [x] **(Team)** Zitierformat → **IEEE** (nummeriert, wie an der Hochschule)
 - [x] **(Team)** Arbeitsweise: Alles wird auf dem Branch
       `claude/trusting-knuth-awmzj8` erledigt. Wenn alles fertig ist, kommt es
@@ -291,30 +296,26 @@ Platzhalter nicht mehr.
 
 ### Anhang
 
-| Seite | Was fehlt | Wer |
-|---|---|---|
-| Team und Rollen | wer hat was gemacht, wie habt ihr euch abgestimmt, Drucker/Slicer (Snapmaker Artisan der Berufsschule, nur die rechte Düse geht, Slicer Snapmaker Luban; Quellen [25], [26]) | **Team** |
-| Zeitplan | gab es eine Planung? Meilensteine mit Datum (Projektstart, `hardware_test`, RFID verdrahtet, Gehäuse montiert), Präsentation und Abgabe | Team liefert Daten, Claude trägt ein |
-| Kosten | Preise und Bezugsquellen, was von der Schule kam | **Team** |
-| Projektphasen | Stand und offene Punkte abhaken, Foto vom fertigen Gerät, Testergebnisse | Team, Claude |
-| KI-Einsatz | Tabelle prüfen, wie ihr den Code geprüft habt, was die KI falsch gemacht hat | **Team** |
-| Entwicklungsverlauf | Zusammenfassung aus der Wiki-Seite übernehmen (ohne Prompts) | Claude |
+**Entfällt** (24.11.2026). Die Vorgabe verlangt nur Kapitel 1–10, und mit
+Anhang wäre die Doku über 15 Seiten gekommen. Kosten und Zeitaufwand stehen
+als offene Stelle in Kapitel 9.1, der KI-Einsatz kurz in Kapitel 9.3.
 
 ### Doku als Word-Dokument
 
-- [ ] **(Claude)** Startfassung `Projektdokumentation_GAS.docx` erzeugen:
-  - Deckblatt, Inhaltsverzeichnis (automatisch aus den Überschriften),
-    Kapitel 1–10, Anhang, jedes Kapitel auf einer neuen Seite,
-    Seitenzahlen in der Fußzeile
-  - Texte und Tabellen aus dem Wiki, Diagramme (Zustandsautomat,
-    Systemüberblick, Zeitleiste) und Bilder als feste Grafiken, animierte SVGs
-    als Standbild
-  - offene Stellen für das Team gelb markiert, Leitfragen zur Reflexion als
-    Kommentar
-  - **ohne `MDs/entwicklungsverlauf.md`**, der Anhang „Entwicklungsverlauf“
-    fasst nur die Schritte zusammen (keine Prompts)
-- [ ] **(Team)** Ablage festlegen: Word-Dokument im Repository (dann nach
-      jeder Änderung hochladen) oder nur bei euch (OneDrive o. Ä.)
+- [x] **(Claude)** Startfassung `Projektdokumentation_GAS.docx` erzeugt
+      (24.11.2026, Schritt 31):
+  - Stil „technisch“: Calibri, Blau als Akzentfarbe, Kopfzeile, farbige
+    Tabellenköpfe, Codekästen. Keine Gedankenstriche, Texte ohne KI-Floskeln
+  - Deckblatt, Inhaltsverzeichnis, Kapitel 1–10 in der Reihenfolge der
+    Vorgabe, **14 Seiten** (Ziel ca. 10, höchstens 15), kein Anhang
+  - Zustandsdiagramm neu gezeichnet, Schaltplan, Fotos vom Aufbau
+  - offene Stellen gelb markiert: Nachnamen, Lehrkraft, Schule, 8.1 (wie
+    der SH1106 erkannt wurde), 8.6 (eigene Erfahrungen), 9.1 (Soll/Ist,
+    Kosten), 9.2 (Reflexion, **ohne KI**), 9.3 (Prüfen des Codes), 9.4
+    (Ideen auswählen), 10 (fehlende Quellen)
+  - ohne Prompts
+- [x] **(Team)** Ablage → **nur bei uns** (und später bei der Lehrkraft),
+      nicht im Repository
 - [ ] **(Team)** Im Word-Dokument weiterschreiben. Was ihr dort ändert, muss
       nicht zurück ins Wiki, außer es ist technisch falsch.
 - [ ] **(Team)** Probefassung durchblättern: Seitenumbrüche, Lesbarkeit der
@@ -336,7 +337,7 @@ noch dazukommen, werden zuletzt eingesetzt.
 
 ### Rahmen
 
-- Insgesamt **mindestens 15 Minuten**, Ziel 16–18 Minuten mit Demo. Jeder
+- Insgesamt **mindestens 20 Minuten** (10 pro Person), Ziel 21–23 Minuten mit Demo. Jeder
   hat einen **erkennbar eigenen Teil** (je etwa die Hälfte).
 - Ablauf nach Vorgabe: Idee → Aufbau und Code → Herausforderungen → Fazit →
   Live-Demo
@@ -351,18 +352,18 @@ noch dazukommen, werden zuletzt eingesetzt.
 - Trotzdem: Das echte Gerät ist der Höhepunkt, nicht die Effekte. Jede Folie
   muss auch ohne Animation verständlich sein.
 
-### Vorschlag für den Ablauf (≈ 17 min + Fragen)
+### Vorschlag für den Ablauf (≈ 22 min + Fragen)
 
 Die Aufteilung ist nur ein Vorschlag, entscheidet selbst, wer was übernimmt.
 
 | # | Teil | Inhalt | Doku | Min | Wer |
 |---|---|---|---|---:|---|
-| 1 | Einstieg | Problem und Idee, Ziel in einem Satz, Muss-/Kann-Anforderungen | Kap. 2 | 1,5 | Person A |
-| 2 | So funktioniert's | Zustände aus Anwendersicht: Herz, Ausgangsverzögerung, Totenkopf, Alarm, Admin | Kap. 3 | 1,5 | Person A |
-| 3 | Bauteile und Aufbau | Bauteile, Schaltplan, Pin-Zuordnung (I²C, SPI), Foto vom Aufbau, Gehäuse, Batterie an VIN | Kap. 4, 5 | 3 | Person B |
-| 4 | Code I | Zustandsautomat, nicht-blockierende Töne mit `millis()` | Kap. 7 | 2 | Person A |
-| 5 | Code II | Keypad selbst scannen statt Library, RFID mit EEPROM und Admin-Menü, RFID-Polling alle 200 ms | Kap. 7 | 2 | Person B |
-| 6 | Herausforderungen | knapper SRAM (Pixelmüll, Neustarts), `SPI.begin()` und der Buzzer an D10, RC522 nur 3,3 V, Bugfix Alarm, Gehäuse und Druck | Kap. 8 | 3 | beide, je die Hälfte |
+| 1 | Einstieg | Problem und Idee, Ziel in einem Satz, Muss-/Kann-Anforderungen | Kap. 2 | 2 | Person A |
+| 2 | So funktioniert's | Zustände aus Anwendersicht: Herz, Ausgangsverzögerung, Totenkopf, Alarm, Admin | Kap. 3 | 2 | Person A |
+| 3 | Bauteile und Aufbau | Bauteile, Schaltplan, Pin-Zuordnung (I²C, SPI), Foto vom Aufbau, Gehäuse, Batterie an VIN | Kap. 4, 5 | 4 | Person B |
+| 4 | Code I | Zustandsautomat, nicht-blockierende Töne mit `millis()` | Kap. 7 | 3 | Person A |
+| 5 | Code II | Keypad selbst scannen statt Library, RFID mit EEPROM und Admin-Menü, RFID-Polling alle 200 ms | Kap. 7 | 3 | Person B |
+| 6 | Herausforderungen | knapper SRAM (Pixelmüll, Neustarts), `SPI.begin()` und der Buzzer an D10, RC522 nur 3,3 V, Bugfix Alarm, Gehäuse und Druck | Kap. 8 | 4 | beide, je die Hälfte |
 | 7 | Fazit und Ausblick | Soll/Ist, was wir gelernt haben, Erweiterungen, kurz: wie wir KI genutzt haben | Kap. 9 | 1,5 | Person B |
 | 8 | Live-Demo | nach Demo-Drehbuch unten | — | 2,5 | A bedient, B erklärt |
 | 9 | Fragen | | | | beide |
@@ -396,7 +397,7 @@ dieselbe Logik.
 
 ## Phase 5 · Proben und Vortrag (25.11. – ab 01.12.)
 
-- [ ] **(Team)** Mindestens zwei komplette Durchläufe mit Stoppuhr (Ziel 16–18 min, nie unter 15)
+- [ ] **(Team)** Mindestens zwei komplette Durchläufe mit Stoppuhr (Ziel 21–23 min, nie unter 20)
 - [ ] **(Team)** Gegenseitig abfragen: Jeder erklärt die Codeabschnitte des
       anderen. Typische Fragen üben:
   - Warum keine Keypad-Library? (SRAM, ~120 Byte, Neustarts)
@@ -454,7 +455,7 @@ das PDF der Doku:
 
 | Teil | Wo im Repository | Form |
 |---|---|---|
-| **Projektdokumentation** (Kap. 1–10 + Anhang) | wird direkt an die Lehrkraft gegeben | PDF, aus dem Word-Dokument exportiert |
+| **Projektdokumentation** (Kap. 1–10, max. 15 Seiten) | wird direkt an die Lehrkraft gegeben | PDF, aus dem Word-Dokument exportiert |
 | **Sourcecode** | `Code/` | eigene `.ino`-Dateien, in der Doku nur verlinkt |
 | **Präsentation** | `praesentation/` | eine HTML-Datei, offline lauffähig (schon am 24.11. abgegeben) |
 | Ergänzend | `Schaltplan/`, `Gehaeuse/`, `Anleitung/`, `docs/viewer/` (3D-Modell), `Teile.xlsx`, `wiki/` (Projekt-Wiki), `MDs/entwicklungsverlauf.md` (Arbeitsprotokoll, nicht in der Doku) | im Repository |

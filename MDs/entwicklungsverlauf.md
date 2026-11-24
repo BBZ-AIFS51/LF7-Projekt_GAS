@@ -1391,6 +1391,45 @@ GitHub-Wiki zu sehen.
 - Endstand mit eigenen PINs hochladen, Tag `v1.0`.
 - Word-Dokument (Phase 3).
 
+
+## 31. Prompt — Startfassung der Projektdokumentation (24.11.2026)
+
+> Wir fangen mit dem Word-Dokument an und machen dann die Präsentation. Lass uns ertsmal planen in welchem stil es sein wird und wie es gegliedert sein soll. Geb mir mal ein paar beispiele
+
+> Ich wusst jz nicht ob du hier die genaue vorgabe für die doukemtation hast, aber hier ist ist. Unsere Lehererin meinte so ca. 10 seiten, also mach bitte nicht mehr als 15. Ich würde Sagen wir nehmen Stil B mit etwas weniger AI Slop und du sollst /humanizer:humanizer verwenden und auch nicht diese längere "-".
+> Mach die Gliederung so wie du es gut findest, am besten in der reihenfolge die auch in der vorgabe unser lehrerin drinne steht. Bei Namen oder anderem, dass du nicht weißt pack nen platzhalter rein. Das Word Dokument liegt nur bei uns und der lehrerin später. Falls du dir meinen schreibstil oder so irgendwo gespeichert hast, versuch meinen stil in die doku einzubringen. Falls du was recherchieren musst kannst du firecrawl verwenden.
+
+(Dazu die Vorgaben der Lehrkraft als Datei, jetzt unter `MDs/vorgaben.md`.)
+
+### Antwort
+
+- **Stilvorschläge:** drei Muster (klassisch, technisch, modern), jeweils
+  Deckblatt und eine Beispielseite, als Bild. Das Team hat sich für den
+  technischen Stil (B) entschieden.
+- **Startfassung `Projektdokumentation_GAS.docx`:** 14 Seiten, Kapitel 1–10
+  genau in der Reihenfolge der Vorgabe, kein Anhang (sonst über 15 Seiten).
+  Calibri, Blau als Akzent, Kopf- und Fußzeile mit Seitenzahl, gefülltes
+  Inhaltsverzeichnis, Codekästen, Hinweisbox. Zustandsdiagramm neu
+  gezeichnet, Schaltplan (zugeschnitten), Foto vom Gerät auf dem Deckblatt,
+  zwei Fotos vom Aufbau. Quellen nach IEEE mit denselben Nummern wie im Wiki.
+- **Texte:** aus dem Wiki übernommen und gekürzt, nach der Humanizer-Anleitung
+  überarbeitet (keine Gedankenstriche, keine Floskeln, kaum Fettdruck).
+  Als Vorbild für den Ton diente der einzige vom Team selbst geschriebene
+  Absatz im Wiki („Hugo und ich haben uns für eine Alarmanlage
+  entschieden …“): „wir“-Form, schlichte Sätze. Recherche war nicht nötig.
+- **Platzhalter (gelb):** Nachnamen, Lehrkraft, Schule, 8.1, 8.6, 9.1, 9.2
+  (Reflexion, ohne KI), 9.3, 9.4, fehlende Quellen.
+- **Ablage:** Das Dokument liegt nur beim Team, nicht im Repository.
+- **Vorgabe gelesen:** Die Präsentation muss **mindestens 10 Minuten pro
+  Person** dauern, also 20 Minuten. Im Abschlussplan standen 15, jetzt
+  korrigiert, der Ablaufvorschlag ist auf etwa 22 Minuten gestreckt.
+- Abschlussplan (Phase 3, Anhang entfällt) und CLAUDE.md nachgezogen.
+
+**Offene Punkte:**
+
+- Team füllt die gelben Stellen aus und schreibt die Reflexion selbst.
+- Präsentation als HTML (Phase 4), Abgabe laut Plan heute.
+
 ---
 
 ## Anhang — Stand der Dateien

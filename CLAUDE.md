@@ -82,7 +82,10 @@ Bewegungssensor erkennt Anwesenheit.
   öffentlich) und werden per `raw.githubusercontent.com`-URL
   (`…/main/Fotos/…`) eingebunden. Projekt-Wiki auf **Deutsch**, **nicht die
   Abgabe-Dokumentation** (die wird seit 10.11.2026 als Word-Dokument
-  geschrieben und als PDF abgegeben, s. `MDs/abschlussplan.md`). Seiten:
+  geschrieben und als PDF abgegeben, s. `MDs/abschlussplan.md`; das
+  Word-Dokument liegt **nur beim Team, nicht im Repository**, höchstens
+  15 Seiten, Stil „technisch“, keine Gedankenstriche; Vorgaben der Lehrkraft
+  in [MDs/vorgaben.md](MDs/vorgaben.md)). Seiten:
   `Home`, `Idee-und-Zielsetzung`, `Funktionsbeschreibung`,
   `Verwendete-Bauteile`, `Aufbau-und-Schaltplan`, `Wichtige-Codeabschnitte`,
   `Herausforderungen`, `Projektphasen`, `Entwicklungsverlauf`, `KI-Einsatz`,

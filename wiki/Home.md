@@ -48,6 +48,6 @@ angelernt, ganz ohne PC.
 
 ## Auf einen Blick
 
-| **6** | **4** | **30** | **5** | **5** |
+| **6** | **4** | **31** | **5** | **5** |
 |:---:|:---:|:---:|:---:|:---:|
 | Bauteile am Uno | Arduino-Sketches | Arbeitsschritte im [Entwicklungsverlauf](Entwicklungsverlauf) | Zustände der Anlage | Druckteile fürs Gehäuse |
