@@ -68,6 +68,21 @@ Bewegungssensor erkennt Anwesenheit.
   `index.html?shot` ist ein versteckter Modus nur für `tools/render.mjs`.
   `docs/social-preview.png` (1280 × 640, < 1 MB) ist das GitHub-Social-Preview,
   wird von Hand unter Settings → General → Social preview hochgeladen.
+- `praesentation/` — **Präsentation** als eine offline lauffähige HTML-Datei
+  `Praesentation_GAS.html` (wird abgegeben, nicht von Hand ändern). Quelle in
+  `praesentation/src/`: `index.html` (Folien, Sprechernotizen in
+  `aside.notes`), `scenes.js` (was das 3D-Modell pro Folie zeigt), `scene.js`
+  (detaillierte 3D-Modelle aller Bauteile, Gehäuse aus `docs/viewer/enclosure.js`,
+  Modulpositionen mit denselben Formeln wie `gehaeuse.scad`), `oled.js`
+  (Display-Symbole wie im Sketch), `deck.js`/`deck.css`. Gebaut mit
+  `node praesentation/build.mjs` (bettet Schriften, Fotos aus `Fotos/`, three.js
+  und `enclosure.js` ein). Stil wie die Word-Doku: Calibri (Carlito eingebettet),
+  Dunkelblau #0B3D6E, Blau #0969DA, schwarzer Hintergrund, keine
+  Gedankenstriche. Person A = Jan, Person B = Hugo. **Ändert sich Verhalten,
+  Zeit, Pin oder Code in der Firmware, Folien und `scenes.js` mitziehen und neu
+  bauen.**
+- `.claude/skills/frontend-design/` — Gestaltungs-Skill von Anthropic (Apache 2.0),
+  für Arbeiten an der Präsentation und den Grafiken.
 - `tools/` — Node-Skripte: `stl2viewer.mjs` (STL → `enclosure.js`, ohne
   Abhängigkeiten), `render.mjs` (rendert `Gehaeuse/bilder/*.png` und das Social
   Preview und `docs/banner.svg` über den Viewer, braucht Playwright + Chromium),

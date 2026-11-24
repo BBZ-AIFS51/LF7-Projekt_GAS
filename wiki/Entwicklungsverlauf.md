@@ -12,7 +12,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **31** | **11** | **4** | **2** |
+| **32** | **11** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -59,6 +59,7 @@ timeline
                : S29 Beispiel-PINs im Code
         24.11. : S30 Platte und Batterie gestrichen
                : S31 Projektdokumentation
+               : S32 Präsentation
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -100,6 +101,7 @@ flowchart LR
     P29["📝 S29<br/>Beispiel-PINs"]
     P30["📝 S30<br/>ohne Platte"]
     P31["📝 S31<br/>Doku in Word"]
+    P32["🎨 S32<br/>Präsentation"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -119,7 +121,8 @@ flowchart LR
     P23 --> P24 --> P25 --> P26 --> P27
     P16 --> P28
     P27 -- "Test am Gerät" --> P28 --> P29
-    P27 --> P30 --> P31
+    P27 --> P30 --> P31 --> P32
+    P13 --> P32
 
     classDef fw fill:#d0e7ff,stroke:#0969da,color:#0a3069
     classDef bug fill:#ffd8d3,stroke:#cf222e,color:#82071e
@@ -130,7 +133,7 @@ flowchart LR
     class P1,P6,P7,P28 fw
     class P2,P4,P16,P21 bug
     class P5 info
-    class P8,P9,P13,P14,P15 vis
+    class P8,P9,P13,P14,P15,P32 vis
     class P10,P11,P12,P20 box
     class P3,P17,P18,P19,P22,P23,P24,P25,P26,P27,P29,P30,P31 doc
 ```
@@ -148,7 +151,7 @@ flowchart LR
 | 💻 | Firmware-Funktionen | 1, 6, 7, 28 |
 | 🐞 | Fehlerbehebung | 2, 4, 16, 21 |
 | 💡 | Erklärung / Wissen | 5 |
-| 🎨 | Darstellung (README, 3D-Modell, Grafiken) | 8, 9, 13, 14, 15 |
+| 🎨 | Darstellung (README, 3D-Modell, Grafiken, Präsentation) | 8, 9, 13, 14, 15, 32 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
 | 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24, 25, 26, 27, 29, 30, 31 |
 
@@ -160,7 +163,7 @@ pie
     "Firmware" : 4
     "Fehlerbehebung" : 4
     "Erklärung" : 1
-    "Darstellung" : 5
+    "Darstellung" : 6
     "Gehäuse" : 4
     "Dokumentation" : 13
 ```
@@ -622,6 +625,26 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 - Beim Lesen der Vorgabe ist aufgefallen, dass die Präsentation mindestens 10 Minuten pro Person dauern muss, also 20 Minuten statt der bisher geplanten 15
 
 <sub>🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#31-prompt--startfassung-der-projektdokumentation-24112026)</sub>
+
+### 🎨 Schritt 32 — Präsentation mit 3D-Modell
+
+**Anlass:** Am 24.11. war die Präsentation abzugeben, als eine HTML-Datei, die ohne Internet läuft. Sie sollte dieselbe Geschichte wie die Doku erzählen, und das Gerät sollte als 3D-Modell immer im Bild sein.
+
+**Ergebnis**
+- 34 Folien in der Reihenfolge der Vorgabe, oben links das Kapitel der Doku, oben rechts, wer spricht. Jan übernimmt Idee, Funktion, den ersten Code-Teil und die Firmware-Probleme, Hugo Bauteile, Aufbau, den zweiten Code-Teil, Hardware und Gehäuse und das Fazit
+- Neues, detailliertes 3D-Modell auf schwarzem Hintergrund: Alle Bauteile sind nachgebaut, das Gehäuse kommt aus unseren STL-Dateien. Bei den Bauteilen fliegt Teil für Teil ins Bild, bei der Pin-Zuordnung wachsen die Kabel pro Bus, beim Gehäuse schließt sich der Deckel
+- Bei den Herausforderungen führt eine Zeitleiste von September bis heute durch das Projekt, das Modell baut sich dabei in der echten Reihenfolge auf
+- Jede Folie ist auch ohne Animation verständlich, Notizen mit Stoppuhr helfen beim Proben
+- Eine einzige Datei mit allen Schriften, Fotos und dem Modell, läuft per Doppelklick
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/praesentation/vorschau.jpg" alt="Folie aus der Präsentation: Pin-Zuordnung neben dem 3D-Modell mit farbigen Kabeln" width="70%">
+</p>
+
+> [!WARNING]
+> **Offen:** Folien mit dem Word-Dokument abgleichen, eigene Stellen füllen, am Beamer testen.
+
+<sub>📁 [`praesentation/`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/praesentation) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#32-prompt--präsentation-als-html-mit-3d-modell-24112026)</sub>
 
 ---
 

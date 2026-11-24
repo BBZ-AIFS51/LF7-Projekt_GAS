@@ -1,0 +1,206 @@
+// OLED 128x64 (SH1106) for the presentation: same icons as Code/alarm_system,
+// drawn into a framebuffer and shown as a canvas texture on the 3D display.
+// The pixel helpers are a small subset of Adafruit_GFX (taken from docs/viewer).
+(function () {
+  'use strict';
+  const W = 128, H = 64;
+  const fb = new Uint8Array(W * H);
+  const WHITE = 1, BLACK = 0;
+
+  // classic 5x7 font, 5 columns per glyph, LSB = top row (ASCII 32..126)
+  const FONT = [
+    0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x5F,0x00,0x00, 0x00,0x07,0x00,0x07,0x00, 0x14,0x7F,0x14,0x7F,0x14,
+    0x24,0x2A,0x7F,0x2A,0x12, 0x23,0x13,0x08,0x64,0x62, 0x36,0x49,0x56,0x20,0x50, 0x00,0x08,0x07,0x03,0x00,
+    0x00,0x1C,0x22,0x41,0x00, 0x00,0x41,0x22,0x1C,0x00, 0x2A,0x1C,0x7F,0x1C,0x2A, 0x08,0x08,0x3E,0x08,0x08,
+    0x00,0x80,0x70,0x30,0x00, 0x08,0x08,0x08,0x08,0x08, 0x00,0x00,0x60,0x60,0x00, 0x20,0x10,0x08,0x04,0x02,
+    0x3E,0x51,0x49,0x45,0x3E, 0x00,0x42,0x7F,0x40,0x00, 0x72,0x49,0x49,0x49,0x46, 0x21,0x41,0x49,0x4D,0x33,
+    0x18,0x14,0x12,0x7F,0x10, 0x27,0x45,0x45,0x45,0x39, 0x3C,0x4A,0x49,0x49,0x31, 0x41,0x21,0x11,0x09,0x07,
+    0x36,0x49,0x49,0x49,0x36, 0x46,0x49,0x49,0x29,0x1E, 0x00,0x00,0x14,0x00,0x00, 0x00,0x40,0x34,0x00,0x00,
+    0x00,0x08,0x14,0x22,0x41, 0x14,0x14,0x14,0x14,0x14, 0x00,0x41,0x22,0x14,0x08, 0x02,0x01,0x59,0x09,0x06,
+    0x3E,0x41,0x5D,0x59,0x4E, 0x7C,0x12,0x11,0x12,0x7C, 0x7F,0x49,0x49,0x49,0x36, 0x3E,0x41,0x41,0x41,0x22,
+    0x7F,0x41,0x41,0x41,0x3E, 0x7F,0x49,0x49,0x49,0x41, 0x7F,0x09,0x09,0x09,0x01, 0x3E,0x41,0x41,0x51,0x73,
+    0x7F,0x08,0x08,0x08,0x7F, 0x00,0x41,0x7F,0x41,0x00, 0x20,0x40,0x41,0x3F,0x01, 0x7F,0x08,0x14,0x22,0x41,
+    0x7F,0x40,0x40,0x40,0x40, 0x7F,0x02,0x1C,0x02,0x7F, 0x7F,0x04,0x08,0x10,0x7F, 0x3E,0x41,0x41,0x41,0x3E,
+    0x7F,0x09,0x09,0x09,0x06, 0x3E,0x41,0x51,0x21,0x5E, 0x7F,0x09,0x19,0x29,0x46, 0x26,0x49,0x49,0x49,0x32,
+    0x03,0x01,0x7F,0x01,0x03, 0x3F,0x40,0x40,0x40,0x3F, 0x1F,0x20,0x40,0x20,0x1F, 0x3F,0x40,0x38,0x40,0x3F,
+    0x63,0x14,0x08,0x14,0x63, 0x03,0x04,0x78,0x04,0x03, 0x61,0x59,0x49,0x4D,0x43, 0x00,0x7F,0x41,0x41,0x41,
+    0x02,0x04,0x08,0x10,0x20, 0x00,0x41,0x41,0x41,0x7F, 0x04,0x02,0x01,0x02,0x04, 0x40,0x40,0x40,0x40,0x40,
+    0x00,0x03,0x07,0x08,0x00, 0x20,0x54,0x54,0x78,0x40, 0x7F,0x28,0x44,0x44,0x38, 0x38,0x44,0x44,0x44,0x28,
+    0x38,0x44,0x44,0x28,0x7F, 0x38,0x54,0x54,0x54,0x18, 0x00,0x08,0x7E,0x09,0x02, 0x18,0xA4,0xA4,0x9C,0x78,
+    0x7F,0x08,0x04,0x04,0x78, 0x00,0x44,0x7D,0x40,0x00, 0x20,0x40,0x40,0x3D,0x00, 0x7F,0x10,0x28,0x44,0x00,
+    0x00,0x41,0x7F,0x40,0x00, 0x7C,0x04,0x78,0x04,0x78, 0x7C,0x08,0x04,0x04,0x78, 0x38,0x44,0x44,0x44,0x38,
+    0xFC,0x18,0x24,0x24,0x18, 0x18,0x24,0x24,0x18,0xFC, 0x7C,0x08,0x04,0x04,0x08, 0x48,0x54,0x54,0x54,0x24,
+    0x04,0x04,0x3F,0x44,0x24, 0x3C,0x40,0x40,0x20,0x7C, 0x1C,0x20,0x40,0x20,0x1C, 0x3C,0x40,0x30,0x40,0x3C,
+    0x44,0x28,0x10,0x28,0x44, 0x4C,0x90,0x90,0x90,0x7C, 0x44,0x64,0x54,0x4C,0x44, 0x00,0x08,0x36,0x41,0x00,
+    0x00,0x00,0x77,0x00,0x00, 0x00,0x41,0x36,0x08,0x00, 0x02,0x01,0x02,0x04,0x02
+  ];
+
+  const d = {
+    cx: 0, cy: 0, size: 1, color: WHITE,
+    clear() { fb.fill(0); },
+    px(x, y, c) { if (x >= 0 && x < W && y >= 0 && y < H) fb[y * W + x] = c; },
+    rect(x, y, w, h, c) { for (let j = y; j < y + h; j++) for (let i = x; i < x + w; i++) this.px(i, j, c); },
+    circle(x0, y0, r, c) {
+      for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) if (dx * dx + dy * dy <= r * r + r) this.px(x0 + dx, y0 + dy, c);
+    },
+    roundRect(x, y, w, h, r, c) {
+      r = Math.min(r, Math.floor(Math.min(w, h) / 2));
+      for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
+        let dx = 0, dy = 0;
+        if (i < r) dx = r - i; else if (i > w - 1 - r) dx = i - (w - 1 - r);
+        if (j < r) dy = r - j; else if (j > h - 1 - r) dy = j - (h - 1 - r);
+        if (dx * dx + dy * dy <= r * r + r) this.px(x + i, y + j, c);
+      }
+    },
+    tri(x0, y0, x1, y1, x2, y2, c) {
+      const minX = Math.min(x0, x1, x2), maxX = Math.max(x0, x1, x2), minY = Math.min(y0, y1, y2), maxY = Math.max(y0, y1, y2);
+      for (let y = minY; y <= maxY; y++) for (let x = minX; x <= maxX; x++) {
+        const w0 = (x1 - x) * (y2 - y) - (x2 - x) * (y1 - y);
+        const w1 = (x2 - x) * (y0 - y) - (x0 - x) * (y2 - y);
+        const w2 = (x0 - x) * (y1 - y) - (x1 - x) * (y0 - y);
+        if ((w0 >= 0 && w1 >= 0 && w2 >= 0) || (w0 <= 0 && w1 <= 0 && w2 <= 0)) this.px(x, y, c);
+      }
+    },
+    line(x0, y0, x1, y1, c) {
+      const dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1, dy = -Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+      let err = dx + dy;
+      for (;;) {
+        this.px(x0, y0, c);
+        if (x0 === x1 && y0 === y1) break;
+        const e2 = 2 * err;
+        if (e2 >= dy) { err += dy; x0 += sx; }
+        if (e2 <= dx) { err += dx; y0 += sy; }
+      }
+    },
+    print(s) {
+      for (const ch of String(s)) {
+        const code = ch.charCodeAt(0) - 32;
+        if (code >= 0 && code < 95) {
+          for (let col = 0; col < 5; col++) {
+            const bits = FONT[code * 5 + col];
+            for (let row = 0; row < 8; row++) if ((bits >> row) & 1) this.rect(this.cx + col * this.size, this.cy + row * this.size, this.size, this.size, this.color);
+          }
+        }
+        this.cx += 6 * this.size;
+      }
+    },
+    at(x, y, size, c) { this.cx = x; this.cy = y; this.size = size || 1; this.color = c === undefined ? WHITE : c; return this; }
+  };
+
+  // icons exactly as in alarm_system.ino
+  function skull(cx, cy, fg, bg) {
+    d.roundRect(cx - 19, cy - 22, 38, 32, 12, fg);
+    d.roundRect(cx - 11, cy + 4, 22, 13, 4, fg);
+    d.circle(cx - 9, cy - 7, 6, bg);
+    d.circle(cx + 9, cy - 7, 6, bg);
+    d.tri(cx, cy - 1, cx - 3, cy + 4, cx + 3, cy + 4, bg);
+    d.rect(cx - 11, cy + 5, 22, 1, bg);
+    for (let i = 0; i < 4; i++) d.rect(cx - 7 + i * 5, cy + 6, 1, 11, bg);
+  }
+  function heart(cx, cy, fg) {
+    d.circle(cx - 8, cy - 6, 9, fg);
+    d.circle(cx + 8, cy - 6, 9, fg);
+    d.tri(cx - 16, cy - 1, cx + 16, cy - 1, cx, cy + 18, fg);
+  }
+  function cross(cx, cy, fg) {
+    for (let i = -2; i <= 2; i++) {
+      d.line(cx - 20, cy - 20 + i, cx + 20, cy + 20 + i, fg);
+      d.line(cx - 20, cy + 20 + i, cx + 20, cy - 20 + i, fg);
+    }
+  }
+  function seconds(secs, size, y, c) {
+    const chars = secs >= 10 ? 3 : 2;
+    d.at(Math.trunc((W - chars * 6 * size) / 2), y, size, c).print(secs + 's');
+  }
+  let seed = 1;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+  // mode: heart, exit, armed, alarm, stars, cross, admin, garbage, stripes, off
+  function draw(mode, t, opt) {
+    opt = opt || {};
+    d.clear();
+    switch (mode) {
+      case 'heart': heart(64, 30, WHITE); break;
+      case 'exit': {
+        skull(64, 24, WHITE, BLACK);
+        seconds(Math.max(1, 10 - Math.floor((t % 10000) / 1000)), 2, 46);
+        break;
+      }
+      case 'armed': skull(64, 34, WHITE, BLACK); break;
+      case 'alarm': {
+        const flash = Math.floor(t / 250) % 2 === 0;
+        const fg = flash ? BLACK : WHITE, bg = flash ? WHITE : BLACK;
+        if (flash) d.rect(0, 0, W, H, WHITE);
+        skull(64, 26, fg, bg);
+        const left = opt.secs !== undefined ? opt.secs : 30 - Math.floor((t % 30000) / 1000);
+        seconds(left, 2, 47, fg);
+        break;
+      }
+      case 'stars': {
+        const n = opt.n || 4;
+        d.at(Math.trunc((W - n * 18) / 2), 20, 3).print('*'.repeat(n));
+        break;
+      }
+      case 'cross': cross(64, 32, WHITE); break;
+      case 'admin':
+        d.at(4, 4).print('ADMIN');
+        d.at(4, 24).print('1 Add card');
+        d.at(4, 36).print('2 List/Del');
+        d.at(4, 52).print('* Exit');
+        break;
+      case 'scan':
+        d.at(4, 24).print('Scan card...');
+        d.at(4, 52).print('* Cancel');
+        break;
+      case 'saved':
+        d.at(4, 28).print('Saved');
+        break;
+      case 'list':
+        d.at(4, 4).print('Card 1/2');
+        d.at(4, 24).print('3F A1 7C 02');
+        d.at(4, 52).print('# Next D Del * Back');
+        break;
+      case 'garbage': {
+        // what the display showed when the stack ran into the framebuffer
+        seed = 1 + (Math.floor(t / 120) % 50);
+        heart(64, 30, WHITE);
+        for (let i = 0; i < 70; i++) {
+          const x = Math.floor(rnd() * W), y = Math.floor(rnd() * H), w = 1 + Math.floor(rnd() * 24);
+          d.rect(x, y, w, 1 + Math.floor(rnd() * 2), rnd() > 0.45 ? WHITE : BLACK);
+        }
+        break;
+      }
+      case 'stripes': {
+        // SSD1306 code on an SH1106: shifted columns and random stripes
+        seed = 7;
+        for (let x = 0; x < W; x++) if (rnd() > 0.55) d.rect(x, 0, 1, H, WHITE);
+        d.rect(0, 0, 2, H, BLACK);
+        break;
+      }
+      default: break;
+    }
+  }
+
+  // canvas texture: every OLED pixel as a small square with a dark gap,
+  // colour like the real module (light cyan)
+  const S = 6;
+  const canvas = document.createElement('canvas');
+  canvas.width = W * S;
+  canvas.height = H * S;
+  const g = canvas.getContext('2d');
+  let last = '';
+  function paint() {
+    const key = fb.join('');
+    if (key === last) return false;
+    last = key;
+    g.fillStyle = '#020407';
+    g.fillRect(0, 0, canvas.width, canvas.height);
+    g.fillStyle = '#7fd7ff';
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      if (fb[y * W + x]) g.fillRect(x * S + 0.6, y * S + 0.6, S - 1.2, S - 1.2);
+    }
+    return true;
+  }
+
+  window.GAS_OLED = { canvas, draw, paint, W, H };
+})();

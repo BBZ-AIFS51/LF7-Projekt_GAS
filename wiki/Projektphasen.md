@@ -114,6 +114,10 @@ haben wir die Montage gestrichen.
 Damit das Projekt auch ohne Gerät verständlich ist, gibt es animierte Grafiken
 in der README und ein **interaktives 3D-Modell** im Browser. Darin läuft die
 gleiche Logik wie in der Firmware, wahlweise als loser Aufbau oder im Gehäuse.
+Für den Vortrag gibt es eine
+[Präsentation](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/tree/main/praesentation)
+als eine HTML-Datei mit einem detaillierten 3D-Modell des Geräts
+([Schritt 32](Entwicklungsverlauf#-schritt-32--präsentation-mit-3d-modell)).
 
 <p align="center">
   <a href="https://bbz-aifs51.github.io/LF7-Projekt_GAS/#enclosure"><img src="https://raw.githubusercontent.com/BBZ-AIFS51/LF7-Projekt_GAS/main/docs/social-preview.png" alt="3D-Modell im Browser öffnen" width="70%"></a><br>

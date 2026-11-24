@@ -149,6 +149,7 @@ and the same example card. To use it offline, just open
 | [Anleitung/](Anleitung/) | user manual as a PDF |
 | [Fotos/](Fotos/) | photos of the real build, used in the documentation |
 | [Schaltplan/](Schaltplan/) | schematic (PNG/SVG) and the breadboard plan for the case |
+| [praesentation/](praesentation/) | the presentation (German) as one HTML file that runs offline: [Praesentation_GAS.html](praesentation/Praesentation_GAS.html), source in `praesentation/src/`, built with `node praesentation/build.mjs` |
 | [Teile.xlsx](Teile.xlsx) | parts list |
 | [CLAUDE.md](CLAUDE.md) | project context and hardware facts for development with Claude Code |
 

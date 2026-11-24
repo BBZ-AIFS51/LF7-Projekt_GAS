@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projekt GAS Präsentation</title>
+<meta name="description" content="Präsentation Projekt GAS: Mini-Sicherheitssystem auf dem Arduino Uno, Lernfeld 7, Klasse AIFS51">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div id="frame">
+  <canvas id="gl"></canvas>
+  <div id="shade" class="left"></div>
+  <div id="labels3d"></div>
+
+  <main id="deck">
+
+    <!-- ===================================================== 1 Titel -->
+    <section class="slide" data-scene="title" data-shade="left" data-kap="1" data-kapname="Deckblatt" data-who="Jan und Hugo" data-sec="idee" data-min="0.3" data-title="Titel">
+      <div class="in col">
+        <h1 class="xl">Projekt GAS</h1>
+        <p class="lead">Ein Mini-Sicherheitssystem für eine Tür, gebaut auf dem Arduino Uno</p>
+        <div class="title-meta">
+          <span>Gruppe</span><span>Jan und Hugo</span>
+          <span>Klasse</span><span>AIFS51, Lernfeld 7</span>
+          <span>Schule</span><span>BBZ Dithmarschen</span>
+        </div>
+      </div>
+      <aside class="notes"><ul>
+        <li>Begrüßung, wir zwei stellen uns vor.</li>
+        <li>Rechts das fertige Gerät als 3D-Modell, gebaut aus unseren echten Druckdateien. Das echte Gerät zeigen wir am Ende live.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 2 Ablauf -->
+    <section class="slide" data-scene="agenda" data-shade="left" data-kap="" data-kapname="Ablauf" data-who="Jan" data-sec="idee" data-min="0.3" data-title="Ablauf">
+      <div class="in col">
+        <h1>Ablauf</h1>
+        <div class="agenda">
+          <div class="row"><span class="n">1</span><span>Idee und Zielsetzung</span><span class="w">Jan</span><span class="m">4 min</span></div>
+          <div class="row"><span class="n">2</span><span>Aufbau und Code</span><span class="w">Hugo, Jan, Hugo</span><span class="m">9 min</span></div>
+          <div class="row"><span class="n">3</span><span>Herausforderungen</span><span class="w">Jan, Hugo</span><span class="m">5 min</span></div>
+          <div class="row"><span class="n">4</span><span>Fazit und Ausblick</span><span class="w">Hugo</span><span class="m">2 min</span></div>
+          <div class="row"><span class="n">5</span><span>Live-Demo</span><span class="w">beide</span><span class="m">3 min</span></div>
+        </div>
+        <p class="note">Die Folien folgen den Kapiteln unserer Dokumentation. Die Nummer oben links ist jeweils das Kapitel.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>Kurz die fünf Teile nennen, wer was erzählt.</li>
+        <li>Hinweis auf die Kapitelnummer oben links: so findet man alles in der Doku wieder.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 3 Idee -->
+    <section class="slide" data-scene="idea" data-shade="left" data-kap="2" data-kapname="Idee und Zielsetzung" data-who="Jan" data-sec="idee" data-min="0.7" data-title="Ausgangsidee">
+      <div class="in col">
+        <h1>Ein Raum, den nicht jeder betreten soll</h1>
+        <p>Zum Beispiel ein Lager- oder Serverraum. Wer berechtigt ist, schaltet die Anlage an der Tür scharf, bevor er geht, und beim Zurückkommen wieder unscharf. Betritt jemand den Raum, während sie scharf ist, gibt es lauten Alarm.</p>
+        <div class="quote">Ein Mini-Sicherheitssystem für eine Tür, das sich per PIN oder RFID-Karte scharf und unscharf schalten lässt und bei Bewegung im Raum Alarm gibt.</div>
+        <p class="note">Wir wollten nur mit den Bauteilen aus der Schule arbeiten und etwas bauen, das man tatsächlich benutzen könnte.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>Problem: Raum gegen unbefugtes Betreten sichern.</li>
+        <li>Unsere Idee in einem Satz (Zitat auf der Folie).</li>
+        <li>Warum eine Alarmanlage: nur Schulmaterial, etwas Echtes bauen.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 4 Anforderungen -->
+    <section class="slide" data-scene="reqs" data-shade="wide" data-kap="2" data-kapname="Idee und Zielsetzung" data-who="Jan" data-sec="idee" data-min="0.9" data-title="Anforderungen">
+      <div class="in wide">
+        <h1>Was die Anlage können muss</h1>
+        <div class="grid2" style="width:1460px">
+          <div>
+            <h3>Muss, aus unserer ersten Beschreibung</h3>
+            <ul class="list check tight">
+              <li>Scharf und unscharf mit PIN, bestätigt mit <kbd class="fn">#</kbd></li>
+              <li>PIN erscheint beim Tippen nur als <code>*</code></li>
+              <li>Bewegung löst nur im scharfen Zustand Alarm aus</li>
+              <li>Alarm laut und schrill, 30 Sekunden</li>
+              <li>Heller Ton bei richtiger PIN, rauer Ton bei falscher</li>
+              <li>3 Fehleingaben lösen den Alarm aus</li>
+              <li>Display: Totenkopf scharf, Herz unscharf</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Kann, im Lauf des Projekts dazugekommen</h3>
+            <table class="t">
+              <tr><th>Anforderung</th><th>Herkunft</th></tr>
+              <tr><td>RFID-Karte als zweiter Weg</td><td>eigene Idee</td></tr>
+              <tr><td>10 s Ausgangsverzögerung</td><td>Vorschlag von Claude Code</td></tr>
+              <tr><td>Karten am Gerät anlernen</td><td>Lehrkraft</td></tr>
+              <tr><td>RFID-Reset, falls der Leser hängt</td><td>Lehrkraft</td></tr>
+              <tr><td>3D-gedrucktes Gehäuse</td><td>eigene Idee</td></tr>
+              <tr><td>3D-Modell im Browser</td><td>eigene Idee</td></tr>
+            </table>
+          </div>
+        </div>
+        <p class="note">Alle 13 Anforderungen sind umgesetzt. Bewusst nicht dabei: Netzwerk, App, Protokoll und Dauerbetrieb.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>Muss = unsere erste Beschreibung der Anlage.</li>
+        <li>Kann: woher die Ideen kamen (eigene, Lehrkraft, KI-Vorschlag Ausgangsverzögerung).</li>
+        <li>Abgrenzung kurz nennen.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 5 Einsatzort -->
+    <section class="slide" data-scene="site" data-shade="left" data-kap="3" data-kapname="Funktionsbeschreibung" data-who="Jan" data-sec="funktion" data-min="0.6" data-title="Einsatzort">
+      <div class="in col narrow">
+        <h1>Zwei Gehäuse, dazwischen die Wand</h1>
+        <p>Das Bedienteil hängt außen neben der Tür, das Sensorteil innen. Der Bewegungsmelder sieht nicht durch die Wand: Wer draußen die PIN eintippt, löst nichts aus.</p>
+        <svg class="plan" viewBox="0 0 820 370" data-angle="60" aria-label="Draufsicht: Bedienteil außen, Sensorteil innen auf einem Keil zur Tür gedreht, Erfassungsbereich deckt den Eingang ab">
+          <defs><clipPath id="room-a"><rect x="0" y="141" width="820" height="229"/></clipPath></defs>
+          <text class="pl-zone" x="0" y="30">Flur, außen</text>
+          <text class="pl-zone" x="0" y="362">Raum, innen</text>
+          <g clip-path="url(#room-a)"><g class="pl-rot"><path class="pl-fan" d="M255 166 L-318 567 A700 700 0 0 0 828 567 Z"/></g></g>
+          <rect class="pl-wall" x="0" y="111" width="520" height="30"/>
+          <rect class="pl-wall" x="700" y="111" width="120" height="30"/>
+          <path class="pl-swing" d="M520 141 A180 180 0 0 0 638 310"/>
+          <line class="pl-door" x1="700" y1="141" x2="638" y2="310"/>
+          <text class="pl-lab" x="612" y="96" text-anchor="middle">Tür</text>
+          <path class="pl-cable" d="M365 111 L365 126 L210 126 L210 141"/>
+          <rect class="pl-unit" x="330" y="93" width="70" height="18" rx="2"/>
+          <text class="pl-lab" x="365" y="80" text-anchor="middle">Bedienteil</text>
+          <polygon class="pl-wedge" points="285,141 225,141 225,141"/>
+          <g class="pl-rot"><rect class="pl-unit" x="225" y="141" width="60" height="22" rx="2"/><circle class="pl-lens" cx="255" cy="166" r="7"/></g>
+          <text class="pl-lab" x="215" y="200" text-anchor="end">Sensorteil</text>
+          <text class="pl-ang" x="215" y="226" text-anchor="end">60°</text>
+        </svg>
+      </div>
+      <aside class="notes"><ul>
+        <li>Bedienteil außen, Sensorteil innen, 3-adriges Kabel durch die Wand.</li>
+        <li>Blaue Fläche = Erfassungsbereich, deckt den Eingang ab.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 6 Zustände -->
+    <section class="slide" data-scene="st-disarmed" data-shade="left" data-kap="3" data-kapname="Funktionsbeschreibung" data-who="Jan" data-sec="funktion" data-min="1.1" data-title="Zustände" id="s-states">
+      <div class="in col">
+        <h1>Fünf Zustände</h1>
+        <div class="states">
+          <svg viewBox="0 0 820 560">
+            <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3a5578"/></marker></defs>
+            <path class="edge" d="M 302 64 L 476 64"/>
+            <text class="elab" x="318" y="50">PIN oder Karte</text>
+            <path class="edge" d="M 650 130 L 650 216"/>
+            <text class="elab" x="664" y="180">nach 10 s</text>
+            <path class="edge" d="M 650 350 L 650 416"/>
+            <text class="elab" x="664" y="390">Bewegung</text>
+            <path class="edge" d="M 822 486 C 870 470 870 300 824 286"/>
+            <text class="elab" x="846" y="392">nach 30 s</text>
+            <path class="edge" d="M 478 500 L 462 500 Q 440 500 440 478 L 440 118 Q 440 100 420 100 L 306 100"/>
+            <path class="edge" d="M 478 286 L 444 286" style="marker-end:none"/>
+            <text class="elab" x="316" y="258">PIN oder</text>
+            <text class="elab" x="316" y="280">Karte</text>
+            <path class="edge" d="M 150 132 L 150 214"/>
+            <text class="elab" x="164" y="180">A + Admin-PIN</text>
+          </svg>
+          <div class="st" data-st="disarmed" style="left:0;top:0"><svg class="ico" viewBox="0 0 40 30"><path d="M20 28 L5 13 A7 7 0 0 1 20 6 A7 7 0 0 1 35 13 Z" fill="#7fd7ff"/></svg><b>Unscharf</b><span>Herz, Bewegung wird ignoriert</span></div>
+          <div class="st wide" data-st="exit" style="left:480px;top:0"><b>Ausgangsverzögerung</b><span>10 s Zeit zum Gehen, piept jede Sekunde</span></div>
+          <div class="st wide" data-st="armed" style="left:480px;top:220px"><b>Scharf</b><span>Totenkopf, Bewegungsmelder aktiv</span></div>
+          <div class="st wide alarm" data-st="alarm" style="left:480px;top:420px"><b>Alarm</b><span>Sirene 30 s, Display blinkt, danach wieder scharf</span></div>
+          <div class="st" data-st="admin" style="left:0;top:220px"><b>Admin-Menü</b><span>Karten anlernen und löschen</span></div>
+        </div>
+        <span class="step" data-scene="st-exit" data-st="exit"></span>
+        <span class="step" data-scene="st-armed" data-st="armed"></span>
+        <span class="step" data-scene="st-alarm" data-st="alarm"></span>
+        <span class="step" data-scene="st-disarm" data-st="disarmed"></span>
+        <span class="step" data-scene="st-admin" data-st="admin"></span>
+      </div>
+      <aside class="notes"><ul>
+        <li>Mit jedem Weiterklicken ein Zustand, das Display im Modell zeigt dasselbe wie das echte Gerät.</li>
+        <li>Wichtig: Nach dem Alarm bleibt die Anlage scharf.</li>
+        <li>Außerhalb des Alarms: 3 falsche Eingaben lösen sofort Alarm aus.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 7 Rückmeldungen -->
+    <section class="slide" data-scene="feedback" data-shade="left" data-kap="3" data-kapname="Funktionsbeschreibung" data-who="Jan" data-sec="funktion" data-min="0.6" data-title="Rückmeldungen">
+      <div class="in col">
+        <h1>Symbole und Töne statt Text</h1>
+        <table class="t">
+          <tr><th>Ereignis</th><th>Display</th><th>Ton</th></tr>
+          <tr><td>Taste gedrückt</td><td><code>*</code> pro Ziffer</td><td>kurzer Klick</td></tr>
+          <tr><td>Richtige PIN oder Karte</td><td>neues Symbol</td><td>heller Doppelton</td></tr>
+          <tr><td>Falsche PIN oder Karte</td><td>Kreuz</td><td>rauer Brummton, 2 s</td></tr>
+          <tr><td>Ausgangsverzögerung</td><td>Totenkopf, Countdown</td><td>Piep jede Sekunde</td></tr>
+          <tr><td>Alarm</td><td>blinkt, Restzeit</td><td>Sirene, auf und ab</td></tr>
+        </table>
+        <div style="margin-top:30px">
+          <button class="snd" data-sound="ok"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/></svg>OK</button>
+          <button class="snd" data-sound="error"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/></svg>Fehler</button>
+          <button class="snd" data-sound="beep"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/></svg>Piep</button>
+          <button class="snd" data-sound="siren"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/></svg>Sirene (3 s)</button>
+        </div>
+      </div>
+      <aside class="notes"><ul>
+        <li>Display zeigt bewusst keinen Text, man versteht es auf einen Blick.</li>
+        <li>Töne lassen sich hier abspielen (Buttons), gleiche Frequenzen wie in der Firmware.</li>
+        <li>Falsche Eingabe im Alarm: kein Fehlerton, die 30 s beginnen neu.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 8 Bauteile -->
+    <section class="slide" data-scene="parts-0" data-shade="left" data-kap="4" data-kapname="Verwendete Bauteile" data-who="Hugo" data-sec="aufbau" data-min="0.9" data-title="Bauteile">
+      <div class="in col narrow">
+        <h1>Die Bauteile</h1>
+        <ul class="list tight dim-past">
+          <li class="step shown" data-scene="parts-1"><b>Arduino Uno R3</b> (Elegoo): ATmega328P, 2 KB SRAM, 1 KB EEPROM</li>
+          <li class="step" data-scene="parts-2"><b>Keypad 4x4</b> für PIN, <kbd class="fn">#</kbd>, <kbd class="fn">*</kbd>, <kbd class="fn">A</kbd>, <kbd class="fn">B</kbd></li>
+          <li class="step" data-scene="parts-3"><b>OLED 1,3 Zoll</b>, 128 x 64 Pixel, Controller SH1106</li>
+          <li class="step" data-scene="parts-4"><b>RFID-Leser RC522</b>, 13,56 MHz, läuft mit 3,3 V</li>
+          <li class="step" data-scene="parts-5"><b>Bewegungsmelder HC-SR501</b>, HIGH bei Bewegung</li>
+          <li class="step" data-scene="parts-6"><b>Passiver Buzzer</b>: spielt jede Tonhöhe über <code>tone()</code></li>
+          <li class="step" data-scene="parts-7"><b>Mini-Breadboard und 9-V-Block</b> für den Strom</li>
+        </ul>
+      </div>
+      <aside class="notes"><ul>
+        <li>Ein Bauteil pro Klick, es fliegt rechts ins Bild.</li>
+        <li>Passiver statt aktiver Buzzer: nur so verschiedene Töne und Sirene.</li>
+        <li>SH1106 statt SSD1306: kommt bei den Herausforderungen.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 9 Pins -->
+    <section class="slide" data-scene="pins-all" data-shade="left" data-kap="5" data-kapname="Aufbau und Schaltplan" data-who="Hugo" data-sec="aufbau" data-min="1.1" data-title="Pin-Zuordnung">
+      <div class="in col">
+        <h1>Pin-Zuordnung</h1>
+        <table class="t">
+          <tr><th>Bauteil</th><th>Pins am Uno</th><th>Bus</th></tr>
+          <tr class="step shown" data-scene="pins-kp"><td>Keypad, Reihen und Spalten</td><td>D9 bis D6, D5 bis D2</td><td>Matrix</td></tr>
+          <tr class="step" data-scene="pins-i2c"><td>OLED</td><td><b>A4</b> SDA, <b>A5</b> SCL</td><td>I²C, fest</td></tr>
+          <tr class="step" data-scene="pins-spi"><td>RC522 Daten</td><td><b>D11</b> MOSI, <b>D12</b> MISO, <b>D13</b> SCK</td><td>SPI, fest</td></tr>
+          <tr class="step" data-scene="pins-spi2"><td>RC522 Auswahl, Reset, Strom</td><td>A0, A1, <b>3,3 V</b></td><td>SPI</td></tr>
+          <tr class="step" data-scene="pins-io"><td>Bewegungsmelder, Buzzer</td><td>A2, D10</td><td>digital</td></tr>
+        </table>
+        <p class="note step">Frei sind nur noch A3 und D0/D1. D0/D1 brauchen wir für Upload und seriellen Monitor.</p>
+        <div class="schem step" data-scene="pins-schem"><img src="img/schaltplan.jpg" alt="Schaltplan aus Cirkit Designer: Uno mit Keypad, OLED, RC522, Buzzer, Bewegungsmelder und 9-V-Batterie"></div>
+      </div>
+      <aside class="notes"><ul>
+        <li>I²C und SPI liegen beim Uno auf festen Pins, nur SS und RST sind frei wählbar.</li>
+        <li>Keypad braucht 8 Pins: jede Reihe und jede Spalte eine Leitung.</li>
+        <li>Letzter Klick: der Schaltplan aus Cirkit Designer (Kapitel 5).</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 10 Strom -->
+    <section class="slide" data-scene="power" data-shade="left" data-kap="5" data-kapname="Aufbau und Schaltplan" data-who="Hugo" data-sec="aufbau" data-min="0.6" data-title="Stromversorgung">
+      <div class="in col">
+        <h1>Strom über VIN</h1>
+        <ul class="list tight">
+          <li>Geplant: 9-V-Block im Gehäuse an <b>VIN</b>, der Uno macht daraus 5 V und 3,3 V</li>
+          <li>VIN hat keinen Verpolungsschutz, Plus und Minus vertauscht heißt Uno kaputt</li>
+          <li>Laufzeit geschätzt 3 bis 5 h, nicht gemessen. Vorgeführt wird über USB</li>
+        </ul>
+        <table class="t" style="margin-top:8px">
+          <tr><th>Spalte</th><th>Netz</th><th>Was steckt drin</th></tr>
+          <tr><td>13 oben</td><td>+5 V</td><td>Uno 5V, OLED, Buzzer, Bewegungsmelder</td></tr>
+          <tr><td>15 oben</td><td>GND</td><td>alle Massen, Batterie minus</td></tr>
+          <tr><td>17 unten</td><td>+9 V</td><td>Batterie plus, Brücke zu VIN</td></tr>
+        </table>
+      </div>
+      <aside class="notes"><ul>
+        <li>Mini-Breadboard SYB-170 verteilt nur Strom, alle Signale gehen direkt an den Uno.</li>
+        <li>Ehrlich sagen: Laufzeit ist geschätzt, vorgeführt wird über USB.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 11 echter Aufbau -->
+    <section class="slide" data-scene="real" data-shade="wide" data-kap="5" data-kapname="Aufbau und Schaltplan" data-who="Hugo" data-sec="aufbau" data-min="0.5" data-title="Der echte Aufbau">
+      <div class="in wide">
+        <h1>Der echte Aufbau</h1>
+        <div class="photos" style="grid-template-columns: 470px 470px; height: 640px">
+          <figure class="ph"><img src="../../Fotos/aufbau_breadboard.jpg" alt="Erster Versuchsaufbau auf dem großen Breadboard" style="height:600px"><figcaption>Erster Versuchsaufbau, noch ohne RFID-Leser</figcaption></figure>
+          <figure class="ph"><img src="../../Fotos/aufbau_offen.jpg" alt="Bedienteil offen: Deckel mit Display, RFID-Leser und Buzzer, Rückteil mit Uno und Mini-Breadboard" style="height:600px"><figcaption>Im Gehäuse, rechts im Modell nachgebaut</figcaption></figure>
+        </div>
+      </div>
+      <aside class="notes"><ul>
+        <li>Links der erste Aufbau auf dem großen Breadboard.</li>
+        <li>Mitte das offene Bedienteil: Deckel mit Display, RFID-Leser und Buzzer, Rückteil mit Uno und Mini-Breadboard.</li>
+        <li>Rechts dasselbe im 3D-Modell, zum Vergleich mit dem Steckplan.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 12 Gehäuse -->
+    <section class="slide" data-scene="case-0" data-shade="left" data-kap="5" data-kapname="Aufbau und Schaltplan" data-who="Hugo" data-sec="aufbau" data-min="0.8" data-title="Gehäuse">
+      <div class="in col narrow">
+        <h1>Das Gehäuse</h1>
+        <ul class="list tight">
+          <li class="step shown" data-scene="case-1">Fünf Druckteile aus PLA, geplant in OpenSCAD</li>
+          <li class="step" data-scene="case-2">Bedienteil außen: Uno, Keypad, Display, RFID-Leser, Buzzer, Mini-Breadboard</li>
+          <li class="step" data-scene="case-3">Der Kartenleser liest durch 2,4 mm Kunststoff</li>
+          <li class="step" data-scene="case-4">Sensorteil innen, auf einem 60°-Keil zur Tür gedreht, verbunden über ein 3-adriges Kabel</li>
+        </ul>
+        <p class="note">Gedruckt auf dem Snapmaker Artisan der Schule, von dem nur die rechte Düse funktioniert.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>Teile fliegen ins Rückteil, dann geht der Deckel zu.</li>
+        <li>Maße der Module aus Datenblättern, beim Einbau hat alles gepasst.</li>
+        <li>Kabel: 5 V, GND und Signal des Bewegungsmelders.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 13 Sourcecode -->
+    <section class="slide" data-scene="source" data-shade="left" data-kap="6" data-kapname="Sourcecode" data-who="Jan" data-sec="code" data-min="0.3" data-title="Sourcecode">
+      <div class="in col">
+        <h1>Vier Sketches, eine Hauptfirmware</h1>
+        <table class="t">
+          <tr><th>Datei</th><th>Zweck</th></tr>
+          <tr class="hi"><td><code>alarm_system.ino</code></td><td>Hauptfirmware, gut 1000 Zeilen</td></tr>
+          <tr><td><code>hardware_test.ino</code></td><td>prüft jedes Bauteil einzeln</td></tr>
+          <tr><td><code>display_test.ino</code></td><td>nur das OLED, zeigt freien SRAM</td></tr>
+          <tr><td><code>rfid_test.ino</code></td><td>nur der RC522, zeigt jede UID</td></tr>
+        </table>
+        <p class="note">Der vollständige Code liegt im Repository im Ordner <code>Code/</code>. Bibliotheken: Adafruit SH110X und GFX, MFRC522, dazu Wire, SPI und EEPROM.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>Testsketches haben beim Eingrenzen von Fehlern geholfen.</li>
+        <li>Im Repository stehen nur Beispiel-PINs (1234 und 0000), unsere echten tragen wir vor dem Hochladen lokal ein.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 14 loop -->
+    <section class="slide" data-scene="loop" data-shade="left" data-kap="7" data-kapname="Wichtige Codeabschnitte" data-who="Jan" data-sec="code" data-min="0.6" data-title="Programmablauf">
+      <div class="in col">
+        <h1>Nichts darf blockieren</h1>
+<pre class="code">void loop() {
+  if (state == STATE_ADMIN) {
+    handleAdminKeypad();
+    handleAdminRfid();
+  } else {
+    handleKeypad();
+    handleRfid();
+  }
+  handleMotion();
+  updateState();
+  updateSound();
+  updateDisplay();
+}</pre>
+        <p>Es gibt kein <code>delay()</code>. Mit <code>delay(30000)</code> für die Sirene könnte niemand den Alarm beenden. Das Programm merkt sich mit <code>millis()</code>, wann etwas angefangen hat, und prüft bei jedem Durchlauf, ob die Zeit um ist.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>loop() läuft tausende Male pro Sekunde, jede Funktion kehrt sofort zurück.</li>
+        <li>Rechts: Gehäuse durchsichtig, die Signale laufen gleichzeitig.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 15 Zustandsautomat -->
+    <section class="slide" data-scene="fsm" data-shade="left" data-kap="7" data-kapname="Wichtige Codeabschnitte" data-who="Jan" data-sec="code" data-min="0.7" data-title="Zustandsautomat">
+      <div class="in col">
+        <h1>Der Zustandsautomat</h1>
+<pre class="code" style="font-size:21px" data-hl="3,9,14">void setState(SystemState next) {
+  state = next;
+  stateStart = millis();      // when this state began
+}
+
+void updateState() {
+  unsigned long now = millis();
+  if (state == STATE_EXIT_DELAY) {
+    if (now - stateStart >= EXIT_DELAY_MS) {
+      setState(STATE_ARMED);
+    }
+  } else if (state == STATE_ALARM) {
+    if (now - stateStart >= ALARM_MS) {
+      stopSound();
+      setState(STATE_ARMED);  // stay armed
+    }
+  }
+}</pre>
+        <p class="small">Nach dem Alarm bleibt die Anlage scharf. Sonst könnte ein Einbrecher einfach 30 Sekunden warten.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>enum mit fünf Zuständen, jeder Wechsel über setState().</li>
+        <li>Zeitprüfung: now minus stateStart. Rechnet auch richtig, wenn millis() nach etwa 49 Tagen überläuft.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 16 Zugriff -->
+    <section class="slide" data-scene="access" data-shade="left" data-kap="7" data-kapname="Wichtige Codeabschnitte" data-who="Jan" data-sec="code" data-min="0.7" data-title="Zugriff">
+      <div class="in col">
+        <h1 class="sm">Zugriff erlaubt oder verweigert</h1>
+<pre class="code" style="font-size:20px" data-hl="8,9">void accessGranted() {
+  wrongTries = 0;
+  switch (state) { /* active: disarm, else: arm */ }
+  startSound(SOUND_OK);
+}
+
+void accessDenied(const __FlashStringHelper *reason) {
+  if (state == STATE_ALARM) {
+    stateStart = millis();    // wrong entry restarts the 30 s
+    return;                   // no error tone
+  }
+  wrongTries++;
+  if (wrongTries &gt;= MAX_WRONG_TRIES) {
+    wrongTries = 0;
+    triggerAlarm(reason);
+  } else {
+    startSound(SOUND_ERROR);
+  }
+}</pre>
+        <p class="small">PIN und Karte rufen dieselben zwei Funktionen auf. Deshalb verhalten sich beide Wege garantiert gleich.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>Richtige Eingabe schaltet um: aktiv wird unscharf, unscharf startet die Ausgangsverzögerung.</li>
+        <li>Falsche Eingabe: Zähler, beim dritten Mal Alarm.</li>
+        <li>Im Alarm: keine Zählung, kein Fehlerton, Alarmzeit beginnt neu.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 17 Töne -->
+    <section class="slide" data-scene="sound" data-shade="left" data-kap="7" data-kapname="Wichtige Codeabschnitte" data-who="Jan" data-sec="code" data-min="0.6" data-title="Töne ohne Warten">
+      <div class="in col">
+        <h1>Töne ohne Warten</h1>
+<pre class="code">case SOUND_ALARM: {
+  unsigned long phase = t % 500UL;              // 500 ms
+  unsigned long step  = (phase % 250UL) / 10UL; // 0..24
+  int freq = (phase &lt; 250UL) ? (2500 + (int)step * 50)
+                             : (3700 - (int)step * 50);
+  setFreq(freq);
+  break;
+}</pre>
+        <svg class="chart" viewBox="0 0 820 210">
+          <line class="ax" x1="70" y1="180" x2="810" y2="180"/>
+          <line class="ax" x1="70" y1="20" x2="70" y2="180"/>
+          <text x="0" y="40">3700 Hz</text><text x="0" y="176">2500 Hz</text>
+          <path class="ln" d="M70 170 L 155 30 L 240 170 L 325 30 L 410 170 L 495 30 L 580 170 L 665 30 L 750 170"/>
+          <text x="660" y="204">Zeit, je 500 ms</text>
+        </svg>
+        <p class="small">Fehlerton: wechselt alle 35 ms zwischen 95 und 135 Hz, 2 s lang. OK: 1568 Hz, dann 2093 Hz. <code>setFreq()</code> ruft <code>tone()</code> nur bei neuer Frequenz auf, sonst knackt es.</p>
+        <button class="snd" data-sound="siren"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/></svg>Sirene (3 s)</button>
+        <button class="snd" data-sound="error"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/></svg>Fehlerton</button>
+      </div>
+      <aside class="notes"><ul>
+        <li>t = Zeit seit Beginn des Tons, daraus wird bei jedem Durchlauf die Frequenz berechnet.</li>
+        <li>2500 bis 3700 Hz: dort ist der Buzzer am lautesten.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 18 Keypad -->
+    <section class="slide" data-scene="keypad" data-shade="left" data-kap="7" data-kapname="Wichtige Codeabschnitte" data-who="Hugo" data-sec="code" data-min="0.7" data-title="Tastenfeld abfragen">
+      <div class="in col">
+        <h1 class="sm">Das Tastenfeld fragen wir selbst ab</h1>
+<pre class="code" style="font-size:21px" data-hl="4,7,8">char scanKeypad() {
+  char found = 0;
+  for (byte c = 0; c &lt; 4 &amp;&amp; found == 0; c++) {
+    pinMode(COL_PINS[c], OUTPUT);     // pull this column low
+    delayMicroseconds(5);             // let the line settle
+    for (byte r = 0; r &lt; 4; r++) {
+      if (digitalRead(ROW_PINS[r]) == LOW) {
+        found = pgm_read_byte(&amp;KEYS[r][c]);
+        break;
+      }
+    }
+    pinMode(COL_PINS[c], INPUT);      // back to high-Z
+  }
+  return found;
+}</pre>
+        <div class="matrix" id="matrix"></div>
+        <p class="small">Die Keypad-Library hätte rund 120 Byte SRAM gekostet. Eine Taste zählt erst nach 20 ms stabil gedrückt (entprellt).</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>Reihen mit Pull-up lesen normal HIGH, eine Spalte nach der anderen wird LOW gezogen.</li>
+        <li>Liest eine Reihe LOW, ist die Taste an dieser Kreuzung gedrückt (Beispiel: Taste 5).</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 19 Bewegung -->
+    <section class="slide" data-scene="motion" data-shade="left" data-kap="7" data-kapname="Wichtige Codeabschnitte" data-who="Hugo" data-sec="code" data-min="0.4" data-title="Bewegung erkennen">
+      <div class="in col">
+        <h1>Bewegung erkennen</h1>
+<pre class="code" data-hl="5">void handleMotion() {
+  bool motion = (digitalRead(MOTION_PIN) == HIGH);
+
+  // rising edge only
+  if (motion &amp;&amp; !lastMotion &amp;&amp; state == STATE_ARMED) {
+    triggerAlarm(F("motion detected"));
+  }
+  lastMotion = motion;
+}</pre>
+        <ul class="list tight">
+          <li>Nur der Wechsel von LOW auf HIGH zählt. Eine lange Bewegung löst einmal aus.</li>
+          <li>Nur im Zustand scharf, nicht während der Ausgangsverzögerung.</li>
+          <li>Beim Scharfschalten wird <code>lastMotion</code> auf den aktuellen Wert gesetzt.</li>
+        </ul>
+      </div>
+      <aside class="notes"><ul>
+        <li>Steigende Flanke: motion jetzt wahr, lastMotion vorher falsch.</li>
+        <li>Sieht der Sensor beim Scharfschalten noch die Person, zählt das nicht.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 20 RFID + EEPROM -->
+    <section class="slide" data-scene="rfid" data-shade="left" data-kap="7" data-kapname="Wichtige Codeabschnitte" data-who="Hugo" data-sec="code" data-min="0.7" data-title="RFID und EEPROM">
+      <div class="in col">
+        <h1 class="sm">Karten lesen und dauerhaft speichern</h1>
+<pre class="code" style="font-size:20px" data-hl="2">bool readNewCardUid() {
+  if (!rfidOk || millis() - lastRfidPoll &lt; RFID_POLL_MS) {
+    return false;                  // only every 200 ms
+  }
+  lastRfidPoll = millis();
+  if (!mfrc522.PICC_IsNewCardPresent() ||
+      !mfrc522.PICC_ReadCardSerial()) {
+    return false;
+  }
+  mfrc522.PICC_HaltA();            // send the card to sleep
+  return true;
+}</pre>
+        <table class="t">
+          <tr><th>EEPROM-Adresse</th><th>Inhalt</th></tr>
+          <tr><td>0</td><td>Kennbyte <code>0xA5</code>: schon einmal gespeichert</td></tr>
+          <tr><td>1</td><td>Anzahl der Karten, höchstens 8</td></tr>
+          <tr><td>ab 2</td><td>je 4 Byte UID pro Karte</td></tr>
+        </table>
+      </div>
+      <aside class="notes"><ul>
+        <li>Abfrage ohne Karte wartet etwa 25 ms, deshalb nur alle 200 ms.</li>
+        <li>EEPROM behält den Inhalt ohne Strom und beim Neu-Hochladen.</li>
+        <li>EEPROM.update() schreibt nur bei Änderung, schont die etwa 100 000 Schreibzyklen.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 21 Admin -->
+    <section class="slide" data-scene="admin" data-shade="left" data-kap="7" data-kapname="Wichtige Codeabschnitte" data-who="Hugo" data-sec="code" data-min="0.4" data-title="Admin-Menü">
+      <div class="in col narrow">
+        <h1>Karten verwalten ohne PC</h1>
+        <ol class="steps">
+          <li>Anlage unscharf: <kbd class="fn">A</kbd>, Admin-PIN, <kbd class="fn">#</kbd></li>
+          <li class="step shown" data-scene="admin-add"><kbd>1</kbd> Karte anlernen: einfach an den Leser halten</li>
+          <li class="step" data-scene="admin-list"><kbd>2</kbd> Liste: <kbd class="fn">#</kbd> blättern, <kbd class="fn">D</kbd> löschen</li>
+          <li class="step" data-scene="admin"><kbd class="fn">*</kbd> verlassen, nach 20 s ohne Eingabe schließt es selbst</li>
+        </ol>
+        <p class="note">Eine falsche Admin-PIN zählt als Fehlversuch. Höchstens 8 Karten, weil der Speicher knapp ist.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>Anregung der Lehrkraft: Rechtevergabe ohne PC.</li>
+        <li>Display meldet Saved, Known oder Full.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 22 Der Weg -->
+    <section class="slide" data-scene="way-0" data-shade="left" data-kap="8" data-kapname="Herausforderungen" data-who="Jan" data-sec="huerden" data-min="0.8" data-title="Der Weg">
+      <div class="in col">
+        <h1>Von September bis heute</h1>
+        <div class="tl">
+          <div class="row step shown" data-scene="way-1"><span class="d">September</span><span class="x"><b>Breadboard und Firmware.</b> Display bleibt leer, später Pixelmüll und Neustarts</span></div>
+          <div class="row step" data-scene="way-2"><span class="d">September</span><span class="x"><b>RFID kommt dazu.</b> Pin-Konflikt auf D11, Buzzer hängt an SS</span></div>
+          <div class="row step" data-scene="way-3"><span class="d">23.09.</span><span class="x"><b>Gehäuse entworfen.</b> Wohin mit dem Bewegungsmelder?</span></div>
+          <div class="row step" data-scene="way-4"><span class="d">06.10.</span><span class="x"><b>Bugfix:</b> Fehlerton beendet den Alarm</span></div>
+          <div class="row step" data-scene="way-5"><span class="d">28.10. bis 10.11.</span><span class="x"><b>Gedruckt und eingebaut.</b> Druck misslungen, Zapfen abgebrochen, Batterie passt nicht</span></div>
+          <div class="row step" data-scene="way-6"><span class="d">17.11.</span><span class="x"><b>Tests T1 bis T9 bestanden</b>, 252 Byte SRAM frei</span></div>
+        </div>
+      </div>
+      <aside class="notes"><ul>
+        <li>Überblick, wann welche Hürde kam. Rechts baut sich das Gerät in dieser Reihenfolge zusammen.</li>
+        <li>Jan erklärt danach Display, Speicher und den Alarm-Bugfix, Hugo die Hardware und das Gehäuse.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 23 SH1106 -->
+    <section class="slide" data-scene="sh-0" data-shade="left" data-kap="8" data-kapname="Herausforderungen" data-who="Jan" data-sec="huerden" data-min="0.5" data-title="Display bleibt leer">
+      <div class="in col narrow">
+        <h1>Das Display bleibt leer</h1>
+        <dl class="pcs">
+          <dt>Problem</dt><dd>Mit dem Code aus fast allen Anleitungen zeigt unser Display nichts oder nur Streifen.</dd>
+          <dt>Ursache</dt><dd>Die Anleitungen nutzen den Controller SSD1306. Unser 1,3-Zoll-Display hat einen SH1106. Beide sehen gleich aus.</dd>
+          <dt class="step" data-scene="sh-1">Lösung</dt><dd class="step" data-scene="sh-1">Library Adafruit SH110X mit der Klasse <code>Adafruit_SH1106G</code>, Adresse <code>0x3C</code>.</dd>
+        </dl>
+      </div>
+      <aside class="notes"><ul>
+        <li>Hier erzählen, wie wir den SH1106 erkannt haben (Kapitel 8.1 der Doku).</li>
+        <li>Seitdem steht der Controller in CLAUDE.md, damit kein Code mehr für den SSD1306 entsteht.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 24 SRAM -->
+    <section class="slide" data-scene="ram-0" data-shade="left" data-kap="8" data-kapname="Herausforderungen" data-who="Jan" data-sec="huerden" data-min="0.8" data-title="Arbeitsspeicher">
+      <div class="in col">
+        <h1>2048 Byte Arbeitsspeicher</h1>
+        <p>Erst Pixelmüll auf dem Display, dann Neustarts und eine richtige PIN, die plötzlich falsch war. Der serielle Monitor zeigte <code>free SRAM: 205</code>.</p>
+        <div class="ram">
+          <div class="bar" id="rambar"><div class="fb" style="flex-grow:1024">Display-Puffer 1024</div><div class="used" style="flex-grow:819">Variablen, Libraries, Stack</div><div class="free bad" style="flex-grow:205">205</div></div>
+          <div class="scale"><span>0</span><span>2048 Byte</span></div>
+        </div>
+        <ul class="list tight step" data-scene="ram-1" data-ram="252">
+          <li>Alle Texte mit <code>F()</code> im Flash, Tabellen mit <code>PROGMEM</code></li>
+          <li>Kein <code>snprintf</code>, keine Textpuffer</li>
+          <li>Keypad-Library raus, Matrix selbst abfragen (rund 120 Byte)</li>
+          <li>Fertiges Gerät mit RFID und Admin-Menü: <b>252 Byte frei</b>, stabil</li>
+        </ul>
+      </div>
+      <aside class="notes"><ul>
+        <li>Display-Puffer belegt allein die Hälfte des SRAM.</li>
+        <li>Wird es knapp, wächst der Stack in den Puffer: Pixelmüll, Neustarts.</li>
+        <li>Seitdem gibt die Firmware beim Start den freien Speicher aus.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 25 Alarm-Bugfix -->
+    <section class="slide" data-scene="bug-0" data-shade="left" data-kap="8" data-kapname="Herausforderungen" data-who="Jan" data-sec="huerden" data-min="0.5" data-title="Falsche Eingabe im Alarm">
+      <div class="in col narrow">
+        <h1>Eine falsche PIN beendete den Alarm</h1>
+        <dl class="pcs">
+          <dt>Problem</dt><dd>Falsche PIN im Alarm: kurz der Fehlerton, danach war die Sirene aus.</dd>
+          <dt>Ursache</dt><dd>Es läuft immer nur ein Ton. Der Fehlerton hat die Sirene ersetzt.</dd>
+          <dt>Lösung</dt><dd>Im Alarm kein Fehlerton mehr, die Sirene läuft weiter.</dd>
+          <dt class="step" data-scene="bug-1">Danach</dt><dd class="step" data-scene="bug-1">Beim Test am fertigen Gerät fiel auf: Im Alarm konnte man in Ruhe Codes durchprobieren. Jetzt startet jede falsche Eingabe die 30 Sekunden neu.</dd>
+        </dl>
+      </div>
+      <aside class="notes"><ul>
+        <li>Im Modell: Restzeit springt nach der falschen Eingabe zurück auf 30.</li>
+        <li>Nur eine Zeile, stateStart = millis(), kein zusätzlicher Speicher.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 26 Pin-Konflikt -->
+    <section class="slide" data-scene="pin-0" data-shade="left" data-kap="8" data-kapname="Herausforderungen" data-who="Hugo" data-sec="huerden" data-min="0.6" data-title="Zwei Bauteile, ein Pin">
+      <div class="in col narrow">
+        <h1>Zwei Bauteile, ein Pin</h1>
+        <dl class="pcs">
+          <dt>Problem</dt><dd>Der Bewegungsmelder hing an D11. Der RFID-Leser braucht D11 als MOSI.</dd>
+          <dt class="step" data-scene="pin-1">Lösung</dt><dd class="step" data-scene="pin-1">Bewegungsmelder auf A2. Analoge Pins funktionieren auch als Digitalpins.</dd>
+          <dt class="step" data-scene="pin-2">Dazu</dt><dd class="step" data-scene="pin-2"><code>SPI.begin()</code> schaltet D10 auf HIGH, weil D10 der SS-Pin ist. Dort hängt der Buzzer. Deshalb setzen wir den Buzzer-Pin erst danach auf LOW.</dd>
+        </dl>
+      </div>
+      <aside class="notes"><ul>
+        <li>SPI liegt beim Uno fest auf D11, D12, D13.</li>
+        <li>Reihenfolge in setup(): erst SPI.begin(), dann pinMode und digitalWrite für den Buzzer.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 27 RC522 -->
+    <section class="slide" data-scene="rc-0" data-shade="left" data-kap="8" data-kapname="Herausforderungen" data-who="Hugo" data-sec="huerden" data-min="0.5" data-title="Der RFID-Leser">
+      <div class="in col narrow">
+        <h1>Der RFID-Leser</h1>
+        <dl class="pcs">
+          <dt>3,3 V</dt><dd>Der RC522 ist für 3,3 V gebaut, 5 V zerstören ihn. Der 3,3-V-Pin liefert 50 mA, der Leser braucht 13 bis 26 mA.</dd>
+          <dt class="step" data-scene="rc-1">Hängt</dt><dd class="step" data-scene="rc-1">Günstige Nachbauten antworten manchmal nicht mehr. Auf Anregung der Lehrkraft startet Taste <kbd class="fn">B</kbd> nur den Leser neu und prüft danach die Version.</dd>
+        </dl>
+        <p class="note">Unser Nachbau meldet <code>0xB2</code> statt <code>0x91</code> oder <code>0x92</code>. Die Firmware wertet nur <code>0x00</code> und <code>0xFF</code> als Fehler.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>Datenleitungen kommen mit 5 V vom Uno: laut Datenblatt außerhalb der Spezifikation, funktioniert aber.</li>
+        <li>Test T8: Leser kurz abgezogen, mit B wieder da.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 28 Keil -->
+    <section class="slide" data-scene="wedge-0" data-shade="left" data-kap="8" data-kapname="Herausforderungen" data-who="Hugo" data-sec="huerden" data-min="0.6" data-title="Wohin mit dem Bewegungsmelder">
+      <div class="in col narrow">
+        <h1>Wohin mit dem Bewegungsmelder?</h1>
+        <p>Im Bedienteil hätte er die Person gesehen, die gerade die PIN eintippt. Flach an der Wand im Raum schaut er geradeaus und erfasst die Tür nur am Rand.</p>
+        <svg class="plan" viewBox="0 0 820 370" data-angle="0" aria-label="Draufsicht: Bedienteil außen, Sensorteil innen auf einem Keil zur Tür gedreht, Erfassungsbereich deckt den Eingang ab">
+          <defs><clipPath id="room-b"><rect x="0" y="141" width="820" height="229"/></clipPath></defs>
+          <text class="pl-zone" x="0" y="30">Flur, außen</text>
+          <text class="pl-zone" x="0" y="362">Raum, innen</text>
+          <g clip-path="url(#room-b)"><g class="pl-rot"><path class="pl-fan" d="M255 166 L-318 567 A700 700 0 0 0 828 567 Z"/></g></g>
+          <rect class="pl-wall" x="0" y="111" width="520" height="30"/>
+          <rect class="pl-wall" x="700" y="111" width="120" height="30"/>
+          <path class="pl-swing" d="M520 141 A180 180 0 0 0 638 310"/>
+          <line class="pl-door" x1="700" y1="141" x2="638" y2="310"/>
+          <text class="pl-lab" x="612" y="96" text-anchor="middle">Tür</text>
+          <path class="pl-cable" d="M365 111 L365 126 L210 126 L210 141"/>
+          <rect class="pl-unit" x="330" y="93" width="70" height="18" rx="2"/>
+          <text class="pl-lab" x="365" y="80" text-anchor="middle">Bedienteil</text>
+          <polygon class="pl-wedge" points="285,141 225,141 225,141"/>
+          <g class="pl-rot"><rect class="pl-unit" x="225" y="141" width="60" height="22" rx="2"/><circle class="pl-lens" cx="255" cy="166" r="7"/></g>
+          <text class="pl-lab" x="215" y="200" text-anchor="end">Sensorteil</text>
+          <text class="pl-ang" x="215" y="226" text-anchor="end">0°</text>
+        </svg>
+        <p class="small step" data-scene="wedge-1" data-angle="30">Erster Keil mit 30°: besser, aber noch nicht sicher.</p>
+        <p class="small step" data-scene="wedge-2" data-angle="60">Mit 60° reicht der Erfassungsbereich bis an die Wand und deckt den ganzen Eingang ab.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>Keil dreht den Sensor zur Tür, die Wand bleibt dazwischen.</li>
+        <li>Zwei Versionen gedruckt: 30°, dann 60°.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 29 Druck -->
+    <section class="slide" data-scene="print" data-shade="wide" data-kap="8" data-kapname="Herausforderungen" data-who="Hugo" data-sec="huerden" data-min="0.6" data-title="Druck und Einbau">
+      <div class="in wide">
+        <h1>Druck und Einbau</h1>
+        <div style="display:grid;grid-template-columns:360px 360px 560px;gap:34px;align-items:start">
+          <figure class="ph"><img src="../../Fotos/druck_misslungen.jpg" alt="Misslungener Druck mit Filamentsalat" style="height:470px"><figcaption>Frontplatte und Sensorteil im Filamentsalat, Ursache unbekannt</figcaption></figure>
+          <figure class="ph"><img src="../../Fotos/sensorteil_offen.jpg" alt="Sensorteil offen mit dem neuen Deckel" style="height:470px"><figcaption>Neuer Deckel mit verstärkten Zapfen</figcaption></figure>
+          <ul class="list tight">
+            <li><b>Zapfen brachen ab:</b> 1,2 mm Wand, die Schraube lief auf Grund. Jetzt ein 8 mm breiter Steg und ein 4,8 mm tiefes Loch.</li>
+            <li><b>Batterie passte nicht:</b> Am Hohlstecker hätte sie außen gehangen. Jetzt innen an VIN.</li>
+            <li><b>Drucker:</b> Am Snapmaker der Schule funktioniert nur eine Düse, ein Druck musste wiederholt werden.</li>
+          </ul>
+        </div>
+      </div>
+      <aside class="notes"><ul>
+        <li>Was beim echten Bauen schiefging, und wie wir es gelöst haben.</li>
+        <li>Hier eigene Erfahrungen ergänzen (Kapitel 8.6 der Doku).</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 30 Fazit -->
+    <section class="slide" data-scene="final" data-shade="left" data-kap="9" data-kapname="Fazit und Ausblick" data-who="Hugo" data-sec="fazit" data-min="0.6" data-title="Fazit">
+      <div class="in col">
+        <h1>Was am Ende steht</h1>
+        <table class="t">
+          <tr><th>Ziel</th><th class="c">Ergebnis</th></tr>
+          <tr><td>7 Muss-Anforderungen</td><td class="ok">alle</td></tr>
+          <tr><td>6 Kann-Anforderungen</td><td class="ok">alle</td></tr>
+          <tr><td>Tests T1 bis T9 am fertigen Gerät</td><td class="ok">bestanden</td></tr>
+          <tr><td>Gehäuse gedruckt und eingebaut</td><td class="ok">ja</td></tr>
+          <tr><td>Montage auf einer Holzplatte</td><td class="c">entfallen</td></tr>
+          <tr><td>Laufzeit mit Batterie</td><td class="c">nur geschätzt</td></tr>
+        </table>
+      </div>
+      <aside class="notes"><ul>
+        <li>Soll und Ist ehrlich gegenüberstellen.</li>
+        <li>Hier unser eigenes Fazit in zwei, drei Sätzen (Kapitel 9 der Doku).</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 31 Gelernt + Ausblick -->
+    <section class="slide" data-scene="outlook" data-shade="wide" data-kap="9" data-kapname="Fazit und Ausblick" data-who="Hugo" data-sec="fazit" data-min="0.7" data-title="Gelernt und Ausblick">
+      <div class="in wide">
+        <div class="grid2" style="width:1460px">
+          <div>
+            <h1>Was wir gelernt haben</h1>
+            <ul class="list tight">
+              <li>Erst das Datenblatt, dann der Code</li>
+              <li>2 KB SRAM sind schnell voll, jedes Byte zählt</li>
+              <li>Nie blockieren: <code>millis()</code> statt <code>delay()</code></li>
+              <li>Feste Pins für I²C und SPI früh einplanen</li>
+              <li>Dünne Druckteile halten wenig aus</li>
+            </ul>
+          </div>
+          <div>
+            <h1>Was noch ginge</h1>
+            <ul class="list tight">
+              <li>Benachrichtigung aufs Handy, zum Beispiel mit einem ESP32 und WLAN</li>
+              <li>Protokoll, wer wann welche Karte benutzt hat</li>
+              <li>Netzteil oder Akku für Dauerbetrieb</li>
+              <li>Sabotagekontakt am Gehäuse</li>
+            </ul>
+            <p class="note">Der Uno ist voll: nur noch A3 frei und 252 Byte SRAM. Für mehr bräuchte es einen größeren Controller.</p>
+          </div>
+        </div>
+      </div>
+      <aside class="notes"><ul>
+        <li>Erweiterungen auswählen, die wir selbst gut finden (Kapitel 9.4).</li>
+        <li>Reflexion in eigenen Worten.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 32 KI -->
+    <section class="slide" data-scene="ai" data-shade="left" data-kap="9" data-kapname="Fazit und Ausblick" data-who="Hugo" data-sec="fazit" data-min="0.6" data-title="KI-Einsatz">
+      <div class="in col">
+        <h1>Wie wir KI genutzt haben</h1>
+        <table class="t">
+          <tr><th>Wir</th><th>Claude Code</th></tr>
+          <tr><td>Idee und Anforderungen</td><td>Firmware nach unseren Anforderungen</td></tr>
+          <tr><td>Aufgebaut, verdrahtet, getestet</td><td>Fehlersuche aus unseren Logs</td></tr>
+          <tr><td>Jede Version kompiliert und geprüft</td><td>Gehäuse in OpenSCAD, 3D-Modell</td></tr>
+          <tr><td>Entscheidungen getroffen</td><td>Grafiken und Protokoll</td></tr>
+        </table>
+        <p class="note">Die KI hatte keinen Zugriff auf die Hardware. Geprüfte Fakten wie Pins und Display-Controller stehen in <code>CLAUDE.md</code>, die sie bei jedem Schritt liest. Prompts stehen nicht in der Doku.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>KI als Hilfsmittel, wie in der Vorgabe erlaubt.</li>
+        <li>Wir können jeden Codeabschnitt selbst erklären, gerne nachfragen.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 33 Demo -->
+    <section class="slide" data-scene="demo" data-shade="left" data-kap="" data-kapname="Live-Demo" data-who="Jan und Hugo" data-sec="demo" data-min="2.5" data-title="Live-Demo">
+      <div class="in col narrow">
+        <h1>Live-Demo</h1>
+        <ol class="steps">
+          <li>Unscharf: Herz</li>
+          <li>Karte auflegen: 10 s, dann Totenkopf</li>
+          <li>Hand vor den Bewegungsmelder: Alarm</li>
+          <li>Falsche PIN: Sirene läuft weiter, Restzeit wieder 30 s</li>
+          <li>Richtige PIN und <kbd class="fn">#</kbd>: Herz</li>
+          <li>Wenn Zeit ist: neue Karte anlernen</li>
+        </ol>
+        <p class="note">Jan bedient, Hugo erklärt.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>Plan B: Videos auf dem Handy, danach das 3D-Modell im Browser.</li>
+        <li>Gerät läuft über USB am Notebook oder an der Powerbank.</li>
+      </ul></aside>
+    </section>
+
+    <!-- ===================================================== 34 Fragen -->
+    <section class="slide" data-scene="end" data-shade="left" data-kap="10" data-kapname="Quellen" data-who="Jan und Hugo" data-sec="demo" data-min="0.3" data-title="Fragen">
+      <div class="in col">
+        <h1 class="xl" style="font-size:120px">Fragen?</h1>
+        <div class="qr"><img src="img/qr-repo.svg" alt="QR-Code zum Repository"><div><b>Repository mit Code, Doku und Wiki</b><span>github.com/BBZ-AIFS51/LF7-Projekt_GAS</span></div></div>
+        <div class="qr"><img src="img/qr-3d.svg" alt="QR-Code zum 3D-Modell"><div><b>3D-Modell zum Ausprobieren</b><span>bbz-aifs51.github.io/LF7-Projekt_GAS</span></div></div>
+        <p class="note">Datenblätter, Bibliotheken und Werkzeuge stehen in Kapitel 10 der Dokumentation.</p>
+      </div>
+      <aside class="notes"><ul>
+        <li>Danke fürs Zuhören.</li>
+        <li>Typische Fragen: Warum keine Keypad-Library? Warum A2? Warum 3,3 V? Wo liegen die Karten? Was hat die KI gemacht?</li>
+      </ul></aside>
+    </section>
+
+  </main>
+
+  <header id="chrome"><div id="kap"><b></b><span></span></div><div id="who"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span></span></div></header>
+  <footer id="progress"></footer>
+  <div id="notes"><div class="txt"></div><div class="side"><div class="clock">00:00</div><div class="goal"></div><div class="next"></div></div></div>
+  <div id="overview"></div>
+  <div id="help">
+    <div><kbd>→</kbd> <kbd>Leertaste</kbd> weiter, <kbd>←</kbd> zurück</div>
+    <div><kbd>F</kbd> Vollbild, <kbd>N</kbd> Notizen und Stoppuhr</div>
+    <div><kbd>O</kbd> Übersicht, <kbd>B</kbd> schwarz, <kbd>M</kbd> Animationen aus</div>
+    <div><kbd>T</kbd> Stoppuhr zurücksetzen, <kbd>H</kbd> diese Hilfe</div>
+  </div>
+</div>
+
+<script src="../../docs/viewer/three.min.js"></script>
+<script src="../../docs/viewer/enclosure.js"></script>
+<script src="oled.js"></script>
+<script src="scene.js"></script>
+<script src="scenes.js"></script>
+<script src="deck.js"></script>
+</body>
+</html>

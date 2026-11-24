@@ -1,2 +1,4 @@
 # three.js is a vendored library, keep it out of the language stats
 docs/viewer/three.min.js linguist-vendored
+# the presentation is built from praesentation/src (three.js and pictures inlined)
+praesentation/Praesentation_GAS.html linguist-generated

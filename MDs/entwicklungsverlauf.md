@@ -6,7 +6,7 @@ Chronologisches Protokoll: Prompts (Jan Mummert) und Antworten (Claude).
 - Projekt: LF07 — Mini-Sicherheitssystem / Access Lock (Arduino Uno R3)
 - Daten der Sitzungen: 08.09.2026, 22.09.2026, 23.09.2026 (inkl. Gehäuse),
   29.09.2026, 30.09.2026, 06.10.2026, 28.10.2026, 03.11.2026,
-  10.11.2026
+  10.11.2026, 17.11.2026, 24.11.2026
 - Grundlagen im Kontext: [../CLAUDE.md](../CLAUDE.md), [aufbau.md](aufbau.md)
 
 ---
@@ -1429,6 +1429,81 @@ GitHub-Wiki zu sehen.
 
 - Team füllt die gelben Stellen aus und schreibt die Reflexion selbst.
 - Präsentation als HTML (Phase 4), Abgabe laut Plan heute.
+
+## 32. Prompt — Präsentation als HTML mit 3D-Modell (24.11.2026)
+
+> Stand Projekt GAS (24.11.2026), Kontext aus der letzten Sitzung. Alles Weitere steht im Repo (CLAUDE.md, MDs/abschlussplan.md, MDs/vorgaben.md, wiki/).
+>
+> Branch: Arbeite auf claude/trusting-knuth-awmzj8. Dort liegt der neueste Stand (Schritte 30 und 31), main ist noch nicht aktualisiert.
+>
+> Erledigt seit dem letzten Stand:
+> - Schritt 30: Die Montage auf der Holzplatte und die Batterie sind gestrichen, das Gerät läuft auch lose. Die Laufzeit ist nur geschätzt (3 bis 5 h, nicht gemessen). Vorgeführt wird über USB (Notebook oder Powerbank). Ein eigenes Demo-Video gibt es nicht, als Plan B dienen Videos auf meinem Handy. Statt geraet_brett.jpg nehmen wir Fotos/geraet_vorne.jpg.
+> - Schritt 31: Die Projektdokumentation ist als Word-Dokument angelegt (hänge ich an). Sie hat 14 Seiten, Kapitel 1 bis 10 in der Reihenfolge der Vorgabe, keinen Anhang und ist im Stil „technisch“ gehalten: Calibri, Dunkelblau #0B3D6E und Blau #0969DA als Akzent. Die Texte sind ohne Gedankenstriche und ohne KI-Floskeln geschrieben (Humanizer). Die Word-Datei liegt nur bei uns und kommt NICHT ins Repo. Die gelb markierten Platzhalter darin füllen wir selbst aus, die bitte ignorieren.
+> - Die Vorgaben der Lehrkraft liegen jetzt in MDs/vorgaben.md. Wichtig: Die Präsentation muss mindestens 10 Minuten pro Person dauern, also mindestens 20 Minuten. Der Ablaufvorschlag in Phase 4 des Abschlussplans ist schon auf ca. 22 Minuten angepasst.
+>
+> Jetzt dran: Phase 4, Präsentation neu bauen. Laut Plan ist heute Abgabe.
+> - Eine einzelne HTML-Datei, offline lauffähig (alles eingebettet), Quelle in praesentation/. Danach die README-Tabelle „Project structure“ ergänzen.
+> - Inhalte und Reihenfolge aus der angehängten Doku, passend zu ihrem Stil (gleiche Farben, keine Gedankenstriche, Humanizer). Präsentiert wird auf meinem Notebook, Motion Graphics und 3D sind erlaubt, jede Folie muss aber auch ohne Animation verständlich sein.
+> - Person A ist Jan, Person B ist Hugo.
+> - Wie immer: Eintrag in MDs/entwicklungsverlauf.md plus Wiki-Karte.
+>
+> /next lass und die präsentation bauen. Gerne kannst du sachen wir den frontend skill von anthropic installieren oder vercel oder was auch immer hierfür passend ist.
+>
+> Wir stellen uns die Präsentation Folgendermaßen vor: Das 3D Modell vom Gerät ist immer irgendwo im Bild (oder baut sich im Laufe der Präsentation immer weiter zusammen bis zu den folien wo es dann um das fertige produkt geht). Die Präsentation soll in html sein, das kannst du am besten. Es soll eine Motion Graphic Präsentation sein, aber trotzdem dezent.
+> Wir könnten Quasi einmal das gesamte Projekt von beginn bis ende mit allen hürden auf dem Weg durchgehen.
+>
+> Du sollst auch noch ausgearbeitete 3D-Modelle generieren, welche dann für die Präsi verwendet werden, sie sollen wirklich gut aussehen und realistisch. Ich stell mir das ganze auf einem Schwarzen hintergrund vor.  Installiere dafür im Projekt auch den apple design skill (aber nur wenn er hier sinnvoll ist). https://github.com/dickwu/apple-design-skill.
+
+(Dazu ein Bildschirmfoto der Vorgaben zum KI-Einsatz und zur Präsentation.)
+
+### Antwort
+
+- **Skills:** Den Gestaltungs-Skill `frontend-design` von Anthropic in
+  `.claude/skills/` installiert und danach gearbeitet (Schrift und Farben der
+  Doku, sparsame Bewegung, keine Schablonen-Elemente). Den Apple-Design-Skill
+  nicht installiert: Er prüft App-Oberflächen gegen Apples Human Interface
+  Guidelines (iOS, macOS), für eine Folienpräsentation bringt er nichts. Ein
+  Skill von Vercel war nicht nötig.
+- **Datei:** [`praesentation/Praesentation_GAS.html`](../praesentation/Praesentation_GAS.html),
+  eine Datei mit allem eingebettet (Schriften, Fotos, three.js, Gehäusedaten),
+  läuft offline per Doppelklick, rund 2,8 MB. Quelle in `praesentation/src/`,
+  gebaut mit `node praesentation/build.mjs`. Bedienung in
+  [`praesentation/README.md`](../praesentation/README.md).
+- **Inhalt:** 34 Folien in der Reihenfolge der Vorgabe und der Doku (Kapitel 1
+  bis 10, Kapitelnummer oben links), Sprecher oben rechts: Jan Idee und
+  Funktion, Code I und die Firmware-Herausforderungen, Hugo Bauteile, Aufbau,
+  Code II, die Hardware-Herausforderungen und das Fazit, die Demo beide.
+  Zielzeiten in den Notizen ergeben etwa 23 Minuten, je etwa 10 pro Person
+  plus Demo. Die Herausforderungen
+  beginnen mit einer Zeitleiste von September bis heute, dazu baut sich das
+  Gerät in der echten Reihenfolge auf. Code-Ausschnitte sind wörtlich aus
+  `alarm_system.ino`, nur ohne Testausgaben. Das Word-Dokument kam nicht mit
+  an, die Texte stammen deshalb aus dem Wiki, aus dem die Doku entstanden ist.
+- **3D-Modell:** neu und detailliert gebaut (three.js): Uno mit Leiterbahnen,
+  DIP-Chip, Quarz, USB-Buchse und Stiftleisten, Keypad mit blauen und roten
+  Tasten wie am echten Gerät, OLED mit Glas und den Symbolen aus der Firmware,
+  RC522 mit Antenne, HC-SR501 mit Fresnel-Linse, Buzzer, orangenes
+  Mini-Breadboard, 9-V-Block, Jumper-Kabel. Das Gehäuse kommt aus den echten
+  STL-Dateien, in schwarzem PLA mit feinen Druckschichten. Es ist auf jeder
+  Folie zu sehen: fertiges Gerät, an der Wand, als Explosionsansicht, Teil für
+  Teil, mit wachsenden Kabeln pro Bus, aufgeklappt wie auf dem Foto, durchsichtig
+  mit laufenden Signalen, und das Display zeigt immer den passenden Zustand.
+- **Wand und Keil:** Draufsicht wie im Montageplan als Skizze auf den Folien 5
+  und 28, beim Keil dreht sie sich von flach über 30° auf 60°.
+- **Ohne Animation verständlich:** Jede Folie steht auch mit
+  <kbd>M</kbd> (Animationen aus) vollständig da. Töne auf zwei Folien mit den
+  Frequenzen aus der Firmware.
+- Geprüft mit Playwright: alle Folien und Schritte als Screenshot, keine
+  Fehler in der Konsole, Bedienung mit Tastatur.
+- README (Project structure), Abschlussplan (Phase 4, Person A = Jan, B =
+  Hugo), CLAUDE.md, Wiki (Entwicklungsverlauf, Startseite) nachgezogen.
+
+**Offene Punkte:**
+
+- Folien gegen das Word-Dokument prüfen, eigene Stellen füllen (SH1106
+  erkannt, Erfahrungen beim Bau, Fazit, Erweiterungen), Notizen in eigenen
+  Worten.
+- Auf Jans Notebook am Beamer testen, HTML-Datei abgeben.
 
 ---
 

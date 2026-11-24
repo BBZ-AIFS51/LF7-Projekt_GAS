@@ -266,8 +266,8 @@ und 3D-Modell nicht mehr überein.
       angepasst. Kein Verweis aufs Doku-PDF, das bekommt die Lehrkraft direkt.
       Die Tabelle „Project structure“ dient als Wegweiser.
 - [x] **(Claude)** Wiki aufs Projekt-Wiki gekürzt (siehe Abgabeform)
-- [ ] **(Claude)** README: `praesentation/` in die Tabelle „Project structure“
-      aufnehmen, sobald es den Ordner gibt (Phase 4)
+- [x] **(Claude)** README: `praesentation/` in die Tabelle „Project structure“
+      aufgenommen (24.11.2026, Schritt 32)
 
 ## Phase 3 · Doku inhaltlich fertig (bis So 22.11.)
 
@@ -354,7 +354,9 @@ noch dazukommen, werden zuletzt eingesetzt.
 
 ### Vorschlag für den Ablauf (≈ 22 min + Fragen)
 
-Die Aufteilung ist nur ein Vorschlag, entscheidet selbst, wer was übernimmt.
+Person A ist **Jan**, Person B ist **Hugo** (festgelegt am 24.11.2026). So ist
+es auch in der Präsentation umgesetzt, oben rechts auf jeder Folie steht, wer
+spricht.
 
 | # | Teil | Inhalt | Doku | Min | Wer |
 |---|---|---|---|---:|---|
@@ -386,13 +388,29 @@ dieselbe Logik.
 
 ### Aufgaben
 
-- [ ] **(Team)** Aufteilung festlegen (wer ist Person A, wer Person B)
-- [ ] **(Claude)** Präsentation nach dem Ablauf oben als HTML bauen, Inhalte
-      aus der Doku, Steuerung mit Pfeiltasten, Vollbild
+- [x] **(Team)** Aufteilung festlegen → Person A = Jan, Person B = Hugo
+- [x] **(Claude)** Präsentation nach dem Ablauf oben als HTML gebaut
+      (24.11.2026, Schritt 32): [`praesentation/Praesentation_GAS.html`](../praesentation/Praesentation_GAS.html),
+      34 Folien, Zielzeiten in den Notizen zusammen etwa 23 Minuten (Jan 10,
+      Hugo gut 10, Demo 2,5). Inhalte aus dem Wiki (die
+      Word-Datei kam nicht mit an), Kapitelnummer oben links, Sprecher oben
+      rechts. 3D-Modell des Geräts auf jeder Folie, baut sich bei den
+      Bauteilen auf und schließt sich beim Gehäuse. Steuerung mit Pfeiltasten
+      oder Presenter, <kbd>F</kbd> Vollbild, <kbd>N</kbd> Notizen mit
+      Stoppuhr, <kbd>O</kbd> Übersicht, <kbd>M</kbd> Animationen aus.
+      Bedienung: [`praesentation/README.md`](../praesentation/README.md)
+- [ ] **(Team)** Folien gegen das Word-Dokument prüfen: Stimmen Reihenfolge,
+      Zahlen und Begriffe? Wo die Doku etwas anders sagt, Folie anpassen
+      (Texte in `praesentation/src/index.html`, danach
+      `node praesentation/build.mjs`) oder Claude Bescheid geben
 - [ ] **(Team)** Folien durchgehen, in eigenen Worten Stichpunkte für die
       Sprechernotizen schreiben
 - [ ] **(Team)** Präsentation auf Jans Notebook **am Beamer im Raum**
       testen: Anschluss (HDMI/Adapter), Auflösung, Vollbild, läuft sie offline
+- [ ] **(Team)** Eigene Stellen auf den Folien füllen: Wie ihr den SH1106
+      erkannt habt (Folie 23), eigene Erfahrungen beim Bauen (Folie 29), euer
+      Fazit (Folie 30) und die Auswahl der Erweiterungen (Folie 31). In den
+      Notizen (<kbd>N</kbd>) ist jeweils markiert, wo das hingehört
 - [ ] **(Team)** HTML-Datei abgeben, **Abgabe bis Di 24.11.**
 
 ## Phase 5 · Proben und Vortrag (25.11. – ab 01.12.)
