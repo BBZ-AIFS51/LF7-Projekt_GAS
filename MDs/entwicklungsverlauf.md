@@ -1361,6 +1361,36 @@ GitHub-Wiki zu sehen.
 
 - Endstand mit den eigenen PINs (lokal) hochladen, danach Tag `v1.0`.
 - Laufzeit mit Batterie (T10), Montage auf der Holzplatte.
+
+## 30. Prompt — Holzplatte, Batterie und Video gestrichen (24.11.2026)
+
+> wir haben leider immernoch keine platte und keine 9v batterie. Das ignorieren wir einf mal, den es funktioniert trzdm alles. Schreib wegen der Batterie einf die geschätze laufdauer rein. Das Video vom gesamten ablauf ist auch egal, ich hab aber welche aufm handy zur not, hak den punkt auch einf ab.
+>
+> Was ist dann als nächstes dran?
+
+### Antwort
+
+- **Holzplatte:** Montage gestrichen, die Holzlatten sind nicht gekommen und
+  das Gerät funktioniert auch lose. Im Abschlussplan abgehakt (entfällt), im
+  Wiki (Projektphasen) als gestrichen vermerkt, `geraet_brett.jpg` in der
+  Fotoliste entfällt, `geraet_vorne.jpg` ersetzt es auf dem Deckblatt.
+- **Batterie / T10:** nicht gemessen. Eingetragen ist die Schätzung
+  **3–5 h** (~100 mA aus 400–500 mAh) im Abschlussplan (T10), im Wiki
+  (Aufbau und Schaltplan, Projektphasen) und in der Anleitung, jeweils als
+  „geschätzt“ gekennzeichnet. Getestet und vorgeführt wird über USB, die
+  Packliste sagt jetzt USB-Kabel und Notebook/Powerbank statt Batterie.
+- **Video:** abgehakt, Videos vom Gerät liegen auf dem Handy und dienen als
+  Plan B für die Demo.
+- **Was als Nächstes dran ist:** laut Plan ist heute (24.11.) die Abgabe
+  der Präsentation, und `praesentation/` gibt es noch nicht. Auch die
+  Startfassung des Word-Dokuments (Phase 3) fehlt noch.
+
+**Offene Punkte:**
+
+- Präsentation als HTML bauen (Phase 4), Abgabe heute.
+- Endstand mit eigenen PINs hochladen, Tag `v1.0`.
+- Word-Dokument (Phase 3).
+
 ---
 
 ## Anhang — Stand der Dateien

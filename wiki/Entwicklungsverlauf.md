@@ -12,7 +12,7 @@ dabei herauskam.
 > [MDs/entwicklungsverlauf.md](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md).
 > Unter jeder Karte führt ein Link direkt zum passenden Eintrag.
 
-| **29** | **10** | **4** | **2** |
+| **30** | **11** | **4** | **2** |
 |:---:|:---:|:---:|:---:|
 | Arbeitsschritte | Sitzungen | Fehler gefunden und behoben | Anregungen der Lehrkraft umgesetzt |
 
@@ -57,6 +57,7 @@ timeline
                : S27 Tests bestanden
                : S28 Alarm verlängern
                : S29 Beispiel-PINs im Code
+        24.11. : S30 Platte und Batterie gestrichen
 ```
 
 ### Wie die Schritte aufeinander aufbauen
@@ -96,6 +97,7 @@ flowchart LR
     P27["📝 S27<br/>Tests"]
     P28["💻 S28<br/>Alarm verlängern"]
     P29["📝 S29<br/>Beispiel-PINs"]
+    P30["📝 S30<br/>ohne Platte"]
 
     P1 -- "Test am Gerät" --> P2 -- "zu wenig SRAM" --> P4
     P1 -. "Lehrkraft" .-> P5 --> P6
@@ -115,6 +117,7 @@ flowchart LR
     P23 --> P24 --> P25 --> P26 --> P27
     P16 --> P28
     P27 -- "Test am Gerät" --> P28 --> P29
+    P27 --> P30
 
     classDef fw fill:#d0e7ff,stroke:#0969da,color:#0a3069
     classDef bug fill:#ffd8d3,stroke:#cf222e,color:#82071e
@@ -127,7 +130,7 @@ flowchart LR
     class P5 info
     class P8,P9,P13,P14,P15 vis
     class P10,P11,P12,P20 box
-    class P3,P17,P18,P19,P22,P23,P24,P25,P26,P27,P29 doc
+    class P3,P17,P18,P19,P22,P23,P24,P25,P26,P27,P29,P30 doc
 ```
 
 <sub>Durchgezogene Pfeile: Ergebnis führt direkt zum nächsten Schritt · gestrichelt: Anregung der Lehrkraft</sub>
@@ -145,7 +148,7 @@ flowchart LR
 | 💡 | Erklärung / Wissen | 5 |
 | 🎨 | Darstellung (README, 3D-Modell, Grafiken) | 8, 9, 13, 14, 15 |
 | 📦 | Gehäuse | 10, 11, 12, 20 |
-| 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24, 25, 26, 27, 29 |
+| 📝 | Dokumentation | 3, 17, 18, 19, 22, 23, 24, 25, 26, 27, 29, 30 |
 
 </td>
 <td width="45%">
@@ -157,7 +160,7 @@ pie
     "Erklärung" : 1
     "Darstellung" : 5
     "Gehäuse" : 4
-    "Dokumentation" : 11
+    "Dokumentation" : 12
 ```
 
 </td>
@@ -592,6 +595,19 @@ Bewusst nur erklärt, nicht umgesetzt. Die Umsetzung folgte in Schritt 6.
 - Der Stand mit Schritt 28 und 29 ist auf `main` übernommen
 
 <sub>📄 [`alarm_system.ino`](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/Code/alarm_system/alarm_system.ino) · 🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#29-prompt--beispielwerte-statt-echter-pins-alles-auf-main-17112026)</sub>
+
+## 📆 24.11.2026 · Ohne Platte und Batterie
+
+### 📝 Schritt 30 — Holzplatte und Batterie gestrichen
+
+**Anlass:** Bis kurz vor der Präsentation sind weder die Holzlatten für die Montage noch eine 9-V-Batterie gekommen. Das Gerät funktioniert aber vollständig.
+
+**Ergebnis**
+- Die Montage auf der Holzplatte ist gestrichen. Für Deckblatt und Präsentation nehmen wir das Foto vom Bedienteil von vorne
+- Die Laufzeit mit Batterie ist nicht gemessen, sondern **geschätzt: 3–5 Stunden** (etwa 100 mA aus einem 9-V-Block mit 400–500 mAh). Getestet und vorgeführt wird über USB
+- Statt eines eigenen Demo-Videos gibt es Videos vom Gerät auf dem Handy, falls die Live-Demo ausfällt
+
+<sub>🔗 [Vollständiger Eintrag](https://github.com/BBZ-AIFS51/LF7-Projekt_GAS/blob/main/MDs/entwicklungsverlauf.md#30-prompt--holzplatte-batterie-und-video-gestrichen-24112026)</sub>
 
 ---
 

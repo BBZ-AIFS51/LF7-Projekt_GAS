@@ -104,9 +104,10 @@ abgebrochen. Sie wurden verstärkt und der Deckel neu gedruckt, siehe
   <sub>Das fertige Bedienteil, Anlage unscharf (Herz)</sub>
 </p>
 
-Als Nächstes werden beide Teile auf eine Holzplatte montiert, die für die
-Vorführung die Wand mit der Tür darstellt. Dafür fehlen noch die Holzlatten
-(Stand 17.11.2026).
+Geplant war, beide Teile auf eine Holzplatte zu montieren, die für die
+Vorführung die Wand mit der Tür darstellt. Die Holzlatten sind nicht
+rechtzeitig gekommen. Weil das Gerät auch lose vollständig funktioniert,
+haben wir die Montage gestrichen.
 
 ## 6 · Präsentation im Repository
 
@@ -143,5 +144,5 @@ neu, damit man während der Sirene nicht ungestraft Codes durchprobieren kann.
 - [x] Alle Module passen ins gedruckte Gehäuse (eingebaut am 10.11.2026)
 - [x] Gehäuse gedruckt
 - [x] Gehäuse nach dem Steckplan verkabelt und verschraubt (10.11.2026)
-- [ ] Gehäuse auf der Holzplatte montiert und getestet
-- [ ] Laufzeit mit 9-V-Batterie gemessen
+- [ ] ~~Gehäuse auf der Holzplatte montiert~~: entfallen, die Holzlatten fehlten. Das Gerät funktioniert auch ohne Platte
+- [ ] Laufzeit mit 9-V-Batterie gemessen: nicht gemessen, weil keine Batterie da war. Geschätzt **3–5 Stunden**, siehe [Aufbau und Schaltplan](Aufbau-und-Schaltplan#stromversorgung-im-gehäuse)

@@ -65,7 +65,7 @@ Das Gerät läuft mit einer **9-V-Blockbatterie** im Inneren des Bedienteils.
 - **Einschalten:** Batterieclip auf die Batterie stecken. Nach dem Start zeigt
   das Display das Herz (unscharf).
 - **Ausschalten:** Clip abziehen. Einen Schalter gibt es nicht.
-- **Laufzeit:** etwa 3–5 Stunden. Wird das Display dunkel oder startet das
+- **Laufzeit:** etwa 3–5 Stunden (geschätzt). Wird das Display dunkel oder startet das
   Gerät von selbst neu, ist die Batterie leer.
 - **Batterie wechseln:** Frontplatte abschrauben, Clip abziehen, neue Batterie
   einsetzen. Auf die Polung achten (Clip passt nur in einer Richtung).

@@ -27,7 +27,7 @@ Handyfotos enthalten oft den GPS-Standort, und das Repository ist öffentlich.
 | `druck.jpg` | Deckel des Bedienteils und Kleinteile auf dem Drucker | Kap. 8, Präsentation | ✅ 17.11.2026 |
 | `druck_nah.jpg` | dasselbe, Nahaufnahme vom Druckkopf | Präsentation | ✅ 17.11.2026 |
 | `druck_misslungen.jpg` | misslungener Druck, Filamentsalat auf dem Druckbett | Kap. 8, Präsentation | ✅ 17.11.2026 |
-| `geraet_brett.jpg` | beide Teile auf der Holzplatte montiert (nach der Montage) | Deckblatt, Kap. 3, Präsentation | ⬜ Holzlatten fehlen noch |
+| `geraet_brett.jpg` | beide Teile auf der Holzplatte montiert (nach der Montage) | Deckblatt, Kap. 3, Präsentation | ⏭️ entfällt, keine Montage auf der Platte |
 | `display_herz.jpg`, `display_totenkopf.jpg`, `display_alarm.jpg` | *optional:* Nahaufnahmen vom Display in den Zuständen | Kap. 3, Präsentation | ⬜ |
 
 **Tipps:** Tageslicht oder helle Lampe, ruhiger einfarbiger Hintergrund,

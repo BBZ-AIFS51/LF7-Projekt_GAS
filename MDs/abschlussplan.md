@@ -1,6 +1,6 @@
 # Abschlussplan — Projekt GAS
 
-Stand: 17.11.2026. Plan für alles, was bis zur Abgabe noch passieren muss.
+Stand: 24.11.2026. Plan für alles, was bis zur Abgabe noch passieren muss.
 Grundlage sind die Vorgaben der Lehrkraft (zehn Kapitel, Präsentation, Regeln
 zum KI-Einsatz) und der aktuelle Stand im Repository.
 
@@ -90,7 +90,7 @@ gantt
 
     section Gerät
     Tests über USB, Fotos            :a1, 2026-11-10, 8d
-    Batterie, Montage auf Holzplatte :a1b, 2026-11-16, 15d
+    Batterie, Montage (entfallen)    :a1b, 2026-11-16, 8d
     Code-Freeze v1.0                 :milestone, m1, 2026-11-20, 0d
 
     section Doku
@@ -170,17 +170,18 @@ mit Dateinamen und wie man hochlädt.
       nicht der beste, am Deckel des Sensorgehäuses sind die Schraubpunkte
       abgebrochen. Verstärkt in Schritt 21 (03.11.2026, auf `main`), neu
       gedruckt und eingebaut. Steht im Wiki unter „Herausforderungen“.
-- [ ] **(Team)** Beide Teile auf die **Holzplatte** montieren. Geplant war
-      KW 47 (16.–20.11.), **die Holzlatten fehlen noch** (Stand 17.11.).
-      Wenn sie bis zum 20.11. nicht da sind: Tests T1–T9 und die Fotos laufen
-      ohne Platte weiter, die Montage rutscht bis spätestens 30.11. (vor dem
-      ersten Präsentationstag). In der Präsentation dann das Foto vom
-      Gehäuse statt vom Brett nehmen.
-- [ ] **(Team)** **9-V-Batterie mitbringen.** Polung an VIN prüfen (kein
-      Verpolungsschutz!), erst dann anstecken
+- [x] **(Team)** ~~Beide Teile auf die **Holzplatte** montieren~~ →
+      **entfällt** (24.11.2026). Die Holzlatten sind nicht gekommen, das
+      Gerät funktioniert auch lose. In Doku und Präsentation kommt das Foto
+      vom Gehäuse (`geraet_vorne.jpg`) statt vom Brett.
+- [x] **(Team)** ~~9-V-Batterie mitbringen~~ → **entfällt** (24.11.2026),
+      es gibt keine. Das Gerät läuft über USB (Notebook oder Powerbank), die
+      Laufzeit mit Batterie ist nur geschätzt (T10). Falls doch noch eine
+      Batterie dazukommt: Polung an VIN prüfen (kein Verpolungsschutz!), erst
+      dann anstecken
 
 **Tests am fertigen Gerät.** T1–T9 gehen auch **ohne Batterie über USB**, also
-schon vor der Montage. Nur T10 braucht die Batterie. **T1–T9 bestanden am 17.11.2026.** (Ergebnis im Wiki auf der Seite
+schon vor der Montage. Nur T10 braucht die Batterie, er wird nicht gemessen, sondern geschätzt (keine Batterie vorhanden). **T1–T9 bestanden am 17.11.2026.** (Ergebnis im Wiki auf der Seite
 [Projektphasen](../wiki/Projektphasen.md) unter „Stand und offene Punkte“
 abhaken, Messwerte eintragen):
 
@@ -195,7 +196,7 @@ abhaken, Messwerte eintragen):
 | T7 | Admin-Menü: `A` + Admin-PIN, Karte anlernen, löschen | Karte wird gespeichert, bleibt nach Neustart | ✅ |
 | T8 | RFID-Reset `B` mit kurz abgezogenem Leser | Leser antwortet danach wieder (nicht 0x00/0xFF; unser Klon meldet 0xB2) | ✅ |
 | T9 | Serieller Monitor beim Start | `free SRAM:` Wert notieren | ✅ **252 Byte** |
-| T10 | Laufzeit mit frischer 9-V-Batterie | grob 3–5 h | ✏️ h |
+| T10 | Laufzeit mit frischer 9-V-Batterie | grob 3–5 h | ⏭️ nicht gemessen, **geschätzt 3–5 h** (~100 mA aus 400–500 mAh) |
 
 Ausgabe im seriellen Monitor beim Start (17.11.2026):
 
@@ -215,12 +216,13 @@ free SRAM: 252
   252 Byte laufen in allen Tests stabil. Mehr Speicher sollte die Firmware
   aber nicht mehr brauchen, ein Grund mehr für den Code-Freeze.
 
-- [ ] **(Team)** Kurzes **Video** vom kompletten Ablauf (Herz → Karte →
-      Totenkopf → Bewegung → Sirene → PIN → Herz), am besten nach der
-      Montage. Dient **als Ersatz, falls die Live-Demo ausfällt**, und kommt
-      nicht ins Repository.
+- [x] **(Team)** Kurzes **Video** vom Ablauf → kein eigenes Video vom
+      ganzen Ablauf, aber Videos vom Gerät liegen auf dem Handy (24.11.2026).
+      Reichen als Ersatz, falls die Live-Demo ausfällt, kommen nicht ins
+      Repository.
 - [x] **(Team)** Bedienteil von vorne → `Fotos/geraet_vorne.jpg` (17.11.2026)
-- [ ] **(Team)** Foto nach der Montage → `Fotos/geraet_brett.jpg`
+- [x] **(Team)** ~~Foto nach der Montage → `Fotos/geraet_brett.jpg`~~ →
+      entfällt mit der Montage, `geraet_vorne.jpg` ersetzt es
 
 ## Phase 2 · Code-Freeze (bis Fr 20.11.)
 
@@ -275,11 +277,11 @@ Platzhalter nicht mehr.
 
 | Kapitel | Was fehlt | Wer |
 |---|---|---|
-| 1 Deckblatt | Titel, Gruppe, Klasse, Abgabedatum, Foto vom Gerät (`geraet_vorne.jpg` ist da, nach der Montage evtl. `geraet_brett.jpg`) | Claude |
-| 2 Idee und Zielsetzung | Projektstart beim Zeitraum, K5 Gehäuse auf ✅ setzen, sobald montiert | Team (Projektstart), Claude |
+| 1 Deckblatt | Titel, Gruppe, Klasse, Abgabedatum, Foto vom Gerät (`geraet_vorne.jpg`) | Claude |
+| 2 Idee und Zielsetzung | Projektstart beim Zeitraum, K5 Gehäuse auf ✅ setzen (gebaut, Montage auf der Platte entfällt) | Team (Projektstart), Claude |
 | 3 Funktionsbeschreibung | aus dem Wiki übernehmen | Claude |
 | 4 Verwendete Bauteile | prüfen, ob Batterie, Clip, Mini-Breadboard und Kabel vollständig drin sind. Verbaut ist ein **Elegoo UNO R3** (baugleich zum Arduino Uno R3), steht seit 17.11. im Wiki | Team prüft |
-| 5 Aufbau und Schaltplan | Laufzeit eintragen (Fotos vom Aufbau sind seit 17.11. da, Schaltplan mit Batterie an VIN seit Schritt 22) | Team |
+| 5 Aufbau und Schaltplan | Laufzeit als **Schätzung** (3–5 h, nicht gemessen) übernehmen. Fotos vom Aufbau sind seit 17.11. da, Schaltplan mit Batterie an VIN seit Schritt 22 | Claude |
 | 6 Sourcecode | Dateien und Abgabeform (Code liegt im Repository) | Claude |
 | 7 Wichtige Codeabschnitte | gemessener SRAM-Wert: **252 Byte** (17.11.), steht im Wiki | Claude |
 | 8 Herausforderungen | wie ihr den SH1106 erkannt habt, Probleme beim RC522-Verdrahten, eigene Probleme (Druck, Einbau, Teamarbeit) | **Team** |
@@ -377,7 +379,7 @@ sichtbare rote Faden.
 5. Richtige PIN + `#` → Herz (UNSCHARF)
 6. Optional, wenn Zeit ist: `A` + Admin-PIN, neue Karte anlernen
 
-**Plan B**, falls die Hardware streikt: Video aus Phase 1 zeigen, danach das
+**Plan B**, falls die Hardware streikt: Videos vom Handy zeigen, danach das
 3D-Modell im Browser (https://bbz-aifs51.github.io/LF7-Projekt_GAS/) — dort läuft
 dieselbe Logik.
 
@@ -404,14 +406,16 @@ dieselbe Logik.
   - Wo sind die Karten gespeichert, und was passiert nach einem Neu-Hochladen?
   - Was hat die KI gemacht, was habt ihr selbst gemacht und geprüft?
 - [ ] **(Team)** Packliste am Vortag:
-  - [ ] **frische 9-V-Batterie** einsetzen + Ersatzbatterie (Laufzeit nur wenige Stunden)
+  - [ ] Stromversorgung: Gerät über **USB** am Notebook oder an einer
+        Powerbank (keine 9-V-Batterie vorhanden). Kabel lang genug, dass
+        man das Bedienteil hochhalten kann
   - [ ] RFID-Karten (mindestens eine angelernt, eine unbekannte für die Demo)
   - [ ] PIN und Admin-PIN auf einem Zettel
   - [ ] USB-Kabel (Typ B) und Laptop mit Arduino IDE, falls neu geladen werden muss
   - [ ] Präsentation als HTML-Datei auf USB-Stick (zusätzlich zum Notebook)
   - [ ] Netzteil fürs Notebook, HDMI-Kabel bzw. Adapter
   - [ ] Energiesparmodus und Benachrichtigungen am Notebook aus
-  - [ ] Demo-Video offline gespeichert
+  - [ ] Videos auf dem Handy, Handy geladen
 
 ## Phase 6 · Feedback einarbeiten und abgeben (02.12. – Di 15.12.)
 

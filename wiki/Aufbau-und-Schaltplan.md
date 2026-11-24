@@ -77,9 +77,10 @@ direkt an den Uno.
 | 17 | unten | +9 V | Batterie +, Brücke zum Uno-Pin VIN |
 
 - **Ein/Aus:** Batterieclip anstecken bzw. abziehen, einen Schalter gibt es nicht.
-- **Laufzeit:** grob 3–5 Stunden. Die Schaltung zieht um die 100 mA, ein
-  Alkali-9-V-Block hat etwa 400–500 mAh. Für Tests und die Vorführung reicht
-  das, für Dauerbetrieb nicht.
+- **Laufzeit:** geschätzt grob 3–5 Stunden, nicht gemessen. Die Schaltung
+  zieht um die 100 mA, ein Alkali-9-V-Block hat etwa 400–500 mAh. Für Tests
+  und die Vorführung reicht das, für Dauerbetrieb nicht. Getestet und
+  vorgeführt haben wir über USB, eine Batterie hatten wir nicht.
 - **Hochladen:** USB-Kabel anstecken, die Batterie darf dranbleiben. Der Uno
   schaltet selbst auf VIN um, sobald dort mehr als etwa 6,6 V anliegen.
 
